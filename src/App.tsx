@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getAllData } from './util/index';
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -23,6 +24,7 @@ const [message, setMessage] = useState('');
   return (
     <>
       <h1>{message}</h1>
+      <Link to="/home">HOME</Link>
     </>
   );
 }
