@@ -1,14 +1,17 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import App from "./App.tsx";
+import Home from "./components/Home.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <Routes>
+      <Route path="/" element={ <App/> } />
+      <Route path="/home" element={ <Home/> }/>
+    </Routes>
+  </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function
