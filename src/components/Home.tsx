@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 const Home = () => {
   return (
     <>
       <Heading>I am home</Heading>
-      <Link to="/">BACK</Link>
+      <Link as={RouterLink} to="/">
+        BACK
+      </Link>
     </>
   );
 };
