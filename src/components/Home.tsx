@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Heading, Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 const Home = () => {
-    return (
-        <> 
-            <h1>I am home</h1>
-            <Link to="/">BACK</Link>
-        </>
-    )
-}
+  return (
+    <>
+      <Heading>I am home</Heading>
+      <Link as={RouterLink} to="/">
+        BACK
+      </Link>
+    </>
+  );
+};
 
 export default Home;

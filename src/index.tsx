@@ -1,17 +1,21 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+
 import reportWebVitals from "./reportWebVitals";
 import App from "./App.tsx";
 import Home from "./components/Home.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={ <App/> } />
-      <Route path="/home" element={ <Home/> }/>
-    </Routes>
-  </BrowserRouter>,
+  <ChakraProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  </ChakraProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
