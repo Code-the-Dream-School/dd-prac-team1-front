@@ -22,7 +22,7 @@ const CreateAccount = () => {
       <Container maxW='xl'>
         <VStack>
           <FormControl isRequired>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Username</FormLabel>
             <Input type='text' variant='flushed' />
             <FormLabel>Email</FormLabel>
             <Input type='email' variant='flushed' />
