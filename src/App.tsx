@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { getAllData } from "./util/index";
 
-const URL = "http://localhost:8000/api/v1/";
+const URL = "http://localhost:3000/api/v1/";
 
 function App() {
   const [message, setMessage] = useState("");
