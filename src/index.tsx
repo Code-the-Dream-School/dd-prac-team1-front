@@ -5,7 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App.tsx";
 import Home from "./components/Home.tsx";
-import CreateAccount from "./components/CreateAccount.tsx";
+import Register from "./components/Register.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -14,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
