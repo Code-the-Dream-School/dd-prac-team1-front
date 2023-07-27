@@ -30,6 +30,7 @@ const Register = () => {
   const navigateToHome = () => {
     navigate("/home");
   }
+
   const navigateToLogin = () => {
     navigate("/login");
   }
@@ -52,14 +53,15 @@ const Register = () => {
         <VStack>
           <FormControl isRequired>
             <FormLabel>Username</FormLabel>
-            <Input type='text' variant='flushed' />
+            <Input type='text' id="registerUsername" variant='flushed' />
             <FormLabel>Email</FormLabel>
-            <Input type='email' variant='flushed' />
+            <Input type='email' id="registerEmail" variant='flushed' />
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
                 type={type}
                 value={password}
+                id="registerPassword"
                 variant='flushed'
                 onClick={() => setShowRequirements(true)}
                 onChange={(event) => { setPassword(event.target.value) }} />
@@ -84,6 +86,7 @@ const Register = () => {
               <Input
                 type={typeConfirm}
                 value={confirmPassword}
+                id="registerConfirmPassword"
                 variant='flushed'
                 onClick={() => setShowRequirements(false)}
                 onChange={(event) => setConfirmPassword(event.target.value)} />
