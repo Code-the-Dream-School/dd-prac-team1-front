@@ -27,8 +27,8 @@ const Login = () => {
             <Container maxW='xl'>
                 <VStack>
                     <FormControl isRequired>
-                        <FormLabel>Email</FormLabel>
-                        <Input type='email' variant='flushed' />
+                        <FormLabel>Username</FormLabel>
+                        <Input type='text' variant='flushed' />
                         <FormLabel>Password</FormLabel>
                         <Input type='password' variant='flushed' />
                         <Center><Button variant='solid' type="submit" title="login" onClick={navigateToHome}>Login</Button> </Center>
