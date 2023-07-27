@@ -21,6 +21,9 @@ const Register = () => {
   const navigateToHome = () => {
     navigate("/home");
   }
+  const navigateToLogin = () => {
+    navigate("/login");
+  }
 
   return (
     <Box>
@@ -47,7 +50,7 @@ const Register = () => {
             <Input type='password' variant='flushed' onClick={() => setShowRequirements(false)} />
             <Center><Button variant='solid' type="submit" title="sign up" onClick={navigateToHome}>Sign Up</Button> </Center>
           </FormControl>
-          <Button variant='link' type="button" size="xs" title="sign up"><Text as='ins'>or sign in</Text></Button>
+          <Button variant='link' type="button" size="xs" title="or sign in" onClick={navigateToLogin}><Text as='ins'>or sign in</Text></Button>
         </VStack>
       </Container>
     </Box>
