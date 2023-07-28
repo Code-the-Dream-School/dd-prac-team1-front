@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react"
 import {
   Box,
   Button,
@@ -14,60 +14,77 @@ import {
   Text,
   UnorderedList,
   VStack
-} from '@chakra-ui/react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { useNavigate } from 'react-router-dom';
-import { register } from '../util/fetchData';
+} from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
+import { useNavigate } from "react-router-dom";
+import { register } from "../utils/fetchData";
+
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [showRequirements, setShowRequirements] = useState(false)
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [type, setType] = useState('password');
-  const [typeConfirm, setTypeConfirm] = useState('password');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [type, setType] = useState("password");
+  const [typeConfirm, setTypeConfirm] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  //const navigateToHome = () => {
-  //  navigate('/home');
-  //}
 
   const navigateToLogin = () => {
-    navigate('/login');
+    navigate("/login");
   }
 
   const handleShowPassword = () => {
-    if (type === 'password') {
-      setType('text')
-      setTypeConfirm('text')
+    if (type === "password") {
+      setType("text")
+      setTypeConfirm("text")
       setShowPassword(true)
     } else {
-      setType('password')
-      setTypeConfirm('password')
+      setType("password")
+      setTypeConfirm("password")
       setShowPassword(false)
     }
   }
 
+  const handleRegister = () => {
+    register(name, email, password, confirmPassword) 
+    .then((data) => {
+      if (data.status === 201) {
+        navigate("/home");
+      }
+    })
+    .catch((error) => {
+        console.log(error);
+        if (error) {
+          navigate("/404");
+        }
+    });
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  }
+
   return (
     <Box>
-      <Container maxW='xl'>
+      <Container maxW="xl">
         <VStack>
           <FormControl isRequired>
             <FormLabel>Username</FormLabel>
             <Input 
-              type='text' 
-              id='registerUsername' 
-              variant='flushed' 
+              type="text" 
+              id="registerUsername" 
+              variant="flushed" 
               value={name}
               onChange={(event) => setName(event.target.value)}
               />
             <FormLabel>Email</FormLabel>
             <Input 
-              type='email' 
-              id='registerEmail' 
-              variant='flushed' 
+              type="email" 
+              id="registerEmail" 
+              variant="flushed" 
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
@@ -76,12 +93,12 @@ const Register = () => {
               <Input
                 type={type}
                 value={password}
-                id='registerPassword'
-                variant='flushed'
+                id="registerPassword"
+                variant="flushed"
                 onClick={() => setShowRequirements(true)}
                 onChange={(event) => setPassword(event.target.value)} />
               <InputRightElement>
-                <Button size='xs' variant='ghost' onClick={handleShowPassword}>
+                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
@@ -101,31 +118,26 @@ const Register = () => {
               <Input
                 type={typeConfirm}
                 value={confirmPassword}
-                id='registerConfirmPassword'
-                variant='flushed'
+                id="registerConfirmPassword"
+                variant="flushed"
                 onClick={() => setShowRequirements(false)}
                 onChange={(event) => setConfirmPassword(event.target.value)} />
               <InputRightElement>
-                <Button size='xs' variant='ghost' onClick={handleShowPassword}>
+                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>
             <Center>
               <Button 
-                variant='solid' type='submit' title='sign up' 
-                onClick={()=> register(
-                  name, setName, 
-                  email, setEmail,
-                  password, setPassword,
-                  confirmPassword, setConfirmPassword)}
-                //onClick={navigateToHome}
+                variant="solid" type="submit" title="sign up" 
+                onClick={handleRegister}
                 >
                   Sign Up
               </Button> 
             </Center>
           </FormControl>
-          <Button variant='link' type='button' size='xs' title='or sign in' onClick={navigateToLogin}><Text as='ins'>or sign in</Text></Button>
+          <Button variant="link" type="button" size="xs" title="or sign in" onClick={navigateToLogin}><Text as="ins">or sign in</Text></Button>
         </VStack>
       </Container>
     </Box>
