@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useState } from 'react'
 import {
     Box,
     Button,
@@ -12,21 +12,23 @@ import {
     InputRightElement,
     Text,
     VStack
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { login } from '../util/fetchData';
 
 const Login = () => {
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
     const [type, setType] = useState('password');
     const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
-    const navigateToHome = () => {
-        navigate("/home");
-    }
+    //const navigateToHome = () => {
+    //    navigate('/home');
+    //}
     const navigateToRegister = () => {
-        navigate("/register");
+        navigate('/register');
     }
     const handleShowPassword = () => {
         if (type === 'password') {
@@ -43,26 +45,42 @@ const Login = () => {
             <Container maxW='xl'>
                 <VStack>
                     <FormControl isRequired>
-                        <FormLabel>Username</FormLabel>
-                        <Input type='text' id="loginUsername" variant='flushed' />
+                        <FormLabel>Email</FormLabel>
+                        <Input 
+                            type='email' 
+                            id='loginEmail' 
+                            variant='flushed' 
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
                         <FormLabel>Password</FormLabel>
                         <InputGroup>
                             <Input
                                 type={type}
                                 value={password}
-                                id="loginPassword"
+                                id='loginPassword'
                                 variant='flushed'
-                                onChange={(event) => { setPassword(event.target.value) }} />
+                                onChange={(event) => setPassword(event.target.value)} />
                             <InputRightElement>
                                 <Button size='xs' variant='ghost' onClick={handleShowPassword}>
                                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <Center><Button variant='solid' type="submit" title="login" onClick={navigateToHome}>Login</Button> </Center>
+                        <Center>
+                            <Button 
+                                variant='solid' 
+                                type='submit' 
+                                title='login' 
+                                onClick={() => login(email, setEmail, password, setPassword)}
+                                //onClick={navigateToHome}
+                                >
+                                Login
+                            </Button> 
+                        </Center>
                     </FormControl>
-                    <Button variant='link' type="button" size="xs" title="forgot password?"><Text as='ins'>Forgot Password?</Text></Button>
-                    <Button variant='link' type="button" size="xs" title="or create an account" onClick={navigateToRegister}><Text as='ins'>or create an account</Text></Button>
+                    <Button variant='link' type='button' size='xs' title='forgot password?'><Text as='ins'>Forgot Password?</Text></Button>
+                    <Button variant='link' type='button' size='xs' title='or create an account' onClick={navigateToRegister}><Text as='ins'>or create an account</Text></Button>
                 </VStack>
             </Container>
         </Box>
