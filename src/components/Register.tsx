@@ -31,6 +31,10 @@ const Register = () => {
     navigate("/home");
   }
 
+  const navigateToLogin = () => {
+    navigate("/login");
+  }
+
   const handleShowPassword = () => {
     if (type === 'password') {
       setType('text')
@@ -49,14 +53,15 @@ const Register = () => {
         <VStack>
           <FormControl isRequired>
             <FormLabel>Username</FormLabel>
-            <Input type='text' variant='flushed' />
+            <Input type='text' id="registerUsername" variant='flushed' />
             <FormLabel>Email</FormLabel>
-            <Input type='email' variant='flushed' />
+            <Input type='email' id="registerEmail" variant='flushed' />
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
                 type={type}
                 value={password}
+                id="registerPassword"
                 variant='flushed'
                 onClick={() => setShowRequirements(true)}
                 onChange={(event) => { setPassword(event.target.value) }} />
@@ -81,6 +86,7 @@ const Register = () => {
               <Input
                 type={typeConfirm}
                 value={confirmPassword}
+                id="registerConfirmPassword"
                 variant='flushed'
                 onClick={() => setShowRequirements(false)}
                 onChange={(event) => setConfirmPassword(event.target.value)} />
@@ -92,7 +98,7 @@ const Register = () => {
             </InputGroup>
             <Center><Button variant='solid' type="submit" title="sign up" onClick={navigateToHome}>Sign Up</Button> </Center>
           </FormControl>
-          <Button variant='link' type="button" size="xs" title="sign up"><Text as='ins'>or sign in</Text></Button>
+          <Button variant='link' type="button" size="xs" title="or sign in" onClick={navigateToLogin}><Text as='ins'>or sign in</Text></Button>
         </VStack>
       </Container>
     </Box>
