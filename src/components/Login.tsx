@@ -11,18 +11,20 @@ import {
     InputGroup,
     InputRightElement,
     Text,
-    VStack
+    VStack,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useNavigate } from "react-router-dom";
 import { login } from "../utils/fetchData";
-
+import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
     const [type, setType] = useState("password");
     const [showPassword, setShowPassword] = useState(false);
+
+    const toast = useToast()
 
     const navigate = useNavigate();
 
@@ -44,16 +46,20 @@ const Login = () => {
         .then((data) => {
             if (data.status === 200) {
                 navigate("/home");
+                setEmail("");
+                setPassword("");
             }
         })
         .catch((error) => {
             console.log(error);
             if (error) {
-                navigate("/404");
+                toast({
+                    title: "Error",
+                    status: "error",
+                    isClosable: true,
+                    })
             }
         });    
-        setEmail("");
-        setPassword("");
     }
 
     return (
@@ -83,6 +89,8 @@ const Login = () => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
+
+
                         <Center>
                             <Button 
                                 variant="solid" 

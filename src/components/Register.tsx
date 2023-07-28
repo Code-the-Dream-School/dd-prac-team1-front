@@ -18,6 +18,8 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useNavigate } from "react-router-dom";
 import { register } from "../utils/fetchData";
+import { useToast } from "@chakra-ui/react";
+
 
 
 const Register = () => {
@@ -36,6 +38,8 @@ const Register = () => {
     navigate("/login");
   }
 
+  const toast = useToast();
+
   const handleShowPassword = () => {
     if (type === "password") {
       setType("text")
@@ -53,18 +57,22 @@ const Register = () => {
     .then((data) => {
       if (data.status === 201) {
         navigate("/home");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
       }
     })
     .catch((error) => {
         console.log(error);
         if (error) {
-          navigate("/404");
+          toast({
+            title: "Error",
+            status: "error",
+            isClosable: true,
+            })
         }
     });
-    setName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
   }
 
   return (
