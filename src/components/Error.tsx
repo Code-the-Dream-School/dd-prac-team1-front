@@ -7,6 +7,7 @@ import {
     AlertDescription,
     Link,
     Button,
+    Flex,
 } from '@chakra-ui/react'
 
 import { Link as RouterLink } from 'react-router-dom';
@@ -30,11 +31,18 @@ const Error = () => {
             <AlertDescription maxWidth='sm'>
                 Sorry there was an error processing your request
             </AlertDescription>
+            <Flex direction={'column'} justifyContent={'space-around'} height={'15vh'}>
             <Button>
                 <Link as={RouterLink} to='/login'>
-                    Try again!
+                    Try again to login!
                 </Link>
             </Button>
+            <Button>
+                <Link as={RouterLink} to='/register'>
+                    Try again to register!
+                </Link>
+            </Button>
+            </Flex>
         </Alert>
         
     )
