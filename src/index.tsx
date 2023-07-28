@@ -7,6 +7,7 @@ import App from './App.tsx';
 import Home from './components/Home.tsx';
 import Register from './components/Register.tsx';
 import Login from './components/Login.tsx';
+import Error from './components/Error.tsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path='/home' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/404' element={<Error />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>

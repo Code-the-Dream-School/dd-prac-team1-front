@@ -1,13 +1,20 @@
-import { Heading, Link } from '@chakra-ui/react';
+import { Button, Heading, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Home = () => {
   return (
     <>
-      <Heading>I am home</Heading>
-      <Link as={RouterLink} to='/'>
-        BACK
-      </Link>
+      <Heading>Home Page</Heading>
+      <Button>
+        <Link as={RouterLink} to='/login'>
+          Sign in
+        </Link>
+      </Button>
+      <Button>
+        <Link as={RouterLink} to='/register'>
+          Create an account
+        </Link>
+      </Button>
     </>
   );
 };

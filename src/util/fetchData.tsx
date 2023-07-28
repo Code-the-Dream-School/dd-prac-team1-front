@@ -30,7 +30,9 @@ export const register = (
             }
         )
     .then((data) => {
-        console.log(data);
+        if (data.status === 201) {
+            window.location.href = '/home';
+        }
         setName('');
         setEmail('');
         setPassword('');
@@ -38,6 +40,9 @@ export const register = (
     })
     .catch((error) => {
         console.log(error);
+        if (error) {
+            window.location.href = '/404';
+        }
     });
 };
 
@@ -59,12 +64,17 @@ export const login = (
                 },
             })
         .then((data) => {
-            console.log(data);
+            if (data.status === 200) {
+                window.location.href = '/home';
+            }
             setEmail('');
             setPassword('');
         })
         .catch((error) => {
             console.log(error);
+            if (error) {
+                window.location.href = '/404';
+            }
         });
 };
 
