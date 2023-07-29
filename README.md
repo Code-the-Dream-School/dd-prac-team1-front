@@ -30,3 +30,24 @@ Note: In the below example, the group's front-end repository was named `bb-pract
 #### Running the front-end server in the browser
 
 ![browser running](images/front-end-running-browser.png)
+
+#### Setting up Prettier
+
+For consistent layout of our code we added new json file to our FrontEnd repository named .prettierrc.json.
+
+To run this file on VSCode we need to complete this steps.
+
+1. Install \***\*Prettier - Code formatter Prettier - Code formatter\*\*** extension on our computer and enable it.
+2. Click on Manage button on the CSCode in the low left corner.
+3. Choose “settings”.
+4. Setup our prettier
+   type “prettier” in the search bar
+   and make sure that you have the same configurations
+   "Prettier: Enable" choose "checked"
+   "Prettier: Require Config" choose "checked"
+5. Setup our editor:
+   type “editor” in the search bar
+   and make sure that you have the same configurations
+   In "Editor: Default Formatter" choose "Prettier - Code formatter"
+   In "Editor: Format On Save" choose "checked"
+6. Instruction in Notion is here: https://www.notion.so/Prettier-configuration-8f5750844f3c45d78e8e4782c218898e
