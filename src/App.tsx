@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Heading, Link, Text } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { getAllData } from "./util/index";
+import { getAllData } from "./utils";
 
 const URL = "http://localhost:3000/api/v1/";
 
