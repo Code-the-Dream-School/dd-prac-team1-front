@@ -63,7 +63,7 @@ const Register = () => {
           error.response.data.msg ===
           "The email address you entered is already taken."
         ) {
-          setErrorEmail("Already taken");
+          setErrorEmail("Account already exists");
         }
         if (
           error.response.data.msg ===
