@@ -78,7 +78,10 @@ const Login = () => {
               id="loginEmail"
               variant="flushed"
               value={email}
-              onChange={event => setEmail(event.target.value)}
+              onChange={event => {
+                setEmail(event.target.value);
+                setErrorOccur(false);
+              }}
             />
           </FormControl>
           <FormControl isInvalid={errorOccur} isRequired>
@@ -89,7 +92,10 @@ const Login = () => {
                 value={password}
                 id="loginPassword"
                 variant="flushed"
-                onChange={event => setPassword(event.target.value)}
+                onChange={event => {
+                  setPassword(event.target.value);
+                  setErrorOccur(false);
+                }}
               />
               <InputRightElement>
                 <Button size="xs" variant="ghost" onClick={handleShowPassword}>

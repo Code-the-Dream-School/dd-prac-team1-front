@@ -121,7 +121,10 @@ const Register = () => {
               id="registerEmail"
               variant="flushed"
               value={email}
-              onChange={event => setEmail(event.target.value)}
+              onChange={event => {
+                setEmail(event.target.value);
+                setErrorEmail("");
+              }}
             />
             {errorEmail.length === 0 && (
               <FormHelperText>
@@ -141,7 +144,10 @@ const Register = () => {
                 value={password}
                 id="registerPassword"
                 variant="flushed"
-                onChange={event => setPassword(event.target.value)}
+                onChange={event => {
+                  setPassword(event.target.value);
+                  setErrorPassword("");
+                }}
               />
               <InputRightElement>
                 <Button size="xs" variant="ghost" onClick={handleShowPassword}>
