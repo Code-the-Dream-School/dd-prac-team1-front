@@ -71,6 +71,13 @@ const Register = () => {
         ) {
           setErrorPassword(error.response.data.msg);
         }
+        if (
+          error.response.data.msg ===
+          "Please enter a valid email address in this format: name@example.com,Password should be at least 8 characters long"
+        ) {
+          setErrorEmail("Account already exists");
+          setErrorPassword("Password should be at least 8 characters long");
+        }
 
         if (error) {
           toast({

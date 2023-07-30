@@ -8,13 +8,13 @@ import {
   FormLabel,
   Input
 } from "@chakra-ui/react";
-import { searchWithOpenAI } from "../utils/fetchData";
+import { searchAI } from "../utils/fetchData";
 
-const SearchWithAI = () => {
+const SearchAI = () => {
   const [search, setSearch] = useState("");
 
   const handleSearch = () => {
-    searchWithOpenAI(search)
+    searchAI(search)
       .then(response => {
         console.log(response);
       })
@@ -55,4 +55,4 @@ const SearchWithAI = () => {
   );
 };
 
-export default SearchWithAI;
+export default SearchAI;

@@ -37,7 +37,7 @@ export const login = (email: string, password: string) => {
   );
 };
 
-export const searchWithOpenAI = (search: string) => {
+export const searchAI = (search: string) => {
   return axios.post(
     "http://localhost:3000/api/v1/ai-recipe",
     {
