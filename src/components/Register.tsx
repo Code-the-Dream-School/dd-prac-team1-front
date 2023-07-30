@@ -25,7 +25,8 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [type, setType] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
-  const [errorOccur, setErrorOccur] = useState(false);
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -58,17 +59,29 @@ const Register = () => {
       })
       .catch(error => {
         console.log(error);
+        if (
+          error.response.data.msg ===
+          "The email address you entered is already taken."
+        ) {
+          setErrorEmail("Already taken");
+        }
+        if (
+          error.response.data.msg ===
+          "Password should be at least 8 characters long"
+        ) {
+          setErrorPassword(error.response.data.msg);
+        }
+
         if (error) {
           toast({
             title: "Error",
             status: "error",
             isClosable: true
           });
-          setErrorOccur(true);
         }
       });
   };
-
+  console.log(errorEmail);
   return (
     <Box>
       <Container maxW="xl">
@@ -86,8 +99,9 @@ const Register = () => {
               value={name}
               onChange={event => setName(event.target.value)}
             />
+            <FormHelperText>Please enter your name</FormHelperText>
           </FormControl>
-          <FormControl isRequired>
+          <FormControl isInvalid={errorEmail.length > 0} isRequired>
             <FormLabel htmlFor="registerEmail">Email</FormLabel>
             <Input
               type="email"
@@ -96,8 +110,17 @@ const Register = () => {
               value={email}
               onChange={event => setEmail(event.target.value)}
             />
+            {errorEmail.length === 0 && (
+              <FormHelperText>
+                Please enter a valid email address in this format:
+                name@example.com
+              </FormHelperText>
+            )}
+            {errorEmail.length > 0 && (
+              <FormErrorMessage>{errorEmail}</FormErrorMessage>
+            )}
           </FormControl>
-          <FormControl isInvalid={errorOccur} isRequired>
+          <FormControl isInvalid={errorPassword.length > 0} isRequired>
             <FormLabel htmlFor="registerPassword">Password</FormLabel>
             <InputGroup>
               <Input
@@ -113,13 +136,13 @@ const Register = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
-            {password.length > 0 && password.length < 8 && (
+            {password.length < 8 && errorPassword.length === 0 && (
               <FormHelperText>
                 Password must be at least 8 characters long
               </FormHelperText>
             )}
-            {errorOccur && (
-              <FormErrorMessage>Sign up is unsuccessful</FormErrorMessage>
+            {errorPassword.length > 0 && (
+              <FormErrorMessage>{errorPassword}</FormErrorMessage>
             )}
             <Center>
               <Button variant="solid" type="submit" title="sign up">
