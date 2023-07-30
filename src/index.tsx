@@ -18,7 +18,7 @@ root.render(
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/searchWithAI" element={<SearchWithAI />} />
+        <Route path="/ai-recipe" element={<SearchWithAI />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
