@@ -72,10 +72,7 @@ const Register = () => {
           );
           setErrorPassword("Password should be at least 8 characters long");
         }
-        if (
-          error.response.data.msg ===
-          "Too many requests, please try again later."
-        ) {
+        if (error.response.data.msg.includes("requests")) {
           setErrorPassword(error.response.data.msg);
         }
         if (error) {
