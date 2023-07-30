@@ -31,7 +31,7 @@ const SearchWithAI = () => {
             handleSearch();
           }}>
           <FormControl>
-            <FormLabel>how i can help</FormLabel>
+            <FormLabel htmlFor="searchAI">how i can help</FormLabel>
             <Input
               type="text"
               id="searchAI"
@@ -44,10 +44,9 @@ const SearchWithAI = () => {
               <Button
                 variant="solid"
                 type="submit"
-                title="login"
-                onClick={handleSearch}>
+                title="search recipe with AI">
                 Search
-              </Button>{" "}
+              </Button>
             </Center>
           </FormControl>
         </form>
