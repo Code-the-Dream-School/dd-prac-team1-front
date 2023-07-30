@@ -10,12 +10,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { login } from "../utils/fetchData";
-import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -55,8 +55,11 @@ const Login = () => {
         if (error) {
           toast({
             title: "Error",
+            description: "Look underline description",
             status: "error",
-            isClosable: true
+            duration: 2000,
+            isClosable: true,
+            position: "top"
           });
           setErrorOccur(true);
         }
