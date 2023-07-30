@@ -61,7 +61,8 @@ const Register = () => {
         console.log(error);
         if (
           error.response.data.msg ===
-          "The email address you entered is already taken."
+            "The email address you entered is already taken." ||
+          error.response.data.msg === "Account already exists."
         ) {
           setErrorEmail("Account already exists");
         }
