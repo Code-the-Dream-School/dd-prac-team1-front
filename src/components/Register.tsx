@@ -22,7 +22,6 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [type, setType] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
   const [errorEmail, setErrorEmail] = useState("");
@@ -47,34 +46,26 @@ const Register = () => {
   };
 
   const handleRegister = () => {
-    register(name, email, password, confirmPassword)
+    register(name, email, password)
       .then(data => {
         if (data.status === 201) {
           navigate("/home");
           setName("");
           setEmail("");
           setPassword("");
-          setConfirmPassword("");
         }
       })
       .catch(error => {
         console.log(error);
-        if (
-          error.response.data.msg ===
-            "The email address you entered is already taken." ||
-          error.response.data.msg === "Account already exists."
-        ) {
+        if (error.response.data.msg.includes("already")) {
           setErrorEmail("Account already exists");
         }
-        if (
-          error.response.data.msg ===
-          "Password should be at least 8 characters long"
-        ) {
+        if (error.response.data.msg.includes(8)) {
           setErrorPassword(error.response.data.msg);
         }
         if (
-          error.response.data.msg ===
-          "Please enter a valid email address in this format: name@example.com,Password should be at least 8 characters long"
+          error.response.data.msg.includes("format") &&
+          error.response.data.msg.includes(8)
         ) {
           setErrorEmail(
             "Please enter a valid email address in this format: name@example.com"

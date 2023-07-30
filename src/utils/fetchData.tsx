@@ -1,18 +1,12 @@
 import axios from "axios";
 
-export const register = (
-  name: string,
-  email: string,
-  password: string,
-  confirmPassword: string
-) => {
+export const register = (name: string, email: string, password: string) => {
   return axios.post(
     "http://localhost:3000/api/v1/auth/register",
     {
       username: name,
       email: email,
-      password: password,
-      confirmPassword: confirmPassword
+      password: password
     },
     {
       headers: {
