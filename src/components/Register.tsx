@@ -75,10 +75,17 @@ const Register = () => {
           error.response.data.msg ===
           "Please enter a valid email address in this format: name@example.com,Password should be at least 8 characters long"
         ) {
-          setErrorEmail("Account already exists");
+          setErrorEmail(
+            "Please enter a valid email address in this format: name@example.com"
+          );
           setErrorPassword("Password should be at least 8 characters long");
         }
-
+        if (
+          error.response.data.msg ===
+          "Too many requests, please try again later."
+        ) {
+          setErrorPassword(error.response.data.msg);
+        }
         if (error) {
           toast({
             title: "Error",
@@ -88,7 +95,6 @@ const Register = () => {
         }
       });
   };
-  console.log(errorEmail);
   return (
     <Box>
       <Container maxW="xl">
