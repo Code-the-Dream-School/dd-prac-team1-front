@@ -32,7 +32,7 @@ export const login = (email: string, password: string) => {
 };
 
 export const searchAI = (search: string) => {
-  const token = sessionStorage.getItem("jwtToken");
+  const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/ai-recipe",
     {
@@ -41,7 +41,7 @@ export const searchAI = (search: string) => {
     {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${jwtToken}`
       }
     }
   );
