@@ -45,7 +45,7 @@ const Login = () => {
     login(email, password)
       .then(data => {
         if (data.status === 200) {
-          navigate("/home");
+          navigate("/ai-recipe");
           setEmail("");
           setPassword("");
         }
