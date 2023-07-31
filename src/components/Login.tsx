@@ -46,7 +46,6 @@ const Login = () => {
       .then(data => {
         if (data.status === 200) {
           sessionStorage.setItem("jwtToken", data.data.token);
-          console.log(data);
           navigate("/ai-recipe");
           setEmail("");
           setPassword("");

@@ -49,7 +49,8 @@ const Register = () => {
     register(name, email, password)
       .then(data => {
         if (data.status === 201) {
-          navigate("/home");
+          sessionStorage.setItem("jwtToken", data.data.token);
+          navigate("/ai-recipe");
           setName("");
           setEmail("");
           setPassword("");
