@@ -1,152 +1,178 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Box,
   Button,
   Center,
   Container,
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
   Input,
   InputGroup,
   InputRightElement,
-  ListItem,
   Text,
-  UnorderedList,
-  VStack
+  useToast
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { register } from "../utils/fetchData";
-import { useToast } from "@chakra-ui/react";
-
-
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [showRequirements, setShowRequirements] = useState(false)
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [type, setType] = useState("password");
-  const [typeConfirm, setTypeConfirm] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
 
   const navigate = useNavigate();
 
   const navigateToLogin = () => {
     navigate("/login");
-  }
+  };
 
   const toast = useToast();
 
   const handleShowPassword = () => {
     if (type === "password") {
-      setType("text")
-      setTypeConfirm("text")
-      setShowPassword(true)
+      setType("text");
+      setShowPassword(true);
     } else {
-      setType("password")
-      setTypeConfirm("password")
-      setShowPassword(false)
+      setType("password");
+      setShowPassword(false);
     }
-  }
+  };
 
   const handleRegister = () => {
-    register(name, email, password, confirmPassword) 
-    .then((data) => {
-      if (data.status === 201) {
-        navigate("/home");
-        setName("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-      }
-    })
-    .catch((error) => {
+    register(name, email, password)
+      .then(data => {
+        if (data.status === 201) {
+          sessionStorage.setItem("jwtToken", data.data.token);
+          navigate("/ai-recipe");
+          setName("");
+          setEmail("");
+          setPassword("");
+        }
+      })
+      .catch(error => {
         console.log(error);
+        if (error.response.data.msg.includes("already")) {
+          setErrorEmail("Account already exists");
+        }
+        if (error.response.data.msg.includes(8)) {
+          setErrorPassword(error.response.data.msg);
+        }
+        if (
+          error.response.data.msg.includes("format") &&
+          error.response.data.msg.includes(8)
+        ) {
+          setErrorEmail(
+            "Please enter a valid email address in this format: name@example.com"
+          );
+          setErrorPassword("Password should be at least 8 characters long");
+        }
+        if (error.response.data.msg.includes("requests")) {
+          setErrorPassword(error.response.data.msg);
+        }
         if (error) {
           toast({
             title: "Error",
+            description: "Look underline description",
             status: "error",
+            duration: 2000,
             isClosable: true,
-            })
+            position: "top"
+          });
         }
-    });
-  }
-
+      });
+  };
   return (
     <Box>
       <Container maxW="xl">
-        <VStack>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            handleRegister();
+          }}>
           <FormControl isRequired>
-            <FormLabel>Username</FormLabel>
-            <Input 
-              type="text" 
-              id="registerUsername" 
-              variant="flushed" 
+            <FormLabel htmlFor="registerName">Name</FormLabel>
+            <Input
+              type="text"
+              id="registerName"
+              variant="flushed"
               value={name}
-              onChange={(event) => setName(event.target.value)}
-              />
-            <FormLabel>Email</FormLabel>
-            <Input 
-              type="email" 
-              id="registerEmail" 
-              variant="flushed" 
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={event => setName(event.target.value)}
             />
-            <FormLabel>Password</FormLabel>
+            <FormHelperText>Please enter your name</FormHelperText>
+          </FormControl>
+          <FormControl isInvalid={errorEmail.length > 0} isRequired>
+            <FormLabel htmlFor="registerEmail">Email</FormLabel>
+            <Input
+              type="email"
+              id="registerEmail"
+              variant="flushed"
+              value={email}
+              onChange={event => {
+                setEmail(event.target.value);
+                setErrorEmail("");
+              }}
+            />
+            {errorEmail.length === 0 && (
+              <FormHelperText>
+                Please enter a valid email address in this format:
+                name@example.com
+              </FormHelperText>
+            )}
+            {errorEmail.length > 0 && (
+              <FormErrorMessage>{errorEmail}</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl isInvalid={errorPassword.length > 0} isRequired>
+            <FormLabel htmlFor="registerPassword">Password</FormLabel>
             <InputGroup>
               <Input
                 type={type}
                 value={password}
                 id="registerPassword"
                 variant="flushed"
-                onClick={() => setShowRequirements(true)}
-                onChange={(event) => setPassword(event.target.value)} />
+                onChange={event => {
+                  setPassword(event.target.value);
+                  setErrorPassword("");
+                }}
+              />
               <InputRightElement>
                 <Button size="xs" variant="ghost" onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>
-            {showRequirements ? (
+            {password.length < 8 && errorPassword.length === 0 && (
               <FormHelperText>
-                <UnorderedList>
-                  <ListItem>Password must be at least 8 characters long.</ListItem>
-                  <ListItem>Password must contain at least one uppercase letter (A-Z).</ListItem>
-                  <ListItem>Password must contain at least one lowercase letter (a-z).</ListItem>
-                  <ListItem>Password must contain at least one number (0-9).</ListItem>
-                  <ListItem>Password may include special characters (e.g., !@#$%^&*).</ListItem>
-                </UnorderedList>
-              </FormHelperText>) : null}
-            <FormLabel>Confirm Password</FormLabel>
-            <InputGroup>
-              <Input
-                type={typeConfirm}
-                value={confirmPassword}
-                id="registerConfirmPassword"
-                variant="flushed"
-                onClick={() => setShowRequirements(false)}
-                onChange={(event) => setConfirmPassword(event.target.value)} />
-              <InputRightElement>
-                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+                Password must be at least 8 characters long
+              </FormHelperText>
+            )}
+            {errorPassword.length > 0 && (
+              <FormErrorMessage>{errorPassword}</FormErrorMessage>
+            )}
             <Center>
-              <Button 
-                variant="solid" type="submit" title="sign up" 
-                onClick={handleRegister}
-                >
-                  Sign Up
-              </Button> 
+              <Button variant="solid" type="submit" title="sign up">
+                Sign Up
+              </Button>
             </Center>
           </FormControl>
-          <Button variant="link" type="button" size="xs" title="or sign in" onClick={navigateToLogin}><Text as="ins">or sign in</Text></Button>
-        </VStack>
+        </form>
+        <Center>
+          <Button
+            variant="link"
+            type="button"
+            size="xs"
+            title="or sign in"
+            onClick={navigateToLogin}>
+            <Text as="ins">or sign in</Text>
+          </Button>
+        </Center>
       </Container>
     </Box>
   );
