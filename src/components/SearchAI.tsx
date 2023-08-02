@@ -70,7 +70,7 @@ const SearchAI = () => {
             <Stack>
               <Select 
                 isMulti
-                closeMenuOnSelect={false}
+                closeMenuOnSelect
                 variant='outline' 
                 placeholder='You can select options below'
                 colorScheme="green"
@@ -91,7 +91,7 @@ const SearchAI = () => {
                 variant="solid"
                 type="submit"
                 title="search recipe with AI">
-                Search
+                GENERATE
               </Button>
             </Center>
             </Flex>
