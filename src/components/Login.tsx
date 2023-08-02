@@ -43,10 +43,14 @@ const Login = () => {
 
   const handleLogin = () => {
     login(email, password)
-      .then(data => {
-        if (data.status === 200) {
-          sessionStorage.setItem("jwtToken", data.data.token);
-          navigate("/ai-recipe");
+      .then(result => {
+        if (result.status === 200) {
+          sessionStorage.setItem("jwtToken", result.data.token);
+          console.log(result)
+          navigate("/ai-recipe",           
+            {state: {
+              username: result.data.user.email
+            }});
           setEmail("");
           setPassword("");
         }
