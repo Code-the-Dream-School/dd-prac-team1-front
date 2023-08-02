@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
   Button,
   Center,
+  CircularProgress,
+  CircularProgressLabel,
   Container,
   Flex,
   FormControl,
@@ -34,6 +36,7 @@ const SearchAI = () => {
     tags: [],
     totalTimeInMinutes: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 
   let valuesArray: Array<string> = [];
@@ -49,15 +52,18 @@ const SearchAI = () => {
       .then(response => {
         console.log(response);
         setRecipe(response.data);
+        setIsLoading(false);
       })
       .catch(error => {
         if (error.message.includes("500")) {
           setError(true);
+          setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.error}`
           );
         } else {
           setError(true);
+          setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.msg}`
           );
@@ -73,6 +79,7 @@ const SearchAI = () => {
             e.preventDefault();
             handleSearch();
             setError(false);
+            setIsLoading(true);
           }}>
           <FormControl isInvalid={error}>
             <Flex
@@ -119,7 +126,12 @@ const SearchAI = () => {
             </Flex>
           </FormControl>
         </form>
-        {recipe.recipeName && <RecipeAI recipe={recipe} />}
+        {isLoading ? (
+          <CircularProgress value={59} size="100px" thickness="4px" />
+        ) : (
+          recipe.recipeName && <RecipeAI recipe={recipe} />
+        )}
+        <CircularProgress isIndeterminate />
       </Container>
     </Center>
   );
