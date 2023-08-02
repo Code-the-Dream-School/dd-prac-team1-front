@@ -29,10 +29,10 @@ const SearchAI = () => {
       .catch(error => {
         if (error.message.includes("500")){
           setError(true)
-          setErrorMessage(error.response.data.error)
+          setErrorMessage(`${error.response.status} - ${error.response.data.error}`)
         } else {
           setError(true)
-          setErrorMessage(error.response.data.msg)
+          setErrorMessage(`${error.response.status} - ${error.response.data.msg}`)
         } 
       });
   };
