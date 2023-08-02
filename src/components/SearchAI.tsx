@@ -72,6 +72,7 @@ const SearchAI = () => {
           onSubmit={e => {
             e.preventDefault();
             handleSearch();
+            setError(false);
           }}>
           <FormControl isInvalid={error}>
             <Flex
