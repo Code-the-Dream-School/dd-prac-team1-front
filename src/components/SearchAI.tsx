@@ -77,7 +77,7 @@ const SearchAI = () => {
             <Flex
               flexDirection={"column"}
               justifyContent={"space-evenly"}
-              h="40vh">
+              h="25vh">
               <FormLabel textAlign="center" htmlFor="searchAI">
                 Hi {location.state.username}, I'm Olivier! Do you want to try a
                 new recipe?

@@ -1,5 +1,13 @@
-import React from "react";
-import { Heading, Image, Grid, GridItem, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Center,
+  Heading,
+  Image,
+  Grid,
+  GridItem,
+  Text,
+  Button
+} from "@chakra-ui/react";
 import { AIRecipe } from "../utils/types";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
@@ -7,6 +15,8 @@ import InstructionList from "./InstructionList";
 type RecipeProps = { recipe: AIRecipe };
 
 const RecipeAI = ({ recipe }: RecipeProps) => {
+  const [save, setSave] = useState<string>("SAVE");
+  const [ifSave, setIfSave] = useState<boolean>(false);
   return (
     <Grid templateColumns="repeat(2, 1fr)" gap={6}>
       <GridItem w="100%">
@@ -24,6 +34,9 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
       </GridItem>
       <GridItem w="100%">
         <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
+        <Center>
+          <Button>{save}</Button>
+        </Center>
       </GridItem>
     </Grid>
   );
