@@ -44,7 +44,7 @@ const SearchAI = () => {
   };
 
   return (
-    <Center h="100vh">
+    <Center>
       <Container maxW="xl">
         <form
           onSubmit={e => {
