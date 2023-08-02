@@ -47,7 +47,7 @@ const Login = () => {
         if (result.status === 200) {
           sessionStorage.setItem("jwtToken", result.data.token);
           console.log(result)
-          navigate("/ai-recipe",           
+          navigate("/search-choice",           
             {state: {
               username: result.data.user.email
             }});

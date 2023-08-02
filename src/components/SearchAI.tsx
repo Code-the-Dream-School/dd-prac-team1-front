@@ -37,7 +37,7 @@ const SearchAI = () => {
       });
   };
 
-  const location = useLocation()
+  const location = useLocation();
 
   const handleSelect = (event: MultiValue<{ label: string; value: string; }>) => {
     const valuesArray: Array<string> = []
@@ -48,7 +48,7 @@ const SearchAI = () => {
       setSelectOptions(valuesArray)
       console.log(selectOptions)
       //first item is an empty array from the initial state,
-      //but we need don't need that
+      //but we don't need that
   }
 
   return (
