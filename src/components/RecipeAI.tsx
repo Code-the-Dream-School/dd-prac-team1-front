@@ -6,7 +6,8 @@ import {
   Grid,
   GridItem,
   Text,
-  Button
+  Button,
+  Icon
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
@@ -18,17 +19,14 @@ type RecipeProps = { recipe: AIRecipe };
 
 const RecipeAI = ({ recipe }: RecipeProps) => {
   const [save, setSave] = useState<string>("SAVE");
-  const [icon, setIcon] = useState(<BsHeart />);
   const [ifSaved, setIfSaved] = useState<boolean>(false);
 
   const handleSave = () => {
     if (!ifSaved) {
       setSave("SAVED");
-      setIcon(<BsHeartFill />);
       setIfSaved(true);
     } else {
       setSave("SAVE");
-      setIcon(<BsHeart />);
       setIfSaved(false);
     }
   };
@@ -50,7 +48,14 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
       <GridItem w="100%">
         <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
         <Center>
-          <Button leftIcon={icon} onClick={handleSave}>
+          <Button
+            leftIcon={
+              <Icon
+                as={ifSaved ? BsHeartFill : BsHeart}
+                color={ifSaved ? "red" : "black"}
+              />
+            }
+            onClick={handleSave}>
             {save}
           </Button>
         </Center>
