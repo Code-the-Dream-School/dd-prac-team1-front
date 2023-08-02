@@ -48,7 +48,7 @@ const Login = () => {
           sessionStorage.setItem("jwtToken", result.data.token);
           navigate("/search-choice",           
             {state: {
-              username: result.data.user.email
+              username: result.data.user.username
             }});
           setEmail("");
           setPassword("");

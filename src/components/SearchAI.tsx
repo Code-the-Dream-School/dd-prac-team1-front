@@ -18,6 +18,7 @@ const SearchAI = () => {
   const [search, setSearch] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [values, setValues] = useState("");
 
   const location = useLocation();
 
@@ -27,11 +28,12 @@ const SearchAI = () => {
     for (let i=0; i<event.length; i++){
       valuesSearch += `${event[i].value} `
     }
-    return valuesSearch;
+    console.log(valuesSearch)
+    setValues(valuesSearch)
   }
 
   const handleSearch = () => {
-    const searchWithOptions = search.concat(" ",valuesSearch)
+    const searchWithOptions = search.concat(" ",values)
     console.log(searchWithOptions)
     searchAI(searchWithOptions)
       .then(response => {
