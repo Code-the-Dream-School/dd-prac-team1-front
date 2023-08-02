@@ -18,24 +18,17 @@ const SearchAI = () => {
   const [search, setSearch] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [values, setValues] = useState("");
-
+  const [values, setValues] = useState<Array<string>>([]);
   const location = useLocation();
 
-  let valuesSearch = "";
-
+  let valuesArray: Array<string> = [];
   const handleSelect = (event: MultiValue<{ label: string; value: string; }>) => {
-    for (let i=0; i<event.length; i++){
-      valuesSearch += `${event[i].value} `
-    }
-    console.log(valuesSearch)
-    setValues(valuesSearch)
+    valuesArray = event.map(item => item.value);
+    setValues(valuesArray);
   }
 
   const handleSearch = () => {
-    const searchWithOptions = search.concat(" ",values)
-    console.log(searchWithOptions)
-    searchAI(searchWithOptions)
+    searchAI(search, values)
       .then(response => {
         console.log(response);
       })
