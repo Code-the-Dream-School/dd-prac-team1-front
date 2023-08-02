@@ -50,11 +50,11 @@ const Register = () => {
       .then(result => {
         if (result.status === 201) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          navigate("/search-choice", 
-          {state: {
-            username: result.data.user.username
-            }}
-          );
+          navigate("/search-choice", {
+            state: {
+              username: result.data.user.username
+            }
+          });
           setName("");
           setEmail("");
           setPassword("");
@@ -162,7 +162,7 @@ const Register = () => {
             )}
             <Center>
               <Button variant="solid" type="submit" title="sign up">
-                Sign Up
+                SIGN UP
               </Button>
             </Center>
           </FormControl>

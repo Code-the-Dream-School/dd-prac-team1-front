@@ -46,10 +46,11 @@ const Login = () => {
       .then(result => {
         if (result.status === 200) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          navigate("/search-choice",           
-            {state: {
+          navigate("/search-choice", {
+            state: {
               username: result.data.user.username
-            }});
+            }
+          });
           setEmail("");
           setPassword("");
         }
@@ -118,7 +119,7 @@ const Login = () => {
           </FormControl>
           <Center>
             <Button variant="solid" type="submit" title="login">
-              Login
+              SIGN IN
             </Button>
           </Center>
         </form>
