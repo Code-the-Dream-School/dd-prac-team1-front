@@ -8,6 +8,8 @@ import {
   Text,
   Button
 } from "@chakra-ui/react";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+
 import { AIRecipe } from "../utils/types";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
@@ -16,7 +18,20 @@ type RecipeProps = { recipe: AIRecipe };
 
 const RecipeAI = ({ recipe }: RecipeProps) => {
   const [save, setSave] = useState<string>("SAVE");
-  const [ifSave, setIfSave] = useState<boolean>(false);
+  const [icon, setIcon] = useState(<BsHeart />);
+  const [ifSaved, setIfSaved] = useState<boolean>(false);
+
+  const handleSave = () => {
+    if (!ifSaved) {
+      setSave("SAVED");
+      setIcon(<BsHeartFill />);
+      setIfSaved(true);
+    } else {
+      setSave("SAVE");
+      setIcon(<BsHeart />);
+      setIfSaved(false);
+    }
+  };
   return (
     <Grid templateColumns="repeat(2, 1fr)" gap={6}>
       <GridItem w="100%">
@@ -35,7 +50,9 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
       <GridItem w="100%">
         <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
         <Center>
-          <Button>{save}</Button>
+          <Button leftIcon={icon} onClick={handleSave}>
+            {save}
+          </Button>
         </Center>
       </GridItem>
     </Grid>
