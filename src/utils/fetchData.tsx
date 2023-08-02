@@ -31,13 +31,12 @@ export const login = (email: string, password: string) => {
   );
 };
 
-export const searchAI = (search: string, selectOptions: Array<string>) => {
+export const searchAI = (searchWithOptions: string) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/ai-recipe",
     {
-      query: search,
-      optionsArray: selectOptions
+      query: searchWithOptions,
     },
     {
       headers: {

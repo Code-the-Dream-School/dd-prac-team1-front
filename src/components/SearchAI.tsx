@@ -18,11 +18,22 @@ const SearchAI = () => {
   const [search, setSearch] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectOptions, setSelectOptions] = useState<string[]>([]);
 
-  
+  const location = useLocation();
+
+  let valuesSearch = "";
+
+  const handleSelect = (event: MultiValue<{ label: string; value: string; }>) => {
+    for (let i=0; i<event.length; i++){
+      valuesSearch += `${event[i].value} `
+    }
+    return valuesSearch;
+  }
+
   const handleSearch = () => {
-    searchAI(search, selectOptions)
+    const searchWithOptions = search.concat(" ",valuesSearch)
+    console.log(searchWithOptions)
+    searchAI(searchWithOptions)
       .then(response => {
         console.log(response);
       })
@@ -36,20 +47,6 @@ const SearchAI = () => {
         } 
       });
   };
-
-  const location = useLocation();
-
-  const handleSelect = (event: MultiValue<{ label: string; value: string; }>) => {
-    const valuesArray: Array<string> = []
-    event.map((item: any)=> {
-        valuesArray.push(item.value)
-        return valuesArray
-      })
-      setSelectOptions(valuesArray)
-      console.log(selectOptions)
-      //first item is an empty array from the initial state,
-      //but we don't need that
-  }
 
   return (
     <Center h="100vh">

@@ -50,7 +50,6 @@ const Register = () => {
       .then(result => {
         if (result.status === 201) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          console.log(result.data.user.username)
           navigate("/search-choice", 
           {state: {
             username: result.data.user.username
