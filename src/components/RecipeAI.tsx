@@ -15,21 +15,21 @@ import { AIRecipe } from "../utils/types";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
 
-type RecipeProps = { recipe: AIRecipe };
+type RecipeProps = {
+  recipe: AIRecipe;
+  handleSaveRecipe: () => void;
+};
 
-const RecipeAI = ({ recipe }: RecipeProps) => {
+const RecipeAI = ({ recipe, handleSaveRecipe }: RecipeProps) => {
   const [save, setSave] = useState<string>("SAVE");
   const [ifSaved, setIfSaved] = useState<boolean>(false);
 
   const handleSave = () => {
-    if (!ifSaved) {
-      setSave("SAVED");
-      setIfSaved(true);
-    } else {
-      setSave("SAVE");
-      setIfSaved(false);
-    }
+    handleSaveRecipe();
+    setSave("SAVED");
+    setIfSaved(true);
   };
+
   return (
     <Grid templateColumns="repeat(2, 1fr)" gap={6}>
       <GridItem w="100%">

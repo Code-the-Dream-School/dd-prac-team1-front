@@ -14,6 +14,7 @@ import { searchAI } from "../utils/fetchData";
 import { MultiValue, Select } from "chakra-react-select";
 import { useLocation } from "react-router-dom";
 import { AIRecipe } from "../utils/types";
+import { saveRecipe } from "../utils/fetchData";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
 
@@ -69,6 +70,16 @@ const SearchAI = () => {
             `${error.response.status} - ${error.response.data.msg}`
           );
         }
+      });
+  };
+  console.log(recipe);
+  const handleSaveRecipe = () => {
+    saveRecipe(recipe)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
       });
   };
 
@@ -130,7 +141,9 @@ const SearchAI = () => {
         {isLoading ? (
           <Loader text="Oliver is cooking your recipe" />
         ) : (
-          recipe.recipeName && <RecipeAI recipe={recipe} />
+          recipe.recipeName && (
+            <RecipeAI recipe={recipe} handleSaveRecipe={handleSaveRecipe} />
+          )
         )}
       </Container>
     </Center>

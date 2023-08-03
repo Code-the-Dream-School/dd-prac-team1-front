@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AIRecipe } from "./types";
 
 export const register = (name: string, email: string, password: string) => {
   return axios.post(
@@ -39,6 +40,22 @@ export const searchAI = (search: string, values: Array<string>) => {
     {
       query: search,
       optionValues: values
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const saveRecipe = (recipe: AIRecipe) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.post(
+    "http://localhost:3000/api/v1/ai-recipe/add",
+    {
+      ...recipe
     },
     {
       headers: {
