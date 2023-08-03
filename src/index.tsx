@@ -8,6 +8,7 @@ import Home from "./components/Home.tsx";
 import Register from "./components/Register.tsx";
 import Login from "./components/Login.tsx";
 import SearchAI from "./components/SearchAI.tsx";
+import SearchChoice from "./components/SearchChoice.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -19,6 +20,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ai-recipe" element={<SearchAI />} />
+        <Route path="/search-choice" element={<SearchChoice />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>

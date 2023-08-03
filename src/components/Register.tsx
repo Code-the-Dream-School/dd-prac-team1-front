@@ -47,10 +47,14 @@ const Register = () => {
 
   const handleRegister = () => {
     register(name, email, password)
-      .then(data => {
-        if (data.status === 201) {
-          sessionStorage.setItem("jwtToken", data.data.token);
-          navigate("/ai-recipe");
+      .then(result => {
+        if (result.status === 201) {
+          sessionStorage.setItem("jwtToken", result.data.token);
+          navigate("/search-choice", 
+          {state: {
+            username: result.data.user.username
+            }}
+          );
           setName("");
           setEmail("");
           setPassword("");
