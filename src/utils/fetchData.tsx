@@ -33,7 +33,7 @@ export const login = (email: string, password: string) => {
 
 export const searchAI = (search: string, values: Array<string>) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
-  console.log(values)
+  console.log(values);
   return axios.post(
     "http://localhost:3000/api/v1/ai-recipe",
     {

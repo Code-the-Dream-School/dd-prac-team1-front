@@ -23,12 +23,14 @@ const SearchAI = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [values, setValues] = useState<Array<string>>([]);
   const [recipe, setRecipe] = useState<AIRecipe>({
+    categories: "",
     cookTimeInMinutes: "",
     image: "",
     ingredients: [],
     instructions: [],
     nutritionInformation: "",
     prepTimeInMinutes: "",
+    recipeComplexityLevel: "",
     recipeName: "",
     servingFor: "",
     specialDiets: [],
