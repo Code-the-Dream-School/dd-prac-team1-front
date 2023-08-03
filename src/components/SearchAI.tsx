@@ -2,8 +2,6 @@ import { useState } from "react";
 import {
   Button,
   Center,
-  CircularProgress,
-  CircularProgressLabel,
   Container,
   Flex,
   FormControl,
@@ -17,6 +15,7 @@ import { MultiValue, Select } from "chakra-react-select";
 import { useLocation } from "react-router-dom";
 import { AIRecipe } from "../utils/types";
 import RecipeAI from "./RecipeAI";
+import Loader from "./Loader";
 
 const SearchAI = () => {
   const [search, setSearch] = useState<string>("");
@@ -127,11 +126,10 @@ const SearchAI = () => {
           </FormControl>
         </form>
         {isLoading ? (
-          <CircularProgress value={59} size="100px" thickness="4px" />
+          <Loader text="Oliver is cooking your recipe" />
         ) : (
           recipe.recipeName && <RecipeAI recipe={recipe} />
         )}
-        <CircularProgress isIndeterminate />
       </Container>
     </Center>
   );
