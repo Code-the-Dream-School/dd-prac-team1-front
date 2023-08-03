@@ -15,6 +15,7 @@ import { MultiValue, Select } from "chakra-react-select";
 import { useLocation } from "react-router-dom";
 import { AIRecipe } from "../utils/types";
 import RecipeAI from "./RecipeAI";
+import Loader from "./Loader";
 
 const SearchAI = () => {
   const [search, setSearch] = useState<string>("");
@@ -34,6 +35,7 @@ const SearchAI = () => {
     tags: [],
     totalTimeInMinutes: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 
   let valuesArray: Array<string> = [];
@@ -49,15 +51,18 @@ const SearchAI = () => {
       .then(response => {
         console.log(response);
         setRecipe(response.data);
+        setIsLoading(false);
       })
       .catch(error => {
         if (error.message.includes("500")) {
           setError(true);
+          setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.error}`
           );
         } else {
           setError(true);
+          setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.msg}`
           );
@@ -73,6 +78,7 @@ const SearchAI = () => {
             e.preventDefault();
             handleSearch();
             setError(false);
+            setIsLoading(true);
           }}>
           <FormControl isInvalid={error}>
             <Flex
@@ -119,7 +125,11 @@ const SearchAI = () => {
             </Flex>
           </FormControl>
         </form>
-        {recipe.recipeName && <RecipeAI recipe={recipe} />}
+        {isLoading ? (
+          <Loader text="Oliver is cooking your recipe" />
+        ) : (
+          recipe.recipeName && <RecipeAI recipe={recipe} />
+        )}
       </Container>
     </Center>
   );
