@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Heading>Welcome to Our App</Heading>
-      <Link as={RouterLink} to="/home">
+      <Link as={RouterLink} to="/">
         HOME
       </Link>
 

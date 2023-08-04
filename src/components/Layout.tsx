@@ -67,10 +67,10 @@ export default function Layout() {
                   variant="outline"
                 /> 
               <HStack as={"nav"} spacing={20} display={{ base: "none", md: "flex" }} justifyContent={"flex-end"}>
-                <NavLink to="/search-choice">ADD RECIPE</NavLink>
-                <NavLink to="/search-choice" >SAVED</NavLink>
-                <NavLink to="/search-choice">MENU</NavLink>
-                <NavLink to="/search-choice">SHOPPING</NavLink>
+                <NavLink to="/app">ADD RECIPE</NavLink>
+                <NavLink to="/app" >SAVED</NavLink>
+                <NavLink to="/app">MENU</NavLink>
+                <NavLink to="/app">SHOPPING</NavLink>
                 <NavLink onClick={handleLogout} to={""}>LOGOUT</NavLink>
               </HStack>
             </HStack>
@@ -80,10 +80,10 @@ export default function Layout() {
         {isOpen ? (
           <Box pb={4} display={{base: "flex", md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              <NavLink to="/search-choice">ADD RECIPE</NavLink>
-              <NavLink to="/search-choice" >SAVED</NavLink>
-              <NavLink to="/search-choice">MENU</NavLink>
-              <NavLink to="/search-choice">SHOPPING</NavLink> 
+              <NavLink to="/app">ADD RECIPE</NavLink>
+              <NavLink to="/app" >SAVED</NavLink>
+              <NavLink to="/app">MENU</NavLink>
+              <NavLink to="/app">SHOPPING</NavLink> 
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
