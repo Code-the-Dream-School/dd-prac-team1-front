@@ -69,7 +69,7 @@ export default function Layout() {
               <HStack as={"nav"} spacing={20} display={{ base: "none", md: "flex" }} justifyContent={"flex-end"}>
                 <NavLink to="/app">ADD RECIPE</NavLink>
                 <NavLink to="/app" >SAVED</NavLink>
-                <NavLink to="/app">MENU</NavLink>
+                <NavLink to="/app">PLANNER</NavLink>
                 <NavLink to="/app">SHOPPING</NavLink>
                 <NavLink onClick={handleLogout} to={""}>LOGOUT</NavLink>
               </HStack>
@@ -82,7 +82,7 @@ export default function Layout() {
             <Stack as={"nav"} spacing={4}>
               <NavLink to="/app">ADD RECIPE</NavLink>
               <NavLink to="/app" >SAVED</NavLink>
-              <NavLink to="/app">MENU</NavLink>
+              <NavLink to="/app">PLANNER</NavLink>
               <NavLink to="/app">SHOPPING</NavLink> 
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
