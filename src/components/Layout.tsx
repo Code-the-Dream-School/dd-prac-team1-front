@@ -24,7 +24,7 @@ export default function Layout() {
     .then(result => {
       if (result.status === 200) {
         console.log(result)
-        sessionStorage.removeItem("jwtToken");
+        sessionStorage.clear();
         navigate("/");
       }
     })
