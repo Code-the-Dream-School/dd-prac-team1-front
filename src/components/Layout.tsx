@@ -8,15 +8,15 @@ import {
   useToast,
   Stack,
   Button,
-//  Input,
-} from "@chakra-ui/react"
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons"
-import { NavLink, Outlet } from "react-router-dom"
+  Input
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../utils/fetchData"
+import { logout } from "../utils/fetchData";
 
 export default function Layout() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const navigate = useNavigate();
 
@@ -24,26 +24,26 @@ export default function Layout() {
 
   const handleLogout = () => {
     logout()
-    .then(result => {
-      if (result.status === 200) {
-        console.log(result)
-        sessionStorage.clear();
-        navigate("/");
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: "Logout failed",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-        position: "top"
+      .then(result => {
+        if (result.status === 200) {
+          console.log(result);
+          sessionStorage.clear();
+          navigate("/");
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: "Logout failed",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top"
+        });
       });
-    });
-  }
-  
+  };
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -55,41 +55,55 @@ export default function Layout() {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack width="95%" display="flex" justifyContent="space-between" ml="1rem" alignItems="center">
+          <HStack
+            width="95%"
+            display="flex"
+            justifyContent="space-between"
+            ml="1rem"
+            alignItems="center">
             <Box>Olivier Logo</Box>
-            <HStack display={{ base: "none", md: "flex" }} justifyContent={"flex-end"} spacing={20}>
-              {/* <Input
-                  size="sm"
-                  width="auto"
-                  type="text"
-                  placeholder="Search a recipe..."
-                  id="search"
-                  variant="outline"
-                /> */}
-              <HStack as={"nav"} spacing={20} display={{ base: "none", md: "flex" }} justifyContent={"flex-end"}>
-                {/* <NavLink to={""}>ADD RECIPE</NavLink>
-                <NavLink to={""} >SAVED</NavLink>
-                <NavLink to={""}>MENU</NavLink>
-                <NavLink to={""}>SHOPPING</NavLink> */}
-                <NavLink onClick={handleLogout} to={""}>LOGOUT</NavLink>
+            <HStack
+              display={{ base: "none", md: "flex" }}
+              justifyContent={"flex-end"}
+              spacing={20}>
+              <Input
+                size="sm"
+                width="auto"
+                type="text"
+                placeholder="Search a recipe..."
+                id="search"
+                variant="outline"
+              />
+              <HStack
+                as={"nav"}
+                spacing={20}
+                display={{ base: "none", md: "flex" }}
+                justifyContent={"flex-end"}>
+                <NavLink to="/search-choice">ADD RECIPE</NavLink>
+                <NavLink to="/saved-recipes">SAVED</NavLink>
+                <NavLink to="/app">PLANNER</NavLink>
+                <NavLink to="/app">SHOPPING</NavLink>
+                <NavLink onClick={handleLogout} to={""}>
+                  LOGOUT
+                </NavLink>
               </HStack>
             </HStack>
           </HStack>
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{base: "flex", md: "none" }}>
+          <Box pb={4} display={{ base: "flex", md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {/* <NavLink to={""}>ADD RECIPE</NavLink>
-              <NavLink to={""} >SAVED</NavLink>
-              <NavLink to={""}>MENU</NavLink>
-              <NavLink to={""}>SHOPPING</NavLink> */}
+              <NavLink to="/search-choice">ADD RECIPE</NavLink>
+              <NavLink to="/saved-recipes">SAVED</NavLink>
+              <NavLink to="/app">PLANNER</NavLink>
+              <NavLink to="/app">SHOPPING</NavLink>
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
         ) : null}
       </Box>
-      <Outlet/>
+      <Outlet />
     </>
-  )
+  );
 }

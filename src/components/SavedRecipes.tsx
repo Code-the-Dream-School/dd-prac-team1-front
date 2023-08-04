@@ -1,15 +1,55 @@
 import React from "react";
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Flex,
+  Grid,
+  GridItem,
+  Text
+} from "@chakra-ui/react";
 
-const SavedRecipe = () => {
+const SavedRecipes = () => {
   return (
-    <Box>
-      <Text> SAVED RECIPES</Text>
-      <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-        <GridItem w="100%"></GridItem>
-        <GridItem w="100%"></GridItem>
+    <Container maxW="6xl">
+      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <GridItem colSpan={1} w="100%" h="100"></GridItem>
+        <GridItem colSpan={2} w="100%" h="100">
+          <Center h="100">
+            <Text fontSize="3xl">SAVED RECIPES</Text>
+          </Center>
+        </GridItem>
       </Grid>
-    </Box>
+      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <GridItem colSpan={1} w="100%">
+          <Center>
+            <Flex flexDirection="column">
+              <Box border="1px" borderBottomStyle="none">
+                <Button height="55px" width="250px" variant="link">
+                  SOUPS
+                </Button>
+              </Box>
+              <Box border="1px" borderBottomStyle="none">
+                <Button height="55px" width="250px" variant="link">
+                  SALADS
+                </Button>
+              </Box>
+              <Box border="1px" borderBottomStyle="none">
+                <Button height="55px" width="250px" variant="link">
+                  DESSERTS
+                </Button>
+              </Box>
+              <Box border="1px">
+                <Button height="55px" width="250px" variant="link">
+                  MAIN DISHES
+                </Button>
+              </Box>
+            </Flex>
+          </Center>
+        </GridItem>
+      </Grid>
+    </Container>
   );
 };
-export default SavedRecipe;
+export default SavedRecipes;

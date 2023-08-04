@@ -12,8 +12,8 @@ function App() {
 
   useEffect(() => {
     getAllData(URL)
-      .then((response) => setMessage(response.data))
-      .catch((error) => {
+      .then(response => setMessage(response.data))
+      .catch(error => {
         setTextColor("red");
         setMessage(error.message);
       });
@@ -26,13 +26,13 @@ function App() {
   return (
     <>
       <Heading>Welcome to Our App</Heading>
-      <Link as={RouterLink} to="/home">
+      <Link as={RouterLink} to="/">
         HOME
       </Link>
 
-      <Text
-        color={textColor}
-      >{`Response from request to ${URL}: ${message}`}</Text>
+      <Text color={textColor}>
+        {`Response from request to ${URL}: ${message}`}
+      </Text>
     </>
   );
 }
