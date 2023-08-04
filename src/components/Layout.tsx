@@ -8,7 +8,7 @@ import {
   useToast,
   Stack,
   Button,
-//  Input,
+  Input,
 } from "@chakra-ui/react"
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons"
 import { NavLink, Outlet } from "react-router-dom"
@@ -58,19 +58,19 @@ export default function Layout() {
           <HStack width="95%" display="flex" justifyContent="space-between" ml="1rem" alignItems="center">
             <Box>Olivier Logo</Box>
             <HStack display={{ base: "none", md: "flex" }} justifyContent={"flex-end"} spacing={20}>
-              {/* <Input
+                <Input
                   size="sm"
                   width="auto"
                   type="text"
                   placeholder="Search a recipe..."
                   id="search"
                   variant="outline"
-                /> */}
+                /> 
               <HStack as={"nav"} spacing={20} display={{ base: "none", md: "flex" }} justifyContent={"flex-end"}>
-                {/* <NavLink to={""}>ADD RECIPE</NavLink>
-                <NavLink to={""} >SAVED</NavLink>
-                <NavLink to={""}>MENU</NavLink>
-                <NavLink to={""}>SHOPPING</NavLink> */}
+                <NavLink to="/search-choice">ADD RECIPE</NavLink>
+                <NavLink to="/search-choice" >SAVED</NavLink>
+                <NavLink to="/search-choice">MENU</NavLink>
+                <NavLink to="/search-choice">SHOPPING</NavLink>
                 <NavLink onClick={handleLogout} to={""}>LOGOUT</NavLink>
               </HStack>
             </HStack>
@@ -80,10 +80,10 @@ export default function Layout() {
         {isOpen ? (
           <Box pb={4} display={{base: "flex", md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {/* <NavLink to={""}>ADD RECIPE</NavLink>
-              <NavLink to={""} >SAVED</NavLink>
-              <NavLink to={""}>MENU</NavLink>
-              <NavLink to={""}>SHOPPING</NavLink> */}
+              <NavLink to="/search-choice">ADD RECIPE</NavLink>
+              <NavLink to="/search-choice" >SAVED</NavLink>
+              <NavLink to="/search-choice">MENU</NavLink>
+              <NavLink to="/search-choice">SHOPPING</NavLink> 
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
