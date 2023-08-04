@@ -5,6 +5,7 @@ import {
   IconButton,
   useDisclosure,
   useColorModeValue,
+  useToast,
   Stack,
   Button,
 //  Input,
@@ -19,6 +20,8 @@ export default function Layout() {
 
   const navigate = useNavigate();
 
+  const toast = useToast();
+
   const handleLogout = () => {
     logout()
     .then(result => {
@@ -30,6 +33,14 @@ export default function Layout() {
     })
     .catch(error => {
       console.log(error);
+      toast({
+        title: "Error",
+        description: "Logout failed",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top"
+      });
     });
   }
   
@@ -82,4 +93,3 @@ export default function Layout() {
     </>
   )
 }
-
