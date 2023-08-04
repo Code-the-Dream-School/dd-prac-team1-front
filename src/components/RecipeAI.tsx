@@ -10,24 +10,29 @@ import {
   Icon
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-
 import { AIRecipe } from "../utils/types";
+import { saveRecipe } from "../utils/fetchData";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
 
 type RecipeProps = {
   recipe: AIRecipe;
-  handleSaveRecipe: () => void;
 };
 
-const RecipeAI = ({ recipe, handleSaveRecipe }: RecipeProps) => {
+const RecipeAI = ({ recipe }: RecipeProps) => {
   const [save, setSave] = useState<string>("SAVE");
   const [ifSaved, setIfSaved] = useState<boolean>(false);
 
-  const handleSave = () => {
-    handleSaveRecipe();
-    setSave("SAVED");
-    setIfSaved(true);
+  const handleSaveRecipe = () => {
+    saveRecipe(recipe)
+      .then(response => {
+        console.log(response.data.data);
+        setSave("SAVED");
+        setIfSaved(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -52,10 +57,10 @@ const RecipeAI = ({ recipe, handleSaveRecipe }: RecipeProps) => {
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "red" : "black"}
+                color={ifSaved ? "white" : ""}
               />
             }
-            onClick={handleSave}>
+            onClick={handleSaveRecipe}>
             {save}
           </Button>
         </Center>

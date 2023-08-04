@@ -12,9 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { searchAI } from "../utils/fetchData";
 import { MultiValue, Select } from "chakra-react-select";
-import { useLocation } from "react-router-dom";
 import { AIRecipe } from "../utils/types";
-import { saveRecipe } from "../utils/fetchData";
+import { useLocation } from "react-router-dom";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
 
@@ -23,21 +22,7 @@ const SearchAI = () => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [values, setValues] = useState<Array<string>>([]);
-  const [recipe, setRecipe] = useState<AIRecipe>({
-    categories: "",
-    cookTimeInMinutes: "",
-    image: "",
-    ingredients: [],
-    instructions: [],
-    nutritionInformation: "",
-    prepTimeInMinutes: "",
-    recipeComplexityLevel: "",
-    recipeName: "",
-    servingFor: "",
-    specialDiets: [],
-    tags: [],
-    totalTimeInMinutes: ""
-  });
+  const [recipe, setRecipe] = useState<AIRecipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 
@@ -63,23 +48,17 @@ const SearchAI = () => {
           setErrorMessage(
             `${error.response.status} - ${error.response.data.error}`
           );
+          setRecipe(null);
+          // setSearch("");
         } else {
           setError(true);
           setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.msg}`
           );
+          setRecipe(null);
+          // setSearch("");
         }
-      });
-  };
-  console.log(recipe);
-  const handleSaveRecipe = () => {
-    saveRecipe(recipe)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
       });
   };
 
@@ -139,11 +118,9 @@ const SearchAI = () => {
           </FormControl>
         </form>
         {isLoading ? (
-          <Loader text="Oliver is cooking your recipe" />
+          <Loader text="Olivier is cooking your recipe" />
         ) : (
-          recipe.recipeName && (
-            <RecipeAI recipe={recipe} handleSaveRecipe={handleSaveRecipe} />
-          )
+          recipe && <RecipeAI recipe={recipe} />
         )}
       </Container>
     </Center>
