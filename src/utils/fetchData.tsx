@@ -32,6 +32,13 @@ export const login = (email: string, password: string) => {
   );
 };
 
+export const logout = () => {
+  return axios.post(
+    "http://localhost:3000/api/v1/auth/logout",
+  );
+};
+
+
 export const searchAI = (search: string, values: Array<string>) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   console.log(values);

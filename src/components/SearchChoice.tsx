@@ -13,7 +13,7 @@ const SearchChoice = () => {
     };
 
     return (
-    <Flex justifyContent={"center"} h="100vh">
+    <Flex justifyContent={"center"} h="80vh">
     <HStack>
         <Card 
             cursor="pointer"
