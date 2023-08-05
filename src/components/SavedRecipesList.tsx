@@ -9,9 +9,7 @@ const SavedRecipesList = ({ recipes }: SavedRecipesProps) => {
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={3}>
       {recipes.map(recipe => (
-        <GridItem w="100%">
-          <SavedRecipesItem key={recipe._id} recipe={recipe} />
-        </GridItem>
+        <SavedRecipesItem key={recipe._id} recipe={recipe} />
       ))}
     </Grid>
   );
