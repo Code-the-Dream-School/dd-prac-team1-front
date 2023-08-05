@@ -26,22 +26,50 @@ const SavedRecipes = () => {
           <Center>
             <Flex flexDirection="column">
               <Box border="1px" borderBottomStyle="none">
-                <Button height="55px" width="250px" variant="link">
+                <Button
+                  height="55px"
+                  width="250px"
+                  variant="link"
+                  _focus={{
+                    fontWeight: "bold",
+                    fontStyle: "italic"
+                  }}>
                   SOUPS
                 </Button>
               </Box>
               <Box border="1px" borderBottomStyle="none">
-                <Button height="55px" width="250px" variant="link">
+                <Button
+                  height="55px"
+                  width="250px"
+                  variant="link"
+                  _focus={{
+                    fontWeight: "bold",
+                    fontStyle: "italic"
+                  }}>
                   SALADS
                 </Button>
               </Box>
               <Box border="1px" borderBottomStyle="none">
-                <Button height="55px" width="250px" variant="link">
+                <Button
+                  height="55px"
+                  width="250px"
+                  variant="link"
+                  _focus={{
+                    fontWeight: "bold",
+                    fontStyle: "italic"
+                  }}>
                   DESSERTS
                 </Button>
               </Box>
               <Box border="1px">
-                <Button height="55px" width="250px" variant="link">
+                <Button
+                  height="55px"
+                  width="250px"
+                  variant="link"
+                  _focus={{
+                    fontWeight: "bold",
+                    fontStyle: "italic"
+                  }}>
                   MAIN DISHES
                 </Button>
               </Box>
