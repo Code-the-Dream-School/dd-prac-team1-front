@@ -1,15 +1,11 @@
 import { Card, CardBody, CardHeader, Flex, HStack, Heading, Text } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchChoice = () => {
     const navigate = useNavigate();
 
-    const location = useLocation();
-
     const navigateToAISearch = () => {
-        navigate("/ai-recipe", {state: {
-            username:location.state.username
-        }})
+        navigate("/ai-recipe");
     };
 
     return (
