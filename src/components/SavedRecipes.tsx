@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  Text
-} from "@chakra-ui/react";
+import { Center, Container, Grid, GridItem, Text } from "@chakra-ui/react";
+import { SavedRecipe } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
+import CategoriesList from "./CategoriesList";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -25,6 +18,17 @@ const SavedRecipes = () => {
       });
   }, []);
 
+  const categories = recipes.reduce(
+    (acc: Array<string>, recipe: SavedRecipe) => {
+      if (!acc.includes(recipe.recipeCategory)) {
+        acc.push(recipe.recipeCategory);
+      }
+      return acc;
+    },
+    []
+  );
+  console.log(categories);
+
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
@@ -37,7 +41,7 @@ const SavedRecipes = () => {
       </Grid>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <GridItem colSpan={1} w="100%">
-          <Flex flexDirection="column">
+          {/* <Flex flexDirection="column">
             <Box border="1px" borderBottomStyle="none">
               <Button
                 height="55px"
@@ -86,7 +90,8 @@ const SavedRecipes = () => {
                 MAIN DISHES
               </Button>
             </Box>
-          </Flex>
+          </Flex> */}
+          <CategoriesList categories={categories} />
         </GridItem>
         <GridItem colSpan={2} w="100%">
           <SavedRecipesList recipes={recipes} />
