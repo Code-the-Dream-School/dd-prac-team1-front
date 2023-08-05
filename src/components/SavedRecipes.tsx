@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -9,8 +9,29 @@ import {
   GridItem,
   Text
 } from "@chakra-ui/react";
+import { getRecipe } from "../utils/fetchData";
 
 const SavedRecipes = () => {
+  const [recipes, setResipes] = useState([]);
+  useEffect(() => {
+    getRecipe()
+      .then(response => {
+        console.log(response.data.recipe);
+        setResipes(response.data.recipe);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  });
+  // getRecipe()
+  //   .then(response => {
+  //     console.log(response.data.recipe);
+  //     setResipes(response.data.recipe);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  console.log(recipes);
   return (
     <Container maxW="6xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
