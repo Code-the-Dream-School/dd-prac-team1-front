@@ -5,12 +5,12 @@ const Home = () => {
   return (
     <>
       <Heading>Home Page</Heading>
-      <Button>
+      <Button type="button" title="navigate to sign in">
         <Link as={RouterLink} to="/login">
           Sign in
         </Link>
       </Button>
-      <Button>
+      <Button type="button" title="navigate to sign up">
         <Link as={RouterLink} to="/register">
           Create an account
         </Link>

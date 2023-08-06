@@ -103,7 +103,12 @@ const Login = () => {
                 }}
               />
               <InputRightElement>
-                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  type="button"
+                  title="show or hide password"
+                  onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
@@ -115,7 +120,7 @@ const Login = () => {
             )}
           </FormControl>
           <Center>
-            <Button variant="solid" type="submit" title="login">
+            <Button variant="solid" type="submit" title="sign in">
               SIGN IN
             </Button>
           </Center>
@@ -123,8 +128,8 @@ const Login = () => {
         <Center>
           <Button
             variant="link"
-            type="button"
             size="xs"
+            type="button"
             title="or create an account"
             onClick={navigateToRegister}>
             <Text as="ins">or create an account</Text>
