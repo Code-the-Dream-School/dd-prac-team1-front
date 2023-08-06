@@ -10,8 +10,6 @@ const CategoriesItem = ({ category }: CategoriesItemProps) => {
         height="55px"
         width="100%"
         variant="link"
-        type="button"
-        title="category"
         _focus={{
           fontWeight: "bold",
           fontStyle: "italic"

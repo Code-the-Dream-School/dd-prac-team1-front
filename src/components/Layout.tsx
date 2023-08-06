@@ -98,9 +98,7 @@ export default function Layout() {
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/app">PLANNER</NavLink>
               <NavLink to="/app">SHOPPING</NavLink>
-              <Button type="button" title="logout" onClick={handleLogout}>
-                LOGOUT
-              </Button>
+              <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
         ) : null}

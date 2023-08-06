@@ -144,12 +144,7 @@ const Register = () => {
                 }}
               />
               <InputRightElement>
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  type="button"
-                  title="show or hide password"
-                  onClick={handleShowPassword}>
+                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
@@ -163,19 +158,14 @@ const Register = () => {
               <FormErrorMessage>{errorPassword}</FormErrorMessage>
             )}
             <Center>
-              <Button variant="solid" type="submit" title="sign up">
+              <Button variant="solid" type="submit">
                 SIGN UP
               </Button>
             </Center>
           </FormControl>
         </form>
         <Center>
-          <Button
-            variant="link"
-            size="xs"
-            type="button"
-            title="or sign in"
-            onClick={navigateToLogin}>
+          <Button variant="link" size="xs" onClick={navigateToLogin}>
             <Text as="ins">or sign in</Text>
           </Button>
         </Center>

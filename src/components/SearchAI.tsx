@@ -105,10 +105,7 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  title="search recipe with AI">
+                <Button variant="solid" type="submit">
                   GENERATE
                 </Button>
               </Center>

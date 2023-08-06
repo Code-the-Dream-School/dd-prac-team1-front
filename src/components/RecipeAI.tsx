@@ -60,8 +60,6 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
                 color={ifSaved ? "white" : ""}
               />
             }
-            type="button"
-            title="save recipe"
             onClick={handleSaveRecipe}>
             {save}
           </Button>
