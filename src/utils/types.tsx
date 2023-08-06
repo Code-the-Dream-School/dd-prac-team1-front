@@ -6,18 +6,18 @@ export type AIIngredient = {
 
 export type AIRecipe = {
   categories: string;
-  cookTimeInMinutes: string;
+  cookTimeInMinutes: number;
   image: string;
   ingredients: Array<AIIngredient>;
   instructions: Array<string>;
-  nutritionInformation: string;
-  prepTimeInMinutes: string;
+  nutritionInformation: Array<number>;
+  prepTimeInMinutes: number;
   recipeComplexityLevel: string;
   recipeName: string;
-  servingFor: string;
+  servingFor: number;
   specialDiets: Array<string>;
   tags: Array<string>;
-  totalTimeInMinutes: string;
+  totalTimeInMinutes: number;
 };
 
 export type SavedIngredient = {
