@@ -144,7 +144,12 @@ const Register = () => {
                 }}
               />
               <InputRightElement>
-                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  type="button"
+                  title="show or hide password"
+                  onClick={handleShowPassword}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
@@ -167,8 +172,8 @@ const Register = () => {
         <Center>
           <Button
             variant="link"
-            type="button"
             size="xs"
+            type="button"
             title="or sign in"
             onClick={navigateToLogin}>
             <Text as="ins">or sign in</Text>
