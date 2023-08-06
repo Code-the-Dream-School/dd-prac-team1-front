@@ -71,7 +71,8 @@ const Login = () => {
   return (
     <Box>
       <Container maxW="xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleLogin();
@@ -119,7 +120,7 @@ const Login = () => {
               SIGN IN
             </Button>
           </Center>
-        </form>
+        </Box>
         <Center>
           <Button variant="link" size="xs" onClick={navigateToRegister}>
             <Text as="ins">or create an account</Text>

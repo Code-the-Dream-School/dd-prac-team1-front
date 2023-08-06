@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Button,
   Center,
   Container,
@@ -64,7 +65,8 @@ const SearchAI = () => {
   return (
     <Center>
       <Container maxW="6xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleSearch();
@@ -111,7 +113,7 @@ const SearchAI = () => {
               </Center>
             </Flex>
           </FormControl>
-        </form>
+        </Box>
         {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (

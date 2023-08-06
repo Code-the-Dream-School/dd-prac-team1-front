@@ -92,7 +92,8 @@ const Register = () => {
   return (
     <Box>
       <Container maxW="xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleRegister();
@@ -163,7 +164,7 @@ const Register = () => {
               </Button>
             </Center>
           </FormControl>
-        </form>
+        </Box>
         <Center>
           <Button variant="link" size="xs" onClick={navigateToLogin}>
             <Text as="ins">or sign in</Text>
