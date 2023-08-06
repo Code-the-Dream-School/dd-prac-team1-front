@@ -7,6 +7,7 @@ type CategoriesProps = { categories: Array<string> };
 const CategoriesList = ({ categories }: CategoriesProps) => {
   return (
     <Flex flexDirection="column">
+      <CategoriesItem category="All recipes" />
       {categories.map(category => (
         <CategoriesItem key={category} category={category} />
       ))}
