@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Button,
   Center,
   Container,
@@ -12,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { searchAI } from "../utils/fetchData";
 import { MultiValue, Select } from "chakra-react-select";
-import { useLocation } from "react-router-dom";
 import { AIRecipe } from "../utils/types";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
@@ -22,21 +22,8 @@ const SearchAI = () => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [values, setValues] = useState<Array<string>>([]);
-  const [recipe, setRecipe] = useState<AIRecipe>({
-    cookTimeInMinutes: "",
-    image: "",
-    ingredients: [],
-    instructions: [],
-    nutritionInformation: "",
-    prepTimeInMinutes: "",
-    recipeName: "",
-    servingFor: "",
-    specialDiets: [],
-    tags: [],
-    totalTimeInMinutes: ""
-  });
+  const [recipe, setRecipe] = useState<AIRecipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
 
   let valuesArray: Array<string> = [];
   const handleSelect = (
@@ -60,20 +47,26 @@ const SearchAI = () => {
           setErrorMessage(
             `${error.response.status} - ${error.response.data.error}`
           );
+          setRecipe(null);
+          // setSearch("");
         } else {
           setError(true);
           setIsLoading(false);
           setErrorMessage(
             `${error.response.status} - ${error.response.data.msg}`
           );
+          setRecipe(null);
+          // setSearch("");
         }
       });
   };
+  const name = sessionStorage.getItem("username");
 
   return (
     <Center>
       <Container maxW="6xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleSearch();
@@ -86,8 +79,7 @@ const SearchAI = () => {
               justifyContent={"space-evenly"}
               h="25vh">
               <FormLabel textAlign="center" htmlFor="searchAI">
-                Hi {location.state.username}, I'm Olivier! Do you want to try a
-                new recipe?
+                Hi {name}, I'm Olivier! Do you want to try a new recipe?
               </FormLabel>
               <Input
                 type="text"
@@ -115,20 +107,17 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  title="search recipe with AI">
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
             </Flex>
           </FormControl>
-        </form>
+        </Box>
         {isLoading ? (
-          <Loader text="Oliver is cooking your recipe" />
+          <Loader text="Olivier is cooking your recipe" />
         ) : (
-          recipe.recipeName && <RecipeAI recipe={recipe} />
+          recipe && <RecipeAI recipe={recipe} />
         )}
       </Container>
     </Center>

@@ -8,7 +8,9 @@ const IngredientList = ({ ingredient }: IngredientProps) => {
   return (
     <UnorderedList>
       <ListItem>
-        {ingredient.quantity} {ingredient.name}
+        {`${ingredient.quantity} ${
+          ingredient.unit !== "unit" ? ingredient.unit : ""
+        } ${ingredient.name}`}
       </ListItem>
     </UnorderedList>
   );
