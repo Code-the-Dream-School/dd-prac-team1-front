@@ -46,11 +46,8 @@ const Login = () => {
       .then(result => {
         if (result.status === 200) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          navigate("/search-choice", {
-            state: {
-              username: result.data.user.username
-            }
-          });
+          sessionStorage.setItem("username", result.data.user.username);
+          navigate("/search-choice")
           setEmail("");
           setPassword("");
         }

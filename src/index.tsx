@@ -9,18 +9,21 @@ import Register from "./components/Register.tsx";
 import Login from "./components/Login.tsx";
 import SearchAI from "./components/SearchAI.tsx";
 import SearchChoice from "./components/SearchChoice.tsx";
+import Layout from "./components/Layout.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <ChakraProvider>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/app" element={<App />} />
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/ai-recipe" element={<SearchAI />} />
-        <Route path="/search-choice" element={<SearchChoice />} />
+        <Route path="/login" element={<Login />} />
+        <Route element={<Layout/>}>
+          <Route path="/search-choice" element={<SearchChoice />} />
+          <Route path="/ai-recipe" element={<SearchAI />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
