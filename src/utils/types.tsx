@@ -26,6 +26,7 @@ export type SavedIngredient = {
   ingredientUnit: string;
   _id: string;
 };
+
 export type RecipeNutritionInfo = {
   NutritionInfoCalories: number;
   NutritionInfoCarbs: number;
