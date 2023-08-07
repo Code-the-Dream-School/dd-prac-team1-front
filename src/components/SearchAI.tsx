@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Button,
   Center,
   Container,
@@ -59,13 +60,15 @@ const SearchAI = () => {
         }
       });
   };
+  const name = sessionStorage.getItem("username");
 
   const name =  sessionStorage.getItem("username");
   
   return (
     <Center>
       <Container maxW="6xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleSearch();
@@ -78,8 +81,7 @@ const SearchAI = () => {
               justifyContent={"space-evenly"}
               h="25vh">
               <FormLabel textAlign="center" htmlFor="searchAI">
-                Hi {name}, I'm Olivier! Do you want to try a
-                new recipe?
+                Hi {name}, I'm Olivier! Do you want to try a new recipe?
               </FormLabel>
               <Input
                 type="text"
@@ -107,16 +109,13 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  title="search recipe with AI">
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
             </Flex>
           </FormControl>
-        </form>
+        </Box>
         {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
