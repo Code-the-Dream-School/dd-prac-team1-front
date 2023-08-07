@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Button,
   Center,
   Container,
@@ -13,7 +14,6 @@ import {
 import { searchAI } from "../utils/fetchData";
 import { MultiValue, Select } from "chakra-react-select";
 import { AIRecipe } from "../utils/types";
-import { useLocation } from "react-router-dom";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
 
@@ -24,7 +24,6 @@ const SearchAI = () => {
   const [values, setValues] = useState<Array<string>>([]);
   const [recipe, setRecipe] = useState<AIRecipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
 
   let valuesArray: Array<string> = [];
   const handleSelect = (
@@ -61,11 +60,13 @@ const SearchAI = () => {
         }
       });
   };
+  const name = sessionStorage.getItem("username");
 
   return (
     <Center>
       <Container maxW="6xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleSearch();
@@ -78,8 +79,7 @@ const SearchAI = () => {
               justifyContent={"space-evenly"}
               h="25vh">
               <FormLabel textAlign="center" htmlFor="searchAI">
-                Hi {location.state.username}, I'm Olivier! Do you want to try a
-                new recipe?
+                Hi {name}, I'm Olivier! Do you want to try a new recipe?
               </FormLabel>
               <Input
                 type="text"
@@ -107,16 +107,13 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  title="search recipe with AI">
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
             </Flex>
           </FormControl>
-        </form>
+        </Box>
         {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
