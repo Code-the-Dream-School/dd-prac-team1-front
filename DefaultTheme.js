@@ -1,24 +1,25 @@
-import { extendTheme } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
-//theme
+//extend the theme
 const theme = extendTheme({
   colors: {
-    transparent: 'transparent',
     black: '#212121',
     white: '#fafafa',
     green: '#d7da5e',
     grey: '#f4f4eb',
     red: '#E53E3E',
+    transparent: 'transparent',
     gray: {
       50: '#f7fafc',
       // ...
       900: '#171923',
     },},
+
   fonts: {
-    body: "system-ui, sans-serif",
-    heading: "Stavok Grotesque, serif",
-    mono: "Poppins, monospace",
+    body: "Poppins, sans-serif",
+    heading: "Stavok Grotesque, sans-serif",
   },
+
   fontSizes: {
     xs: "0.75rem",
     sm: "0.875rem",
@@ -34,6 +35,7 @@ const theme = extendTheme({
     "8xl": "6rem",
     "9xl": "8rem",
   },
+
   fontWeights: {
     hairline: 100,
     thin: 200,
@@ -45,6 +47,7 @@ const theme = extendTheme({
     extrabold: 800,
     black: 900,
   },
+
   lineHeights: {
     normal: "normal",
     none: 1,
@@ -62,6 +65,7 @@ const theme = extendTheme({
     "9": "2.25rem",
     "10": "2.5rem",
   },
+
   letterSpacings: {
     tighter: "-0.05em",
     tight: "-0.025em",
@@ -70,9 +74,7 @@ const theme = extendTheme({
     wider: "0.05em",
     widest: "0.1em",
   },
-});
 
-const spacing = {
   space: {
     px: '1px',
     0.5: '0.125rem',
@@ -108,6 +110,6 @@ const spacing = {
     80: '20rem',
     96: '24rem',
   },
-}
+});
 
-const theme = extendTheme({ ...spacing })
+export default theme;
