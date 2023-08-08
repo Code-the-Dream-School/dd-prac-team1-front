@@ -12,8 +12,8 @@ function App() {
 
   useEffect(() => {
     getAllData(URL)
-      .then((response) => setMessage(response.data))
-      .catch((error) => {
+      .then(response => setMessage(response.data))
+      .catch(error => {
         setTextColor("red");
         setMessage(error.message);
       });
@@ -30,9 +30,9 @@ function App() {
         HOME
       </Link>
 
-      <Text
-        color={textColor}
-      >{`Response from request to ${URL}: ${message}`}</Text>
+      <Text color={textColor}>
+        {`Response from request to ${URL}: ${message}`}
+      </Text>
     </>
   );
 }

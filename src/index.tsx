@@ -9,6 +9,7 @@ import Register from "./components/Register.tsx";
 import Login from "./components/Login.tsx";
 import SearchAI from "./components/SearchAI.tsx";
 import SearchChoice from "./components/SearchChoice.tsx";
+import SavedRecipes from "./components/SavedRecipes.tsx";
 import Layout from "./components/Layout.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
@@ -20,9 +21,10 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route element={<Layout/>}>
+        <Route element={<Layout />}>
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
+          <Route path="/saved-recipes" element={<SavedRecipes />} />
         </Route>
       </Routes>
     </BrowserRouter>
