@@ -62,8 +62,6 @@ const SearchAI = () => {
   };
   const name = sessionStorage.getItem("username");
 
-  const name =  sessionStorage.getItem("username");
-  
   return (
     <Center>
       <Container maxW="6xl">

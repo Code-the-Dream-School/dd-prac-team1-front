@@ -33,11 +33,8 @@ export const login = (email: string, password: string) => {
 };
 
 export const logout = () => {
-  return axios.post(
-    "http://localhost:3000/api/v1/auth/logout",
-  );
+  return axios.post("http://localhost:3000/api/v1/auth/logout");
 };
-
 
 export const searchAI = (search: string, values: Array<string>) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
@@ -70,4 +67,14 @@ export const saveRecipe = (recipe: AIRecipe) => {
       }
     }
   );
+};
+
+export const getRecipe = () => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.get("http://localhost:3000/api/v1/ai-recipe", {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
 };

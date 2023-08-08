@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
-import App from "./App.tsx";
-import Home from "./components/Home.tsx";
-import Register from "./components/Register.tsx";
-import Login from "./components/Login.tsx";
-import SearchAI from "./components/SearchAI.tsx";
-import SearchChoice from "./components/SearchChoice.tsx";
-import SavedRecipes from "./components/SavedRecipes.tsx";
-import Layout from "./components/Layout.tsx";
+import App from "./App";
+import Home from "./components/Home";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import SearchAI from "./components/SearchAI";
+import SearchChoice from "./components/SearchChoice";
+import SavedRecipes from "./components/SavedRecipes";
+import Layout from "./components/Layout";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
