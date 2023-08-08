@@ -1,22 +1,15 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  HStack,
-  Heading,
-  Text
-} from "@chakra-ui/react";
+
+import { Card, CardBody, CardHeader, Flex, HStack, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const SearchChoice = () => {
   const navigate = useNavigate();
+    const navigateToAISearch = () => {
+        navigate("/ai-recipe");
+    };
 
-  const navigateToAISearch = () => {
-    navigate("/ai-recipe");
-  };
+    return (
 
-  return (
     <Flex justifyContent={"center"} h="80vh">
       <HStack>
         <Card cursor="pointer" onClick={navigateToAISearch}>

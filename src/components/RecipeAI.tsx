@@ -60,6 +60,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
                 color={ifSaved ? "white" : ""}
               />
             }
+            isDisabled={ifSaved}
             onClick={handleSaveRecipe}>
             {save}
           </Button>

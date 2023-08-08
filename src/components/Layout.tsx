@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/fetchData";
 
@@ -86,6 +87,7 @@ export default function Layout() {
                 <NavLink onClick={handleLogout} to={""}>
                   LOGOUT
                 </NavLink>
+
               </HStack>
             </HStack>
           </HStack>
@@ -98,6 +100,7 @@ export default function Layout() {
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/app">PLANNER</NavLink>
               <NavLink to="/app">SHOPPING</NavLink>
+
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
