@@ -7,14 +7,13 @@ import {
   useColorModeValue,
   useToast,
   Stack,
-  Button,
-  Input
+  Button
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/fetchData";
+import RecipeSearch from "./RecipeSearch";
 
 export default function Layout() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,14 +66,7 @@ export default function Layout() {
               display={{ base: "none", md: "flex" }}
               justifyContent={"flex-end"}
               spacing={20}>
-              <Input
-                size="sm"
-                width="auto"
-                type="text"
-                placeholder="Search a recipe..."
-                id="search"
-                variant="outline"
-              />
+                <RecipeSearch/>
               <HStack
                 as={"nav"}
                 spacing={20}
@@ -87,7 +79,6 @@ export default function Layout() {
                 <NavLink onClick={handleLogout} to={""}>
                   LOGOUT
                 </NavLink>
-
               </HStack>
             </HStack>
           </HStack>
@@ -100,13 +91,12 @@ export default function Layout() {
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/app">PLANNER</NavLink>
               <NavLink to="/app">SHOPPING</NavLink>
-
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
         ) : null}
       </Box>
-      <Outlet />
+        <Outlet/> 
     </>
   );
 }
