@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App.tsx";
@@ -9,6 +9,7 @@ import Register from "./components/Register.tsx";
 import Login from "./components/Login.tsx";
 import SearchAI from "./components/SearchAI.tsx";
 import SearchChoice from "./components/SearchChoice.tsx";
+import theme from "./CustomTheme.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
