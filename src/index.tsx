@@ -3,12 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
-import App from "./App.tsx";
-import Home from "./components/Home.tsx";
-import Register from "./components/Register.tsx";
-import Login from "./components/Login.tsx";
-import SearchAI from "./components/SearchAI.tsx";
-import SearchChoice from "./components/SearchChoice.tsx";
+import App from "./App";
+import Home from "./components/Home";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import SearchAI from "./components/SearchAI";
+import SearchChoice from "./components/SearchChoice";
+import SavedRecipes from "./components/SavedRecipes";
+import Layout from "./components/Layout";
 import theme from "./CustomTheme.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
@@ -16,12 +18,15 @@ root.render(
   <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/app" element={<App />} />
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/ai-recipe" element={<SearchAI />} />
-        <Route path="/search-choice" element={<SearchChoice />} />
+        <Route path="/login" element={<Login />} />
+        <Route element={<Layout />}>
+          <Route path="/search-choice" element={<SearchChoice />} />
+          <Route path="/ai-recipe" element={<SearchAI />} />
+          <Route path="/saved-recipes" element={<SavedRecipes />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </ChakraProvider>

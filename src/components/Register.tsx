@@ -50,11 +50,8 @@ const Register = () => {
       .then(result => {
         if (result.status === 201) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          navigate("/search-choice", {
-            state: {
-              username: result.data.user.username
-            }
-          });
+          sessionStorage.setItem("username", result.data.user.username);
+          navigate("/search-choice");
           setName("");
           setEmail("");
           setPassword("");
@@ -95,7 +92,8 @@ const Register = () => {
   return (
     <Box>
       <Container maxW="xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleRegister();
@@ -161,19 +159,14 @@ const Register = () => {
               <FormErrorMessage>{errorPassword}</FormErrorMessage>
             )}
             <Center>
-              <Button variant="solid" type="submit" title="sign up">
+              <Button variant="solid" type="submit">
                 SIGN UP
               </Button>
             </Center>
           </FormControl>
-        </form>
+        </Box>
         <Center>
-          <Button
-            variant="link"
-            type="button"
-            size="xs"
-            title="or sign in"
-            onClick={navigateToLogin}>
+          <Button variant="link" size="xs" onClick={navigateToLogin}>
             <Text as="ins">or sign in</Text>
           </Button>
         </Center>

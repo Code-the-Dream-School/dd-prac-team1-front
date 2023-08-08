@@ -46,11 +46,8 @@ const Login = () => {
       .then(result => {
         if (result.status === 200) {
           sessionStorage.setItem("jwtToken", result.data.token);
-          navigate("/search-choice", {
-            state: {
-              username: result.data.user.username
-            }
-          });
+          sessionStorage.setItem("username", result.data.user.username);
+          navigate("/search-choice");
           setEmail("");
           setPassword("");
         }
@@ -74,7 +71,8 @@ const Login = () => {
   return (
     <Box>
       <Container maxW="xl">
-        <form
+        <Box
+          as="form"
           onSubmit={e => {
             e.preventDefault();
             handleLogin();
@@ -118,18 +116,13 @@ const Login = () => {
             )}
           </FormControl>
           <Center>
-            <Button variant="solid" type="submit" title="login">
+            <Button variant="solid" type="submit">
               SIGN IN
             </Button>
           </Center>
-        </form>
+        </Box>
         <Center>
-          <Button
-            variant="link"
-            type="button"
-            size="xs"
-            title="or create an account"
-            onClick={navigateToRegister}>
+          <Button variant="link" size="xs" onClick={navigateToRegister}>
             <Text as="ins">or create an account</Text>
           </Button>
         </Center>
