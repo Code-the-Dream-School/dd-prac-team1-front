@@ -12,7 +12,7 @@ import SearchChoice from "./components/SearchChoice.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
