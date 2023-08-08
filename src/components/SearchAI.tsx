@@ -62,6 +62,8 @@ const SearchAI = () => {
   };
   const name = sessionStorage.getItem("username");
 
+  const name =  sessionStorage.getItem("username");
+  
   return (
     <Center>
       <Container maxW="6xl">
@@ -107,7 +109,7 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button variant="solid" type="submit">
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
