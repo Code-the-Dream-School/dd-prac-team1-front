@@ -1,17 +1,23 @@
-import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import CategoriesItem from "./CategoriesItem";
 
-type CategoriesProps = { categories: Array<string> };
 
-const CategoriesList = ({ categories }: CategoriesProps) => {
+type CategoriesProps = { 
+  categories: Array<string>,
+  chooseCategory: Function,
+  chooseAllCategories: Function
+};
+
+const CategoriesList = ({ categories, chooseCategory, chooseAllCategories }: CategoriesProps) => {
   return (
-    <Flex flexDirection="column">
-      <CategoriesItem category="All recipes" />
-      {categories.map(category => (
-        <CategoriesItem key={category} category={category} />
-      ))}
-    </Flex>
+    <Container>
+      <Flex flexDirection="column">
+        <CategoriesItem handleClick={chooseAllCategories} title="All recipes"/>
+        {categories.map(category => (
+          <CategoriesItem key={category} category={category} title={category} handleClick={chooseCategory} />
+        ))}
+      </Flex>
+    </Container>
   );
 };
 
