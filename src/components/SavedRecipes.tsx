@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Center, Container, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
-import { SavedRecipe } from "../utils/types";
+import {
+  Box,
+  Button,
+  Center,
+  Collapse,
+  Container,
+  Flex,
+  Heading,
+  Grid,
+  GridItem,
+  Icon,
+  Text,
+  useDisclosure
+} from "@chakra-ui/react";
+import { SavedRecipe, RecipeTag } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+  const { isOpen, onToggle } = useDisclosure();
 
   useEffect(() => {
     getRecipe()
@@ -31,13 +46,26 @@ const SavedRecipes = () => {
     []
   );
 
+  const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+    recipe.recipeTags.forEach((tag: RecipeTag) => {
+      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
+        acc.push(tag.tagName);
+      }
+    });
+    return acc;
+  }, []);
+
+  console.log(recipes);
+  console.log(tags);
   const chooseCategory = (category: string) => {
-    const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category)
-    setFilteredRecipes(categorizedRecipes)
+    const categorizedRecipes = recipes.filter(
+      (recipe: SavedRecipe) => recipe.recipeCategory === category
+    );
+    setFilteredRecipes(categorizedRecipes);
   };
 
   const showAllCategories = () => {
-    setFilteredRecipes(recipes)
+    setFilteredRecipes(recipes);
   };
 
   return (
@@ -53,12 +81,31 @@ const SavedRecipes = () => {
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <GridItem colSpan={1} w="100%">
           <Flex flexDirection="column">
-            <CategoriesList categories={categories} chooseCategory={chooseCategory} chooseAllCategories={showAllCategories}/>
+            <CategoriesList
+              categories={categories}
+              chooseCategory={chooseCategory}
+              chooseAllCategories={showAllCategories}
+            />
+          </Flex>
+          <Flex onClick={onToggle} cursor="pointer">
+            <Heading as="h3" size="md" marginBottom="3">
+              Tags
+            </Heading>
+            <Box as="span">
+              <Icon as={ChevronDownIcon} />
+              <Collapse in={isOpen} animateOpacity>
+                {tags.map(tag => (
+                  <Button size="sm" margin="1">
+                    {tag}
+                  </Button>
+                ))}
+              </Collapse>
+            </Box>
           </Flex>
         </GridItem>
         <GridItem colSpan={2} w="100%">
           <SavedRecipesList recipes={filteredRecipes} />
-        </GridItem> 
+        </GridItem>
       </Grid>
     </Container>
   );
