@@ -35,20 +35,36 @@ const SavedRecipes = () => {
         console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
-        if(params) {
+        /*if(params) {
           console.log(recipes)
           //here there are no recipes in the console.log unless we put handleRecipeSearch in the dependancy array
           // but this causes too many renders, every second
           handleRecipeSearch(params)
         } else {
           setSearchParams({search: ""});
-        }
+        }*/
       })
       .catch(error => {
         console.log(error);
       });
-}, [params]);
+}, []);
 
+//the version in which 
+//1) after being redirected from add recipe to savedRecipes the search is not conducted
+//2) the search is not conducted on the first render with params
+//3) sometimes you need to double click the category to make it work - this one is a complete mistery
+useEffect(()=> {
+  if(params) {
+    console.log(recipes) 
+    handleRecipeSearch(params)
+  } else {
+    setSearchParams({search: ""});
+  }
+}, [params])
+
+
+  //when redirected from add recipe, the search is conduncted correctly 
+  //BUT here is the infinite loop!
  /* useEffect(()=> {
     if(params) {
       console.log(recipes) 
@@ -57,8 +73,7 @@ const SavedRecipes = () => {
       setSearchParams({search: ""});
     }
   }, [handleRecipeSearch])*/
-  //when redirected from add recipe, the search is conduncted correctly 
-  //BUT here is the infinite loop!
+
 
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
