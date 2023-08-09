@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Center, Container, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { SavedRecipe } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
@@ -13,8 +13,19 @@ const SavedRecipes = () => {
 
   let params = searchParams.get("search");
 
-  const handleRecipeSearch = (params: string) => {
-    console.log("handleRecipeSearch has run", recipes)
+  useEffect(() => {
+    getRecipe()
+      .then(response => {
+        console.log(response.data.recipe);
+        setRecipes(response.data.recipe);
+        setFilteredRecipes(response.data.recipe);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+}, []);
+
+  const handleRecipeSearch = useCallback((params: string) => {
     const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const search = params.toLowerCase();
         const nameSearch = recipe.recipeName.toLowerCase()
@@ -27,53 +38,15 @@ const SavedRecipes = () => {
         return nameSearch.includes(search) || ingredientSearch.includes(search) || tagSearch.includes(search)
     })
     setFilteredRecipes(searchedRecipes)
-}
+}, [recipes])
 
-  useEffect(() => {
-    getRecipe()
-      .then(response => {
-        console.log(response.data.recipe);
-        setRecipes(response.data.recipe);
-        setFilteredRecipes(response.data.recipe);
-        /*if(params) {
-          console.log(recipes)
-          //here there are no recipes in the console.log unless we put handleRecipeSearch in the dependancy array
-          // but this causes too many renders, every second
-          handleRecipeSearch(params)
-        } else {
-          setSearchParams({search: ""});
-        }*/
-      })
-      .catch(error => {
-        console.log(error);
-      });
-}, []);
-
-//the version in which 
-//1) after being redirected from add recipe to savedRecipes the search is not conducted
-//2) the search is not conducted on the first render with params
-//3) sometimes you need to double click the category to make it work - this one is a complete mistery
-useEffect(()=> {
+  useEffect(()=> {
   if(params) {
-    console.log(recipes) 
     handleRecipeSearch(params)
   } else {
     setSearchParams({search: ""});
   }
-}, [params])
-
-
-  //when redirected from add recipe, the search is conduncted correctly 
-  //BUT here is the infinite loop!
- /* useEffect(()=> {
-    if(params) {
-      console.log(recipes) 
-      handleRecipeSearch(params)
-    } else {
-      setSearchParams({search: ""});
-    }
-  }, [handleRecipeSearch])*/
-
+}, [searchParams, recipes])
 
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
@@ -87,6 +60,8 @@ useEffect(()=> {
 
   const chooseCategory = (category: string) => {
     const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category);
+    console.log(category)
+    console.log(categorizedRecipes)
     setSearchParams({search: category});
     setFilteredRecipes(categorizedRecipes);
   };
