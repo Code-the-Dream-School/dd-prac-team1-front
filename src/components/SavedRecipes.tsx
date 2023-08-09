@@ -97,7 +97,7 @@ const SavedRecipes = () => {
           </GridItem>): (
           <GridItem colSpan={2} w="100%" textAlign="center" alignItems={"center"} h={"10rem"}>
             <Center h="300">
-              <Text fontSize="3xl">Nothing is found</Text>
+              <Text fontSize="3xl">No results for "{params}"</Text>
             </Center>
           </GridItem>
           )
