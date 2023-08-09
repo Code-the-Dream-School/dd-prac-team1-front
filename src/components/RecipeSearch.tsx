@@ -1,6 +1,6 @@
 import { Container, FormControl, Input } from "@chakra-ui/react";
 import { useState } from "react";
-import { useNavigate,useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RecipeSearch = ()=> {
 
@@ -8,19 +8,14 @@ const RecipeSearch = ()=> {
 
     const navigate = useNavigate()
 
-    let [searchParams, setSearchParams] = useSearchParams();
-
     function handleSubmit(event: { preventDefault: () => void; }) {
         event.preventDefault();
-        setSearchParams({search:`${search}`});
-        console.log(searchParams)
-        navigate(`/saved-recipes?search=${searchParams}`)
-        
-        /* THE PART WITH SENDING STATE TO SAVEDRECIPES
-        console.log("I am running in submit")
-        navigate("/saved-recipes", {state: {
-            search:search
-        }})*/
+        if (search) {
+            navigate(`/saved-recipes?search=${search}`)
+            setSearch("")
+        } else {
+            alert('Type')
+        }
     }
 
     return ( 
