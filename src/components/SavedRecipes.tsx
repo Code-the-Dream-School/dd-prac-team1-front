@@ -60,14 +60,10 @@ const SavedRecipes = () => {
 
   const chooseCategory = (category: string) => {
     const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category);
-    console.log(category)
-    console.log(categorizedRecipes)
-    setSearchParams({search: category});
     setFilteredRecipes(categorizedRecipes);
   };
 
   const showAllCategories = () => {
-    setSearchParams({search: ""})
     setFilteredRecipes(recipes)
   };
 
