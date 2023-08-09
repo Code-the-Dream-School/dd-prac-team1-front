@@ -62,11 +62,13 @@ export default function Layout() {
             ml="1rem"
             alignItems="center">
             <Box>Olivier Logo</Box>
+            <HStack>
+              <RecipeSearch/>
+            </HStack>
             <HStack
               display={{ base: "none", md: "flex" }}
               justifyContent={"flex-end"}
               spacing={20}>
-                <RecipeSearch/>
               <HStack
                 as={"nav"}
                 spacing={20}

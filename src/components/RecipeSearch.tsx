@@ -3,18 +3,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RecipeSearch = ()=> {
-
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState("");
 
     const navigate = useNavigate()
 
     function handleSubmit(event: { preventDefault: () => void; }) {
         event.preventDefault();
         if (search) {
-            navigate(`/saved-recipes?search=${search}`)
-            setSearch("")
-        } else {
-            alert('Type')
+            navigate(`/saved-recipes?search=${search}`);
+            setSearch("");
         }
     }
 

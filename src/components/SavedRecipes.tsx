@@ -10,6 +10,7 @@ const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [show, setShow] = useState(true);
 
   let params = searchParams.get("search");
 
@@ -23,30 +24,35 @@ const SavedRecipes = () => {
       .catch(error => {
         console.log(error);
       });
-}, []);
+  }, []);
 
   const handleRecipeSearch = useCallback((params: string) => {
     const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const search = params.toLowerCase();
-        const nameSearch = recipe.recipeName.toLowerCase()
-        const ingredientSearch = recipe.recipeIngredients.map((ingredient: { ingredientName:string }) => {
-            return ingredient.ingredientName.toLowerCase()
+        const nameSearch = recipe.recipeName.toLowerCase();
+        const ingredientSearch = recipe.recipeIngredients.map((ingredient: { ingredientName: string }) => {
+            return ingredient.ingredientName.toLowerCase();
         })
         const tagSearch = recipe.recipeTags.map((tag: { tagName: string; }) => {
             return tag.tagName.toLowerCase();
         })
-        return nameSearch.includes(search) || ingredientSearch.includes(search) || tagSearch.includes(search)
+        return nameSearch.includes(search) || ingredientSearch.includes(search) || tagSearch.includes(search);
     })
-    setFilteredRecipes(searchedRecipes)
-}, [recipes])
+    if (searchedRecipes.length > 0) {
+      setFilteredRecipes(searchedRecipes);
+      setShow(true);
+    } else if (!searchedRecipes.length) {
+      setShow(false);
+    }
+  }, [recipes]);
 
   useEffect(()=> {
   if(params) {
-    handleRecipeSearch(params)
+    handleRecipeSearch(params);
   } else {
     setSearchParams({search: ""});
   }
-}, [searchParams, recipes])
+}, [searchParams, recipes]);
 
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
@@ -60,11 +66,13 @@ const SavedRecipes = () => {
 
   const chooseCategory = (category: string) => {
     const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category);
+    setShow(true);
     setFilteredRecipes(categorizedRecipes);
   };
 
   const showAllCategories = () => {
-    setFilteredRecipes(recipes)
+    setShow(true);
+    setFilteredRecipes(recipes);
   };
 
   return (
@@ -83,9 +91,17 @@ const SavedRecipes = () => {
             <CategoriesList categories={categories} chooseCategory={chooseCategory} chooseAllCategories={showAllCategories}/>
           </Flex>
         </GridItem>
-        <GridItem colSpan={2} w="100%">
-          <SavedRecipesList recipes={filteredRecipes} />
-        </GridItem> 
+        {show ? (
+          <GridItem colSpan={2} w="100%">
+            <SavedRecipesList recipes={filteredRecipes} />
+          </GridItem>): (
+          <GridItem colSpan={2} w="100%" textAlign="center" alignItems={"center"} h={"10rem"}>
+            <Center h="300">
+              <Text fontSize="3xl">Nothing is found</Text>
+            </Center>
+          </GridItem>
+          )
+        }
       </Grid>
     </Container>
   );
