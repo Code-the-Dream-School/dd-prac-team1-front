@@ -79,7 +79,7 @@ export const getRecipe = () => {
   });
 };
 
-export const getSingleRecipe = id => {
+export const getSingleRecipe = (id: string) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get(`http://localhost:3000/api/v1/ai-recipe/saved/${id}`, {
     headers: {
