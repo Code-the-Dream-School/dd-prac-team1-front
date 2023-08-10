@@ -8,9 +8,9 @@ type SingleRecipeTagProps = { tag: RecipeTag };
 const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
   const navigate = useNavigate();
 
-  const navigateToSavedRecipe = () => {
+  const navigateToFilteredTag = () => {
     const filterByTag = `${tag.tagName}`;
-    navigate(`/saved-recipes?filter=${filterByTag}`);
+    navigate(`/saved-recipes?filterTag=${filterByTag}`);
   };
 
   return (
@@ -18,7 +18,7 @@ const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
       size="sm"
       margin="1"
       onClick={() => {
-        navigateToSavedRecipe();
+        navigateToFilteredTag();
       }}>
       {tag.tagName}
     </Button>

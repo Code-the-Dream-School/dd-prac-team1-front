@@ -18,21 +18,35 @@ import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
-  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
   const [activeTag, setActiveTag] = useState("");
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const filteredTag = searchParams.get("filter") as string;
+
+  const filteredTag = searchParams.get("filterTag") as string;
+  console.log(filteredTag);
+  const filteredCategory = searchParams.get("filterCategory") as string;
+  console.log(filteredCategory);
 
   useEffect(() => {
     getRecipe()
       .then(response => {
-        if (searchParams) {
-          setActiveTag(filteredTag);
-        }
         console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
+        if (filteredTag) {
+          setActiveTag(filteredTag);
+        }
+        if (filteredCategory) {
+          setActiveCategory(filteredCategory);
+          setFilteredRecipes(
+            response.data.recipe.filter(
+              (recipe: SavedRecipe) =>
+                recipe.recipeCategory === filteredCategory
+            )
+          );
+        }
       })
       .catch(error => {
         console.log(error);
@@ -56,7 +70,7 @@ const SavedRecipes = () => {
     setFilteredRecipes(categorizedRecipes);
     setActiveCategory(category);
     setActiveTag("");
-    setSearchParams({ filter: category });
+    setSearchParams({ filterCategory: category });
   };
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
@@ -115,7 +129,7 @@ const SavedRecipes = () => {
                   onClick={() => {
                     setActiveTag(tag);
                     setActiveCategory("");
-                    setSearchParams({ filter: tag });
+                    setSearchParams({ filterTag: tag });
                   }}>
                   {tag}
                 </Button>
@@ -125,9 +139,15 @@ const SavedRecipes = () => {
         </GridItem>
         <GridItem colSpan={2} w="100%">
           {activeTag ? (
-            <SavedRecipesList recipes={filteredByTag} />
+            <SavedRecipesList
+              recipes={filteredByTag}
+              // setSearchParams={setSearchParams }
+            />
           ) : (
-            <SavedRecipesList recipes={filteredRecipes} />
+            <SavedRecipesList
+              recipes={filteredRecipes}
+              // setSearchParams={setSearchParams}
+            />
           )}
         </GridItem>
       </Grid>
