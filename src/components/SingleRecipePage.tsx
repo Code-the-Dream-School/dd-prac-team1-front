@@ -68,13 +68,15 @@ const SingleRecipePage = () => {
             </Text>
             <Text as="span">
               <b>Total:</b>&nbsp;
-              {`${
-                recipe.recipePrepTime.recipePrepTimeMinutes +
-                recipe.recipeCookTime.recipeCookTimeMinutes
-              } min`}
+              {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
               &nbsp;&nbsp;
             </Text>
           </Box>
+          <Text>
+            <b>Complexity level:</b>&nbsp;
+            {`${recipe.recipeComplexityLevel}`}
+            &nbsp;&nbsp;
+          </Text>
           <Text>
             <b>Servings:</b>&nbsp;
             {`${recipe.recipeServings}`}

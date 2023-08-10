@@ -18,7 +18,9 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
               src={recipe.recipeImage}
               alt={recipe.recipeName}
             />
-            <Text fontSize="xs">{recipe.recipeName}</Text>
+            <Text fontSize="xs" h="7">
+              {recipe.recipeName}
+            </Text>
           </CardBody>
         </Card>
       </Link>
