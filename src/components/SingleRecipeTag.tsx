@@ -7,8 +7,10 @@ type SingleRecipeTagProps = { tag: RecipeTag };
 
 const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
   const navigate = useNavigate();
+
   const navigateToSavedRecipe = () => {
-    navigate("/saved-recipes");
+    const filterByTag = `${tag.tagName}`;
+    navigate(`/saved-recipes?filter=${filterByTag}`);
   };
 
   return (
@@ -16,7 +18,6 @@ const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
       size="sm"
       margin="1"
       onClick={() => {
-        localStorage.setItem("filteredTag", tag.tagName);
         navigateToSavedRecipe();
       }}>
       {tag.tagName}

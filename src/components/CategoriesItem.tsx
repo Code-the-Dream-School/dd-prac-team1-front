@@ -18,10 +18,11 @@ const CategoriesItem = ({
     <Button
       height="55px"
       width="100%"
-      variant={active ? "solid" : "link"}
+      variant={active ? "solid" : "outline"}
       borderRadius="0"
       border="1px"
       marginTop="-1px"
+      textDecoration="none"
       onClick={() => handleClick(category)}>
       {title}
     </Button>

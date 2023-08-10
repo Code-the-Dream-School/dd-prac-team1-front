@@ -14,19 +14,22 @@ import { SavedRecipe, RecipeTag } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
+import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
   const [activeCategory, setActiveCategory] = useState("");
   const [activeTag, setActiveTag] = useState("");
-  const [activeTagFromRecipe, setActiveTagFromRecipe] = useState(
-    localStorage.getItem("filteredTag")
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filteredTag = searchParams.get("filter") as string;
 
   useEffect(() => {
     getRecipe()
       .then(response => {
+        if (searchParams) {
+          setActiveTag(filteredTag);
+        }
         console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
@@ -53,8 +56,7 @@ const SavedRecipes = () => {
     setFilteredRecipes(categorizedRecipes);
     setActiveCategory(category);
     setActiveTag("");
-    setActiveTagFromRecipe("");
-    localStorage.removeItem("filteredTag");
+    setSearchParams({ filter: category });
   };
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
@@ -65,23 +67,18 @@ const SavedRecipes = () => {
     });
     return acc;
   }, []);
-  const tagClickedInRecipe = localStorage.getItem("filteredTag");
-  console.log(tagClickedInRecipe);
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
-    return recipe.recipeTags.some((tag: RecipeTag) => {
-      if (tag.tagName === activeTag) return tag.tagName;
-      if (tag.tagName === tagClickedInRecipe) return tag.tagName;
-    });
+    return recipe.recipeTags.some(
+      (tag: RecipeTag) => tag.tagName === activeTag
+    );
   });
 
-  console.log(filteredByTag);
   const showAllCategories = () => {
     setFilteredRecipes(recipes);
     setActiveCategory("");
     setActiveTag("");
-    setActiveTagFromRecipe("");
-    localStorage.removeItem("filteredTag");
+    setSearchParams({});
   };
 
   return (
@@ -118,7 +115,7 @@ const SavedRecipes = () => {
                   onClick={() => {
                     setActiveTag(tag);
                     setActiveCategory("");
-                    localStorage.removeItem("filteredTag");
+                    setSearchParams({ filter: tag });
                   }}>
                   {tag}
                 </Button>
@@ -127,9 +124,7 @@ const SavedRecipes = () => {
           </Flex>
         </GridItem>
         <GridItem colSpan={2} w="100%">
-          {activeTagFromRecipe ? (
-            <SavedRecipesList recipes={filteredByTag} />
-          ) : activeTag ? (
+          {activeTag ? (
             <SavedRecipesList recipes={filteredByTag} />
           ) : (
             <SavedRecipesList recipes={filteredRecipes} />
