@@ -20,6 +20,9 @@ const SavedRecipes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
   const [activeCategory, setActiveCategory] = useState("");
   const [activeTag, setActiveTag] = useState("");
+  const [activeTagFromRecipe, setActiveTagFromRecipe] = useState(
+    localStorage.getItem("filteredTag")
+  );
 
   useEffect(() => {
     getRecipe()
@@ -50,6 +53,8 @@ const SavedRecipes = () => {
     setFilteredRecipes(categorizedRecipes);
     setActiveCategory(category);
     setActiveTag("");
+    setActiveTagFromRecipe("");
+    localStorage.removeItem("filteredTag");
   };
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
@@ -60,17 +65,23 @@ const SavedRecipes = () => {
     });
     return acc;
   }, []);
+  const tagClickedInRecipe = localStorage.getItem("filteredTag");
+  console.log(tagClickedInRecipe);
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
     return recipe.recipeTags.some((tag: RecipeTag) => {
-      return tag.tagName === activeTag;
+      if (tag.tagName === activeTag) return tag.tagName;
+      if (tag.tagName === tagClickedInRecipe) return tag.tagName;
     });
   });
 
+  console.log(filteredByTag);
   const showAllCategories = () => {
     setFilteredRecipes(recipes);
     setActiveCategory("");
     setActiveTag("");
+    setActiveTagFromRecipe("");
+    localStorage.removeItem("filteredTag");
   };
 
   return (
@@ -107,6 +118,7 @@ const SavedRecipes = () => {
                   onClick={() => {
                     setActiveTag(tag);
                     setActiveCategory("");
+                    localStorage.removeItem("filteredTag");
                   }}>
                   {tag}
                 </Button>
@@ -115,7 +127,9 @@ const SavedRecipes = () => {
           </Flex>
         </GridItem>
         <GridItem colSpan={2} w="100%">
-          {activeTag ? (
+          {activeTagFromRecipe ? (
+            <SavedRecipesList recipes={filteredByTag} />
+          ) : activeTag ? (
             <SavedRecipesList recipes={filteredByTag} />
           ) : (
             <SavedRecipesList recipes={filteredRecipes} />
