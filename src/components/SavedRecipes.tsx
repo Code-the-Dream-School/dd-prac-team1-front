@@ -3,26 +3,23 @@ import {
   Box,
   Button,
   Center,
-  Collapse,
   Container,
   Flex,
   Heading,
   Grid,
   GridItem,
-  Icon,
-  Text,
-  useDisclosure
+  Text
 } from "@chakra-ui/react";
 import { SavedRecipe, RecipeTag } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
-  const { isOpen, onToggle } = useDisclosure();
+  const [activeCategory, setActiveCategory] = useState("");
+  const [activeTag, setActiveTag] = useState("");
 
   useEffect(() => {
     getRecipe()
@@ -46,6 +43,15 @@ const SavedRecipes = () => {
     []
   );
 
+  const chooseCategory = (category: string) => {
+    const categorizedRecipes = recipes.filter(
+      (recipe: SavedRecipe) => recipe.recipeCategory === category
+    );
+    setFilteredRecipes(categorizedRecipes);
+    setActiveCategory(category);
+    setActiveTag("");
+  };
+
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeTags.forEach((tag: RecipeTag) => {
       if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
@@ -55,17 +61,16 @@ const SavedRecipes = () => {
     return acc;
   }, []);
 
-  console.log(recipes);
-  console.log(tags);
-  const chooseCategory = (category: string) => {
-    const categorizedRecipes = recipes.filter(
-      (recipe: SavedRecipe) => recipe.recipeCategory === category
-    );
-    setFilteredRecipes(categorizedRecipes);
-  };
+  const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
+    return recipe.recipeTags.some((tag: RecipeTag) => {
+      return tag.tagName === activeTag;
+    });
+  });
 
   const showAllCategories = () => {
     setFilteredRecipes(recipes);
+    setActiveCategory("");
+    setActiveTag("");
   };
 
   return (
@@ -85,26 +90,36 @@ const SavedRecipes = () => {
               categories={categories}
               chooseCategory={chooseCategory}
               chooseAllCategories={showAllCategories}
+              activeCategory={activeCategory}
             />
           </Flex>
-          <Flex onClick={onToggle} cursor="pointer">
+          <Flex flexDirection="column" marginTop="5">
             <Heading as="h3" size="md" marginBottom="3">
               Tags
             </Heading>
             <Box as="span">
-              <Icon as={ChevronDownIcon} />
-              <Collapse in={isOpen} animateOpacity>
-                {tags.map(tag => (
-                  <Button size="sm" margin="1">
-                    {tag}
-                  </Button>
-                ))}
-              </Collapse>
+              {tags.map(tag => (
+                <Button
+                  size="sm"
+                  variant={activeTag === tag ? "solid" : "outline"}
+                  margin="1"
+                  key={tag}
+                  onClick={() => {
+                    setActiveTag(tag);
+                    setActiveCategory("");
+                  }}>
+                  {tag}
+                </Button>
+              ))}
             </Box>
           </Flex>
         </GridItem>
         <GridItem colSpan={2} w="100%">
-          <SavedRecipesList recipes={filteredRecipes} />
+          {activeTag ? (
+            <SavedRecipesList recipes={filteredByTag} />
+          ) : (
+            <SavedRecipesList recipes={filteredRecipes} />
+          )}
         </GridItem>
       </Grid>
     </Container>
