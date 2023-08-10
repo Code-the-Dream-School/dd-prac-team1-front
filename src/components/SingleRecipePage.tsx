@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../utils/types";
 import { getSingleRecipe } from "../utils/fetchData";
 import { ArrowBackIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -28,6 +28,8 @@ const SingleRecipePage = () => {
   const { slug } = useParams();
   const id = slug;
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (id === undefined) return;
     getSingleRecipe(id)
@@ -39,8 +41,12 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   }, [id]);
-  if (recipe === undefined) return;
+  const print = () => {
+    window.print();
+  };
 
+  if (recipe === undefined) return;
+  console.log(print);
   return (
     <Container maxW="5xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
@@ -52,6 +58,9 @@ const SingleRecipePage = () => {
               aria-label="on the previous page"
               icon={<ArrowBackIcon />}
               title="on the previous page"
+              onClick={() => {
+                navigate("/saved-recipes");
+              }}
             />
             <Heading size="lg">{recipe.recipeName.toUpperCase()}</Heading>
           </Flex>
@@ -128,6 +137,7 @@ const SingleRecipePage = () => {
               aria-label="Print recipe"
               icon={<TfiPrinter />}
               title="print"
+              onClick={print}
             />
           </Flex>
         </GridItem>
