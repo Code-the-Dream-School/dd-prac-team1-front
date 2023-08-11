@@ -178,9 +178,9 @@ const SingleRecipePage = () => {
                     content: recipe.recipeNutritionInfo.NutritionInfoFat,
                     unit: "g"
                   }
-                ].map(({ displayName, content, unit }) => {
+                ].map(({ displayName, content, unit }, index) => {
                   return (
-                    <Text as="span">
+                    <Text as="span" key={index}>
                       <b>{displayName}:</b> {content}
                       {unit}&nbsp;
                     </Text>
