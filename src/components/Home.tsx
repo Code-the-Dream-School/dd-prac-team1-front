@@ -1,26 +1,14 @@
 import {
-  Box,
   Button,
-  Container,
-  HStack,
   Heading,
   Image,
   Link,
   Grid,
   GridItem,
   Center,
-  Text,
-  Card,
-  CardBody,
   Flex
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { FaFacebookF, FaTwitter } from "react-icons/fa";
-import { BsInstagram } from "react-icons/bs";
-const params = {
-  iconSize: "30",
-  iconSpacing: "10px"
-};
 
 const Home = () => {
   return (
