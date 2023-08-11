@@ -34,6 +34,11 @@ export type RecipeNutritionInfo = {
   NutritionInfoProtein: number;
 };
 
+export type RecipeTag = {
+  tagName: string;
+  _id: string;
+};
+
 export type SavedRecipe = {
   createdAt: string;
   recipeCategory: string;
@@ -48,7 +53,7 @@ export type SavedRecipe = {
   recipePrepTime: { recipePrepTimeMinutes: number };
   recipeServings: number;
   recipeSpecialDiets: Array<string>;
-  recipeTags: { tagName: string; _id: string };
+  recipeTags: Array<RecipeTag>;
   recipeTotalTime: { recipeTotalTimeMinutes: number };
   updatedAt: string;
   __v: number;
