@@ -32,11 +32,11 @@ const SavedRecipes = () => {
     const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const searchQueryParamParsed = searchQueryParam.toLowerCase();
         const nameSearch = recipe.recipeName.toLowerCase();
-        const ingredientSearch = recipe.recipeIngredients.map((ingredient: { ingredientName: string }) => {
-            return ingredient.ingredientName.toLowerCase();
+        const ingredientSearch = recipe.recipeIngredients.map(ingredient => {
+          return ingredient.ingredientName.toLowerCase();
         })
-        const tagSearch = recipe.recipeTags.map((tag: { tagName: string; }) => {
-            return tag.tagName.toLowerCase();
+        const tagSearch = recipe.recipeTags.map(tag=> {
+          return tag.tagName.toLowerCase();
         })
         return nameSearch.includes(searchQueryParamParsed) || ingredientSearch.includes(searchQueryParamParsed) || tagSearch.includes(searchQueryParamParsed);
     })

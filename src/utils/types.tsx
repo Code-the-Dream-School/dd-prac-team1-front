@@ -48,9 +48,7 @@ export type SavedRecipe = {
   recipePrepTime: { recipePrepTimeMinutes: number };
   recipeServings: number;
   recipeSpecialDiets: Array<string>;
-  recipeTags: {
-    map: any; tagName: string; _id: string 
-};
+  recipeTags: Array<{ tagName: string }>;
   recipeTotalTime: { recipeTotalTimeMinutes: number };
   updatedAt: string;
   __v: number;
