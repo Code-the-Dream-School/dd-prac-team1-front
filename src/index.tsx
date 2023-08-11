@@ -12,6 +12,7 @@ import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import Footer from "./components/Footer";
+import OurTeam from "./components/OurTeam";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -22,16 +23,15 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/team" element={<OurTeam />} />
         <Route element={<Layout />}>
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
         </Route>
-        <Route element={<Footer />}>
-          {/* <Route path="/our-team" element={<OurTeam />} /> */}
-        </Route>   
       </Routes>
-    </BrowserRouter>
+      <Footer/>
+     </BrowserRouter>
   </ChakraProvider>
 );
 
