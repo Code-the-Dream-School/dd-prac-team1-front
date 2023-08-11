@@ -15,22 +15,16 @@ import { getRecipe } from "../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
 import { useSearchParams } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [show, setShow] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const searchQueryParam = searchParams.get("search");
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
   const [activeTag, setActiveTag] = useState("");
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  const [show, setShow] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const searchQueryParam = searchParams.get("search");
   const filteredTag = searchParams.get("filterTag") as string;
   const filteredCategory = searchParams.get("filterCategory") as string;
 
@@ -89,9 +83,10 @@ const SavedRecipes = () => {
   useEffect(() => {
     if (searchQueryParam) {
       handleRecipeSearch(searchQueryParam);
-    } else {
-      setSearchParams({ search: "" });
     }
+    // else {
+    //   setSearchParams({ search: "" });
+    // }
   }, [searchQueryParam, recipes, handleRecipeSearch, setSearchParams]);
 
   const categories = recipes.reduce(
@@ -182,7 +177,17 @@ const SavedRecipes = () => {
         </GridItem>
         {show || isLoading ? (
           <GridItem colSpan={2} w="100%">
-            <SavedRecipesList recipes={filteredRecipes} />
+            {activeTag ? (
+              <SavedRecipesList
+                recipes={filteredByTag}
+                // setSearchParams={setSearchParams }
+              />
+            ) : (
+              <SavedRecipesList
+                recipes={filteredRecipes}
+                // setSearchParams={setSearchParams}
+              />
+            )}
           </GridItem>
         ) : (
           <GridItem
@@ -196,19 +201,6 @@ const SavedRecipes = () => {
             </Center>
           </GridItem>
         )}
-        <GridItem colSpan={2} w="100%">
-          {activeTag ? (
-            <SavedRecipesList
-              recipes={filteredByTag}
-              // setSearchParams={setSearchParams }
-            />
-          ) : (
-            <SavedRecipesList
-              recipes={filteredRecipes}
-              // setSearchParams={setSearchParams}
-            />
-          )}
-        </GridItem>
       </Grid>
     </Container>
   );

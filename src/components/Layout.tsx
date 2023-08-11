@@ -7,8 +7,7 @@ import {
   useColorModeValue,
   useToast,
   Stack,
-  Button,
-  Input
+  Button
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
