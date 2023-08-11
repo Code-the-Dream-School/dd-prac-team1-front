@@ -11,8 +11,9 @@ const SavedRecipes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [show, setShow] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  let params = searchParams.get("search");
+  const searchQueryParam = searchParams.get("search");
 
   useEffect(() => {
     getRecipe()
@@ -20,15 +21,16 @@ const SavedRecipes = () => {
         console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
 
-  const handleRecipeSearch = useCallback((params: string) => {
+  const handleRecipeSearch = useCallback((searchQueryParam: string) => {
     const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
-        const search = params.toLowerCase();
+        const searchQueryParamParsed = searchQueryParam.toLowerCase();
         const nameSearch = recipe.recipeName.toLowerCase();
         const ingredientSearch = recipe.recipeIngredients.map((ingredient: { ingredientName: string }) => {
             return ingredient.ingredientName.toLowerCase();
@@ -36,7 +38,7 @@ const SavedRecipes = () => {
         const tagSearch = recipe.recipeTags.map((tag: { tagName: string; }) => {
             return tag.tagName.toLowerCase();
         })
-        return nameSearch.includes(search) || ingredientSearch.includes(search) || tagSearch.includes(search);
+        return nameSearch.includes(searchQueryParamParsed) || ingredientSearch.includes(searchQueryParamParsed) || tagSearch.includes(searchQueryParamParsed);
     })
     if (searchedRecipes.length > 0) {
       setFilteredRecipes(searchedRecipes);
@@ -47,12 +49,12 @@ const SavedRecipes = () => {
   }, [recipes]);
 
   useEffect(()=> {
-  if(params) {
-    handleRecipeSearch(params);
-  } else {
-    setSearchParams({search: ""});
-  }
-}, [searchParams, recipes]);
+    if(searchQueryParam) {
+      handleRecipeSearch(searchQueryParam);
+    } else {
+      setSearchParams({search: ""});
+    }
+  }, [searchQueryParam, recipes, handleRecipeSearch, setSearchParams]);
 
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
@@ -91,13 +93,13 @@ const SavedRecipes = () => {
             <CategoriesList categories={categories} chooseCategory={chooseCategory} chooseAllCategories={showAllCategories}/>
           </Flex>
         </GridItem>
-        {show ? (
+        {show || isLoading? (
           <GridItem colSpan={2} w="100%">
             <SavedRecipesList recipes={filteredRecipes} />
           </GridItem>): (
           <GridItem colSpan={2} w="100%" textAlign="center" alignItems={"center"} h={"10rem"}>
             <Center h="300">
-              <Text fontSize="3xl">No results for "{params}"</Text>
+              <Text fontSize="3xl">No results for "{searchQueryParam}"</Text>
             </Center>
           </GridItem>
           )
