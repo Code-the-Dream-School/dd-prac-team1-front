@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Center, Container, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { SavedRecipe } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
+import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
-  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [show, setShow] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const searchQueryParam = searchParams.get("search");
 
   useEffect(() => {
     getRecipe()
@@ -15,11 +21,40 @@ const SavedRecipes = () => {
         console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+
+  const handleRecipeSearch = useCallback((searchQueryParam: string) => {
+    const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
+        const searchQueryParamParsed = searchQueryParam.toLowerCase();
+        const nameSearch = recipe.recipeName.toLowerCase();
+        const ingredientSearch = recipe.recipeIngredients.map(ingredient => {
+          return ingredient.ingredientName.toLowerCase();
+        })
+        const tagSearch = recipe.recipeTags.map(tag=> {
+          return tag.tagName.toLowerCase();
+        })
+        return nameSearch.includes(searchQueryParamParsed) || ingredientSearch.includes(searchQueryParamParsed) || tagSearch.includes(searchQueryParamParsed);
+    })
+    if (searchedRecipes.length > 0) {
+      setFilteredRecipes(searchedRecipes);
+      setShow(true);
+    } else if (!searchedRecipes.length) {
+      setShow(false);
+    }
+  }, [recipes]);
+
+  useEffect(()=> {
+    if(searchQueryParam) {
+      handleRecipeSearch(searchQueryParam);
+    } else {
+      setSearchParams({search: ""});
+    }
+  }, [searchQueryParam, recipes, handleRecipeSearch, setSearchParams]);
 
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
@@ -32,12 +67,14 @@ const SavedRecipes = () => {
   );
 
   const chooseCategory = (category: string) => {
-    const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category)
-    setFilteredRecipes(categorizedRecipes)
+    const categorizedRecipes = recipes.filter((recipe: SavedRecipe)=> recipe.recipeCategory === category);
+    setShow(true);
+    setFilteredRecipes(categorizedRecipes);
   };
 
   const showAllCategories = () => {
-    setFilteredRecipes(recipes)
+    setShow(true);
+    setFilteredRecipes(recipes);
   };
 
   return (
@@ -56,11 +93,20 @@ const SavedRecipes = () => {
             <CategoriesList categories={categories} chooseCategory={chooseCategory} chooseAllCategories={showAllCategories}/>
           </Flex>
         </GridItem>
-        <GridItem colSpan={2} w="100%">
-          <SavedRecipesList recipes={filteredRecipes} />
-        </GridItem> 
+        {show || isLoading? (
+          <GridItem colSpan={2} w="100%">
+            <SavedRecipesList recipes={filteredRecipes} />
+          </GridItem>): (
+          <GridItem colSpan={2} w="100%" textAlign="center" alignItems={"center"} h={"10rem"}>
+            <Center h="300">
+              <Text fontSize="3xl">No results for "{searchQueryParam}"</Text>
+            </Center>
+          </GridItem>
+          )
+        }
       </Grid>
     </Container>
   );
 };
 export default SavedRecipes;
+
