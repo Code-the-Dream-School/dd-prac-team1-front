@@ -25,14 +25,11 @@ const SavedRecipes = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filteredTag = searchParams.get("filterTag") as string;
-  console.log(filteredTag);
   const filteredCategory = searchParams.get("filterCategory") as string;
-  console.log(filteredCategory);
 
   useEffect(() => {
     getRecipe()
       .then(response => {
-        console.log(response.data.recipe);
         setRecipes(response.data.recipe);
         setFilteredRecipes(response.data.recipe);
         if (filteredTag) {

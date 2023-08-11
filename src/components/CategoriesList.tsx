@@ -14,7 +14,6 @@ const CategoriesList = ({
   chooseAllCategories,
   activeCategory
 }: CategoriesProps) => {
-  console.log(activeCategory);
   return (
     <Flex flexDirection="column">
       <CategoriesItem
