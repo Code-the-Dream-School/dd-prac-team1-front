@@ -11,6 +11,7 @@ import SearchAI from "./components/SearchAI";
 import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
+import SingleRecipePage from "./components/SingleRecipePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -25,6 +26,7 @@ root.render(
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
+          <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

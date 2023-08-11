@@ -34,6 +34,11 @@ export type RecipeNutritionInfo = {
   NutritionInfoProtein: number;
 };
 
+export type RecipeTag = {
+  tagName: string;
+  _id: string;
+};
+
 export type SavedRecipe = {
   createdAt: string;
   recipeCategory: string;
