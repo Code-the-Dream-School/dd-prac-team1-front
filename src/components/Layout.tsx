@@ -76,8 +76,8 @@ export default function Layout() {
                 justifyContent={"flex-end"}>
                 <NavLink to="/search-choice">ADD RECIPE</NavLink>
                 <NavLink to="/saved-recipes">SAVED</NavLink>
-                <NavLink to="/app">PLANNER</NavLink>
-                <NavLink to="/app">SHOPPING</NavLink>
+                <NavLink to="/planner">PLANNER</NavLink>
+                <NavLink to="/shopping-list">SHOPPING</NavLink>
                 <NavLink onClick={handleLogout} to={""}>
                   LOGOUT
                 </NavLink>
