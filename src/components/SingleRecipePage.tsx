@@ -26,11 +26,11 @@ import SingleRecipeTag from "./SingleRecipeTag";
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe>();
   const { slug } = useParams();
-  const id = slug;
+  const recipeId = slug;
   const { isOpen, onToggle } = useDisclosure();
   useEffect(() => {
-    if (id === undefined) return;
-    getSingleRecipe(id)
+    if (recipeId === undefined) return;
+    getSingleRecipe(recipeId)
       .then(response => {
         console.log(response.data);
         setRecipe(response.data);
@@ -38,7 +38,7 @@ const SingleRecipePage = () => {
       .catch(error => {
         console.log(error);
       });
-  }, [id]);
+  }, [recipeId]);
   if (recipe === undefined) return;
 
   return (
