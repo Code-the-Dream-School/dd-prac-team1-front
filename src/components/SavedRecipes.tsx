@@ -31,8 +31,9 @@ const SavedRecipes = () => {
   useEffect(() => {
     getRecipe()
       .then(response => {
-        setRecipes(response.data.recipe);
-        setFilteredRecipes(response.data.recipe);
+        console.log(response.data.recipes);
+        setRecipes(response.data.recipes);
+        setFilteredRecipes(response.data.recipes);
         setIsLoading(false);
         if (filteredTag) {
           setActiveTag(filteredTag);
@@ -56,10 +57,15 @@ const SavedRecipes = () => {
   const handleRecipeSearch = useCallback(
     (searchQueryParam: string) => {
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
+  const handleRecipeSearch = useCallback(
+    (searchQueryParam: string) => {
+      const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const searchQueryParamParsed = searchQueryParam.toLowerCase();
         const nameSearch = recipe.recipeName.toLowerCase();
         const ingredientSearch = recipe.recipeIngredients.map(ingredient => {
           return ingredient.ingredientName.toLowerCase();
+        });
+        const tagSearch = recipe.recipeTags.map(tag => {
         });
         const tagSearch = recipe.recipeTags.map(tag => {
           return tag.tagName.toLowerCase();
@@ -79,7 +85,25 @@ const SavedRecipes = () => {
     },
     [recipes]
   );
+        });
+        return (
+          nameSearch.includes(searchQueryParamParsed) ||
+          ingredientSearch.includes(searchQueryParamParsed) ||
+          tagSearch.includes(searchQueryParamParsed)
+        );
+      });
+      if (searchedRecipes.length > 0) {
+        setFilteredRecipes(searchedRecipes);
+        setShow(true);
+      } else if (!searchedRecipes.length) {
+        setShow(false);
+      }
+    },
+    [recipes]
+  );
 
+  useEffect(() => {
+    if (searchQueryParam) {
   useEffect(() => {
     if (searchQueryParam) {
       handleRecipeSearch(searchQueryParam);
@@ -100,6 +124,9 @@ const SavedRecipes = () => {
   );
 
   const chooseCategory = (category: string) => {
+    const categorizedRecipes = recipes.filter(
+      (recipe: SavedRecipe) => recipe.recipeCategory === category
+    );
     const categorizedRecipes = recipes.filter(
       (recipe: SavedRecipe) => recipe.recipeCategory === category
     );
@@ -176,6 +203,7 @@ const SavedRecipes = () => {
           </Flex>
         </GridItem>
         {show || isLoading ? (
+        {show || isLoading ? (
           <GridItem colSpan={2} w="100%">
             {activeTag ? (
               <SavedRecipesList
@@ -200,6 +228,7 @@ const SavedRecipes = () => {
               <Text fontSize="3xl">No results for "{searchQueryParam}"</Text>
             </Center>
           </GridItem>
+        )}
         )}
       </Grid>
     </Container>

@@ -32,28 +32,28 @@ const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe>();
   const [showConfirm, setShowConfirm] = useState(false);
   const { slug } = useParams();
-  const id = slug;
+  const recipeId = slug;
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id === undefined) return;
-    getSingleRecipe(id)
+    if (recipeId === undefined) return;
+    getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
       })
       .catch(error => {
         console.log(error);
       });
-  }, [id]);
+  }, [recipeId]);
 
   const print = () => {
     window.print();
   };
 
   const deleteRecipe = () => {
-    if (id === undefined) return;
-    deleteSingleRecipe(id)
+    if (recipeId === undefined) return;
+    deleteSingleRecipe(recipeId)
       .then(response => {
         navigate("/saved-recipes");
       })
