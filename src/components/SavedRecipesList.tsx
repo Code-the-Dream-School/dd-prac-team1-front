@@ -5,21 +5,13 @@ import SavedRecipesItem from "./SavedRecipesItem";
 
 type SavedRecipesProps = {
   recipes: Array<SavedRecipe>;
-  // setSearchParams: Function;
 };
 
-const SavedRecipesList = ({
-  recipes
-}: // setSearchParams
-SavedRecipesProps) => {
+const SavedRecipesList = ({ recipes }: SavedRecipesProps) => {
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={3}>
       {recipes.map(recipe => (
-        <SavedRecipesItem
-          key={recipe._id}
-          recipe={recipe}
-          // setSearchParams={setSearchParams}
-        />
+        <SavedRecipesItem key={recipe._id} recipe={recipe} />
       ))}
     </Grid>
   );
