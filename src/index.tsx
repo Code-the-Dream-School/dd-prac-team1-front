@@ -31,7 +31,7 @@ root.render(
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
           <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
-          <Route path="/edit" element={<EditRecipe />} />
+          <Route path="/edit/:slug" element={<EditRecipe />} />
           <Route path="/planner" element={<Planner />} />
           <Route path="/shopping-list" element={<ShoppingList />} />
         </Route>

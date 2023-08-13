@@ -29,11 +29,11 @@ import SingleRecipeIngredients from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
 
 const SingleRecipePage = () => {
-  const [recipe, setRecipe] = useState<SavedRecipe>();
+  const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { isOpen, onToggle } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
-  const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   };
-  if (recipe === undefined) return;
+  if (recipe === null) return null;
   const nutrition = [
     {
       displayName: "Calories",
@@ -148,7 +148,6 @@ const SingleRecipePage = () => {
                   icon={<CheckIcon />}
                   title="yes, delete the recipe"
                   onClick={deleteRecipe}
-                  key="btn-1"
                 />
                 <IconButton
                   size="lg"
@@ -167,13 +166,11 @@ const SingleRecipePage = () => {
                   size="lg"
                   variant="outline"
                   aria-label="Edit recipe"
-                  transform="scale(-1,1)"
                   icon={<GiPencil />}
                   title="edit"
                   onClick={() => {
-                    navigate("/edit");
+                    navigate(`/edit/${slug}`);
                   }}
-                  key="btn-2"
                 />
                 <IconButton
                   size="lg"
@@ -225,8 +222,8 @@ const SingleRecipePage = () => {
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
-              {recipe.recipeIngredients.map((ingredient, index) => (
-                <SingleRecipeIngredients key={index} ingredient={ingredient} />
+              {recipe.recipeIngredients.map((ingredient, _id) => (
+                <SingleRecipeIngredients key={_id} ingredient={ingredient} />
               ))}
             </Box>
             <Box marginTop="5">
@@ -260,8 +257,8 @@ const SingleRecipePage = () => {
         <GridItem colSpan={1} w="100%">
           <Image w="100%" src={recipe.recipeImage} alt={recipe.recipeName} />
           <Flex marginTop="2" wrap="wrap">
-            {recipe.recipeTags.map((tag, index) => (
-              <SingleRecipeTag key={index} tag={tag} />
+            {recipe.recipeTags.map((tag, _id) => (
+              <SingleRecipeTag key={_id} tag={tag} />
             ))}
           </Flex>
         </GridItem>
