@@ -16,7 +16,8 @@ import {
   Heading,
   Select,
   Text,
-  Textarea
+  Textarea,
+  useToast
 } from "@chakra-ui/react";
 import { AddIcon, CheckIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { useParams, useNavigate } from "react-router-dom";
@@ -30,9 +31,11 @@ const EditRecipe = () => {
   );
   const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
   const [diets, setDiets] = useState<Array<string> | null>(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     if (recipeId === undefined) return;
@@ -63,10 +66,17 @@ const EditRecipe = () => {
     if (recipe === null) return;
     editSingleRecipe(recipeId, recipe)
       .then(response => {
-        console.log(response);
+        navigate(`/saved-recipes/${recipeId}`);
       })
       .catch(error => {
-        console.log(error);
+        toast({
+          title: "Error",
+          description: "Server wasn't be able to edit your recipe",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -177,7 +187,6 @@ const EditRecipe = () => {
                         ...recipe,
                         recipeName: e.target.value
                       });
-                      console.log(recipe);
                     }}
                   />
                 </FormControl>
@@ -276,7 +285,6 @@ const EditRecipe = () => {
                         ...recipe,
                         recipeComplexityLevel: e.target.value
                       });
-                      console.log(recipe);
                     }}>
                     <option value="easy">easy</option>
                     <option value="medium">medium</option>
@@ -296,7 +304,6 @@ const EditRecipe = () => {
                           ...recipe,
                           recipeServings: Number(e.target.value)
                         });
-                        console.log(recipe);
                       }}
                     />
                     <InputRightElement marginRight="5">
@@ -347,7 +354,6 @@ const EditRecipe = () => {
                             ...recipe,
                             recipeIngredients: newIngredients
                           });
-                          console.log(recipe);
                         }}
                       />
                     </FormControl>
@@ -368,7 +374,6 @@ const EditRecipe = () => {
                             ...recipe,
                             recipeIngredients: newIngredients
                           });
-                          console.log(recipe);
                         }}
                       />
                     </FormControl>
@@ -386,7 +391,6 @@ const EditRecipe = () => {
                             ...recipe,
                             recipeIngredients: newIngredients
                           });
-                          console.log(recipe);
                         }}>
                         <option value="kg">kg</option>
                         <option value="g">g</option>
@@ -430,7 +434,6 @@ const EditRecipe = () => {
                         ...recipe,
                         recipeInstructions: e.target.value
                       });
-                      console.log(recipe);
                     }}
                   />
                 </FormControl>
@@ -449,8 +452,7 @@ const EditRecipe = () => {
                         size="sm"
                         type="number"
                         value={
-                          recipe.recipeNutritionInfo.NutritionInfoCalories ||
-                          undefined
+                          recipe.recipeNutritionInfo.NutritionInfoCalories || ""
                         }
                         onChange={e => {
                           setRecipe({
@@ -460,7 +462,6 @@ const EditRecipe = () => {
                               NutritionInfoCalories: Number(e.target.value)
                             }
                           });
-                          console.log(e.target.value);
                         }}
                       />
                       <InputRightElement>
@@ -477,8 +478,7 @@ const EditRecipe = () => {
                         size="sm"
                         type="number"
                         value={
-                          recipe.recipeNutritionInfo.NutritionInfoCarbs ||
-                          undefined
+                          recipe.recipeNutritionInfo.NutritionInfoCarbs || ""
                         }
                         onChange={e => {
                           setRecipe({
@@ -488,7 +488,6 @@ const EditRecipe = () => {
                               NutritionInfoCarbs: Number(e.target.value)
                             }
                           });
-                          console.log(e.target.value);
                         }}
                       />
                       <InputRightElement>
@@ -505,8 +504,7 @@ const EditRecipe = () => {
                         size="sm"
                         type="number"
                         value={
-                          recipe.recipeNutritionInfo.NutritionInfoProtein ||
-                          undefined
+                          recipe.recipeNutritionInfo.NutritionInfoProtein || ""
                         }
                         onChange={e => {
                           setRecipe({
@@ -516,7 +514,6 @@ const EditRecipe = () => {
                               NutritionInfoProtein: Number(e.target.value)
                             }
                           });
-                          console.log(e.target.value);
                         }}
                       />
                       <InputRightElement>
@@ -533,8 +530,7 @@ const EditRecipe = () => {
                         size="sm"
                         type="number"
                         value={
-                          recipe.recipeNutritionInfo.NutritionInfoFat ||
-                          undefined
+                          recipe.recipeNutritionInfo.NutritionInfoFat || ""
                         }
                         onChange={e => {
                           setRecipe({
@@ -544,7 +540,6 @@ const EditRecipe = () => {
                               NutritionInfoFat: Number(e.target.value)
                             }
                           });
-                          console.log(e.target.value);
                         }}
                       />
                       <InputRightElement>
@@ -587,7 +582,6 @@ const EditRecipe = () => {
                         ...recipe,
                         recipeTags: newTags
                       });
-                      console.log(recipe);
                     }}
                   />
                   <FormHelperText></FormHelperText>
@@ -632,8 +626,6 @@ const EditRecipe = () => {
                         ...recipe,
                         recipeSpecialDiets: newDiets
                       });
-
-                      console.log(diets);
                     }}>
                     <option value="Weight Loss">Weight Loss</option>
                     <option value="Gluten-free">Gluten-free</option>
