@@ -7,6 +7,7 @@ import App from "./App";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Contact from "./components/Contact";
 import SearchAI from "./components/SearchAI";
 import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
@@ -22,6 +23,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contact" element={<Contact />} />
         <Route element={<Layout />}>
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
