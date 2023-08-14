@@ -31,7 +31,6 @@ const EditRecipe = () => {
   );
   const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
   const [diets, setDiets] = useState<Array<string> | null>(null);
-  const [selectedFile, setSelectedFile] = useState(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
