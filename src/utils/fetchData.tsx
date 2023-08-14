@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AIRecipe } from "./types";
+import { AIRecipe, SavedRecipe } from "./types";
 
 export const register = (name: string, email: string, password: string) => {
   return axios.post(
@@ -39,7 +39,7 @@ export const logout = () => {
 export const searchAI = (search: string, values: Array<string>) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
-    "http://localhost:3000/api/v1/ai-recipe",
+    "http://localhost:3000/api/v1/recipes/",
     {
       query: search,
       optionValues: values
@@ -56,7 +56,7 @@ export const searchAI = (search: string, values: Array<string>) => {
 export const saveRecipe = (recipe: AIRecipe) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
-    "http://localhost:3000/api/v1/ai-recipe/add",
+    "http://localhost:3000/api/v1/recipes/add-ai",
     {
       ...recipe
     },
@@ -71,7 +71,7 @@ export const saveRecipe = (recipe: AIRecipe) => {
 
 export const getRecipe = () => {
   const jwtToken = sessionStorage.getItem("jwtToken");
-  return axios.get("http://localhost:3000/api/v1/ai-recipe", {
+  return axios.get("http://localhost:3000/api/v1/recipes/", {
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
@@ -79,9 +79,35 @@ export const getRecipe = () => {
   });
 };
 
-export const getSingleRecipe = (id: string) => {
+export const getSingleRecipe = (recipeId: string) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
-  return axios.get(`http://localhost:3000/api/v1/ai-recipe/saved/${id}`, {
+  return axios.get(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};
+
+export const editSingleRecipe = (recipeId: string, recipe: SavedRecipe) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.patch(
+    `http://localhost:3000/api/v1/recipes/${recipeId}`,
+    {
+      ...recipe
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const deleteSingleRecipe = (recipeId: string) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.delete(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`

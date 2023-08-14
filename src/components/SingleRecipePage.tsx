@@ -13,10 +13,15 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../utils/types";
-import { getSingleRecipe } from "../utils/fetchData";
-import { ArrowBackIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { getSingleRecipe, deleteSingleRecipe } from "../utils/fetchData";
+import {
+  ArrowBackIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CloseIcon
+} from "@chakra-ui/icons";
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
@@ -24,22 +29,61 @@ import SingleRecipeIngredients from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
 
 const SingleRecipePage = () => {
-  const [recipe, setRecipe] = useState<SavedRecipe>();
-  const { slug } = useParams();
-  const id = slug;
+  const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
+  const { slug } = useParams();
+  const recipeId = slug;
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (id === undefined) return;
-    getSingleRecipe(id)
+    if (recipeId === undefined) return;
+    getSingleRecipe(recipeId)
       .then(response => {
-        console.log(response.data);
         setRecipe(response.data);
       })
       .catch(error => {
         console.log(error);
       });
-  }, [id]);
-  if (recipe === undefined) return;
+  }, [recipeId]);
+
+  const print = () => {
+    window.print();
+  };
+
+  const deleteRecipe = () => {
+    if (recipeId === undefined) return;
+    deleteSingleRecipe(recipeId)
+      .then(response => {
+        navigate("/saved-recipes");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  if (recipe === null) return null;
+  const nutrition = [
+    {
+      displayName: "Calories",
+      content: recipe.recipeNutritionInfo.NutritionInfoCalories,
+      unit: "kcal"
+    },
+    {
+      displayName: "Carbohydrates",
+      content: recipe.recipeNutritionInfo.NutritionInfoCarbs,
+      unit: "g"
+    },
+    {
+      displayName: "Protein",
+      content: recipe.recipeNutritionInfo.NutritionInfoProtein,
+      unit: "g"
+    },
+    {
+      displayName: "Fat",
+      content: recipe.recipeNutritionInfo.NutritionInfoFat,
+      unit: "g"
+    }
+  ];
 
   return (
     <Container maxW="5xl">
@@ -52,6 +96,9 @@ const SingleRecipePage = () => {
               aria-label="on the previous page"
               icon={<ArrowBackIcon />}
               title="on the previous page"
+              onClick={() => {
+                navigate("/saved-recipes");
+              }}
             />
             <Heading size="lg">{recipe.recipeName.toUpperCase()}</Heading>
           </Flex>
@@ -68,13 +115,15 @@ const SingleRecipePage = () => {
             </Text>
             <Text as="span">
               <b>Total:</b>&nbsp;
-              {`${
-                recipe.recipePrepTime.recipePrepTimeMinutes +
-                recipe.recipeCookTime.recipeCookTimeMinutes
-              } min`}
+              {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
               &nbsp;&nbsp;
             </Text>
           </Box>
+          <Text>
+            <b>Complexity level:</b>&nbsp;
+            {`${recipe.recipeComplexityLevel}`}
+            &nbsp;&nbsp;
+          </Text>
           <Text>
             <b>Servings:</b>&nbsp;
             {`${recipe.recipeServings}`}
@@ -89,44 +138,80 @@ const SingleRecipePage = () => {
             flexWrap="wrap"
             position="absolute"
             bottom="2"
-            // alignSelf=""
             justifyContent="center">
-            <IconButton
-              size="lg"
-              variant="outline"
-              aria-label="Edit recipe"
-              transform="scale(-1,1)"
-              icon={<GiPencil />}
-              title="edit"
-            />
-            <IconButton
-              size="lg"
-              variant="outline"
-              aria-label="Add to menu planner"
-              icon={<GiCalendar />}
-              title="add to menu planner"
-            />
-            <IconButton
-              size="lg"
-              variant="outline"
-              aria-label="Add to shopping list"
-              icon={<GiShoppingCart />}
-              title="add to shopping cart"
-            />
-            <IconButton
-              size="lg"
-              variant="outline"
-              aria-label="Delete recipe"
-              icon={<IoTrashOutline />}
-              title="delete"
-            />
-            <IconButton
-              size="lg"
-              variant="outline"
-              aria-label="Print recipe"
-              icon={<TfiPrinter />}
-              title="print"
-            />
+            {showConfirm ? (
+              <>
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Edit recipe"
+                  icon={<CheckIcon />}
+                  title="yes, delete the recipe"
+                  onClick={deleteRecipe}
+                />
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Add to menu planner"
+                  icon={<CloseIcon />}
+                  title="do not delete the recipe"
+                  onClick={() => {
+                    setShowConfirm(false);
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Edit recipe"
+                  icon={<GiPencil />}
+                  title="edit"
+                  onClick={() => {
+                    navigate(`/edit/${slug}`);
+                  }}
+                />
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Add to menu planner"
+                  icon={<GiCalendar />}
+                  title="add to menu planner"
+                  onClick={() => {
+                    navigate("/planner");
+                  }}
+                />
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Add to shopping list"
+                  icon={<GiShoppingCart />}
+                  title="add to shopping cart"
+                  onClick={() => {
+                    navigate("/shopping-list");
+                  }}
+                />
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Delete recipe"
+                  icon={<IoTrashOutline />}
+                  title="delete"
+                  onClick={() => {
+                    setShowConfirm(true);
+                  }}
+                />
+                <IconButton
+                  size="lg"
+                  variant="outline"
+                  aria-label="Print recipe"
+                  icon={<TfiPrinter />}
+                  title="print"
+                  onClick={print}
+                />
+              </>
+            )}
           </Flex>
         </GridItem>
       </Grid>
@@ -137,8 +222,8 @@ const SingleRecipePage = () => {
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
-              {recipe.recipeIngredients.map((ingredient, index) => (
-                <SingleRecipeIngredients key={index} ingredient={ingredient} />
+              {recipe.recipeIngredients.map((ingredient, _id) => (
+                <SingleRecipeIngredients key={_id} ingredient={ingredient} />
               ))}
             </Box>
             <Box marginTop="5">
@@ -157,28 +242,7 @@ const SingleRecipePage = () => {
                 </Box>
               </Flex>
               <Collapse in={isOpen} animateOpacity>
-                {[
-                  {
-                    displayName: "Calories",
-                    content: recipe.recipeNutritionInfo.NutritionInfoCalories,
-                    unit: "kcal"
-                  },
-                  {
-                    displayName: "Carbohydrates",
-                    content: recipe.recipeNutritionInfo.NutritionInfoCarbs,
-                    unit: "g"
-                  },
-                  {
-                    displayName: "Protein",
-                    content: recipe.recipeNutritionInfo.NutritionInfoProtein,
-                    unit: "g"
-                  },
-                  {
-                    displayName: "Fat",
-                    content: recipe.recipeNutritionInfo.NutritionInfoFat,
-                    unit: "g"
-                  }
-                ].map(({ displayName, content, unit }, index) => {
+                {nutrition.map(({ displayName, content, unit }, index) => {
                   return (
                     <Text as="span" key={index}>
                       <b>{displayName}:</b> {content}
@@ -193,8 +257,8 @@ const SingleRecipePage = () => {
         <GridItem colSpan={1} w="100%">
           <Image w="100%" src={recipe.recipeImage} alt={recipe.recipeName} />
           <Flex marginTop="2" wrap="wrap">
-            {recipe.recipeTags.map((tag, index) => (
-              <SingleRecipeTag key={index} tag={tag} />
+            {recipe.recipeTags.map((tag, _id) => (
+              <SingleRecipeTag key={_id} tag={tag} />
             ))}
           </Flex>
         </GridItem>
