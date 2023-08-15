@@ -20,7 +20,7 @@ const Loader = ({ text = "Loading..." }) => {
       {text.split("").map((letter, index) => (
         <Box
           as="span"
-          animation={`${loader} infinite 5s alternate`}
+          animation={`${loader} infinite 5s alternate ease-in-out`}
           style={{ animationDelay: `${100 * index}ms` }}
           fontSize="6xl"
           letterSpacing="-1px"
