@@ -39,7 +39,8 @@ export const logout = () => {
 export const searchAI = (search: string, values: Array<string>) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
-    "http://localhost:3000/api/v1/ai-recipe",
+    // "http://localhost:3000/api/v1/ai-recipe",
+    "http://localhost:3000/api/v1/recipes/",
     {
       query: search,
       optionValues: values
@@ -56,7 +57,8 @@ export const searchAI = (search: string, values: Array<string>) => {
 export const saveRecipe = (recipe: AIRecipe) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
-    "http://localhost:3000/api/v1/ai-recipe/add",
+    // "http://localhost:3000/api/v1/ai-recipe/add",
+    "http://localhost:3000/api/v1/recipes/add-ai",
     {
       ...recipe
     },
@@ -71,20 +73,28 @@ export const saveRecipe = (recipe: AIRecipe) => {
 
 export const getRecipe = () => {
   const jwtToken = sessionStorage.getItem("jwtToken");
-  return axios.get("http://localhost:3000/api/v1/ai-recipe", {
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwtToken}`
+  return axios.get(
+    // "http://localhost:3000/api/v1/ai-recipe",
+    "http://localhost:3000/api/v1/recipes/",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
     }
-  });
+  );
 };
 
-export const getSingleRecipe = (id: string) => {
+export const getSingleRecipe = (recipeId: string) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
-  return axios.get(`http://localhost:3000/api/v1/ai-recipe/saved/${id}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwtToken}`
+  return axios.get(
+    // `http://localhost:3000/api/v1/ai-recipe/saved/${id}`,
+    `http://localhost:3000/api/v1/recipes/${recipeId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
     }
-  });
+  );
 };
