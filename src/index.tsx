@@ -12,7 +12,7 @@ import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
-import theme from "./CustomTheme.js";
+import theme from "./CustomTheme.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
