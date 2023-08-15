@@ -8,11 +8,6 @@ const theme = extendTheme({
     green: "#d7da5e",
     brandGray: "#f4f4eb",
     red: "#E53E3E",
-    gray: {
-      50: "#f7fafc",
-      // ...
-      900: "#171923"
-    }
   },
 
   fonts: {
