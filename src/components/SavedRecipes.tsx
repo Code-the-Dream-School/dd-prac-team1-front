@@ -24,9 +24,9 @@ const SavedRecipes = () => {
   const [activeTag, setActiveTag] = useState("");
   const [show, setShow] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const searchQueryParam = searchParams.get("search");
-  const filteredTag = searchParams.get("filterTag") as string;
-  const filteredCategory = searchParams.get("filterCategory") as string;
+  const searchQueryParam = searchParams.get("search") as string | null;
+  const filteredTag = searchParams.get("filterTag") as string | null;
+  const filteredCategory = searchParams.get("filterCategory") as string | null;
 
   const handleRecipeSearch = useCallback(
     (searchQueryParam: string) => {
