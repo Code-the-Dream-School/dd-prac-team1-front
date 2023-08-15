@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
@@ -16,23 +16,25 @@ import OurTeam from "./components/OurTeam";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/app" element={<App />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/team" element={<OurTeam />} />
-        <Route element={<Layout />}>
-          <Route path="/search-choice" element={<SearchChoice />} />
-          <Route path="/ai-recipe" element={<SearchAI />} />
-          <Route path="/saved-recipes" element={<SavedRecipes />} />
-        </Route>
-      </Routes>
-      <Footer/>
-     </BrowserRouter>
-  </ChakraProvider>
+  <Box position="absolute" h="100vh" width="100%">
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/app" element={<App />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/team" element={<OurTeam />} />
+          <Route element={<Layout />}>
+            <Route path="/search-choice" element={<SearchChoice />} />
+            <Route path="/ai-recipe" element={<SearchAI />} />
+            <Route path="/saved-recipes" element={<SavedRecipes />} />
+          </Route>
+        </Routes>
+        <Footer/>
+      </BrowserRouter>
+    </ChakraProvider>
+  </Box>
 );
 
 // If you want to start measuring performance in your app, pass a function
