@@ -21,7 +21,11 @@ const SingleRecipeIngredient = ({
     <ListItem>
       {`${amount()} 
         ${
-          ingredient.ingredientUnit !== "other" ? ingredient.ingredientUnit : ""
+          ingredient.ingredientAmount <= 0
+            ? ""
+            : ingredient.ingredientUnit !== "other"
+            ? ingredient.ingredientUnit
+            : ""
         } ${ingredient.ingredientName}`}
     </ListItem>
   );
