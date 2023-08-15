@@ -61,10 +61,12 @@ const EditRecipe = () => {
   }, [recipeId]);
 
   const saveRecipe = () => {
+    console.log(recipe);
     if (recipeId === undefined) return;
     if (recipe === null) return;
     editSingleRecipe(recipeId, recipe)
       .then(response => {
+        console.log(response);
         navigate(`/saved-recipes/${recipeId}`);
       })
       .catch(error => {
@@ -91,7 +93,7 @@ const EditRecipe = () => {
         {
           ingredientName: "",
           ingredientAmount: 0,
-          ingredientUnit: ""
+          ingredientUnit: "other"
         }
       ]);
     }
@@ -113,16 +115,19 @@ const EditRecipe = () => {
       const values = [...ingredients];
       values.splice(index, 1);
       setIngredients(values);
+      setRecipe({ ...recipe, recipeIngredients: values });
     }
     if (arg === "tags") {
       const values = [...tags];
       values.splice(index, 1);
       setTags(values);
+      setRecipe({ ...recipe, recipeTags: values });
     }
     if (arg === "diets") {
       const values = [...diets];
       values.splice(index, 1);
       setDiets(values);
+      setRecipe({ ...recipe, recipeSpecialDiets: values });
     }
   };
 
@@ -154,7 +159,7 @@ const EditRecipe = () => {
                 icon={<CheckIcon />}
                 title="edit recipe"
                 type="submit"
-                onClick={saveRecipe}
+                // onClick={saveRecipe}
               />
               <IconButton
                 size="lg"
@@ -344,6 +349,7 @@ const EditRecipe = () => {
                         size="sm"
                         name="ingredientName"
                         type="text"
+                        placeholder="ingredient name is required"
                         value={ingredient.ingredientName}
                         onChange={e => {
                           const newIngredients = [...ingredients];
