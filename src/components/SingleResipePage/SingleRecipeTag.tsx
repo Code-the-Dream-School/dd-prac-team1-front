@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
-import { RecipeTag } from "../utils/types";
+import { RecipeTag } from "../../utils/types";
 
 type SingleRecipeTagProps = { tag: RecipeTag };
 

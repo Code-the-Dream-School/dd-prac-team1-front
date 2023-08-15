@@ -14,8 +14,8 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { SavedRecipe } from "../utils/types";
-import { getSingleRecipe } from "../utils/fetchData";
+import { SavedRecipe } from "../../utils/types";
+import { getSingleRecipe } from "../../utils/fetchData";
 import { ArrowBackIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";

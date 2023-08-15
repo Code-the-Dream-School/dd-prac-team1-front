@@ -13,7 +13,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/fetchData";
-import RecipeSearch from "./RecipeSearch";
+import RecipeSearch from "../Search/RecipeSearch";
 
 export default function Layout() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -63,7 +63,7 @@ export default function Layout() {
             alignItems="center">
             <Box>Olivier Logo</Box>
             <HStack>
-              <RecipeSearch/>
+              <RecipeSearch />
             </HStack>
             <HStack
               display={{ base: "none", md: "flex" }}
@@ -98,7 +98,7 @@ export default function Layout() {
           </Box>
         ) : null}
       </Box>
-        <Outlet/> 
+      <Outlet />
     </>
   );
 }

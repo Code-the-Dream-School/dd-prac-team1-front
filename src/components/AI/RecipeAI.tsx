@@ -10,8 +10,8 @@ import {
   Icon
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { AIRecipe } from "../utils/types";
-import { saveRecipe } from "../utils/fetchData";
+import { AIRecipe } from "../../utils/types";
+import { saveRecipe } from "../../utils/fetchData";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
 

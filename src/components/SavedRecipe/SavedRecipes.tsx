@@ -7,8 +7,8 @@ import {
   GridItem,
   Text
 } from "@chakra-ui/react";
-import { SavedRecipe } from "../utils/types";
-import { getRecipe } from "../utils/fetchData";
+import { SavedRecipe } from "../../utils/types";
+import { getRecipe } from "../../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
 import { useSearchParams } from "react-router-dom";

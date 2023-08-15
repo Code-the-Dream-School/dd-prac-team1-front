@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@chakra-ui/react";
-import { SavedRecipe } from "../utils/types";
+import { SavedRecipe } from "../../utils/types";
 import SavedRecipesItem from "./SavedRecipesItem";
 
 type SavedRecipesProps = { recipes: Array<SavedRecipe> };
