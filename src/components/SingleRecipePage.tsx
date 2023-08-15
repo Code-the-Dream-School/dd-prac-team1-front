@@ -103,21 +103,27 @@ const SingleRecipePage = () => {
             <Heading size="lg">{recipe.recipeName.toUpperCase()}</Heading>
           </Flex>
           <Box>
-            <Text as="span">
-              <b>Prep time:</b>&nbsp;
-              {`${recipe.recipePrepTime.recipePrepTimeMinutes} min`}
-              &nbsp;&nbsp;
-            </Text>
-            <Text as="span">
-              <b>Cooking time:</b>&nbsp;
-              {`${recipe.recipeCookTime.recipeCookTimeMinutes} min`}
-              &nbsp;&nbsp;
-            </Text>
-            <Text as="span">
-              <b>Total:</b>&nbsp;
-              {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
-              &nbsp;&nbsp;
-            </Text>
+            {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Prep time:</b>&nbsp;
+                {`${recipe.recipePrepTime.recipePrepTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
+            {recipe.recipeCookTime.recipeCookTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Cooking time:</b>&nbsp;
+                {`${recipe.recipeCookTime.recipeCookTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
+            {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Total:</b>&nbsp;
+                {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
           </Box>
           <Text>
             <b>Complexity level:</b>&nbsp;
@@ -232,26 +238,33 @@ const SingleRecipePage = () => {
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
             </Box>
-            <Box marginTop="5">
-              <Flex onClick={onToggle} cursor="pointer">
-                <Heading as="h3" size="md" marginBottom="3">
-                  Nutrition Information
-                </Heading>
-                <Box as="span">
-                  <Icon as={ChevronDownIcon} />
+            {recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+              recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
+              recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
+              (recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 && (
+                <Box marginTop="5">
+                  <Flex onClick={onToggle} cursor="pointer">
+                    <Heading as="h3" size="md" marginBottom="3">
+                      Nutrition Information
+                    </Heading>
+                    <Box as="span">
+                      <Icon as={ChevronDownIcon} />
+                    </Box>
+                  </Flex>
+                  <Collapse in={isOpen} animateOpacity>
+                    {nutrition.map(({ displayName, content, unit }, index) => (
+                      <>
+                        {content > 0 && (
+                          <Text as="span" key={index}>
+                            <b>{displayName}:</b> {content}
+                            {unit}&nbsp;
+                          </Text>
+                        )}
+                      </>
+                    ))}
+                  </Collapse>
                 </Box>
-              </Flex>
-              <Collapse in={isOpen} animateOpacity>
-                {nutrition.map(({ displayName, content, unit }, index) => {
-                  return (
-                    <Text as="span" key={index}>
-                      <b>{displayName}:</b> {content}
-                      {unit}&nbsp;
-                    </Text>
-                  );
-                })}
-              </Collapse>
-            </Box>
+              ))}
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">

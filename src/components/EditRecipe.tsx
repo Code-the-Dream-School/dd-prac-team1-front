@@ -185,6 +185,7 @@ const EditRecipe = () => {
                   <Input
                     size="sm"
                     type="text"
+                    placeholder="recipe name is required"
                     value={recipe.recipeName}
                     onChange={e => {
                       setRecipe({
@@ -236,6 +237,7 @@ const EditRecipe = () => {
                       size="sm"
                       type="number"
                       value={recipe.recipePrepTime.recipePrepTimeMinutes || ""}
+                      min="0"
                       onChange={e => {
                         setRecipe({
                           ...recipe,
@@ -259,6 +261,7 @@ const EditRecipe = () => {
                       size="sm"
                       type="number"
                       value={recipe.recipeCookTime.recipeCookTimeMinutes || ""}
+                      min="0"
                       onChange={e => {
                         setRecipe({
                           ...recipe,
@@ -303,6 +306,7 @@ const EditRecipe = () => {
                     <Input
                       size="sm"
                       value={recipe.recipeServings || ""}
+                      min="0"
                       onChange={e => {
                         setRecipe({
                           ...recipe,
@@ -369,6 +373,7 @@ const EditRecipe = () => {
                         name="ingredientAmount"
                         type="number"
                         value={ingredient.ingredientAmount || ""}
+                        min="0"
                         onChange={e => {
                           const newIngredients = [...ingredients];
                           newIngredients[index].ingredientAmount = Number(
@@ -459,6 +464,7 @@ const EditRecipe = () => {
                         value={
                           recipe.recipeNutritionInfo.NutritionInfoCalories || ""
                         }
+                        min="0"
                         onChange={e => {
                           setRecipe({
                             ...recipe,
@@ -485,6 +491,7 @@ const EditRecipe = () => {
                         value={
                           recipe.recipeNutritionInfo.NutritionInfoCarbs || ""
                         }
+                        min="0"
                         onChange={e => {
                           setRecipe({
                             ...recipe,
@@ -511,6 +518,7 @@ const EditRecipe = () => {
                         value={
                           recipe.recipeNutritionInfo.NutritionInfoProtein || ""
                         }
+                        min="0"
                         onChange={e => {
                           setRecipe({
                             ...recipe,
@@ -537,6 +545,7 @@ const EditRecipe = () => {
                         value={
                           recipe.recipeNutritionInfo.NutritionInfoFat || ""
                         }
+                        min="0"
                         onChange={e => {
                           setRecipe({
                             ...recipe,
