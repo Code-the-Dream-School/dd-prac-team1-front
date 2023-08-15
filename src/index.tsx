@@ -12,10 +12,11 @@ import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
+import theme from "./CustomTheme.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path="/app" element={<App />} />
