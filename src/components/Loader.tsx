@@ -3,11 +3,11 @@ import { Box, Center, keyframes } from "@chakra-ui/react";
 
 const loader = keyframes`
   from {
-    opacity: 0.25;
-    padding-top: 20px
+    opacity: 0.85;
+    
   }
   to {
-    opacity: 1;
+    opacity: 0.25;
     padding-right: 7px;
     padding-top: 70px
 
