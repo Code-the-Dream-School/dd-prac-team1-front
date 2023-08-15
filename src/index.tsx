@@ -4,14 +4,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import Home from "./components/Home";
+import Home from "./components/SharedComponents/Home";
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
-import SearchAI from "./components/AI/SearchAI";
-import SearchChoice from "./Search/SearchChoice";
-import SavedRecipes from "./components/SavedRecipe/SavedRecipes";
-import Layout from "./components/Layout";
-import SingleRecipePage from "./components/SingleResipePage/SingleRecipePage";
+import SearchAI from "./components/RecipeAI/SearchAI";
+import SearchChoice from "./components/Search/SearchChoice";
+import SavedRecipes from "./components/SavedRecipes/SavedRecipes";
+import Layout from "./components/SharedComponents/Layout";
+import SingleRecipePage from "./components/SingleRecipePage/SingleRecipePage";
 import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);

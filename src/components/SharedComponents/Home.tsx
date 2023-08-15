@@ -17,7 +17,7 @@ const Home = () => {
         colSpan={1}
         w="100%"
         h="100vh"
-        backgroundImage="url('/images/avocado_toast.png')"
+        backgroundImage="url('/public/images/avocado_toast.png')"
         backgroundPosition="center"
         backgroundSize="cover"
         backgroundRepeat="no-repeat"
