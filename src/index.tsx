@@ -13,6 +13,8 @@ import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
 import theme from "./CustomTheme.tsx";
+import NotFound from "./components/404";
+import { Navigate } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -29,6 +31,8 @@ root.render(
           <Route path="/saved-recipes" element={<SavedRecipes />} />
           <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
         </Route>
+        <Route path="/404" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
