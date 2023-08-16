@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import {  extendTheme } from "@chakra-ui/react";
 
 //extend the theme
 const theme = extendTheme({
