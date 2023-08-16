@@ -23,6 +23,7 @@ import { AddIcon, CheckIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSingleRecipe, editSingleRecipe } from "../utils/fetchData";
 import { SavedRecipe, SavedIngredient, RecipeTag } from "../utils/types";
+import IngredientAmountHandle from "./IngredientAmountHandle";
 
 const EditRecipe = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -70,6 +71,7 @@ const EditRecipe = () => {
         navigate(`/saved-recipes/${recipeId}`);
       })
       .catch(error => {
+        console.log(error);
         toast({
           title: "Error",
           description: "Server wasn't be able to edit your recipe",
@@ -347,7 +349,7 @@ const EditRecipe = () => {
                 </Flex>
                 {ingredients.map((ingredient, index) => (
                   <Flex key={index}>
-                    <FormControl marginRight="3">
+                    <FormControl marginRight="3" w="70%">
                       <FormLabel></FormLabel>
                       <Input
                         size="sm"
@@ -366,27 +368,14 @@ const EditRecipe = () => {
                         }}
                       />
                     </FormControl>
-                    <FormControl w="40%" marginRight="3">
-                      <FormLabel></FormLabel>
-                      <Input
-                        size="sm"
-                        name="ingredientAmount"
-                        type="number"
-                        value={ingredient.ingredientAmount || ""}
-                        min="0"
-                        onChange={e => {
-                          const newIngredients = [...ingredients];
-                          newIngredients[index].ingredientAmount = Number(
-                            e.target.value
-                          );
-                          setIngredients(newIngredients);
-                          setRecipe({
-                            ...recipe,
-                            recipeIngredients: newIngredients
-                          });
-                        }}
-                      />
-                    </FormControl>
+                    <IngredientAmountHandle
+                      ingredient={ingredient}
+                      onChange={(value: any) => {
+                        const newIngredients = [...ingredients];
+                        newIngredients[index].ingredientAmount = value;
+                        setIngredients(newIngredients);
+                      }}
+                    />
                     <FormControl marginRight="1" w="40%">
                       <FormLabel></FormLabel>
                       <Select
