@@ -7,34 +7,35 @@ import App from "./App";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Layout from "./components/Layout";
 import SearchAI from "./components/SearchAI";
 import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
-import Layout from "./components/Layout";
+import SingleRecipePage from "./components/SingleRecipePage";
 import Footer from "./components/Footer";
 import OurTeam from "./components/OurTeam";
+import theme from "./CustomTheme.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <Box position="absolute" h="100vh" width="100%">
-    <ChakraProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/app" element={<App />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/team" element={<OurTeam />} />
-          <Route element={<Layout />}>
-            <Route path="/search-choice" element={<SearchChoice />} />
-            <Route path="/ai-recipe" element={<SearchAI />} />
-            <Route path="/saved-recipes" element={<SavedRecipes />} />
-          </Route>
-        </Routes>
-        <Footer/>
-      </BrowserRouter>
-    </ChakraProvider>
-  </Box>
+  <ChakraProvider theme={theme}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/app" element={<App />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/team" element={<OurTeam />} />
+        <Route element={<Layout />}>
+          <Route path="/search-choice" element={<SearchChoice />} />
+          <Route path="/ai-recipe" element={<SearchAI />} />
+          <Route path="/saved-recipes" element={<SavedRecipes />} />
+          <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
+        </Route>
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  </ChakraProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
