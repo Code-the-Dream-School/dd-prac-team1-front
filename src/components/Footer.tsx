@@ -6,30 +6,32 @@ const Footer = () => {
     <Box
       as="footer"
       py={4}
-      bg="brandGray"
-      color="black"
+      position="absolute"
+      bottom="0"
       height="82"
-      width="100%">
+      width="100%"
+      bg="brandGray"
+      color="black">
       <Container maxW="6xl">
         <Flex justify="space-between" align="center">
           <Text pl={4}>&copy; 2023 Olivier Meal Planner</Text>
 
           <Flex justify="center" alignItems="center">
-            <Box as="a" href="/team" mx={8}>
+            <Box as="a" href="/team" mx={10}>
               <Text
                 _hover={{
-                borderBottom: "2px solid green"
+                  borderBottom: "2px solid green"
                 }}>
                 MEET THE TEAM
               </Text>
             </Box>
 
-            <Box as="a" href="/ContactUs" mr={8}>
-            <Text
+            <Box as="a" href="/ContactUs" mr={10}>
+              <Text
                 _hover={{
-                borderBottom: "2px solid green"
+                  borderBottom: "2px solid green"
                 }}>
-              CONTACT
+                CONTACT
               </Text>
             </Box>
 

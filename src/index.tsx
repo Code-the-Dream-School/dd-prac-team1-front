@@ -18,24 +18,26 @@ import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider theme={theme}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/app" element={<App />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/team" element={<OurTeam />} />
-        <Route element={<Layout />}>
-          <Route path="/search-choice" element={<SearchChoice />} />
-          <Route path="/ai-recipe" element={<SearchAI />} />
-          <Route path="/saved-recipes" element={<SavedRecipes />} />
-          <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-  </ChakraProvider>
+  <Box position="absolute" h="100vh" width="100%">
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/app" element={<App />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="/search-choice" element={<SearchChoice />} />
+            <Route path="/ai-recipe" element={<SearchAI />} />
+            <Route path="/saved-recipes" element={<SavedRecipes />} />
+            <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
+            <Route path="/team" element={<OurTeam />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </ChakraProvider>
+  </Box>
 );
 
 // If you want to start measuring performance in your app, pass a function
