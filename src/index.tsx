@@ -13,10 +13,11 @@ import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
 import RecipeManual from "./components/RecipeManual/RecipeManual";
+import theme from "./CustomTheme.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path="/app" element={<App />} />
