@@ -1,29 +1,38 @@
-import { Box, Flex, Text, IconButton, Container } from '@chakra-ui/react';
-import { FaGithub, FaInstagram, FaFacebook } from 'react-icons/fa';
+import { Box, Flex, Text, IconButton, Container } from "@chakra-ui/react";
+import { FaGithub, FaInstagram, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <Box
       as="footer"
       py={4}
-      bg="gray.200"
+      bg="brandGray"
       color="black"
-      position="absolute"
-      bottom="0"
-      height="85"
+      height="82"
       width="100%">
-
       <Container maxW="6xl">
         <Flex justify="space-between" align="center">
-          <Text pl={4}>&copy; 2023 Olivier. All rights reserved.</Text>
+          <Text pl={4}>&copy; 2023 Olivier Meal Planner</Text>
 
-            <Flex justify="center" alignItems="center">
-              <Box as="a" href="/OurTeam" mx={2}>
-                Meet the Team
-              </Box>
-              <Box as="a" href="/ContactUs" mx={2}>
-                Contact
-              </Box>
+          <Flex justify="center" alignItems="center">
+            <Box as="a" href="/team" mx={8}>
+              <Text
+                _hover={{
+                borderBottom: "2px solid green"
+                }}>
+                MEET THE TEAM
+              </Text>
+            </Box>
+
+            <Box as="a" href="/ContactUs" mr={8}>
+            <Text
+                _hover={{
+                borderBottom: "2px solid green"
+                }}>
+              CONTACT
+              </Text>
+            </Box>
+
             <IconButton
               as="a"
               href="https://github.com/Code-the-Dream-School/dd-prac-team1-front"
@@ -32,6 +41,11 @@ const Footer = () => {
               icon={<FaGithub />}
               fontSize="1.5rem"
               mx={2}
+              bg="#f4f4eb"
+              color="black"
+              _hover={{
+                border: "1px"
+              }}
             />
             <IconButton
               as="a"
@@ -39,8 +53,13 @@ const Footer = () => {
               target="_blank"
               aria-label="Instagram"
               icon={<FaInstagram />}
-              fontSize="1.5rem" 
+              fontSize="1.5rem"
               mx={2}
+              bg="#f4f4eb"
+              color="black"
+              _hover={{
+                border: "1px"
+              }}
             />
             <IconButton
               as="a"
@@ -50,12 +69,16 @@ const Footer = () => {
               icon={<FaFacebook />}
               fontSize="1.5rem"
               mx={2}
+              bg="#f4f4eb"
+              color="black"
+              _hover={{
+                border: "1px"
+              }}
             />
           </Flex>
         </Flex>
       </Container>
     </Box>
-  
   );
 };
 

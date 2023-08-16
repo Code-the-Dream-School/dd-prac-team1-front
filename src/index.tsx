@@ -14,7 +14,7 @@ import SavedRecipes from "./components/SavedRecipes";
 import SingleRecipePage from "./components/SingleRecipePage";
 import Footer from "./components/Footer";
 import OurTeam from "./components/OurTeam";
-import theme from "./CustomTheme.tsx";
+import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
