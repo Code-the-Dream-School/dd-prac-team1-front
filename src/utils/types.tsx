@@ -59,3 +59,10 @@ export type SavedRecipe = {
   __v: number;
   _id: string;
 };
+
+
+export type Options = {
+    value: string;
+    label: string;
+};
+
