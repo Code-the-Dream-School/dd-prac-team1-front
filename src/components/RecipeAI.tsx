@@ -27,6 +27,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   const handleSaveRecipe = () => {
     saveRecipe(recipe)
       .then(response => {
+        console.log(response);
         setSave("SAVED");
         setIfSaved(true);
       })

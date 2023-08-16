@@ -13,7 +13,7 @@ const IngredientAmountHandle = ({
 }: IngredientAmountHandleProps) => {
   const [mode, setMode] = useState<number | undefined>(undefined);
   useEffect(() => {
-    if (ingredient.ingredientAmount >= 0) setMode(0);
+    if (ingredient.ingredientAmount > 0) setMode(0);
   }, [ingredient.ingredientAmount]);
   return (
     <Flex w="80%" justifyContent="center">
@@ -31,7 +31,7 @@ const IngredientAmountHandle = ({
           />
         </FormControl>
       )}
-      <FormControl w="80%">
+      <FormControl w="80%" marginRight="7">
         <FormLabel></FormLabel>
         <Select
           size="sm"
@@ -41,7 +41,7 @@ const IngredientAmountHandle = ({
             setMode(Number(e.target.value));
             onChange(e.target.value);
           }}>
-          <option value="0">enter quantity</option>
+          <option value="0.01">enter quantity</option>
           <option value="-1">to taste</option>
           <option value="-2">for serving</option>
           <option value="-3">for garnish</option>

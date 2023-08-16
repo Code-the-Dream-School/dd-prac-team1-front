@@ -349,7 +349,7 @@ const EditRecipe = () => {
                 </Flex>
                 {ingredients.map((ingredient, index) => (
                   <Flex key={index}>
-                    <FormControl marginRight="3" w="70%">
+                    <FormControl marginRight="7" w="70%">
                       <FormLabel></FormLabel>
                       <Input
                         size="sm"
@@ -376,7 +376,7 @@ const EditRecipe = () => {
                         setIngredients(newIngredients);
                       }}
                     />
-                    <FormControl marginRight="1" w="40%">
+                    <FormControl marginRight="1" w="30%">
                       <FormLabel></FormLabel>
                       <Select
                         size="sm"

@@ -36,6 +36,7 @@ const SearchAI = () => {
   const handleSearch = () => {
     searchAI(search, values)
       .then(response => {
+        console.log(response);
         setRecipe(response.data);
         setIsLoading(false);
       })
