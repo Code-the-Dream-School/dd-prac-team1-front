@@ -374,6 +374,7 @@ const EditRecipe = () => {
                         type="number"
                         value={ingredient.ingredientAmount || ""}
                         min="0"
+                        step="0.05"
                         onChange={e => {
                           const newIngredients = [...ingredients];
                           newIngredients[index].ingredientAmount = Number(
