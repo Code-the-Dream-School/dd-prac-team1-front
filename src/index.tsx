@@ -4,13 +4,13 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import Home from "./components/SharedComponents/Home";
+import Home from "./components/Layout/Home";
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
 import SearchAI from "./components/RecipeAI/SearchAI";
 import SearchChoice from "./components/Search/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes/SavedRecipes";
-import Layout from "./components/SharedComponents/Layout";
+import Layout from "./components/Layout/Layout";
 import SingleRecipePage from "./components/SingleRecipePage/SingleRecipePage";
 import theme from "./CustomTheme";
 
