@@ -12,12 +12,12 @@ const chakraStyles: ChakraStylesConfig = {
         ...provided,
         my: 0,
         borderWidth: "1px",
-        borderColor: "#D7DA5E",
+        borderColor: "green",
         borderRadius: "md"
     }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
         ...prev,
-        bg: "#D7DA5E",
+        bg: "green",
         "> svg": {
             transitionDuration: "normal",
             transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
@@ -31,10 +31,9 @@ const MultipleSelectForm = ( {options}: OptionsProps) => (
         <Box>
             <FormControl>
             <Select        
-                className="chakra-react-select"
-                classNamePrefix="chakra-react-select"
                 isMulti
                 chakraStyles={chakraStyles}
+                focusBorderColor="brandGray"
               //  selectedOptionColorScheme="green"
                 name="colors"
                 options={options}

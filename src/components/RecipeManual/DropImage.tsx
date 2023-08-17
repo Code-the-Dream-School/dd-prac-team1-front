@@ -88,6 +88,7 @@ type Props = {
 }
 
 const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
+
     return (
         <Box
         bg="white"
@@ -118,7 +119,7 @@ const DropImage = () => {
         <Flex justifyContent="center">
         <AspectRatio width="sm" ratio={1}>
             <Box
-            borderColor="gray.300"
+            borderColor="green"
             borderStyle="dashed"
             borderWidth="2px"
             rounded="md"
@@ -163,7 +164,7 @@ const DropImage = () => {
                     />
                     </Box>
                     <Stack p="8" textAlign="center" spacing="1">
-                    <Heading fontSize="lg" color="gray.700" fontWeight="bold" >
+                    <Heading fontSize="lg" fontWeight="bold" >
                         Сlick to upload
                     </Heading>
                     </Stack>

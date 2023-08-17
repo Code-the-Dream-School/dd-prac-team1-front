@@ -49,8 +49,6 @@ const RecipeManual = () => {
                             variant="flushed"
                             //value={title}
                             placeholder="TITLE"
-                            borderColor="#D7DA5E"
-                            focusBorderColor='#F4F4EB'
                             //onChange={event => {
                             //    setTitle(event.target.value);
                            // }}
@@ -73,12 +71,9 @@ const RecipeManual = () => {
                     <IconButton
                         ml="10px"
                         size="sm"
-                        variant="outline"
                         aria-label="add ingredient"
                         icon={<AddIcon />}
                         title="add ingredient"
-                        borderColor="#D7DA5E"
-                        colorScheme='green'
                     />
                 </Flex>
             </GridItem>
@@ -94,12 +89,9 @@ const RecipeManual = () => {
                     <Input
                         type="text"
                         id="title"
-                        variant="outline"
                        // value={ingredients}
                         placeholder="Add ingredients"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                        // onChange={event => {
                        //     setIngredients(event.target.value);
                        // }}
@@ -110,31 +102,22 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                         placeholder="quantity"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
                 <GridItem colSpan={2}>
                     <Input
                         type="text"
                         id=""
-                        variant="outline"
                         placeholder="unit"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
                 <GridItem colSpan={1}>
                     <Flex justifyContent="end" > 
                     <IconButton
                         size="md"
-                        borderColor="#D7DA5E"
-                        colorScheme='green'
-                        variant="outline"
                         aria-label="remove ingredient"
                         icon={<MinusIcon />}
                         title="remove ingredient"
@@ -147,7 +130,6 @@ const RecipeManual = () => {
                         <Textarea
                             size="lg"
                             id="instuctions"
-                            variant="outline"
                            // value={instructions}
                             placeholder="Instructions"
                             _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -200,7 +182,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -215,7 +196,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -231,7 +211,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="person(s)"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -253,7 +232,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="kcal"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -269,7 +247,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -285,7 +262,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -301,7 +277,6 @@ const RecipeManual = () => {
                     <Input
                         type="number"
                         id=""
-                        variant="outline"
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -319,7 +294,6 @@ const RecipeManual = () => {
             <Flex mt="3rem" justifyContent="center">
                 <Button
                     size='lg'
-                    variant='outline'
                 >SAVE
                 </Button>
             </Flex>

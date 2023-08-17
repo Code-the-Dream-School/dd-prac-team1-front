@@ -42,8 +42,10 @@ export const categoriesOptions = [
 
 export const tagsOptions = [
     { value: "None", label: "None" },
-    { value: "Weight Loss", label: "Weight Loss" },
-    { value: "Gluten-free", label: "Gluten-free" },
-    { value: "Pork-free", label: "Pork-free" },
-    { value: "Vegetarian", label: "Vegetarian" },      
+    { value: "Healthy", label: "Healthy" },
+    { value: "Fiest", label: "Fiest" },
+    { value: "Fish", label: "Fish" },
+    { value: "Chicken", label: "Chicken" },    
+    { value: "Vegetables", label: "Vegetables" },  
+    { value: "Fruits", label: "Fruits" },     
 ];
