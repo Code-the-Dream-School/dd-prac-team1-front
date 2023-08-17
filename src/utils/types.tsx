@@ -66,3 +66,27 @@ export type Options = {
     label: string;
 };
 
+export type AnimationVariants = {
+  rest: {
+      rotate?: string,
+      scale?: number,
+      x?: string,
+      filter?: string,
+      transition?: {
+      duration?: number,
+      type?: string,
+      ease?: string,
+      }
+  }
+  hover: {
+      x?: string,
+      scale?: number,
+      rotate?: string,
+      filter?: string,
+      transition?: {
+      duration?: number,
+      type?: string,
+      ease?: string,
+      }
+  }
+};

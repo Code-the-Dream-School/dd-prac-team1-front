@@ -1,41 +1,16 @@
+import { forwardRef } from "react";
 import {
     AspectRatio,
     Box,
-    BoxProps,
     Flex,
-    forwardRef,
     Heading,
     Input,
     Stack,
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
+import { AnimationVariants } from "../../utils/types"; 
 
-type AnimationVariants = {
-    rest: {
-        rotate?: string,
-        scale?: number,
-        x?: string,
-        filter?: string,
-        transition?: {
-        duration?: number,
-        type?: string,
-        ease?: string,
-        }
-    }
-    hover: {
-        x?: string,
-        scale?: number,
-        rotate?: string,
-        filter?: string,
-        transition?: {
-        duration?: number,
-        type?: string,
-        ease?: string,
-        }
-    }
-};
-
-const first: AnimationVariants = {
+const first = {
     rest: {
         rotate: "-15deg",
         scale: 0.95,
@@ -60,7 +35,7 @@ const first: AnimationVariants = {
     }
     };
 
-    const second: AnimationVariants = {
+    const second = {
     rest: {
         rotate: "15deg",
         scale: 0.95,
@@ -85,7 +60,7 @@ const first: AnimationVariants = {
     }
 };
 
-const third: AnimationVariants= {
+const third = {
     rest: {
         scale: 1.1,
         filter: "grayscale(80%)",
@@ -106,7 +81,14 @@ const third: AnimationVariants= {
     }
 };
 
-const PreviewImage = forwardRef<BoxProps, typeof Box>((props, ref) => {
+type Ref = HTMLDivElement;
+type Props = {
+    variants: AnimationVariants;
+    backgroundImage: string;
+}
+
+const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
+//const PreviewImage = forwardRef<BoxProps, typeof Box>((props, ref) => {
     return (
         <Box
         bg="white"
@@ -122,7 +104,6 @@ const PreviewImage = forwardRef<BoxProps, typeof Box>((props, ref) => {
         backgroundSize="cover"
         backgroundRepeat="no-repeat"
         backgroundPosition="center"
-        backgroundImage={`url(${require("./imagesPreview/uploadPicture1.jpg")})`}
         {...props}
         ref={ref}
         />
