@@ -15,10 +15,11 @@ import SingleRecipePage from "./components/SingleRecipePage";
 import EditRecipe from "./components/EditRecipe";
 import ShoppingList from "./components/ShoppingList";
 import Planner from "./components/Planner";
+import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path="/app" element={<App />} />
