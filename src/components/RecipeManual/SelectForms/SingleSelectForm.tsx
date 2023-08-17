@@ -24,19 +24,12 @@ const chakraStyles: ChakraStylesConfig = {
 type OptionsProps = {placeholder: string, options : Options[]}
 
 const SingleSelectForm = ( {placeholder, options}: OptionsProps ) => (
-        <Box  sx={{
-            '--green': "#D7DA5E",
-            '.chakra-react-select': {
-            "borderColor": 'var(--green)',
-            
-            },
-        }}>
+        <Box>
             <FormControl>
             <Select        
                 className="chakra-react-select"
                 classNamePrefix="chakra-react-select"
                 chakraStyles={chakraStyles}
-                focusBorderColor='#F4F4EB'
               //  selectedOptionColorScheme="green"
                 name="colors"
                 options={options}

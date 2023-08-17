@@ -148,8 +148,6 @@ const RecipeManual = () => {
                             size="lg"
                             id="instuctions"
                             variant="outline"
-                            borderColor="#D7DA5E"
-                            focusBorderColor='#F4F4EB'
                            // value={instructions}
                             placeholder="Instructions"
                             _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -206,8 +204,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
                 <GridItem colSpan={2}>
@@ -223,8 +219,7 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
+
                     />
                 </GridItem>
                 <GridItem colSpan={2}>
@@ -240,8 +235,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="person(s)"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
                 </Grid>
@@ -264,8 +257,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="kcal"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
 
@@ -282,8 +273,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
 
@@ -300,8 +289,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
 
@@ -318,8 +305,6 @@ const RecipeManual = () => {
                       //  value={}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        borderColor="#D7DA5E"
-                        focusBorderColor='#F4F4EB'
                     />
                 </GridItem>
 

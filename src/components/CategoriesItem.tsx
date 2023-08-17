@@ -1,25 +1,28 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 
-type CategoriesItemProps = { 
-  category?: string,
-  title: string,
-  handleClick: Function
+type CategoriesItemProps = {
+  category?: string;
+  title: string;
+  handleClick: Function;
+  active: boolean;
 };
 
-const CategoriesItem = ({ category, title, handleClick}: CategoriesItemProps) => {
+const CategoriesItem = ({
+  category,
+  title,
+  handleClick,
+  active
+}: CategoriesItemProps) => {
   return (
     <Button
       height="55px"
       width="100%"
-      variant="link"
-      _focus={{
-        fontWeight: "bold",
-        fontStyle: "italic"
-      }}
+      variant={active ? "solid" : "outline"}
       borderRadius="0"
       border="1px"
       marginTop="-1px"
+      textDecoration="none"
       onClick={() => handleClick(category)}>
       {title}
     </Button>

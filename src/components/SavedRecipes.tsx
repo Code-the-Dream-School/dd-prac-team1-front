@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
+  Box,
+  Button,
   Center,
   Container,
   Flex,
+  Heading,
   Grid,
   GridItem,
   Text
 } from "@chakra-ui/react";
-import { SavedRecipe } from "../utils/types";
+import { SavedRecipe, RecipeTag } from "../utils/types";
 import { getRecipe } from "../utils/fetchData";
 import SavedRecipesList from "./SavedRecipesList";
 import CategoriesList from "./CategoriesList";
@@ -17,23 +20,13 @@ const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState("");
+  const [activeTag, setActiveTag] = useState("");
   const [show, setShow] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-
-  const searchQueryParam = searchParams.get("search");
-
-  useEffect(() => {
-    getRecipe()
-      .then(response => {
-        console.log(response.data.recipes);
-        setRecipes(response.data.recipes);
-        setFilteredRecipes(response.data.recipes);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  const searchQueryParam = searchParams.get("search") as string | null;
+  const filteredTag = searchParams.get("filterTag") as string | null;
+  const filteredCategory = searchParams.get("filterCategory") as string | null;
 
   const handleRecipeSearch = useCallback(
     (searchQueryParam: string) => {
@@ -54,6 +47,8 @@ const SavedRecipes = () => {
       });
       if (searchedRecipes.length > 0) {
         setFilteredRecipes(searchedRecipes);
+        setActiveTag("");
+        setActiveCategory("");
         setShow(true);
       } else if (!searchedRecipes.length) {
         setShow(false);
@@ -61,15 +56,69 @@ const SavedRecipes = () => {
     },
     [recipes]
   );
+  useEffect(() => {
+    getRecipe()
+      .then(response => {
+        setRecipes(response.data.recipes);
+        setFilteredRecipes(response.data.recipes);
+        setIsLoading(false);
+        if (filteredTag) {
+          setActiveTag(filteredTag);
+        }
+        if (filteredCategory) {
+          setActiveCategory(filteredCategory);
+          setFilteredRecipes(
+            response.data.recipes.filter(
+              (recipe: SavedRecipe) =>
+                recipe.recipeCategory === filteredCategory
+            )
+          );
+        }
+        if (searchQueryParam) {
+          setFilteredRecipes(
+            response.data.recipes.filter(
+              (recipe: SavedRecipe) =>
+                recipe.recipeCategory === filteredCategory
+            )
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQueryParam]);
 
   useEffect(() => {
     if (searchQueryParam) {
       handleRecipeSearch(searchQueryParam);
-    } else {
-      setSearchParams({ search: "" });
     }
   }, [searchQueryParam, recipes, handleRecipeSearch, setSearchParams]);
 
+  const chooseCategory = (category: string) => {
+    const categorizedRecipes = recipes.filter(
+      (recipe: SavedRecipe) => recipe.recipeCategory === category
+    );
+    setShow(true);
+    setFilteredRecipes(categorizedRecipes);
+    setActiveCategory(category);
+    setActiveTag("");
+    setSearchParams({ filterCategory: category });
+  };
+
+  const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
+    return recipe.recipeTags.some(
+      (tag: RecipeTag) => tag.tagName === activeTag
+    );
+  });
+
+  const showAllCategories = () => {
+    setShow(true);
+    setFilteredRecipes(recipes);
+    setActiveCategory("");
+    setActiveTag("");
+    setSearchParams({});
+  };
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
       if (!acc.includes(recipe.recipeCategory)) {
@@ -80,19 +129,14 @@ const SavedRecipes = () => {
     []
   );
 
-  const chooseCategory = (category: string) => {
-    const categorizedRecipes = recipes.filter(
-      (recipe: SavedRecipe) => recipe.recipeCategory === category
-    );
-    setShow(true);
-    setFilteredRecipes(categorizedRecipes);
-  };
-
-  const showAllCategories = () => {
-    setShow(true);
-    setFilteredRecipes(recipes);
-  };
-
+  const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+    recipe.recipeTags.forEach((tag: RecipeTag) => {
+      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
+        acc.push(tag.tagName);
+      }
+    });
+    return acc;
+  }, []);
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
@@ -110,12 +154,38 @@ const SavedRecipes = () => {
               categories={categories}
               chooseCategory={chooseCategory}
               chooseAllCategories={showAllCategories}
+              activeCategory={activeCategory}
             />
+          </Flex>
+          <Flex flexDirection="column" marginTop="5">
+            <Heading as="h3" size="md" marginBottom="3">
+              Tags
+            </Heading>
+            <Box as="span">
+              {tags.map(tag => (
+                <Button
+                  size="sm"
+                  variant={activeTag === tag ? "solid" : "outline"}
+                  margin="1"
+                  key={tag}
+                  onClick={() => {
+                    setActiveTag(tag);
+                    setActiveCategory("");
+                    setSearchParams({ filterTag: tag });
+                  }}>
+                  {tag}
+                </Button>
+              ))}
+            </Box>
           </Flex>
         </GridItem>
         {show || isLoading ? (
           <GridItem colSpan={2} w="100%">
-            <SavedRecipesList recipes={filteredRecipes} />
+            {activeTag ? (
+              <SavedRecipesList recipes={filteredByTag} />
+            ) : (
+              <SavedRecipesList recipes={filteredRecipes} />
+            )}
           </GridItem>
         ) : (
           <GridItem

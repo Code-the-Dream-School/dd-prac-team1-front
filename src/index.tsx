@@ -13,7 +13,10 @@ import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
 import RecipeManual from "./components/RecipeManual/RecipeManual";
-import theme from "./CustomTheme.tsx";
+import EditRecipe from "./components/EditRecipe";
+import ShoppingList from "./components/ShoppingList";
+import Planner from "./components/Planner";
+import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -24,12 +27,16 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+
         <Route element={<Layout />}>
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/manual-recipe" element={<RecipeManual />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
           <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
+          <Route path="/edit/:slug" element={<EditRecipe />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/shopping-list" element={<ShoppingList />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -88,7 +88,6 @@ type Props = {
 }
 
 const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
-//const PreviewImage = forwardRef<BoxProps, typeof Box>((props, ref) => {
     return (
         <Box
         bg="white"

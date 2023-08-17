@@ -24,21 +24,14 @@ const chakraStyles: ChakraStylesConfig = {
 type OptionsProps = {options : Options[]}
 
 const MultipleCreatableSelectForm = ( {options}: OptionsProps ) => (
-        <Box  sx={{
-            '--green': "#D7DA5E",
-            '.chakra-react-select': {
-            "borderColor": 'var(--green)',
-            
-            },
-        }}>
+        <Box>
             <FormControl>
             <CreatableSelect        
                 className="chakra-react-select"
                 classNamePrefix="chakra-react-select"
                 isMulti
                 chakraStyles={chakraStyles}
-                focusBorderColor='#F4F4EB'
-              //  selectedOptionColorScheme="green"
+                //selectedOptionColorScheme="green"
                 name="colors"
                 options={options}
                 placeholder="Choose or type tags"
