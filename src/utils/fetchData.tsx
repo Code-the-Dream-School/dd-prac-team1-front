@@ -98,7 +98,7 @@ export const editSingleRecipe = (recipeId: string, recipe: SavedRecipe) => {
     },
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${jwtToken}`
       }
     }

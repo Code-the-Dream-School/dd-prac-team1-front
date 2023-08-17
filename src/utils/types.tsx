@@ -46,6 +46,29 @@ export type SavedRecipe = {
   recipeCookTime: { recipeCookTimeMinutes: number };
   recipeCreatedBy: string;
   recipeImage: string;
+  recipeImagePublic: string;
+  recipeIngredients: Array<SavedIngredient>;
+  recipeInstructions: string;
+  recipeName: string;
+  recipeNutritionInfo: RecipeNutritionInfo;
+  recipePrepTime: { recipePrepTimeMinutes: number };
+  recipeServings: number;
+  recipeSpecialDiets: Array<string>;
+  recipeTags: Array<RecipeTag>;
+  recipeTotalTime: { recipeTotalTimeMinutes: number };
+  updatedAt: string;
+  __v: number;
+  _id: string;
+};
+
+export type EditedRecipe = {
+  createdAt: string;
+  recipeCategory: string;
+  recipeComplexityLevel: string;
+  recipeCookTime: { recipeCookTimeMinutes: number };
+  recipeCreatedBy: string;
+  recipeImage: string | Object;
+  recipeImagePublic: string;
   recipeIngredients: Array<SavedIngredient>;
   recipeInstructions: string;
   recipeName: string;

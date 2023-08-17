@@ -3,7 +3,7 @@ import {
   Box,
   Container,
   IconButton,
-  Image,
+  Image as ChakraImage,
   Input,
   InputGroup,
   InputRightElement,
@@ -22,16 +22,23 @@ import {
 import { AddIcon, CheckIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSingleRecipe, editSingleRecipe } from "../utils/fetchData";
-import { SavedRecipe, SavedIngredient, RecipeTag } from "../utils/types";
+import {
+  SavedRecipe,
+  SavedIngredient,
+  RecipeTag,
+  EditedRecipe
+} from "../utils/types";
 import IngredientAmountHandle from "./IngredientAmountHandle";
 
 const EditRecipe = () => {
-  const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
+  // const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
+  const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
   const [ingredients, setIngredients] = useState<Array<SavedIngredient> | null>(
     null
   );
   const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
   const [diets, setDiets] = useState<Array<string> | null>(null);
+  const [editSrcImage, setEditSrcImage] = useState<string | null>(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -42,6 +49,7 @@ const EditRecipe = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
+        setEditSrcImage(response.data.recipeImage);
         setIngredients(
           response.data.recipeIngredients.map(
             ({ _id, ...rest }: SavedIngredient) => {
@@ -56,6 +64,7 @@ const EditRecipe = () => {
         );
         setDiets(response.data.recipeSpecialDiets);
       })
+
       .catch(error => {
         console.log(error);
       });
@@ -87,6 +96,7 @@ const EditRecipe = () => {
   if (ingredients === null) return null;
   if (tags === null) return null;
   if (diets === null) return null;
+  if (editSrcImage === null) return;
 
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
@@ -138,6 +148,7 @@ const EditRecipe = () => {
       as="form"
       onSubmit={e => {
         e.preventDefault();
+        console.log(recipe);
         saveRecipe();
       }}>
       <Container maxW="5xl">
@@ -161,7 +172,6 @@ const EditRecipe = () => {
                 icon={<CheckIcon />}
                 title="edit recipe"
                 type="submit"
-                // onClick={saveRecipe}
               />
               <IconButton
                 size="lg"
@@ -555,7 +565,33 @@ const EditRecipe = () => {
             </Flex>
           </GridItem>
           <GridItem colSpan={1} w="100%">
-            <Image w="100%" src={recipe.recipeImage} alt={recipe.recipeName} />
+            <ChakraImage w="100%" src={editSrcImage} alt={recipe.recipeName} />
+            <FormControl w="70%" marginY="5">
+              <FormLabel>
+                <b>Image</b>
+              </FormLabel>
+              <Input
+                size="sm"
+                type="file"
+                name="recipeImage"
+                accept="image/png, image/jpeg, image/avif"
+                onChange={e => {
+                  console.log(e);
+                  if (e.target.files === null) return;
+                  const file = e.target.files[0];
+                  const newSrc = URL.createObjectURL(file);
+                  setEditSrcImage(newSrc);
+                  console.log(newSrc);
+                  setRecipe({
+                    ...recipe,
+                    recipeImage: e.target.files[0]
+                  });
+
+                  console.log(recipe);
+                }}
+              />
+            </FormControl>
+
             <Flex marginY="7">
               <Text marginRight="2">
                 <b>Tags</b>
