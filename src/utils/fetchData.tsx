@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AIRecipe, SavedRecipe } from "./types";
+import { AIRecipe, SavedRecipe, EditedRecipe } from "./types";
 
 export const register = (name: string, email: string, password: string) => {
   return axios.post(
@@ -89,7 +89,10 @@ export const getSingleRecipe = (recipeId: string) => {
   });
 };
 
-export const editSingleRecipe = (recipeId: string, recipe: SavedRecipe) => {
+export const editSingleRecipe = (
+  recipeId: string,
+  recipe: SavedRecipe | EditedRecipe
+) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.patch(
     `http://localhost:3000/api/v1/recipes/${recipeId}`,

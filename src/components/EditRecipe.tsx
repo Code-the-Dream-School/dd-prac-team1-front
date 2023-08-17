@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
+  Button,
   Container,
   IconButton,
   Image as ChakraImage,
@@ -31,14 +32,12 @@ import {
 import IngredientAmountHandle from "./IngredientAmountHandle";
 
 const EditRecipe = () => {
-  // const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
   const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
-  const [ingredients, setIngredients] = useState<Array<SavedIngredient> | null>(
-    null
-  );
-  const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
-  const [diets, setDiets] = useState<Array<string> | null>(null);
-  const [editSrcImage, setEditSrcImage] = useState<string | null>(null);
+  const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
+  const [tags, setTags] = useState<Array<RecipeTag>>([]);
+  const [diets, setDiets] = useState<Array<string>>([]);
+  const [editSrcImage, setEditSrcImage] = useState<string>("");
+  const nativeFilePickerRef = useRef<HTMLInputElement>(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -93,10 +92,6 @@ const EditRecipe = () => {
   };
 
   if (recipe === null) return null;
-  if (ingredients === null) return null;
-  if (tags === null) return null;
-  if (diets === null) return null;
-  if (editSrcImage === null) return;
 
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
@@ -167,7 +162,7 @@ const EditRecipe = () => {
               justifyContent="center">
               <IconButton
                 size="lg"
-                variant="outline"
+                variant="solid"
                 aria-label="Edit recipe"
                 icon={<CheckIcon />}
                 title="edit recipe"
@@ -175,7 +170,7 @@ const EditRecipe = () => {
               />
               <IconButton
                 size="lg"
-                variant="outline"
+                variant="solid"
                 aria-label="Do not edit the recipe"
                 icon={<CloseIcon />}
                 title="Cancel"
@@ -339,7 +334,7 @@ const EditRecipe = () => {
                   </Text>
                   <IconButton
                     size="sm"
-                    variant="outline"
+                    variant="solid"
                     aria-label="add ingredient"
                     icon={<AddIcon />}
                     title="add ingredient"
@@ -360,7 +355,6 @@ const EditRecipe = () => {
                 {ingredients.map((ingredient, index) => (
                   <Flex key={index}>
                     <FormControl marginRight="7" w="70%">
-                      <FormLabel></FormLabel>
                       <Input
                         size="sm"
                         name="ingredientName"
@@ -387,7 +381,6 @@ const EditRecipe = () => {
                       }}
                     />
                     <FormControl marginRight="1" w="30%">
-                      <FormLabel></FormLabel>
                       <Select
                         size="sm"
                         value={ingredient.ingredientUnit}
@@ -418,7 +411,7 @@ const EditRecipe = () => {
                     </FormControl>
                     <IconButton
                       size="sm"
-                      variant="outline"
+                      variant="solid"
                       aria-label="remove ingredient"
                       icon={<MinusIcon />}
                       title="remove ingredient"
@@ -565,40 +558,53 @@ const EditRecipe = () => {
             </Flex>
           </GridItem>
           <GridItem colSpan={1} w="100%">
-            <ChakraImage w="100%" src={editSrcImage} alt={recipe.recipeName} />
-            <FormControl w="70%" marginY="5">
-              <FormLabel>
-                <b>Image</b>
-              </FormLabel>
-              <Input
-                size="sm"
-                type="file"
-                name="recipeImage"
-                accept="image/png, image/jpeg, image/avif"
-                onChange={e => {
-                  console.log(e);
-                  if (e.target.files === null) return;
-                  const file = e.target.files[0];
-                  const newSrc = URL.createObjectURL(file);
-                  setEditSrcImage(newSrc);
-                  console.log(newSrc);
-                  setRecipe({
-                    ...recipe,
-                    recipeImage: e.target.files[0]
-                  });
+            <ChakraImage
+              w="100%"
+              src={editSrcImage || ""}
+              alt={recipe.recipeName}
+            />
+            <Flex marginY="3">
+              <FormControl w="70%">
+                <Input
+                  size="sm"
+                  ref={nativeFilePickerRef}
+                  style={{ display: "none" }}
+                  type="file"
+                  name="recipeImage"
+                  placeholder="Choose img"
+                  accept="image/png, image/jpeg, image/avif"
+                  onChange={e => {
+                    console.log(e);
+                    if (e.target.files === null) return;
+                    const file = e.target.files[0];
+                    const newSrc = URL.createObjectURL(file);
+                    setEditSrcImage(newSrc);
+                    console.log(newSrc);
+                    setRecipe({
+                      ...recipe,
+                      recipeImage: e.target.files[0]
+                    });
+                    console.log(recipe);
+                  }}
+                />
+              </FormControl>
+            </Flex>
 
-                  console.log(recipe);
-                }}
-              />
-            </FormControl>
-
+            <Button
+              w="100%"
+              onClick={() => {
+                if (nativeFilePickerRef.current === null) return;
+                nativeFilePickerRef.current.click();
+              }}>
+              Upload image
+            </Button>
             <Flex marginY="7">
               <Text marginRight="2">
                 <b>Tags</b>
               </Text>
               <IconButton
                 size="sm"
-                variant="outline"
+                variant="solid"
                 aria-label="add tag"
                 icon={<AddIcon />}
                 title="add tag"
@@ -608,7 +614,6 @@ const EditRecipe = () => {
             {tags.map((tag, index) => (
               <Flex key={index}>
                 <FormControl marginRight="1">
-                  <FormLabel></FormLabel>
                   <Input
                     size="sm"
                     type="text"
@@ -627,7 +632,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
@@ -636,13 +641,14 @@ const EditRecipe = () => {
                 />
               </Flex>
             ))}
+
             <Flex marginY="5">
               <Text marginRight="2">
                 <b>Special diets</b>
               </Text>
               <IconButton
                 size="sm"
-                variant="outline"
+                variant="solid"
                 aria-label="add diet"
                 icon={<AddIcon />}
                 title="add diet"
@@ -652,7 +658,6 @@ const EditRecipe = () => {
             {diets.map((diet, index) => (
               <Flex key={index}>
                 <FormControl marginRight="1">
-                  <FormLabel></FormLabel>
                   <Select
                     size="sm"
                     placeholder="Choose diet"
@@ -685,7 +690,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"

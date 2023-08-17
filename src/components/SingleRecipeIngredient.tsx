@@ -8,7 +8,9 @@ const SingleRecipeIngredient = ({
   ingredient
 }: SingleRecipeIngredientProps) => {
   const amount = () => {
-    if (ingredient.ingredientAmount === -1) {
+    if (ingredient.ingredientAmount === 0) {
+      return "";
+    } else if (ingredient.ingredientAmount === -1) {
       return "to taste";
     } else if (ingredient.ingredientAmount === -2) {
       return "for serving";
@@ -19,14 +21,15 @@ const SingleRecipeIngredient = ({
   };
   return (
     <ListItem>
-      {`${amount()} 
+      {`${ingredient.ingredientName}
+      ${amount()} 
         ${
           ingredient.ingredientAmount <= 0
             ? ""
             : ingredient.ingredientUnit !== "other"
             ? ingredient.ingredientUnit
             : ""
-        } ${ingredient.ingredientName}`}
+        } `}
     </ListItem>
   );
 };
