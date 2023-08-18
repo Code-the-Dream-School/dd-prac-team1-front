@@ -147,7 +147,7 @@ const EditRecipe = () => {
         saveRecipe();
       }}>
       <Container maxW="5xl">
-        <Grid templateColumns="repeat(3, 1fr)" gap={6} marginTop="10">
+        <Grid templateColumns="repeat(3, 1fr)" gap="2" mt="10" mb="5">
           <GridItem colSpan={2} w="100%">
             <Heading as="h3">Edit your recipe</Heading>
           </GridItem>
@@ -158,7 +158,6 @@ const EditRecipe = () => {
               flexShrink="1"
               flexWrap="wrap"
               position="absolute"
-              bottom="2"
               justifyContent="center">
               <IconButton
                 size="lg"
@@ -181,10 +180,10 @@ const EditRecipe = () => {
             </Flex>
           </GridItem>
         </Grid>
-        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <Grid templateColumns="repeat(3, 1fr)" gap="2">
           <GridItem colSpan={2} w="95%">
             <Flex flexDirection="column">
-              <Box marginTop="10" alignItems="center" gap={2}>
+              <Box mt="10" alignItems="center" gap="2">
                 <FormControl w="70%" marginY="5">
                   <FormLabel>
                     <b>Recipe name</b>
@@ -202,7 +201,7 @@ const EditRecipe = () => {
                     }}
                   />
                 </FormControl>
-                <FormControl w="70%" marginY="7">
+                <FormControl w="70%" marginY="5">
                   <FormLabel>
                     <b>Recipe category</b>
                   </FormLabel>
@@ -321,7 +320,7 @@ const EditRecipe = () => {
                         });
                       }}
                     />
-                    <InputRightElement marginRight="5">
+                    <InputRightElement mr="5">
                       <Text fontSize="12">persons</Text>
                     </InputRightElement>
                   </InputGroup>
@@ -329,7 +328,7 @@ const EditRecipe = () => {
               </Flex>
               <Flex flexDirection="column" gap="4">
                 <Flex mt="5">
-                  <Text marginRight="2">
+                  <Text mr="2">
                     <b>Ingredients</b>
                   </Text>
                   <IconButton
@@ -400,7 +399,7 @@ const EditRecipe = () => {
                     </GridItem>
                     <GridItem colSpan={1} w="100%">
                       {ingredient.ingredientAmount >= 0 && (
-                        <FormControl marginRight="1" w="100%">
+                        <FormControl mr="1" w="100%">
                           <Select
                             size="sm"
                             value={ingredient.ingredientUnit}
@@ -469,7 +468,7 @@ const EditRecipe = () => {
                   <b>Nutrition Information</b>
                 </Text>
                 <Flex>
-                  <FormControl marginRight="2" w="20%">
+                  <FormControl mr="2" w="20%">
                     <FormLabel>
                       <i>Calories</i>
                     </FormLabel>
@@ -496,7 +495,7 @@ const EditRecipe = () => {
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <FormControl marginRight="2" w="20%">
+                  <FormControl mr="2" w="20%">
                     <FormLabel>
                       <i>Carbs</i>
                     </FormLabel>
@@ -523,7 +522,7 @@ const EditRecipe = () => {
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <FormControl marginRight="2" w="20%">
+                  <FormControl mr="2" w="20%">
                     <FormLabel>
                       <i>Protein</i>
                     </FormLabel>
@@ -550,7 +549,7 @@ const EditRecipe = () => {
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <FormControl marginRight="2" w="20  %">
+                  <FormControl mr="2" w="20  %">
                     <FormLabel>
                       <i>Fat</i>
                     </FormLabel>
@@ -587,7 +586,7 @@ const EditRecipe = () => {
               src={editSrcImage || ""}
               alt={recipe.recipeName}
             />
-            <Flex marginY="3">
+            <Flex marginY="5">
               <FormControl w="70%">
                 <Input
                   size="sm"
@@ -622,8 +621,8 @@ const EditRecipe = () => {
               }}>
               Upload image
             </Button>
-            <Flex marginY="7">
-              <Text marginRight="2">
+            <Flex marginY="5">
+              <Text mr="2">
                 <b>Tags</b>
               </Text>
               <IconButton
@@ -637,7 +636,7 @@ const EditRecipe = () => {
             </Flex>
             {tags.map((tag, index) => (
               <Flex key={index}>
-                <FormControl marginRight="1">
+                <FormControl mr="1">
                   <Input
                     size="sm"
                     type="text"
@@ -652,7 +651,6 @@ const EditRecipe = () => {
                       });
                     }}
                   />
-                  <FormHelperText></FormHelperText>
                 </FormControl>
                 <IconButton
                   size="sm"
@@ -660,14 +658,14 @@ const EditRecipe = () => {
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
-                  margin="2"
+                  m="2"
                   onClick={() => handleInputRemove("tags", index)}
                 />
               </Flex>
             ))}
 
             <Flex marginY="5">
-              <Text marginRight="2">
+              <Text mr="2">
                 <b>Special diets</b>
               </Text>
               <IconButton
@@ -681,7 +679,7 @@ const EditRecipe = () => {
             </Flex>
             {diets.map((diet, index) => (
               <Flex key={index}>
-                <FormControl marginRight="1">
+                <FormControl mr="1">
                   <Select
                     size="sm"
                     placeholder="Choose diet"
@@ -718,7 +716,7 @@ const EditRecipe = () => {
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
-                  margin="2"
+                  m="2"
                   onClick={() => handleInputRemove("diets", index)}
                 />
               </Flex>
