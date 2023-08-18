@@ -6,13 +6,11 @@ type IngredientProps = { ingredient: AIIngredient };
 
 const IngredientList = ({ ingredient }: IngredientProps) => {
   return (
-    <UnorderedList>
-      <ListItem>
-        {`${ingredient.quantity} ${
-          ingredient.unit !== "unit" ? ingredient.unit : ""
-        } ${ingredient.name}`}
-      </ListItem>
-    </UnorderedList>
+    <ListItem>
+      {`${ingredient.quantity} ${
+        ingredient.unit !== "unit" ? ingredient.unit : ""
+      } ${ingredient.name}`}
+    </ListItem>
   );
 };
 export default IngredientList;
