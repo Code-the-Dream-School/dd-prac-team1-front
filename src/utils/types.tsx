@@ -24,7 +24,7 @@ export type SavedIngredient = {
   ingredientAmount: number;
   ingredientName: string;
   ingredientUnit: string;
-  _id: string;
+  _id?: string;
 };
 
 export type RecipeNutritionInfo = {
@@ -36,7 +36,7 @@ export type RecipeNutritionInfo = {
 
 export type RecipeTag = {
   tagName: string;
-  _id: string;
+  _id?: string;
 };
 
 export type SavedRecipe = {
