@@ -1,11 +1,12 @@
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 import {
     AspectRatio,
     Box,
+    Button,
     Flex,
-    Heading,
     Input,
     Stack,
+    Image as ChakraImage
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import { AnimationVariants } from "../../utils/types"; 
@@ -87,6 +88,11 @@ type Props = {
     backgroundImage: string;
 }
 
+type DropImageProps = {
+    srcImage: string,
+    onChange: Function,
+};
+
 const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
 
     return (
@@ -110,11 +116,11 @@ const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
     );
     });
 
-const DropImage = () => {
+const DropImage = ({ srcImage, onChange }:DropImageProps) => {
     const controls = useAnimation();
     const startAnimation = () => controls.start("hover");
     const stopAnimation = () => controls.stop();
-
+    const nativeFilePickerRef = useRef<HTMLInputElement>(null);
     return (
         <Flex justifyContent="center">
         <AspectRatio width="sm" ratio={1}>
@@ -142,47 +148,76 @@ const DropImage = () => {
                 width="100%"
                 display="flex"
                 flexDirection="column">
-                <Stack
-                    height="100%"
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                    justify="center"
-                    spacing="4">
-                    <Box height="16" width="12" position="relative">
-                    <PreviewImage
-                        variants={first}
-                        backgroundImage={`url(${require("./imagesPreview/uploadPicture3.jpg")})`}
-                    />
-                    <PreviewImage
-                        variants={second}
-                        backgroundImage={`url(${require("./imagesPreview/uploadPicture2.jpg")})`}
-                    />
-                    <PreviewImage
-                        variants={third}
-                        backgroundImage={`url(${require("./imagesPreview/uploadPicture1.jpg")})`}
-                    />
-                    </Box>
-                    <Stack p="8" textAlign="center" spacing="1">
-                    <Heading fontSize="lg" fontWeight="bold" >
-                        Сlick to upload
-                    </Heading>
+
+                {srcImage ? 
+                    (
+                        <Box height="16" width="12" position="relative">
+                            <ChakraImage
+                            // w="100%"
+                            src={srcImage || ""}
+                            // alt={recipe.recipeName}
+                            />
+                        </Box>
+                    ) 
+                    :
+                    (  
+                    <Stack
+                        height="100%"
+                        width="100%"
+                        display="flex"
+                        alignItems="center"
+                        justify="center"
+                        spacing="4"
+                        >
+                        <Box height="16" width="12" position="relative">
+                            <PreviewImage
+                                variants={first}
+                                backgroundImage={`url(${require("./imagesPreview/uploadPicture3.jpg")})`}
+                            />
+                            <PreviewImage
+                                variants={second}
+                                backgroundImage={`url(${require("./imagesPreview/uploadPicture2.jpg")})`}
+                            />
+                            <PreviewImage
+                                variants={third}
+                                backgroundImage={`url(${require("./imagesPreview/uploadPicture1.jpg")})`}
+                            />
+                        </Box>
+                        <Stack p="8" textAlign="center" spacing="1">
+                            <Input
+                                ref={nativeFilePickerRef}
+                                type="file"
+                                name="recipeImage"
+                                placeholder="Choose img"
+                                accept="image/png, image/jpeg, image/avif"
+                                onChange={onChange}
+                                height="100%"
+                                width="100%"
+                                position="absolute"
+                                top="0"
+                                left="0"
+                                opacity="0"
+                                aria-hidden="true"
+                                onDragEnter={startAnimation}
+                                onDragLeave={stopAnimation}
+                            />
+                            <Button 
+                                fontSize="lg"
+                                fontWeight="bold"
+                                onClick={() => {
+                                if (nativeFilePickerRef.current === null) return;
+                                nativeFilePickerRef.current.click();
+                                console.log(nativeFilePickerRef)
+                                console.log("i am fine")
+                                }} 
+                            >
+                                Сlick to upload
+                            </Button>
+                        </Stack>
                     </Stack>
-                </Stack>
+                    )
+                }        
                 </Box>
-                <Input
-                type="file"
-                height="100%"
-                width="100%"
-                position="absolute"
-                top="0"
-                left="0"
-                opacity="0"
-                aria-hidden="true"
-                accept="image/*"
-                onDragEnter={startAnimation}
-                onDragLeave={stopAnimation}
-                />
             </Box>
             </Box>
         </AspectRatio>

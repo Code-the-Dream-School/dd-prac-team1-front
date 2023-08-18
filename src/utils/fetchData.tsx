@@ -79,7 +79,7 @@ export const saveManualRecipe = (recipe: SavedRecipe) => {
     },
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${jwtToken}`
       }
     }

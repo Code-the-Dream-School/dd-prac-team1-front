@@ -1,6 +1,6 @@
 import { Box, Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { FormControl, Grid, GridItem, IconButton, Input, Textarea, Text, Button, 
-   // useToast 
+    useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MinusIcon } from "@chakra-ui/icons";
@@ -13,24 +13,27 @@ import { complexityOptions } from "../../utils/OptionsData";
 import { specialDietsOptions } from "../../utils/OptionsData";
 import { tagsOptions } from "../../utils/OptionsData";
 import { unitOptions } from "../../utils/OptionsData";
-import { SavedIngredient, SavedRecipe } from "../../utils/types";
+import { SavedIngredient, SavedRecipe, RecipeTag } from "../../utils/types";
 import { MultiValue } from "chakra-react-select";
-//import { saveManualRecipe } from "../../utils/fetchData";
+import { saveManualRecipe } from "../../utils/fetchData";
 //import { useNavigate, useParams } from "react-router-dom";
 
 
 const RecipeManual = () => {
     const [recipe, setRecipe] = useState<SavedRecipe>({});
     const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
-    const [tags, setTags] = useState<Array<string>>([]);
+    const [tags, setTags] = useState<Array<RecipeTag>>([]);
     const [diets, setDiets] = useState<Array<string>>([]);
+    const [srcImage, setsrcImage] = useState<string>("");
 
     
 
     //const { slug } = useParams();
     //const recipeId = slug;
     //const navigate = useNavigate();
-    //const toast = useToast();
+    const toast = useToast();
+
+
 
     const saveRecipe = () => {
         setRecipe({
@@ -42,10 +45,10 @@ const RecipeManual = () => {
         console.log(recipe);
         //if (recipeId === undefined) return;
         //if (recipe === null) return;
-           /* saveManualRecipe(recipeId, recipe)
+        saveManualRecipe(recipe)
             .then(response => {
                 console.log(response);
-                navigate(`/saved-recipes/${recipeId}`);
+               // navigate(`/saved-recipes/${recipeId}`);
             })
             .catch(error => {
                 console.log(error);
@@ -57,7 +60,7 @@ const RecipeManual = () => {
                 isClosable: true,
                 position: "top"
                 });
-            });*/
+            });
         };
         const handleInputAdd = () => {
                 setIngredients([
@@ -294,9 +297,9 @@ const RecipeManual = () => {
                         onChange={(
                             event
                         )=> {
-                            let tagsArray: Array<string> = [];
-                            tagsArray = event.map(item => item.value);
-                            setTags(tagsArray)
+                            let tagsArray = event.map(item => item.value);
+                            let recipeTagNames = tagsArray.map(tagValue => ({ tagName: tagValue }));
+                            setTags(recipeTagNames)
                         }
                     } 
                         />
@@ -312,8 +315,7 @@ const RecipeManual = () => {
                         onChange={(
                             event: MultiValue<{ label: string; value: string }>
                         ) => {
-                            let dietsArray: Array<string> = [];
-                            dietsArray = event.map(item => item.value);
+                            let dietsArray = event.map(item => item.value);
                             setDiets(dietsArray)
                         }
                     } 
@@ -397,20 +399,19 @@ const RecipeManual = () => {
                 <GridItem colSpan={2}> 
                     <Input
                         type="number"
-                        id="calories"
-                        name="calories"
                         placeholder="kcal"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                    //    value={
-                    //         recipe.recipeNutritionInfo.NutritionInfoCalories || ""
-                    //     }
+                        value={
+                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoCalories
+                        }
                         min="0"
-                        onChange={e => {
+                        onChange={event => {
+                            console.log(event.target.value)
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
                                 ...recipe.recipeNutritionInfo,
-                                NutritionInfoCalories: Number(e.target.value)
+                                NutritionInfoCalories: Number(event.target.value)
                                 }
                             });
                         }}
@@ -425,20 +426,18 @@ const RecipeManual = () => {
                 <GridItem colSpan={2}> 
                     <Input
                         type="number"
-                        id="carbs"
-                        name="carbs"
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        // value={
-                        //     recipe.recipeNutritionInfo.NutritionInfoCarbs || ""
-                        // }
+                        value={
+                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoCarbs
+                        }
                         min="0"
-                        onChange={e => {
+                        onChange={event => {
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
                                     ...recipe.recipeNutritionInfo,
-                                    NutritionInfoCarbs: Number(e.target.value)
+                                    NutritionInfoCarbs: Number(event.target.value)
                                 }
                             });
                         }}
@@ -453,20 +452,18 @@ const RecipeManual = () => {
                 <GridItem colSpan={2}> 
                     <Input
                         type="number"
-                        id="protein"
-                        name="protein"
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        // value={
-                        //     recipe.recipeNutritionInfo.NutritionInfoProtein || ""
-                        // }
+                        /*value=
+                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoProtein
+                        }*/
                         min="0"
-                        onChange={e => {
+                        onChange={event => {
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
                                     ...recipe.recipeNutritionInfo,
-                                    NutritionInfoProtein: Number(e.target.value)
+                                    NutritionInfoProtein: Number(event.target.value)
                                 }
                             });
                         }}
@@ -481,30 +478,40 @@ const RecipeManual = () => {
                 <GridItem colSpan={2}> 
                     <Input
                         type="number"
-                        // value={
-                        //     recipe.recipeNutritionInfo.NutritionInfoFat || ""
-                        // }
+                        value={
+                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoFat
+                        }
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
                         min="0"
-                        onChange={e => {
+                        onChange={event => {
+                            console.log(recipe.recipeNutritionInfo )
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
                                     ...recipe.recipeNutritionInfo,
-                                    NutritionInfoFat: Number(e.target.value)
+                                    NutritionInfoFat: Number(event.target.value)
                                 }
                             });
                         }}
 
                     />
                 </GridItem>
-
                 </Grid>
-
             </GridItem>
             <GridItem colSpan={4}>
-                <DropImage/>
+                <DropImage srcImage={srcImage} onChange={ event => {
+                    console.log(event);
+                    if (event.target.files === null) return;
+                    const file = event.target.files[0];
+                    const newSrc = URL.createObjectURL(file);
+                    setsrcImage(newSrc);
+                    setRecipe({
+                        ...recipe,
+                        recipeImage: event.target.files[0]
+                    });
+                }
+                }/>
             </GridItem>
             </Grid>
 
