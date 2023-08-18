@@ -1,6 +1,6 @@
 import React from "react";
 import { ListItem, UnorderedList } from "@chakra-ui/react";
-import { SavedIngredient } from "../utils/types";
+import { SavedIngredient } from "../../utils/types";
 
 type SingleRecipeIngredientsProps = { ingredient: SavedIngredient };
 
