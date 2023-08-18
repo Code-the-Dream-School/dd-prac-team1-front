@@ -15,8 +15,8 @@ import {
   UnorderedList
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
-import { SavedRecipe } from "../utils/types";
-import { getSingleRecipe, deleteSingleRecipe } from "../utils/fetchData";
+import { SavedRecipe } from "../../utils/types";
+import { getSingleRecipe, deleteSingleRecipe } from "../../utils/fetchData";
 import {
   ArrowBackIcon,
   CheckIcon,
@@ -272,14 +272,14 @@ const SingleRecipePage = () => {
                   </Flex>
                   <Collapse in={openNutrition} animateOpacity>
                     {nutrition.map(({ displayName, content, unit }, index) => (
-                      <>
+                      <Box key={index}>
                         {content > 0 && (
-                          <Text as="span" key={index}>
+                          <Text as="span">
                             <b>{displayName}:</b> {content}
                             {unit}&nbsp;
                           </Text>
                         )}
-                      </>
+                      </Box>
                     ))}
                   </Collapse>
                 </Box>

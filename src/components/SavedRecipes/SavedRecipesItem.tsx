@@ -1,23 +1,18 @@
 import React from "react";
 import { Card, CardBody, GridItem, Image, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { SavedRecipe } from "../utils/types";
+import { SavedRecipe } from "../../utils/types";
 
 type SavedRecipeProps = {
   recipe: SavedRecipe;
-  // setSearchParams: Function;
 };
 
-const SavedRecipesItem = ({
-  recipe
-}: // setSearchParams
-SavedRecipeProps) => {
+const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
   const navigate = useNavigate();
   const slug = `${recipe._id}`;
 
   const handleClick = () => {
     navigate(`/saved-recipes/${slug}`);
-    // setSearchParams("")
   };
 
   return (

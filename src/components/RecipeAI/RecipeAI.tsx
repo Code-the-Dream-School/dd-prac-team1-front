@@ -11,8 +11,8 @@ import {
   UnorderedList
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { AIRecipe } from "../utils/types";
-import { saveRecipe } from "../utils/fetchData";
+import { AIRecipe } from "../../utils/types";
+import { saveRecipe } from "../../utils/fetchData";
 import IngredientList from "./IngredientList";
 import InstructionList from "./InstructionList";
 
@@ -54,13 +54,14 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         ))}
       </GridItem>
       <GridItem w="100%">
-        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
         <Center>
           <Button
+            variant="outline"
+            marginBottom="5"
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "white" : ""}
+                color={ifSaved ? "red" : ""}
               />
             }
             isDisabled={ifSaved}
@@ -68,6 +69,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             {save}
           </Button>
         </Center>
+        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
       </GridItem>
     </Grid>
   );
