@@ -17,20 +17,7 @@ const IngredientAmountHandle = ({
   }, [ingredient.ingredientAmount]);
   return (
     <Flex justifyContent="center">
-      {mode === 0 && (
-        <FormControl mr="2" w="40%">
-          <Input
-            size="sm"
-            name="ingredientAmount"
-            type="number"
-            value={ingredient.ingredientAmount}
-            onChange={e => {
-              onChange(e.target.value);
-            }}
-          />
-        </FormControl>
-      )}
-      <FormControl>
+      <FormControl mr="2">
         <Select
           size="sm"
           value={mode}
@@ -47,6 +34,19 @@ const IngredientAmountHandle = ({
           <option value="-3">for garnish</option>
         </Select>
       </FormControl>
+      {mode === 0 && (
+        <FormControl w="40%">
+          <Input
+            size="sm"
+            name="ingredientAmount"
+            type="number"
+            value={ingredient.ingredientAmount}
+            onChange={e => {
+              onChange(e.target.value);
+            }}
+          />
+        </FormControl>
+      )}
     </Flex>
   );
 };

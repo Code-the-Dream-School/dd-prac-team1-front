@@ -327,7 +327,7 @@ const EditRecipe = () => {
                 </FormControl>
               </Flex>
               <Flex flexDirection="column" gap="4">
-                <Flex mt="5">
+                <Flex mt="5" alignItems="center">
                   <Text mr="2">
                     <b>Ingredients</b>
                   </Text>
@@ -621,7 +621,7 @@ const EditRecipe = () => {
               }}>
               Upload image
             </Button>
-            <Flex marginY="5">
+            <Flex marginY="5" alignItems="center">
               <Text mr="2">
                 <b>Tags</b>
               </Text>
@@ -664,7 +664,7 @@ const EditRecipe = () => {
               </Flex>
             ))}
 
-            <Flex marginY="5">
+            <Flex marginY="5" alignItems="center">
               <Text mr="2">
                 <b>Special diets</b>
               </Text>
