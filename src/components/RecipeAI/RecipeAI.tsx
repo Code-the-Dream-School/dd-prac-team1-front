@@ -7,8 +7,7 @@ import {
   GridItem,
   Text,
   Button,
-  Icon,
-  UnorderedList
+  Icon
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { AIRecipe } from "../../utils/types";
@@ -27,7 +26,6 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   const handleSaveRecipe = () => {
     saveRecipe(recipe)
       .then(response => {
-        console.log(response);
         setSave("SAVED");
         setIfSaved(true);
       })
@@ -43,24 +41,23 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
           Sure! Here's a simple and delicious recipe for {recipe.recipeName}:
         </Text>
         <Heading as="h6">Ingredients:</Heading>
-        <UnorderedList>
-          {recipe.ingredients.map((ingredient, index) => (
-            <IngredientList key={index} ingredient={ingredient} />
-          ))}
-        </UnorderedList>
+        {recipe.ingredients.map((ingredient, index) => (
+          <IngredientList key={index} ingredient={ingredient} />
+        ))}
         <Heading as="h6">Instructions:</Heading>
         {recipe.instructions.map((instruction, index) => (
           <InstructionList key={index} instruction={instruction} />
         ))}
       </GridItem>
       <GridItem w="100%">
-        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
         <Center>
           <Button
+            variant="outline"
+            marginBottom="5"
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "white" : ""}
+                color={ifSaved ? "red" : ""}
               />
             }
             isDisabled={ifSaved}
@@ -68,6 +65,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             {save}
           </Button>
         </Center>
+        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
       </GridItem>
     </Grid>
   );

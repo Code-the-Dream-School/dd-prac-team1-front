@@ -11,8 +11,7 @@ import {
   GridItem,
   Heading,
   Text,
-  useDisclosure,
-  UnorderedList
+  useDisclosure
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../../utils/types";
@@ -26,7 +25,7 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredient from "./SingleRecipeIngredient";
+import SingleRecipeIngredients from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
 
 const SingleRecipePage = () => {
@@ -229,11 +228,9 @@ const SingleRecipePage = () => {
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
-              <UnorderedList>
-                {recipe.recipeIngredients.map((ingredient, _id) => (
-                  <SingleRecipeIngredient key={_id} ingredient={ingredient} />
-                ))}
-              </UnorderedList>
+              {recipe.recipeIngredients.map((ingredient, _id) => (
+                <SingleRecipeIngredients key={_id} ingredient={ingredient} />
+              ))}
             </Box>
             <Box marginTop="5">
               <Heading as="h3" size="md" marginBottom="3">
@@ -256,14 +253,14 @@ const SingleRecipePage = () => {
                   </Flex>
                   <Collapse in={isOpen} animateOpacity>
                     {nutrition.map(({ displayName, content, unit }, index) => (
-                      <>
+                      <Box key={index}>
                         {content > 0 && (
-                          <Text as="span" key={index}>
+                          <Text as="span">
                             <b>{displayName}:</b> {content}
                             {unit}&nbsp;
                           </Text>
                         )}
-                      </>
+                      </Box>
                     ))}
                   </Collapse>
                 </Box>

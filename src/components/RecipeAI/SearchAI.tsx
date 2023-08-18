@@ -37,7 +37,6 @@ const SearchAI = () => {
   const handleSearch = () => {
     searchAI(search, values)
       .then(response => {
-        console.log(response);
         setRecipe(response.data);
         setIsLoading(false);
       })
@@ -94,7 +93,6 @@ const SearchAI = () => {
         },
     }),
   };
-
   return (
     <Center>
       <Container maxW="6xl">

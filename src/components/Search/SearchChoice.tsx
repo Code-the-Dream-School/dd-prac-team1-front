@@ -21,7 +21,6 @@ const SearchChoice = () => {
 
   return (
     <Flex justifyContent={"center"} h="85vh">
-
       <HStack>
         <Card cursor="pointer" onClick={navigateToAISearch}>
           <CardHeader>
