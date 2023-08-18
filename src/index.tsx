@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
+import Contact from "./components/Contact";
 import SearchAI from "./components/SearchAI";
 import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
@@ -15,6 +16,13 @@ import SingleRecipePage from "./components/SingleRecipePage";
 import Footer from "./components/Footer";
 import OurTeam from "./components/OurTeam";
 import theme from "./CustomTheme";
+import EditRecipe from "./components/EditRecipe";
+import ShoppingList from "./components/ShoppingList";
+import Planner from "./components/Planner";
+import theme from "./CustomTheme";
+
+import NotFound from "./components/404";
+import { Navigate } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -26,14 +34,20 @@ root.render(
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route element={<Layout />}>
+          <Route path="/contact" element={<Contact />} />
+        <Route element={<Layout />}>
             <Route path="/search-choice" element={<SearchChoice />} />
             <Route path="/ai-recipe" element={<SearchAI />} />
             <Route path="/saved-recipes" element={<SavedRecipes />} />
             <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
             <Route path="/team" element={<OurTeam />} />
-          </Route>
-        </Routes>
+            <Route path="/edit/:slug" element={<EditRecipe />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/shopping-list" element={<ShoppingList />} />
+        </Route>
+          <Route path="/404" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
         <Footer />
       </BrowserRouter>
     </ChakraProvider>

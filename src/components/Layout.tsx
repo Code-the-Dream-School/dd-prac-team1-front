@@ -63,7 +63,7 @@ export default function Layout() {
             alignItems="center">
             <Box>Olivier Logo</Box>
             <HStack>
-              <RecipeSearch/>
+              <RecipeSearch />
             </HStack>
             <HStack
               display={{ base: "none", md: "flex" }}
@@ -76,8 +76,8 @@ export default function Layout() {
                 justifyContent={"flex-end"}>
                 <NavLink to="/search-choice">ADD RECIPE</NavLink>
                 <NavLink to="/saved-recipes">SAVED</NavLink>
-                <NavLink to="/app">PLANNER</NavLink>
-                <NavLink to="/app">SHOPPING</NavLink>
+                <NavLink to="/planner">PLANNER</NavLink>
+                <NavLink to="/shopping-list">SHOPPING</NavLink>
                 <NavLink onClick={handleLogout} to={""}>
                   LOGOUT
                 </NavLink>
@@ -91,14 +91,15 @@ export default function Layout() {
             <Stack as={"nav"} spacing={4}>
               <NavLink to="/search-choice">ADD RECIPE</NavLink>
               <NavLink to="/saved-recipes">SAVED</NavLink>
-              <NavLink to="/app">PLANNER</NavLink>
-              <NavLink to="/app">SHOPPING</NavLink>
+              <NavLink to="/planner">PLANNER</NavLink>
+              <NavLink to="/shopping-list">SHOPPING</NavLink>
+
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
         ) : null}
       </Box>
-        <Outlet/> 
+      <Outlet />
     </>
   );
 }
