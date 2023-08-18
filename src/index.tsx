@@ -13,10 +13,15 @@ import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
+import EditRecipe from "./components/EditRecipe";
+import ShoppingList from "./components/ShoppingList";
+import Planner from "./components/Planner";
+import theme from "./CustomTheme";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path="/app" element={<App />} />
@@ -29,6 +34,9 @@ root.render(
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
           <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
+          <Route path="/edit/:slug" element={<EditRecipe />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/shopping-list" element={<ShoppingList />} />
         </Route>
       </Routes>
     </BrowserRouter>

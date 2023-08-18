@@ -26,7 +26,6 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   const handleSaveRecipe = () => {
     saveRecipe(recipe)
       .then(response => {
-        console.log(response.data.data);
         setSave("SAVED");
         setIfSaved(true);
       })
@@ -51,13 +50,14 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         ))}
       </GridItem>
       <GridItem w="100%">
-        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
         <Center>
           <Button
+            variant="outline"
+            marginBottom="5"
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "white" : ""}
+                color={ifSaved ? "red" : ""}
               />
             }
             isDisabled={ifSaved}
@@ -65,6 +65,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             {save}
           </Button>
         </Center>
+        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
       </GridItem>
     </Grid>
   );
