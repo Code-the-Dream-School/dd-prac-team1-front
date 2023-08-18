@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
-import { SavedIngredient } from "../utils/types";
+import { SavedIngredient } from "../../utils/types";
 
 type IngredientAmountHandleProps = {
   ingredient: SavedIngredient;

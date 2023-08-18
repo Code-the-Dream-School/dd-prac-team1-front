@@ -1,30 +1,36 @@
 import React from "react";
-import { ListItem, UnorderedList } from "@chakra-ui/react";
+import { ListItem } from "@chakra-ui/react";
 import { SavedIngredient } from "../../utils/types";
 
-type SingleRecipeIngredientsProps = { ingredient: SavedIngredient };
+type SingleRecipeIngredientProps = { ingredient: SavedIngredient };
 
-const SingleRecipeIngredients = ({
+const SingleRecipeIngredient = ({
   ingredient
-}: SingleRecipeIngredientsProps) => {
+}: SingleRecipeIngredientProps) => {
+  const amount = () => {
+    if (ingredient.ingredientAmount === 0) {
+      return "";
+    } else if (ingredient.ingredientAmount === -1) {
+      return "to taste";
+    } else if (ingredient.ingredientAmount === -2) {
+      return "for serving";
+    } else if (ingredient.ingredientAmount === -3) {
+      return "for garnish";
+    }
+    return ingredient.ingredientAmount;
+  };
   return (
-    <UnorderedList>
-      <ListItem>
-        {`${
-          ingredient.ingredientAmount === 0
-            ? ""
-            : ingredient.ingredientAmount !== -1
-            ? ingredient.ingredientAmount
-            : "to taste"
-        } ${
-          ingredient.ingredientAmount === 0
+    <ListItem>
+      {`${ingredient.ingredientName}
+      ${amount()} 
+        ${
+          ingredient.ingredientAmount <= 0
             ? ""
             : ingredient.ingredientUnit !== "other"
             ? ingredient.ingredientUnit
             : ""
-        } ${ingredient.ingredientName}`}
-      </ListItem>
-    </UnorderedList>
+        } `}
+    </ListItem>
   );
 };
-export default SingleRecipeIngredients;
+export default SingleRecipeIngredient;
