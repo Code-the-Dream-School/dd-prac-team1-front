@@ -11,12 +11,12 @@ import {
   Input,
   Stack
 } from "@chakra-ui/react";
-import { searchAI } from "../utils/fetchData";
+import { searchAI } from "../../utils/fetchData";
 import { ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
-import { AIRecipe } from "../utils/types";
+import { AIRecipe } from "../../utils/types";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
-import { specialDietsOptions } from "../utils/OptionsData";
+import { specialDietsOptions } from "../../utils/OptionsData";
 
 const SearchAI = () => {
   const [search, setSearch] = useState<string>("");
@@ -100,8 +100,8 @@ const SearchAI = () => {
       <Container maxW="6xl">
         <Box
           as="form"
-          onSubmit={e => {
-            e.preventDefault();
+          onSubmit={event => {
+            event.preventDefault();
             handleSearch();
             setError(false);
             setIsLoading(true);
