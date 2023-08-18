@@ -26,15 +26,15 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredient from "./SingleRecipeIngredient";
+import SingleRecipeIngredient from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
-import ModalForServings from "./ModalForServings";
+import ModalForServings from "../ShoppingList/ModalForServings";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(recipe?.recipeServings);
-  const [];
+  // const [];
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
@@ -68,8 +68,8 @@ const SingleRecipePage = () => {
       });
   };
 
-  const CalculateServings = () => {
-    // console.log(value);
+  const CalculateServings = e => {
+    console.log(e);
   };
 
   const valueServings = () => {};

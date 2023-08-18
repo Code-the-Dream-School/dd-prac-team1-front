@@ -21,8 +21,8 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, CheckIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { useParams, useNavigate } from "react-router-dom";
-import { getSingleRecipe, editSingleRecipe } from "../utils/fetchData";
-import { SavedRecipe, SavedIngredient, RecipeTag } from "../utils/types";
+import { getSingleRecipe, editSingleRecipe } from "../../utils/fetchData";
+import { SavedRecipe, SavedIngredient, RecipeTag } from "../../utils/types";
 
 const EditRecipe = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
