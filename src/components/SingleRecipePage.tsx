@@ -28,11 +28,16 @@ import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import SingleRecipeTag from "./SingleRecipeTag";
+import ModalForServings from "./ModalForServings";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const { isOpen, onToggle } = useDisclosure();
+  const [servingSize, setServingSize] = useState(recipe?.recipeServings);
+  const [];
+  // const [openModal, setOpenModal] = useState(false);
+  const { isOpen: openNutrition, onToggle } = useDisclosure();
+  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -62,6 +67,12 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   };
+
+  const CalculateServings = () => {
+    // console.log(value);
+  };
+
+  const valueServings = () => {};
   if (recipe === null) return null;
   const nutrition = [
     {
@@ -195,9 +206,14 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  onClick={() => {
-                    navigate("/shopping-list");
-                  }}
+                  onClick={onOpen}
+                />
+                <ModalForServings
+                  isOpen={openModal}
+                  onClose={onClose}
+                  value={recipe.recipeServings}
+                  CalculateServings={CalculateServings}
+                  valueServings={valueServings}
                 />
                 <IconButton
                   size="lg"
@@ -254,7 +270,7 @@ const SingleRecipePage = () => {
                       <Icon as={ChevronDownIcon} />
                     </Box>
                   </Flex>
-                  <Collapse in={isOpen} animateOpacity>
+                  <Collapse in={openNutrition} animateOpacity>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <>
                         {content > 0 && (
