@@ -77,6 +77,14 @@ const theme = extendTheme({
           borderColor: "green"
         }
       }
+    },
+    Modal: {
+      variants: {
+        outline: {
+          borderColor: "green",
+          bg: "brandGray"
+        }
+      }
     }
   }
 });
