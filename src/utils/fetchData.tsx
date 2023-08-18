@@ -37,6 +37,7 @@ export const logout = () => {
 };
 
 export const searchAI = (search: string, values: Array<string>) => {
+  console.log(values)
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/",
@@ -57,6 +58,22 @@ export const saveRecipe = (recipe: AIRecipe) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-ai",
+    {
+      ...recipe
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const saveManualRecipe = (recipe: SavedRecipe) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.post(
+    "http://localhost:3000/api/v1/recipes/add-manual",
     {
       ...recipe
     },

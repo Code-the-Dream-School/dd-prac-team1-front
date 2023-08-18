@@ -49,3 +49,19 @@ export const tagsOptions = [
     { value: "Vegetables", label: "Vegetables" },  
     { value: "Fruits", label: "Fruits" },     
 ];
+
+export const unitOptions = [
+    { value: "g", label: "g" },
+    { value: "kg", label: "kg" },
+    { value: "ml", label: "ml" },
+    { value: "l", label: "l" },
+    { value: "lbs", label: "lbs" },
+    { value: "cup", label: "cup" },
+    { value: "cups", label: "cups" },
+    { value: "tsp", label: "tsp" },    
+    { value: "tbsp", label: "tbsp" },  
+    { value: "cloves", label: "cloves" },     
+    { value: "medium", label: "medium" }, 
+    { value: "pinch", label: "pinch" }, 
+    { value: "other", label: "other" }, 
+];

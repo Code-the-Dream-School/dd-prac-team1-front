@@ -11,6 +11,12 @@ const chakraStyles: ChakraStylesConfig = {
         borderColor: "green",
         borderRadius: "md"
     }),
+    placeholder: (provided) => ({
+        ...provided,
+        position:"absolute", 
+        marginTop: "-2", 
+        fontSize: "xs",
+    }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
         ...prev,
         bg: "green",
@@ -21,20 +27,24 @@ const chakraStyles: ChakraStylesConfig = {
     })
     };
 
-type OptionsProps = {options : Options[]}
+type OptionsProps = {
+    options : Options[],   
+    onChange: Function
+};
+    
 
-const MultipleCreatableSelectForm = ( {options}: OptionsProps ) => (
-        <Box>
+const MultipleCreatableSelectForm = ( { options, onChange}: OptionsProps ) => (
+        <Box  >
             <FormControl>
             <CreatableSelect        
                 isMulti
                 chakraStyles={chakraStyles}
                 focusBorderColor="brandGray"
                 //selectedOptionColorScheme="green"
-                name="colors"
                 options={options}
                 placeholder="Choose or type tags"
                 closeMenuOnSelect={false}
+                onChange={onChange}
             />  
             </FormControl>
         </Box>

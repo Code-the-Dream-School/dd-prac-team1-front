@@ -4,7 +4,7 @@ import {
     FormControl,
 
 } from "@chakra-ui/react";
-import {  ChakraStylesConfig, Select } from "chakra-react-select";
+import {  ActionMeta, ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
 import { Options } from "../../../utils/types";
 
 const chakraStyles: ChakraStylesConfig = {
@@ -14,6 +14,12 @@ const chakraStyles: ChakraStylesConfig = {
         borderWidth: "1px",
         borderColor: "green",
         borderRadius: "md"
+    }),
+    placeholder: (provided) => ({
+        ...provided,
+        position:"absolute", 
+        marginTop: "-3", 
+        fontSize: "xs"
     }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
         ...prev,
@@ -25,20 +31,30 @@ const chakraStyles: ChakraStylesConfig = {
     })
     };
 
-type OptionsProps = {options : Options[]}
+type OptionsProps = {
+    placeholder: string, 
+    options : Options[],   
+    id: string,
+    value: string,
+    name: string,
+    onChange: ((newValue: MultiValue<unknown>, actionMeta: ActionMeta<unknown>) => void) | undefined
+};
 
-const MultipleSelectForm = ( {options}: OptionsProps) => (
+const MultipleSelectForm = ( {options, id, value, name, onChange}: OptionsProps) => (
         <Box>
             <FormControl>
-            <Select        
+            <Select
+                id={id}
+                value={value} 
+                name={name}      
                 isMulti
                 chakraStyles={chakraStyles}
                 focusBorderColor="brandGray"
-              //  selectedOptionColorScheme="green"
-                name="colors"
+                //selectedOptionColorScheme="brandGray"
                 options={options}
                 placeholder="Choose a special diet"
                 closeMenuOnSelect={false}
+                onChange={onChange}
             />  
             </FormControl>
         </Box>

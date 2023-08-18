@@ -11,6 +11,12 @@ const chakraStyles: ChakraStylesConfig = {
         borderColor: "green",
         borderRadius: "md"
     }),
+    placeholder: (provided) => ({
+        ...provided,
+        position:"absolute", 
+        marginTop: "-3", 
+        fontSize: "xs"
+    }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
         ...prev,
         bg: "green",
@@ -21,19 +27,25 @@ const chakraStyles: ChakraStylesConfig = {
     })
     };
     
-type OptionsProps = {placeholder: string, options : Options[]}
+type OptionsProps = {
+    placeholder: string, 
+    options : Options[],   
+    value: Options,
+    onChange: Function
+};
 
-const SingleSelectForm = ( {placeholder, options}: OptionsProps ) => (
-        <Box>
+const SingleSelectForm = ( {placeholder, options, value, onChange}: OptionsProps ) => (
+        <Box >
             <FormControl>
-            <Select        
+            <Select
+                value={value}
                 chakraStyles={chakraStyles}
                 focusBorderColor="brandGray"
               //  selectedOptionColorScheme="green"
-                name="colors"
                 options={options}
                 placeholder={placeholder}
                 closeMenuOnSelect
+                onChange={onChange}
             />  
             </FormControl>
         </Box>
