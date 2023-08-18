@@ -17,6 +17,7 @@ import ShoppingList from "./components/ShoppingList";
 import Planner from "./components/Planner";
 import theme from "./CustomTheme";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <ChakraProvider theme={theme}>
