@@ -18,6 +18,8 @@ import ShoppingList from "./components/ShoppingList";
 import Planner from "./components/Planner";
 import theme from "./CustomTheme";
 
+import NotFound from "./components/404";
+import { Navigate } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -38,6 +40,8 @@ root.render(
           <Route path="/planner" element={<Planner />} />
           <Route path="/shopping-list" element={<ShoppingList />} />
         </Route>
+        <Route path="/404" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
