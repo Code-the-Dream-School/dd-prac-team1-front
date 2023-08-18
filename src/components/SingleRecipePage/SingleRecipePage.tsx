@@ -253,14 +253,14 @@ const SingleRecipePage = () => {
                   </Flex>
                   <Collapse in={isOpen} animateOpacity>
                     {nutrition.map(({ displayName, content, unit }, index) => (
-                      <>
+                      <Box key={index}>
                         {content > 0 && (
-                          <Text as="span" key={index}>
+                          <Text as="span">
                             <b>{displayName}:</b> {content}
                             {unit}&nbsp;
                           </Text>
                         )}
-                      </>
+                      </Box>
                     ))}
                   </Collapse>
                 </Box>
