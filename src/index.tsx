@@ -1,8 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, ChakraProvider } from "@chakra-ui/react";
-
+import { Navigate } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import theme from "./CustomTheme";
 import App from "./App";
 import Home from "./components/Home";
 import Register from "./components/Register";
@@ -15,14 +16,10 @@ import SavedRecipes from "./components/SavedRecipes";
 import SingleRecipePage from "./components/SingleRecipePage";
 import Footer from "./components/Footer";
 import OurTeam from "./components/OurTeam";
-import theme from "./CustomTheme";
 import EditRecipe from "./components/EditRecipe";
 import ShoppingList from "./components/ShoppingList";
 import Planner from "./components/Planner";
-import theme from "./CustomTheme";
-
 import NotFound from "./components/404";
-import { Navigate } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(

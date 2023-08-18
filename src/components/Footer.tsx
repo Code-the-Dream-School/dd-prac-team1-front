@@ -6,9 +6,7 @@ const Footer = () => {
     <Box
       as="footer"
       py={4}
-      position="absolute"
-      bottom="0"
-      height="82"
+      height="70"
       width="100%"
       bg="brandGray"
       color="black">
@@ -20,7 +18,9 @@ const Footer = () => {
             <Box as="a" href="/team" mx={10}>
               <Text
                 _hover={{
-                  borderBottom: "2px solid green"
+                  borderBottomColor: "green",
+                  borderBottomWidth: "2px",
+                  borderBottomStyle: "solid"
                 }}>
                 MEET THE TEAM
               </Text>
@@ -29,7 +29,9 @@ const Footer = () => {
             <Box as="a" href="/ContactUs" mr={10}>
               <Text
                 _hover={{
-                  borderBottom: "2px solid green"
+                  borderBottomColor: "green",
+                  borderBottomWidth: "2px",
+                  borderBottomStyle: "solid"
                 }}>
                 CONTACT
               </Text>

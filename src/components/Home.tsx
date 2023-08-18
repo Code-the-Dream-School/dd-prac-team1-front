@@ -16,7 +16,7 @@ const Home = () => {
       <GridItem
         colSpan={1}
         w="100%"
-        h="100vh"
+        h="90vh"
         backgroundImage="url('/images/avocado_toast.png')"
         backgroundPosition="center"
         backgroundSize="cover"
@@ -25,7 +25,7 @@ const Home = () => {
       <GridItem
         colSpan={1}
         w="100%"
-        h="100vh"
+        h="90vh"
         padding="50"
         display="flex"
         flexDirection="column">
