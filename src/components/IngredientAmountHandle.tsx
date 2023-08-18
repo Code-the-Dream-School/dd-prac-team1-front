@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { Input, Flex, FormControl, Select } from "@chakra-ui/react";
 import { SavedIngredient } from "../utils/types";
 
 type IngredientAmountHandleProps = {
@@ -16,10 +16,9 @@ const IngredientAmountHandle = ({
     if (ingredient.ingredientAmount === 0) setMode(1);
   }, [ingredient.ingredientAmount]);
   return (
-    <Flex w="80%" justifyContent="center">
+    <Flex justifyContent="center">
       {mode === 0 && (
-        <FormControl marginRight="3" w="40%">
-          <FormLabel></FormLabel>
+        <FormControl mr="2" w="40%">
           <Input
             size="sm"
             name="ingredientAmount"
@@ -31,8 +30,7 @@ const IngredientAmountHandle = ({
           />
         </FormControl>
       )}
-      <FormControl w="80%" marginRight="7">
-        <FormLabel></FormLabel>
+      <FormControl>
         <Select
           size="sm"
           value={mode}

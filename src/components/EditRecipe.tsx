@@ -327,8 +327,8 @@ const EditRecipe = () => {
                   </InputGroup>
                 </FormControl>
               </Flex>
-              <Box>
-                <Flex marginY="5">
+              <Flex flexDirection="column" gap="4">
+                <Flex mt="5">
                   <Text marginRight="2">
                     <b>Ingredients</b>
                   </Text>
@@ -341,86 +341,110 @@ const EditRecipe = () => {
                     onClick={() => handleInputAdd("ingredients")}
                   />
                 </Flex>
-                <Flex justifyContent="center">
-                  <Text w="50%">
-                    <i>ingredient</i>
-                  </Text>
-                  <Text w="22%">
-                    <i>amount</i>
-                  </Text>
-                  <Text w="28%">
-                    <i>unit</i>
-                  </Text>
-                </Flex>
+                <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+                  <GridItem colSpan={1} w="100%">
+                    <Text>
+                      <i>ingredient</i>
+                    </Text>
+                  </GridItem>
+                  <GridItem colSpan={1} w="100%">
+                    <Text>
+                      <i>amount</i>
+                    </Text>
+                  </GridItem>
+                  <GridItem colSpan={1} w="100%">
+                    <Text>
+                      <i>unit</i>
+                    </Text>
+                  </GridItem>
+                </Grid>
+
                 {ingredients.map((ingredient, index) => (
-                  <Flex key={index}>
-                    <FormControl marginRight="7" w="70%">
-                      <Input
-                        size="sm"
-                        name="ingredientName"
-                        type="text"
-                        placeholder="ingredient name is required"
-                        value={ingredient.ingredientName}
-                        onChange={e => {
+                  <Grid templateColumns="repeat(6, 1fr)" gap={2}>
+                    <GridItem colSpan={2} w="100%">
+                      <FormControl w="100%">
+                        <Input
+                          size="sm"
+                          name="ingredientName"
+                          type="text"
+                          placeholder="ingredient name is required"
+                          value={ingredient.ingredientName}
+                          onChange={e => {
+                            const newIngredients = [...ingredients];
+                            newIngredients[index].ingredientName =
+                              e.target.value;
+                            setIngredients(newIngredients);
+                            setRecipe({
+                              ...recipe,
+                              recipeIngredients: newIngredients
+                            });
+                          }}
+                        />
+                      </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={2} w="100%">
+                      <IngredientAmountHandle
+                        ingredient={ingredient}
+                        onChange={(value: any) => {
                           const newIngredients = [...ingredients];
-                          newIngredients[index].ingredientName = e.target.value;
+                          newIngredients[index].ingredientAmount = value;
                           setIngredients(newIngredients);
                           setRecipe({
                             ...recipe,
                             recipeIngredients: newIngredients
                           });
+                          console.log(ingredients);
+                          console.log(recipe);
                         }}
                       />
-                    </FormControl>
-                    <IngredientAmountHandle
-                      ingredient={ingredient}
-                      onChange={(value: any) => {
-                        const newIngredients = [...ingredients];
-                        newIngredients[index].ingredientAmount = value;
-                        setIngredients(newIngredients);
-                      }}
-                    />
-                    <FormControl marginRight="1" w="30%">
-                      <Select
+                    </GridItem>
+                    <GridItem colSpan={1} w="100%">
+                      {ingredient.ingredientAmount >= 0 && (
+                        <FormControl marginRight="1" w="100%">
+                          <Select
+                            size="sm"
+                            value={ingredient.ingredientUnit}
+                            placeholder={ingredient.ingredientUnit}
+                            onChange={e => {
+                              const newIngredients = [...ingredients];
+                              newIngredients[index].ingredientUnit =
+                                e.target.value;
+                              setIngredients(newIngredients);
+                              setRecipe({
+                                ...recipe,
+                                recipeIngredients: newIngredients
+                              });
+                            }}>
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="lbs">lbs</option>
+                            <option value="cup">cup</option>
+                            <option value="cups">cups</option>
+                            <option value="tsp">tsp</option>
+                            <option value="tbsp">tbsp</option>
+                            <option value="cloves">cloves</option>
+                            <option value="ml">ml</option>
+                            <option value="l">l</option>
+                            <option value="medium">medium</option>
+                            <option value="pinch">pinch</option>
+                            <option value="other">other </option>
+                          </Select>
+                        </FormControl>
+                      )}
+                    </GridItem>
+                    <GridItem colSpan={1} w="100%">
+                      <IconButton
                         size="sm"
-                        value={ingredient.ingredientUnit}
-                        placeholder={ingredient.ingredientUnit}
-                        onChange={e => {
-                          const newIngredients = [...ingredients];
-                          newIngredients[index].ingredientUnit = e.target.value;
-                          setIngredients(newIngredients);
-                          setRecipe({
-                            ...recipe,
-                            recipeIngredients: newIngredients
-                          });
-                        }}>
-                        <option value="kg">kg</option>
-                        <option value="g">g</option>
-                        <option value="lbs">lbs</option>
-                        <option value="cup">cup</option>
-                        <option value="cups">cups</option>
-                        <option value="tsp">tsp</option>
-                        <option value="tbsp">tbsp</option>
-                        <option value="cloves">cloves</option>
-                        <option value="ml">ml</option>
-                        <option value="l">l</option>
-                        <option value="medium">medium</option>
-                        <option value="pinch">pinch</option>
-                        <option value="other">other </option>
-                      </Select>
-                    </FormControl>
-                    <IconButton
-                      size="sm"
-                      variant="solid"
-                      aria-label="remove ingredient"
-                      icon={<MinusIcon />}
-                      title="remove ingredient"
-                      margin="2"
-                      onClick={() => handleInputRemove("ingredients", index)}
-                    />
-                  </Flex>
+                        variant="solid"
+                        aria-label="remove ingredient"
+                        icon={<MinusIcon />}
+                        title="remove ingredient"
+                        onClick={() => handleInputRemove("ingredients", index)}
+                      />
+                    </GridItem>
+                  </Grid>
                 ))}
-              </Box>
+              </Flex>
               <Box marginY="5">
                 <FormControl>
                   <FormLabel>
