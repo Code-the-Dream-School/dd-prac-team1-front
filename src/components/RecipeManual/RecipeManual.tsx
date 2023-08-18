@@ -76,8 +76,9 @@ const RecipeManual = () => {
                 toast({
                 title: "Error",
                 description: "Server wasn't be able to add your recipe",
-                status: "error",
-                duration: 2000,
+                status: "warning",
+                variant: "subtle",
+                duration: 4000,
                 isClosable: true,
                 position: "top"
                 });

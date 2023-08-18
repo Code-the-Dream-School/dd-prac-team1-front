@@ -6,7 +6,8 @@ import {
     Flex,
     Input,
     Stack,
-    Image as ChakraImage
+    Image as ChakraImage,
+    FormControl
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import { AnimationVariants } from "../../utils/types"; 
@@ -185,33 +186,35 @@ const DropImage = ({ srcImage, onChange }:DropImageProps) => {
                     )
                 }
                     <Stack p="8" textAlign="center" spacing="1">
-                        <Input
-                            ref={nativeFilePickerRef}
-                            type="file"
-                            name="recipeImage"
-                            laceholder="Choose img"
-                            accept="image/png, image/jpeg, image/avif"
-                            height="100%"
-                            width="100%"
-                            position="absolute"
-                            top="0"
-                            left="0"
-                            opacity="0"
-                            aria-hidden="true"
-                            onDragEnter={startAnimation}
-                            onDragLeave={stopAnimation}
-                            onChange={onChange}
-                        />
-                        <Button 
-                            fontSize="lg"
-                            fontWeight="bold"
-                            onClick={() => {
-                            if (nativeFilePickerRef.current === null) return;
-                            nativeFilePickerRef.current.click();
-                            }} 
-                        >
-                            Сlick to upload
-                        </Button>
+                        <FormControl isRequired>
+                            <Input
+                                ref={nativeFilePickerRef}
+                                type="file"
+                                name="recipeImage"
+                                laceholder="Choose img"
+                                accept="image/png, image/jpeg, image/avif"
+                                height="100%"
+                                width="100%"
+                                position="absolute"
+                                top="0"
+                                left="0"
+                                opacity="0"
+                                aria-hidden="true"
+                                onDragEnter={startAnimation}
+                                onDragLeave={stopAnimation}
+                                onChange={onChange}
+                            />
+                            <Button 
+                                fontSize="lg"
+                                fontWeight="bold"
+                                onClick={() => {
+                                if (nativeFilePickerRef.current === null) return;
+                                nativeFilePickerRef.current.click();
+                                }} 
+                            >
+                                Сlick to upload
+                            </Button>
+                        </FormControl>
                     </Stack>  
                 </Box> 
             </Box>
