@@ -148,76 +148,74 @@ const DropImage = ({ srcImage, onChange }:DropImageProps) => {
                 width="100%"
                 display="flex"
                 flexDirection="column">
-
                 {srcImage ? 
                     (
-                        <Box height="16" width="12" position="relative">
-                            <ChakraImage
-                            // w="100%"
+                        <Box height="70%" position="relative">
+                            <ChakraImage 
                             src={srcImage || ""}
-                            // alt={recipe.recipeName}
+                            alt="recipeImage"
                             />
                         </Box>
                     ) 
                     :
                     (  
-                    <Stack
-                        height="100%"
-                        width="100%"
-                        display="flex"
-                        alignItems="center"
-                        justify="center"
-                        spacing="4"
-                        >
-                        <Box height="16" width="12" position="relative">
-                            <PreviewImage
-                                variants={first}
-                                backgroundImage={`url(${require("./imagesPreview/uploadPicture3.jpg")})`}
-                            />
-                            <PreviewImage
-                                variants={second}
-                                backgroundImage={`url(${require("./imagesPreview/uploadPicture2.jpg")})`}
-                            />
-                            <PreviewImage
-                                variants={third}
-                                backgroundImage={`url(${require("./imagesPreview/uploadPicture1.jpg")})`}
-                            />
-                        </Box>
-                        <Stack p="8" textAlign="center" spacing="1">
-                            <Input
-                                ref={nativeFilePickerRef}
-                                type="file"
-                                name="recipeImage"
-                                placeholder="Choose img"
-                                accept="image/png, image/jpeg, image/avif"
-                                onChange={onChange}
-                                height="100%"
-                                width="100%"
-                                position="absolute"
-                                top="0"
-                                left="0"
-                                opacity="0"
-                                aria-hidden="true"
-                                onDragEnter={startAnimation}
-                                onDragLeave={stopAnimation}
-                            />
-                            <Button 
-                                fontSize="lg"
-                                fontWeight="bold"
-                                onClick={() => {
-                                if (nativeFilePickerRef.current === null) return;
-                                nativeFilePickerRef.current.click();
-                                console.log(nativeFilePickerRef)
-                                console.log("i am fine")
-                                }} 
+                        <Stack
+                            height="100%"
+                            width="100%"
+                            display="flex"
+                            alignItems="center"
+                            justify="center"
+                            spacing="4"
                             >
-                                Сlick to upload
-                            </Button>
+                            <Box height="16" width="12" position="relative">
+                                <PreviewImage
+                                    variants={first}
+                                    backgroundImage={`url(${require("./imagesPreview/uploadPicture3.jpg")})`}
+                                />
+                                <PreviewImage
+                                    variants={second}
+                                    backgroundImage={`url(${require("./imagesPreview/uploadPicture2.jpg")})`}
+                                />
+                                <PreviewImage
+                                    variants={third}
+                                    backgroundImage={`url(${require("./imagesPreview/uploadPicture1.jpg")})`}
+                                />
+                            </Box>
                         </Stack>
-                    </Stack>
                     )
-                }        
-                </Box>
+                }
+                    <Stack p="8" textAlign="center" spacing="1">
+                        <Input
+                            ref={nativeFilePickerRef}
+                            type="file"
+                            name="recipeImage"
+                            laceholder="Choose img"
+                            accept="image/png, image/jpeg, image/avif"
+                            height="100%"
+                            width="100%"
+                            position="absolute"
+                            top="0"
+                            left="0"
+                            opacity="0"
+                            aria-hidden="true"
+                            onDragEnter={startAnimation}
+                            onDragLeave={stopAnimation}
+                            onChange={onChange}
+                        />
+                        <Button 
+                            fontSize="lg"
+                            fontWeight="bold"
+                            onClick={() => {
+                            if (nativeFilePickerRef.current === null) return;
+                            nativeFilePickerRef.current.click();
+                            console.log(nativeFilePickerRef)
+                            console.log("i am fine")
+                            }} 
+                        >
+                            Сlick to upload
+                        </Button>
+                    </Stack>  
+                </Box> 
             </Box>
             </Box>
         </AspectRatio>
