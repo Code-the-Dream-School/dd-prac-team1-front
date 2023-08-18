@@ -18,7 +18,7 @@ const IngredientAmountHandle = ({
     if (ingredient.ingredientAmount === -2) setMode(-2);
     if (ingredient.ingredientAmount === -3) setMode(-3);
   }, [ingredient.ingredientAmount]);
-  console.log(mode);
+
   return (
     <Flex justifyContent="center">
       <FormControl mr="2">

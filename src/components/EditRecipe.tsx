@@ -70,7 +70,6 @@ const EditRecipe = () => {
   }, [recipeId]);
 
   const saveRecipe = () => {
-    console.log(recipe);
     if (recipeId === undefined) return;
     if (recipe === null) return;
     editSingleRecipe(recipeId, recipe)
