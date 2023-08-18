@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { register } from "../utils/fetchData";
+import { register } from "../../utils/fetchData";
 
 const Register = () => {
   const [name, setName] = useState("");

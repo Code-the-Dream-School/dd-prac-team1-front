@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, GridItem, Image, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { SavedRecipe } from "../utils/types";
+import { SavedRecipe } from "../../utils/types";
 
 type SavedRecipeProps = {
   recipe: SavedRecipe;

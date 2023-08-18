@@ -15,8 +15,8 @@ import {
   UnorderedList
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
-import { SavedRecipe } from "../utils/types";
-import { getSingleRecipe, deleteSingleRecipe } from "../utils/fetchData";
+import { SavedRecipe } from "../../utils/types";
+import { getSingleRecipe, deleteSingleRecipe } from "../../utils/fetchData";
 import {
   ArrowBackIcon,
   CheckIcon,
