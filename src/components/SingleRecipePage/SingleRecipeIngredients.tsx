@@ -11,11 +11,17 @@ const SingleRecipeIngredients = ({
     <UnorderedList>
       <ListItem>
         {`${
-          ingredient.ingredientAmount !== -1
+          ingredient.ingredientAmount === 0
+            ? ""
+            : ingredient.ingredientAmount !== -1
             ? ingredient.ingredientAmount
             : "to taste"
         } ${
-          ingredient.ingredientUnit !== "other" ? ingredient.ingredientUnit : ""
+          ingredient.ingredientAmount === 0
+            ? ""
+            : ingredient.ingredientUnit !== "other"
+            ? ingredient.ingredientUnit
+            : ""
         } ${ingredient.ingredientName}`}
       </ListItem>
     </UnorderedList>
