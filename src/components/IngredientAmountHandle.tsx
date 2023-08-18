@@ -38,7 +38,7 @@ const IngredientAmountHandle = ({
           <option value="-3">for garnish</option>
         </Select>
       </FormControl>
-      {mode >= 0 && (
+      {mode === 0 && (
         <FormControl w="40%">
           <Input
             size="sm"
