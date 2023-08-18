@@ -167,7 +167,7 @@ const DropImage = ({ srcImage, onChange }:DropImageProps) => {
                             justify="center"
                             spacing="4"
                             >
-                            <Box height="16" width="12" position="relative">
+                            <Box height="20" width="16" position="relative">
                                 <PreviewImage
                                     variants={first}
                                     backgroundImage={`url(${require("./imagesPreview/uploadPicture3.jpg")})`}
@@ -208,8 +208,6 @@ const DropImage = ({ srcImage, onChange }:DropImageProps) => {
                             onClick={() => {
                             if (nativeFilePickerRef.current === null) return;
                             nativeFilePickerRef.current.click();
-                            console.log(nativeFilePickerRef)
-                            console.log("i am fine")
                             }} 
                         >
                             Сlick to upload

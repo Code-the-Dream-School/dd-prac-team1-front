@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, FormControl } from "@chakra-ui/react";
-import {  ChakraStylesConfig, CreatableSelect } from "chakra-react-select";
+import {  ActionMeta, ChakraStylesConfig, CreatableSelect, MultiValue } from "chakra-react-select";
 import { Options } from "../../../utils/types";
 
 const chakraStyles: ChakraStylesConfig = {
@@ -29,7 +29,7 @@ const chakraStyles: ChakraStylesConfig = {
 
 type OptionsProps = {
     options : Options[],   
-    onChange: Function
+    onChange:  ((newValue: MultiValue<unknown>, actionMeta: ActionMeta<unknown>) => void) | undefined
 };
     
 

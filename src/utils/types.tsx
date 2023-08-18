@@ -83,6 +83,22 @@ export type EditedRecipe = {
   _id: string;
 };
 
+export type ManualRecipe = {
+  createdAt: string;
+  recipeCategory: string;
+  recipeComplexityLevel: string;
+  recipeCookTime: { recipeCookTimeMinutes: number };
+  recipeImage: string | Object;
+  recipeIngredients: Array<SavedIngredient>;
+  recipeInstructions: string;
+  recipeName: string;
+  recipeNutritionInfo: RecipeNutritionInfo;
+  recipePrepTime: { recipePrepTimeMinutes: number };
+  recipeServings: number;
+  recipeSpecialDiets: Array<string>;
+  recipeTags: Array<RecipeTag>;
+};
+
 
 export type Options = {
     value: string;

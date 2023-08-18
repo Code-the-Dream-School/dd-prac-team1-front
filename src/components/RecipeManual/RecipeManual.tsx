@@ -13,42 +13,63 @@ import { complexityOptions } from "../../utils/OptionsData";
 import { specialDietsOptions } from "../../utils/OptionsData";
 import { tagsOptions } from "../../utils/OptionsData";
 import { unitOptions } from "../../utils/OptionsData";
-import { SavedIngredient, SavedRecipe, RecipeTag } from "../../utils/types";
-import { MultiValue } from "chakra-react-select";
+import { SavedIngredient, ManualRecipe } from "../../utils/types";
 import { saveManualRecipe } from "../../utils/fetchData";
-//import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { MultiValue } from "chakra-react-select";
 
 
 const RecipeManual = () => {
-    const [recipe, setRecipe] = useState<SavedRecipe>({});
-    const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
-    const [tags, setTags] = useState<Array<RecipeTag>>([]);
-    const [diets, setDiets] = useState<Array<string>>([]);
+    const [recipe, setRecipe] = useState<ManualRecipe>({
+        createdAt: "",
+        recipeCategory: "none",
+        recipeComplexityLevel: "medium",
+        recipeCookTime: { recipeCookTimeMinutes: 0 },
+        recipeImage: "", 
+        recipeIngredients: [
+            {
+                ingredientName: "",
+                ingredientAmount: 0,
+                ingredientUnit: "other",
+            },
+            {
+                ingredientName: "",
+                ingredientAmount: 0,
+                ingredientUnit: "other",
+            },
+        ],
+        recipeInstructions: "",
+        recipeName: "",
+        recipeNutritionInfo: {
+            NutritionInfoCalories: 0,
+            NutritionInfoCarbs: 0,
+            NutritionInfoProtein: 0,
+            NutritionInfoFat: 0,
+        },
+        recipePrepTime: { 
+            recipePrepTimeMinutes: 0 
+        },
+        recipeServings: 0,
+        recipeSpecialDiets: [],
+        recipeTags: [],
+    });
+    const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([
+        {
+            ingredientName: "",
+            ingredientAmount: 0,
+            ingredientUnit: "other",
+        },
+    ]);
     const [srcImage, setsrcImage] = useState<string>("");
-
-    
-
-    //const { slug } = useParams();
-    //const recipeId = slug;
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const toast = useToast();
 
-
-
     const saveRecipe = () => {
-        setRecipe({
-            ...recipe,
-            recipeSpecialDiets: diets,
-            recipeTags: tags
-        })
-
-        console.log(recipe);
-        //if (recipeId === undefined) return;
-        //if (recipe === null) return;
+        console.log(recipe)
         saveManualRecipe(recipe)
             .then(response => {
                 console.log(response);
-               // navigate(`/saved-recipes/${recipeId}`);
+                navigate("/saved-recipes");
             })
             .catch(error => {
                 console.log(error);
@@ -60,8 +81,9 @@ const RecipeManual = () => {
                 isClosable: true,
                 position: "top"
                 });
-            });
+            })
         };
+        
         const handleInputAdd = () => {
                 setIngredients([
                     ...ingredients,
@@ -143,6 +165,7 @@ const RecipeManual = () => {
                 </Flex>
             </GridItem>
             <GridItem colSpan={6}>
+            
             {ingredients.map((ingredient, id) => (
                 <Grid
                     h="70px" 
@@ -155,8 +178,8 @@ const RecipeManual = () => {
                     <FormControl isRequired>
                     <Input
                         type="text"
-                        id="ingredientName"
-                        name="ingredientName"
+                        id={`ingredientName-${id}`}
+                        name={`ingredientName-${id}`}
                         value={ingredient.ingredientName}
                         placeholder="Add ingredients"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -178,7 +201,7 @@ const RecipeManual = () => {
                         type="number"
                         id="ingredientAmount"
                         name="ingredientAmount"
-                        value={ingredient.ingredientAmount}
+                        value={ingredient.ingredientAmount === 0 ? "" : ingredient.ingredientAmount}
                         placeholder="quantity"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
                         onChange={event => {
@@ -194,7 +217,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={2}>
                     <SingleSelectForm 
-                        value={{ value: ingredients[id].ingredientUnit, label: ingredients[id].ingredientUnit }} 
+                        value={ { value: ingredients[id].ingredientUnit, label: ingredients[id].ingredientUnit } }
                         placeholder="unit"
                         options={unitOptions} 
                         onChange={(selectedOption: { value: string; } ) => {
@@ -216,7 +239,7 @@ const RecipeManual = () => {
                         aria-label="remove ingredient"
                         icon={<MinusIcon />}
                         title="remove ingredient"
-                        onClick={handleInputRemove}
+                        onClick={ ()=> handleInputRemove(id) }
                     />
                     </Flex>
                 </GridItem>
@@ -228,7 +251,12 @@ const RecipeManual = () => {
                 templateColumns='repeat(10, 1fr)'
                 gap={3}
                 > 
-                <GridItem colSpan={10} mb="30px"> 
+                <GridItem colSpan={2}>
+                    <Flex  h="40px" justifyContent="start"  alignItems="center">
+                        <Text>INSTRUCTIONS</Text>
+                    </Flex>
+                </GridItem>
+                <GridItem colSpan={8} mb="30px"> 
                     <Center>
                         <FormControl>
                         <Textarea
@@ -236,7 +264,7 @@ const RecipeManual = () => {
                             id="instuctions"
                             name="recipeInstructions"
                             value={recipe.recipeInstructions}
-                            placeholder="Instructions"
+                            placeholder="Instructions how to cook the dish"
                             _placeholder={{ position:"absolute", marginTop: "-0.5", fontSize: "xs" }}
                             onChange={event => {
                                 setRecipe({
@@ -295,11 +323,14 @@ const RecipeManual = () => {
                         
                         options={tagsOptions}
                         onChange={(
-                            event
+                            event: any[]
                         )=> {
                             let tagsArray = event.map(item => item.value);
-                            let recipeTagNames = tagsArray.map(tagValue => ({ tagName: tagValue }));
-                            setTags(recipeTagNames)
+                            let recipeTagNames = tagsArray.map( tagValue => ({ tagName: tagValue }) );
+                            setRecipe({
+                                ...recipe,
+                                recipeTags: recipeTagNames
+                            })
                         }
                     } 
                         />
@@ -316,9 +347,11 @@ const RecipeManual = () => {
                             event: MultiValue<{ label: string; value: string }>
                         ) => {
                             let dietsArray = event.map(item => item.value);
-                            setDiets(dietsArray)
-                        }
-                    } 
+                            setRecipe({
+                                ...recipe,
+                                recipeSpecialDiets: dietsArray,
+                            })
+                        }} 
                     />
                 </GridItem>
 
@@ -329,7 +362,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={3}> 
                     <Input
-                        //value={}
+                        value={recipe.recipeCookTime.recipeCookTimeMinutes !== 0 ? recipe.recipeCookTime.recipeCookTimeMinutes : ""}
                         type="number"
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -351,7 +384,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={3}> 
                     <Input
-                        //value={}
+                        value={recipe.recipePrepTime.recipePrepTimeMinutes !== 0 ? recipe.recipePrepTime.recipePrepTimeMinutes : ""}
                         type="number"
                         placeholder="min"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -373,7 +406,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={3}> 
                     <Input
-                        value={recipe.recipeServings}
+                        value={recipe.recipeServings !== 0 ? recipe.recipeServings : ''}
                         type="number"
                         placeholder="person(s)"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -401,12 +434,9 @@ const RecipeManual = () => {
                         type="number"
                         placeholder="kcal"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        value={
-                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoCalories
-                        }
+                        value={recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ? recipe.recipeNutritionInfo.NutritionInfoCalories : ''}
                         min="0"
                         onChange={event => {
-                            console.log(event.target.value)
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
@@ -428,9 +458,7 @@ const RecipeManual = () => {
                         type="number"
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        value={
-                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoCarbs
-                        }
+                        value={recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ? recipe.recipeNutritionInfo.NutritionInfoCarbs : ""}
                         min="0"
                         onChange={event => {
                             setRecipe({
@@ -454,9 +482,7 @@ const RecipeManual = () => {
                         type="number"
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        /*value=
-                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoProtein
-                        }*/
+                        value={recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 ? recipe.recipeNutritionInfo.NutritionInfoProtein : ""}
                         min="0"
                         onChange={event => {
                             setRecipe({
@@ -478,14 +504,11 @@ const RecipeManual = () => {
                 <GridItem colSpan={2}> 
                     <Input
                         type="number"
-                        value={
-                            recipe.recipeNutritionInfo && recipe.recipeNutritionInfo.NutritionInfoFat
-                        }
+                        value={recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ? recipe.recipeNutritionInfo.NutritionInfoFat : ""}
                         placeholder="g"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
                         min="0"
                         onChange={event => {
-                            console.log(recipe.recipeNutritionInfo )
                             setRecipe({
                                 ...recipe,
                                 recipeNutritionInfo: {
@@ -500,8 +523,7 @@ const RecipeManual = () => {
                 </Grid>
             </GridItem>
             <GridItem colSpan={4}>
-                <DropImage srcImage={srcImage} onChange={ event => {
-                    console.log(event);
+                <DropImage srcImage={srcImage} onChange={ (event: { target: { files: any[] | null; }; }) => {
                     if (event.target.files === null) return;
                     const file = event.target.files[0];
                     const newSrc = URL.createObjectURL(file);
