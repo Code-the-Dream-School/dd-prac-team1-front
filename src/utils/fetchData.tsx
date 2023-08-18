@@ -98,3 +98,13 @@ export const getSingleRecipe = (recipeId: string) => {
     }
   );
 };
+
+export const deleteSingleRecipe = (recipeId: string) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.delete(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};
