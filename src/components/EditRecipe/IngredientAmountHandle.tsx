@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { Input, Flex, FormControl, Select } from "@chakra-ui/react";
 import { SavedIngredient } from "../../utils/types";
 
 type IngredientAmountHandleProps = {
@@ -14,25 +14,14 @@ const IngredientAmountHandle = ({
   const [mode, setMode] = useState<number>(0);
   useEffect(() => {
     if (ingredient.ingredientAmount === 0) setMode(1);
+    if (ingredient.ingredientAmount === -1) setMode(-1);
+    if (ingredient.ingredientAmount === -2) setMode(-2);
+    if (ingredient.ingredientAmount === -3) setMode(-3);
   }, [ingredient.ingredientAmount]);
+
   return (
-    <Flex w="80%" justifyContent="center">
-      {mode === 0 && (
-        <FormControl marginRight="3" w="40%">
-          <FormLabel></FormLabel>
-          <Input
-            size="sm"
-            name="ingredientAmount"
-            type="number"
-            value={ingredient.ingredientAmount}
-            onChange={e => {
-              onChange(e.target.value);
-            }}
-          />
-        </FormControl>
-      )}
-      <FormControl w="80%" marginRight="7">
-        <FormLabel></FormLabel>
+    <Flex justifyContent="center">
+      <FormControl mr="2">
         <Select
           size="sm"
           value={mode}
@@ -49,6 +38,19 @@ const IngredientAmountHandle = ({
           <option value="-3">for garnish</option>
         </Select>
       </FormControl>
+      {mode === 0 && (
+        <FormControl w="40%">
+          <Input
+            size="sm"
+            name="ingredientAmount"
+            type="number"
+            value={ingredient.ingredientAmount}
+            onChange={e => {
+              onChange(e.target.value);
+            }}
+          />
+        </FormControl>
+      )}
     </Flex>
   );
 };
