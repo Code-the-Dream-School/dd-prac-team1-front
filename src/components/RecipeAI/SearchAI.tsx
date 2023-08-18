@@ -84,13 +84,15 @@ const SearchAI = () => {
       color: "black", 
       borderRadius: "md",
     }),
-    option: (base) => ({
-        ...base,
-        cursor: "pointer",
-        transition: "background-color 0.2s",
-        _hover: {
-            backgroundColor: "brandGray", 
-        },
+    option: (base, { isSelected }) => ({
+      ...base,
+      backgroundColor: isSelected ? "green" : "white",
+      color: "black",
+      cursor: "pointer",
+      transition: "background-color 0.2s",
+      _hover: {
+          backgroundColor: "brandGray", 
+      },
     }),
   };
   return (

@@ -35,8 +35,10 @@ const chakraStyles: ChakraStylesConfig = {
         color: "black", 
         borderRadius: "md",
     }),
-    option: (base) => ({
+    option: (base, { isSelected }) => ({
         ...base,
+        backgroundColor: isSelected ? "green" : "white",
+        color: "black",
         cursor: "pointer",
         transition: "background-color 0.2s",
         _hover: {
