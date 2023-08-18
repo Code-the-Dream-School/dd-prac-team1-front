@@ -118,24 +118,26 @@ const SingleRecipePage = () => {
                 &nbsp;&nbsp;
               </Text>
             )}
-            {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
+            {/* {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
               <Text as="span">
                 <b>Total:</b>&nbsp;
                 {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
                 &nbsp;&nbsp;
               </Text>
-            )}
+            )} */}
           </Box>
           <Text>
             <b>Complexity level:</b>&nbsp;
             {`${recipe.recipeComplexityLevel}`}
             &nbsp;&nbsp;
           </Text>
-          <Text>
-            <b>Servings:</b>&nbsp;
-            {`${recipe.recipeServings}`}
-            &nbsp;&nbsp;
-          </Text>
+          {recipe.recipeServings > 0 && (
+            <Text>
+              <b>Servings:</b>&nbsp;
+              {`${recipe.recipeServings}`}
+              &nbsp;&nbsp;
+            </Text>
+          )}
         </GridItem>
         <GridItem colSpan={1} w="100%" position="relative">
           <Flex
