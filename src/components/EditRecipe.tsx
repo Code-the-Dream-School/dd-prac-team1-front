@@ -340,7 +340,7 @@ const EditRecipe = () => {
                     onClick={() => handleInputAdd("ingredients")}
                   />
                 </Flex>
-                <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+                <Grid templateColumns="repeat(3, 1fr)" gap="6">
                   <GridItem colSpan={1} w="100%">
                     <Text>
                       <i>ingredient</i>
@@ -359,7 +359,7 @@ const EditRecipe = () => {
                 </Grid>
 
                 {ingredients.map((ingredient, index) => (
-                  <Grid templateColumns="repeat(6, 1fr)" gap={2}>
+                  <Grid templateColumns="repeat(6, 1fr)" key={index} gap="2">
                     <GridItem colSpan={2} w="100%">
                       <FormControl w="100%">
                         <Input

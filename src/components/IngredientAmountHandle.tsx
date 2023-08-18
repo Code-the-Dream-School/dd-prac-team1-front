@@ -14,7 +14,11 @@ const IngredientAmountHandle = ({
   const [mode, setMode] = useState<number>(0);
   useEffect(() => {
     if (ingredient.ingredientAmount === 0) setMode(1);
+    if (ingredient.ingredientAmount === -1) setMode(-1);
+    if (ingredient.ingredientAmount === -2) setMode(-2);
+    if (ingredient.ingredientAmount === -3) setMode(-3);
   }, [ingredient.ingredientAmount]);
+  console.log(mode);
   return (
     <Flex justifyContent="center">
       <FormControl mr="2">
@@ -34,7 +38,7 @@ const IngredientAmountHandle = ({
           <option value="-3">for garnish</option>
         </Select>
       </FormControl>
-      {mode === 0 && (
+      {mode >= 0 && (
         <FormControl w="40%">
           <Input
             size="sm"
