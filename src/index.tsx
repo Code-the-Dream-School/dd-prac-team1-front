@@ -12,6 +12,9 @@ import SearchChoice from "./components/Search/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes/SavedRecipes";
 import Layout from "./components/Layout/Layout";
 import SingleRecipePage from "./components/SingleRecipePage/SingleRecipePage";
+import EditRecipe from "./components/EditRecipe";
+import Planner from "./components/Planner";
+import ShoppingList from "./components/ShoppingList";
 import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
