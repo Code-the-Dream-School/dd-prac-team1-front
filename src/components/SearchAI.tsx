@@ -78,8 +78,22 @@ const SearchAI = () => {
             transitionDuration: "normal",
             transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
         }
-    })
-    };
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "green", 
+      color: "black", 
+      borderRadius: "md",
+    }),
+    option: (base) => ({
+        ...base,
+        cursor: "pointer",
+        transition: "background-color 0.2s",
+        _hover: {
+            backgroundColor: "brandGray", 
+        },
+    }),
+  };
 
   return (
     <Center>
@@ -114,8 +128,8 @@ const SearchAI = () => {
                   isMulti
                   chakraStyles={chakraStyles}
                   variant="outline"
+                  focusBorderColor="green"
                   placeholder="You can select options below"
-                 // colorScheme="green"
                   options={specialDietsOptions}
                   onChange={handleSelect}
                 />

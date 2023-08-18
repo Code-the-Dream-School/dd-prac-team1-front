@@ -28,8 +28,22 @@ const chakraStyles: ChakraStylesConfig = {
             transitionDuration: "normal",
             transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
         }
-    })
-    };
+    }),
+    multiValue: (base) => ({
+        ...base,
+        backgroundColor: "green", 
+        color: "black", 
+        borderRadius: "md",
+    }),
+    option: (base) => ({
+        ...base,
+        cursor: "pointer",
+        transition: "background-color 0.2s",
+        _hover: {
+            backgroundColor: "brandGray", 
+        },
+    }),
+};
 
 type OptionsProps = {
     options : Options[],   
@@ -42,8 +56,7 @@ const MultipleSelectForm = ( {options, onChange}: OptionsProps) => (
             <Select
                 isMulti
                 chakraStyles={chakraStyles}
-                focusBorderColor="brandGray"
-                //selectedOptionColorScheme="brandGray"
+                focusBorderColor="green"
                 options={options}
                 placeholder="Choose a special diet"
                 closeMenuOnSelect={false}
