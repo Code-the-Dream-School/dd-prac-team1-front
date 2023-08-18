@@ -36,6 +36,8 @@ const EditRecipe = () => {
   const [tags, setTags] = useState<Array<RecipeTag>>([]);
   const [diets, setDiets] = useState<Array<string>>([]);
   const [editSrcImage, setEditSrcImage] = useState<string>("");
+  const [prepTime, setPrepTime] = useState<number>(0);
+  const [cookTime, setCookTime] = useState<number>(0);
   const nativeFilePickerRef = useRef<HTMLInputElement>(null);
   const { slug } = useParams();
   const recipeId = slug;
@@ -61,12 +63,31 @@ const EditRecipe = () => {
           })
         );
         setDiets(response.data.recipeSpecialDiets);
+        setPrepTime(response.data.recipePrepTime.recipePrepTimeMinutes);
+        setCookTime(response.data.recipeCookTime.recipeCookTimeMinutes);
       })
 
       .catch(error => {
         console.log(error);
       });
   }, [recipeId]);
+
+  useEffect(() => {
+    if (recipe === null) return;
+    const totalTime = prepTime + cookTime;
+    setRecipe({
+      ...recipe,
+      recipeTotalTime: {
+        recipeTotalTimeMinutes: totalTime
+      },
+      recipePrepTime: {
+        recipePrepTimeMinutes: prepTime
+      },
+      recipeCookTime: {
+        recipeCookTimeMinutes: cookTime
+      }
+    });
+  }, [cookTime, prepTime]);
 
   const saveRecipe = () => {
     if (recipeId === undefined) return;
@@ -243,12 +264,7 @@ const EditRecipe = () => {
                       value={recipe.recipePrepTime.recipePrepTimeMinutes || ""}
                       min="0"
                       onChange={e => {
-                        setRecipe({
-                          ...recipe,
-                          recipePrepTime: {
-                            recipePrepTimeMinutes: Number(e.target.value)
-                          }
-                        });
+                        setPrepTime(Number(e.target.value));
                       }}
                     />
                     <InputRightElement>
@@ -267,12 +283,10 @@ const EditRecipe = () => {
                       value={recipe.recipeCookTime.recipeCookTimeMinutes || ""}
                       min="0"
                       onChange={e => {
-                        setRecipe({
-                          ...recipe,
-                          recipeCookTime: {
-                            recipeCookTimeMinutes: Number(e.target.value)
-                          }
-                        });
+                        setCookTime(Number(e.target.value));
+
+                        console.log(recipe);
+                        console.log(cookTime);
                       }}
                     />
                     <InputRightElement>

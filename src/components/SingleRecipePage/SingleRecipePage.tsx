@@ -121,10 +121,7 @@ const SingleRecipePage = () => {
             {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
               <Text as="span">
                 <b>Total:</b>&nbsp;
-                {`${
-                  recipe.recipePrepTime.recipePrepTimeMinutes +
-                  recipe.recipeCookTime.recipeCookTimeMinutes
-                } min`}
+                {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
                 &nbsp;&nbsp;
               </Text>
             )}
