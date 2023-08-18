@@ -8,6 +8,7 @@ const Footer = () => {
       py={4}
       height="70"
       width="100%"
+      bottom="0"
       bg="brandGray"
       color="black">
       <Container maxW="6xl">

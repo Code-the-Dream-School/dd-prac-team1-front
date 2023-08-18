@@ -22,7 +22,7 @@ import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <Box position="absolute" h="100vh" width="100%">
+  <Box minHeight="100vh" width="100%" display="flex" flexDirection="column">
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
