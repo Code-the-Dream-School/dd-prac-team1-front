@@ -23,6 +23,7 @@ const IngredientAmountHandle = ({
     <Flex justifyContent="center">
       <FormControl mr="2">
         <Select
+          isRequired
           size="sm"
           value={mode}
           onChange={e => {

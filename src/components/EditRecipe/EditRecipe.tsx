@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
+  Center,
   Container,
   IconButton,
   Image as ChakraImage,
@@ -82,9 +83,14 @@ const EditRecipe = () => {
           title: "Error",
           description: "Server wasn't be able to edit your recipe",
           status: "error",
-          duration: 2000,
+          duration: 3000,
           isClosable: true,
-          position: "top"
+          position: "top",
+          render: () => (
+            <Box p="3" bg="red">
+              Server wasn't be able to edit your recipe
+            </Box>
+          )
         });
       });
   };
@@ -187,6 +193,7 @@ const EditRecipe = () => {
                     <b>Recipe name</b>
                   </FormLabel>
                   <Input
+                    isRequired
                     size="sm"
                     type="text"
                     placeholder="recipe name is required"
@@ -204,6 +211,7 @@ const EditRecipe = () => {
                     <b>Recipe category</b>
                   </FormLabel>
                   <Select
+                    isRequired
                     size="sm"
                     value={recipe.recipeCategory}
                     placeholder="Choose category"
@@ -373,6 +381,7 @@ const EditRecipe = () => {
                     <GridItem colSpan={2} w="100%">
                       <FormControl w="100%">
                         <Input
+                          isRequired
                           size="sm"
                           name="ingredientName"
                           type="text"
@@ -411,6 +420,7 @@ const EditRecipe = () => {
                       {ingredient.ingredientAmount >= 0 && (
                         <FormControl mr="1" w="100%">
                           <Select
+                            isRequired
                             size="sm"
                             value={ingredient.ingredientUnit}
                             placeholder={ingredient.ingredientUnit}
@@ -462,6 +472,7 @@ const EditRecipe = () => {
                     </Text>
                   </FormLabel>
                   <Textarea
+                    isRequired
                     value={recipe.recipeInstructions}
                     size="md"
                     onChange={e => {
@@ -631,6 +642,11 @@ const EditRecipe = () => {
               }}>
               Upload image
             </Button>
+            <Center>
+              <Text color="gray">
+                <i>5MB max</i>
+              </Text>
+            </Center>
             <Flex marginY="5" alignItems="center">
               <Text mr="2">
                 <b>Tags</b>
