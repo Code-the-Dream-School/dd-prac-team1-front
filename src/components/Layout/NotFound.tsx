@@ -33,10 +33,7 @@ const NotFound = () => {
             <VStack spacing={4}>
               <Flex flexGrow="1" alignItems="center">
                 <Heading as="h3" size="xL">
-                  <Text
-                    align="center"
-                    fontSize="30px"
-                    color="RGBA(0, 0, 0, 0.36)">
+                  <Text align="center" fontSize="30px" color="blackAlpha.700">
                     Oops! Your desired recipe is off on a culinary adventure,
                     and our detectives are hot on the trail!
                   </Text>
@@ -59,7 +56,9 @@ const NotFound = () => {
                 justifyContent="space-between"
                 flexBasis="5px">
                 <Button variant="link" size="lg" onClick={navigateToHome}>
-                  <Text as="ins">Lead Me Back to Deliciousness</Text>
+                  <Text as="ins" color="blackAlpha.700">
+                    Lead Me Back to Deliciousness
+                  </Text>
                 </Button>
               </Flex>
             </VStack>
