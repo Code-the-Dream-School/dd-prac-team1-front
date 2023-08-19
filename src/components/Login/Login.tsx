@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { login } from "../utils/fetchData";
+import { login } from "../../utils/fetchData";
 
 const Login = () => {
   const [email, setEmail] = useState("");

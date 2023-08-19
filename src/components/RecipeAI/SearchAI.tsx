@@ -11,9 +11,9 @@ import {
   Input,
   Stack
 } from "@chakra-ui/react";
-import { searchAI } from "../utils/fetchData";
+import { searchAI } from "../../utils/fetchData";
 import { MultiValue, Select } from "chakra-react-select";
-import { AIRecipe } from "../utils/types";
+import { AIRecipe } from "../../utils/types";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
 

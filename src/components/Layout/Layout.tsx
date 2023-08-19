@@ -12,8 +12,8 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../utils/fetchData";
-import RecipeSearch from "./RecipeSearch";
+import { logout } from "../../utils/fetchData";
+import RecipeSearch from "../Search/RecipeSearch";
 
 export default function Layout() {
   const { isOpen, onOpen, onClose } = useDisclosure();
