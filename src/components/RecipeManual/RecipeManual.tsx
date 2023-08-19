@@ -21,7 +21,7 @@ import { MultiValue } from "chakra-react-select";
 
 const RecipeManual = () => {
     const [recipe, setRecipe] = useState<ManualRecipe>({
-        recipeCategory: "None",
+        recipeCategory: "None - you must choose at least one",
         recipeComplexityLevel: "medium",
         recipeCookTime: { recipeCookTimeMinutes: 0 },
         recipeImage: "", 
@@ -197,6 +197,7 @@ const RecipeManual = () => {
                     </FormControl>
                 </GridItem>
                 <GridItem colSpan={2}>
+                    <FormControl isRequired>
                     <Input
                         type="number"
                         id="ingredientAmount"
@@ -214,6 +215,7 @@ const RecipeManual = () => {
                                 });
                             }}
                     />
+                    </FormControl>
                 </GridItem>
                 <GridItem colSpan={2}>
                     <SingleSelectForm 
@@ -258,7 +260,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={8} mb="30px"> 
                     <Center>
-                        <FormControl>
+                        <FormControl isRequired>
                         <Textarea
                             size="lg"
                             id="instuctions"
@@ -300,6 +302,7 @@ const RecipeManual = () => {
                     </Flex>
                 </GridItem>
                 <GridItem colSpan={8} > 
+                    <FormControl isRequired>
                     <SingleSelectForm 
                         placeholder={"Choose a category"} 
                         options={categoriesOptions} 
@@ -310,8 +313,8 @@ const RecipeManual = () => {
                                 recipeCategory: event.value,
                             });
                         }}
-                        
                     />
+                    </FormControl>
                 </GridItem>
                 <GridItem colSpan={2}>
                 <Flex h="40px" justifyContent="start"  alignItems="center">
@@ -320,7 +323,6 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={8}> 
                     <MultipleCreatableSelectForm 
-                        
                         options={tagsOptions}
                         onChange={(
                             event

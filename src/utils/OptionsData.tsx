@@ -23,7 +23,6 @@ export const specialDietsOptions = [
 ];
 
 export const categoriesOptions = [
-    {value: "None", label: "None"},
     {value: "Main Dish", label: "Main Dish"},
     {value: "Snack", label: "Snack"},
     {value: "Soup", label: "Soup"},
