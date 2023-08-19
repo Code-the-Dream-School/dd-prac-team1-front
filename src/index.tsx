@@ -7,13 +7,17 @@ import App from "./App";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Contact from "./components/Contact";
 import SearchAI from "./components/SearchAI";
 import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
-import theme from "./CustomTheme.tsx";
 import NotFound from "./components/NotFound.tsx";
+import EditRecipe from "./components/EditRecipe";
+import ShoppingList from "./components/ShoppingList";
+import Planner from "./components/Planner";
+import theme from "./CustomTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -24,11 +28,15 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contact" element={<Contact />} />
         <Route element={<Layout />}>
           <Route path="/search-choice" element={<SearchChoice />} />
           <Route path="/ai-recipe" element={<SearchAI />} />
           <Route path="/saved-recipes" element={<SavedRecipes />} />
           <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
+          <Route path="/edit/:slug" element={<EditRecipe />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/shopping-list" element={<ShoppingList />} />
         </Route>
         <Route path="/404" element={<NotFound />} />
         <Route path="/*" element={<NotFound />} />
