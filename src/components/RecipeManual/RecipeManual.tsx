@@ -21,7 +21,6 @@ import { MultiValue } from "chakra-react-select";
 
 const RecipeManual = () => {
     const [recipe, setRecipe] = useState<ManualRecipe>({
-        createdAt: "",
         recipeCategory: "None",
         recipeComplexityLevel: "medium",
         recipeCookTime: { recipeCookTimeMinutes: 0 },

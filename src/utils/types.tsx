@@ -84,7 +84,6 @@ export type EditedRecipe = {
 };
 
 export type ManualRecipe = {
-  createdAt: string;
   recipeCategory: string;
   recipeComplexityLevel: string;
   recipeCookTime: { recipeCookTimeMinutes: number };
