@@ -40,16 +40,6 @@ export const categoriesOptions = [
     {value: "Party Menu", label: "Party Menu"},
 ];
 
-export const tagsOptions = [
-    { value: "None", label: "None" },
-    { value: "Healthy", label: "Healthy" },
-    { value: "Fiest", label: "Fiest" },
-    { value: "Fish", label: "Fish" },
-    { value: "Chicken", label: "Chicken" },    
-    { value: "Vegetables", label: "Vegetables" },  
-    { value: "Fruits", label: "Fruits" },     
-];
-
 export const unitOptions = [
     { value: "g", label: "g" },
     { value: "kg", label: "kg" },

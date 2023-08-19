@@ -11,7 +11,6 @@ import MultipleSelectForm from "./SelectForms/MultipleSelectForm";
 import { categoriesOptions } from "../../utils/OptionsData";
 import { complexityOptions } from "../../utils/OptionsData";
 import { specialDietsOptions } from "../../utils/OptionsData";
-import { tagsOptions } from "../../utils/OptionsData";
 import { unitOptions } from "../../utils/OptionsData";
 import { SavedIngredient, ManualRecipe } from "../../utils/types";
 import { saveManualRecipe } from "../../utils/fetchData";
@@ -21,7 +20,7 @@ import { MultiValue } from "chakra-react-select";
 
 const RecipeManual = () => {
     const [recipe, setRecipe] = useState<ManualRecipe>({
-        recipeCategory: "None - you must choose at least one",
+        recipeCategory: "Main Dish",
         recipeComplexityLevel: "medium",
         recipeCookTime: { recipeCookTimeMinutes: 0 },
         recipeImage: "", 
@@ -302,7 +301,6 @@ const RecipeManual = () => {
                     </Flex>
                 </GridItem>
                 <GridItem colSpan={8} > 
-                    <FormControl isRequired>
                     <SingleSelectForm 
                         placeholder={"Choose a category"} 
                         options={categoriesOptions} 
@@ -314,7 +312,6 @@ const RecipeManual = () => {
                             });
                         }}
                     />
-                    </FormControl>
                 </GridItem>
                 <GridItem colSpan={2}>
                 <Flex h="40px" justifyContent="start"  alignItems="center">
@@ -323,7 +320,6 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={8}> 
                     <MultipleCreatableSelectForm 
-                        options={tagsOptions}
                         onChange={(
                             event
                         )=> {

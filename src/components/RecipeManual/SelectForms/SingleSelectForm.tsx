@@ -56,6 +56,7 @@ const SingleSelectForm = ( {placeholder, options, value, onChange}: OptionsProps
             <FormControl>
             <Select
                 value={value}
+                //isSearchable={false}
                 chakraStyles={chakraStyles}
                 focusBorderColor="green"
                 options={options}
