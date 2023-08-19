@@ -13,7 +13,7 @@ import SearchChoice from "./components/SearchChoice";
 import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
-import NotFound from "./components/NotFound.tsx";
+import NotFound from "./components/NotFound";
 import EditRecipe from "./components/EditRecipe";
 import ShoppingList from "./components/ShoppingList";
 import Planner from "./components/Planner";
