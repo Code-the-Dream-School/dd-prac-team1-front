@@ -33,7 +33,7 @@ import ModalForServings from "../ShoppingList/ModalForServings";
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [servingSize, setServingSize] = useState(recipe?.recipeServings);
+  // const [servingSize, setServingSize] = useState(0);
   // const [];
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
@@ -47,6 +47,7 @@ const SingleRecipePage = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
+        // setServingSize(recipe.recipeServings);
       })
       .catch(error => {
         console.log(error);
@@ -72,7 +73,10 @@ const SingleRecipePage = () => {
     console.log(e);
   };
 
-  const valueServings = () => {};
+  const valueServings = e => {
+    // setServingSize(e.target.value);
+    console.log(e);
+  };
   if (recipe === null) return null;
   const nutrition = [
     {
@@ -216,6 +220,9 @@ const SingleRecipePage = () => {
                   value={recipe.recipeServings}
                   CalculateServings={CalculateServings}
                   valueServings={valueServings}
+                  recipe={recipe}
+                  // setServingSize={setServingSize}
+                  setRecipe={setRecipe}
                 />
                 <IconButton
                   size="lg"
@@ -259,33 +266,33 @@ const SingleRecipePage = () => {
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
             </Box>
-            {recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+            {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
-              (recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 && (
-                <Box marginTop="5">
-                  <Flex onClick={onToggle} cursor="pointer">
-                    <Heading as="h3" size="md" marginBottom="3">
-                      Nutrition Information
-                    </Heading>
-                    <Box as="span">
-                      <Icon as={ChevronDownIcon} />
+              recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
+              <Box marginTop="5">
+                <Flex onClick={onToggle} cursor="pointer">
+                  <Heading as="h3" size="md" marginBottom="3">
+                    Nutrition Information
+                  </Heading>
+                  <Box as="span">
+                    <Icon as={ChevronDownIcon} />
+                  </Box>
+                </Flex>
+                <Collapse in={openNutrition} animateOpacity>
+                  {nutrition.map(({ displayName, content, unit }, index) => (
+                    <Box key={index}>
+                      {content > 0 && (
+                        <Text as="span">
+                          <b>{displayName}:</b> {content}
+                          {unit}&nbsp;
+                        </Text>
+                      )}
                     </Box>
-                  </Flex>
-                  <Collapse in={openNutrition} animateOpacity>
-                    {nutrition.map(({ displayName, content, unit }, index) => (
-                      <Box key={index}>
-                        {content > 0 && (
-                          <Text as="span">
-                            <b>{displayName}:</b> {content}
-                            {unit}&nbsp;
-                          </Text>
-                        )}
-                      </Box>
-                    ))}
-                  </Collapse>
-                </Box>
-              ))}
+                  ))}
+                </Collapse>
+              </Box>
+            )}
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">

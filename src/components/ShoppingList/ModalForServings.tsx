@@ -12,13 +12,16 @@ import {
   ModalBody,
   ModalCloseButton
 } from "@chakra-ui/react";
-
+import { SavedRecipe } from "../../utils/types";
 type ModalForServingsProps = {
   isOpen: boolean;
   onClose: () => void;
   value: number;
   CalculateServings: Function;
   valueServings: Function;
+  setRecipe: Function;
+  recipe: SavedRecipe;
+  // setServingSize: Function;
 };
 
 const ModalForServings = ({
@@ -26,7 +29,10 @@ const ModalForServings = ({
   onClose,
   value,
   CalculateServings,
-  valueServings
+  recipe,
+  valueServings,
+  // setServingSize,
+  setRecipe
 }: ModalForServingsProps) => {
   return (
     <Modal
@@ -48,7 +54,16 @@ const ModalForServings = ({
               type="number"
               min="0"
               value={value}
-              onChange={valueServings}
+              onChange={e => {
+                setRecipe({
+                  ...recipe,
+                  recipeServings: Number(e.target.value)
+                });
+              }}
+              // onChange={e => {
+              //   setServingSize(e.target.value);
+              //   console.log(e);
+              // }}
             />
           </Center>
         </ModalBody>
