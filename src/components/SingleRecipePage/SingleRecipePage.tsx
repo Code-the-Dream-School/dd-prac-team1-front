@@ -69,15 +69,22 @@ const SingleRecipePage = () => {
       });
   };
 
-  const CalculateServings = e => {
+  if (recipe === null) return null;
+
+  const valueOfServings = (e: any) => {
     console.log(e);
+    setRecipe({
+      ...recipe,
+      recipeServings: Number(e.target.value)
+    });
   };
 
-  const valueServings = e => {
-    // setServingSize(e.target.value);
-    console.log(e);
-  };
-  if (recipe === null) return null;
+  // const CalculateServings = () => {
+  //   recipe.recipeIngredients.map(ingredient => {
+  //     return { ingredient };
+  //   });
+  // };
+
   const nutrition = [
     {
       displayName: "Calories",
@@ -219,7 +226,7 @@ const SingleRecipePage = () => {
                   onClose={onClose}
                   value={recipe.recipeServings}
                   CalculateServings={CalculateServings}
-                  valueServings={valueServings}
+                  valueOfServings={valueOfServings}
                   recipe={recipe}
                   // setServingSize={setServingSize}
                   setRecipe={setRecipe}
@@ -280,16 +287,18 @@ const SingleRecipePage = () => {
                   </Box>
                 </Flex>
                 <Collapse in={openNutrition} animateOpacity>
-                  {nutrition.map(({ displayName, content, unit }, index) => (
-                    <Box key={index}>
-                      {content > 0 && (
-                        <Text as="span">
-                          <b>{displayName}:</b> {content}
-                          {unit}&nbsp;
-                        </Text>
-                      )}
-                    </Box>
-                  ))}
+                  <Flex>
+                    {nutrition.map(({ displayName, content, unit }, index) => (
+                      <Box key={index}>
+                        {content > 0 && (
+                          <Text as="span">
+                            <b>{displayName}:</b> {content}
+                            {unit}&nbsp;
+                          </Text>
+                        )}
+                      </Box>
+                    ))}
+                  </Flex>
                 </Collapse>
               </Box>
             )}

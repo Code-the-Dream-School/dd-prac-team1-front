@@ -18,9 +18,9 @@ type ModalForServingsProps = {
   onClose: () => void;
   value: number;
   CalculateServings: Function;
-  valueServings: Function;
-  setRecipe: Function;
-  recipe: SavedRecipe;
+  valueOfServings: Function;
+  // setRecipe: Function;
+  // recipe: SavedRecipe;
   // setServingSize: Function;
 };
 
@@ -29,11 +29,11 @@ const ModalForServings = ({
   onClose,
   value,
   CalculateServings,
-  recipe,
-  valueServings,
-  // setServingSize,
-  setRecipe
-}: ModalForServingsProps) => {
+  // recipe,
+  valueOfServings
+}: // setServingSize,
+// setRecipe
+ModalForServingsProps) => {
   return (
     <Modal
       blockScrollOnMount={false}
@@ -55,15 +55,8 @@ const ModalForServings = ({
               min="0"
               value={value}
               onChange={e => {
-                setRecipe({
-                  ...recipe,
-                  recipeServings: Number(e.target.value)
-                });
+                valueOfServings(e);
               }}
-              // onChange={e => {
-              //   setServingSize(e.target.value);
-              //   console.log(e);
-              // }}
             />
           </Center>
         </ModalBody>
