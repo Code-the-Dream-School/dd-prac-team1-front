@@ -13,8 +13,7 @@ import SavedRecipes from "./components/SavedRecipes";
 import Layout from "./components/Layout";
 import SingleRecipePage from "./components/SingleRecipePage";
 import theme from "./CustomTheme.tsx";
-import NotFound from "./components/404";
-import { Navigate } from "react-router-dom";
+import NotFound from "./components/NotFound.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
