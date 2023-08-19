@@ -79,16 +79,16 @@ const EditRecipe = () => {
       })
       .catch(error => {
         console.log(error);
+
         toast({
           title: "Error",
-          description: "Server wasn't be able to edit your recipe",
           status: "error",
           duration: 3000,
           isClosable: true,
           position: "top",
           render: () => (
             <Box p="3" bg="red">
-              Server wasn't be able to edit your recipe
+              {error.response.data.message}
             </Box>
           )
         });
