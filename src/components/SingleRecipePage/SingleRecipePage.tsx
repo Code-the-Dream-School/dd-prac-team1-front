@@ -243,20 +243,21 @@ const SingleRecipePage = () => {
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
             </Box>
-            {recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+            {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
-              (recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 && (
-                <Box marginTop="5">
-                  <Flex onClick={onToggle} cursor="pointer">
-                    <Heading as="h3" size="md" marginBottom="3">
-                      Nutrition Information
-                    </Heading>
-                    <Box as="span">
-                      <Icon as={ChevronDownIcon} />
-                    </Box>
-                  </Flex>
-                  <Collapse in={isOpen} animateOpacity>
+              recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
+              <Box marginTop="5">
+                <Flex onClick={onToggle} cursor="pointer">
+                  <Heading as="h3" size="md" marginBottom="3">
+                    Nutrition Information
+                  </Heading>
+                  <Box as="span">
+                    <Icon as={ChevronDownIcon} />
+                  </Box>
+                </Flex>
+                <Collapse in={isOpen} animateOpacity>
+                  <Flex>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <Box key={index}>
                         {content > 0 && (
@@ -267,9 +268,10 @@ const SingleRecipePage = () => {
                         )}
                       </Box>
                     ))}
-                  </Collapse>
-                </Box>
-              ))}
+                  </Flex>
+                </Collapse>
+              </Box>
+            )}
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">
