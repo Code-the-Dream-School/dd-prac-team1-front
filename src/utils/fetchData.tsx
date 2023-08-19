@@ -37,7 +37,6 @@ export const logout = () => {
 };
 
 export const searchAI = (search: string, values: Array<string>) => {
-  console.log(values)
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/",

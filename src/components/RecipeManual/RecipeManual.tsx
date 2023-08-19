@@ -324,7 +324,7 @@ const RecipeManual = () => {
                         
                         options={tagsOptions}
                         onChange={(
-                            event: any[]
+                            event
                         )=> {
                             let tagsArray = event.map(item => item.value);
                             let recipeTagNames = tagsArray.map( tagValue => ({ tagName: tagValue }) );
@@ -524,7 +524,7 @@ const RecipeManual = () => {
                 </Grid>
             </GridItem>
             <GridItem colSpan={4}>
-                <DropImage srcImage={srcImage} onChange={ (event: { target: { files: any[] | null; }; }) => {
+                <DropImage srcImage={srcImage} onChange={event => {
                     if (event.target.files === null) return;
                     const file = event.target.files[0];
                     const newSrc = URL.createObjectURL(file);

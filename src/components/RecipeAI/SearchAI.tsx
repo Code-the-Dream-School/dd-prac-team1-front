@@ -26,11 +26,10 @@ const SearchAI = () => {
   const [recipe, setRecipe] = useState<AIRecipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  let valuesArray: Array<string> = [];
   const handleSelect = (
-    event: MultiValue<{ label: string; value: string }>
+    newValue: MultiValue<any>,
   ) => {
-    valuesArray = event.map(item => item.value);
+    let valuesArray = newValue.map(item => item.value);
     setValues(valuesArray);
   };
 

@@ -4,7 +4,7 @@ import {
     FormControl,
 
 } from "@chakra-ui/react";
-import {   ChakraStylesConfig, Select } from "chakra-react-select";
+import {   ActionMeta, ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
 import { Options } from "../../../utils/types";
 
 const chakraStyles: ChakraStylesConfig = {
@@ -49,7 +49,7 @@ const chakraStyles: ChakraStylesConfig = {
 
 type OptionsProps = {
     options : Options[],   
-    onChange: Function,
+    onChange: ((newValue: MultiValue<any>, actionMeta: ActionMeta<any>) => void) | undefined,
 }
 
 const MultipleSelectForm = ( {options, onChange}: OptionsProps) => (

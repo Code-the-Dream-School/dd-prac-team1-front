@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, FormControl } from "@chakra-ui/react";
-import {  ChakraStylesConfig, Select } from "chakra-react-select";
+import {  ActionMeta, ChakraStylesConfig, Select } from "chakra-react-select";
 import { Options } from "../../../utils/types";
 
 
@@ -48,7 +48,7 @@ type OptionsProps = {
     placeholder: string, 
     options : Options[],   
     value: Options,
-    onChange: Function
+    onChange: ((newValue: any, actionMeta: ActionMeta<any>) => void) | undefined,
 };
 
 const SingleSelectForm = ( {placeholder, options, value, onChange}: OptionsProps ) => (

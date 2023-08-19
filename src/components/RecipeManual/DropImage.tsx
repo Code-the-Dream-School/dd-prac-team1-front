@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { ChangeEventHandler, forwardRef, useRef } from "react";
 import {
     AspectRatio,
     Box,
@@ -91,7 +91,7 @@ type Props = {
 
 type DropImageProps = {
     srcImage: string,
-    onChange: Function,
+    onChange: ChangeEventHandler<HTMLInputElement>,
 };
 
 const PreviewImage = forwardRef<Ref, Props>((props, ref) => {
@@ -191,7 +191,7 @@ const DropImage = ({ srcImage, onChange }:DropImageProps) => {
                                 ref={nativeFilePickerRef}
                                 type="file"
                                 name="recipeImage"
-                                laceholder="Choose img"
+                                placeholder="Choose img"
                                 accept="image/png, image/jpeg, image/avif"
                                 height="100%"
                                 width="100%"
