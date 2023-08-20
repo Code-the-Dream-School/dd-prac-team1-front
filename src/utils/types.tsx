@@ -93,6 +93,7 @@ export type ManualRecipe = {
   recipeName: string;
   recipeNutritionInfo: RecipeNutritionInfo;
   recipePrepTime: { recipePrepTimeMinutes: number };
+  recipeTotalTime: { recipeTotalTimeMinutes: number };
   recipeServings: number;
   recipeSpecialDiets: Array<string>;
   recipeTags: Array<RecipeTag>;

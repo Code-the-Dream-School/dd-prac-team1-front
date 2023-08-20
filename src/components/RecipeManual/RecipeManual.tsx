@@ -369,6 +369,11 @@ const RecipeManual = () => {
                                 ...recipe,
                                 recipeCookTime: {
                                     recipeCookTimeMinutes: Number(event.target.value)
+                                },
+                                recipeTotalTime: {
+                                    recipeTotalTimeMinutes:
+                                        Number(event.target.value) +
+                                        recipe.recipeCookTime.recipeCookTimeMinutes
                                 }
                             });
                         }}
@@ -392,9 +397,14 @@ const RecipeManual = () => {
                             ...recipe,
                             recipePrepTime: {
                                 recipePrepTimeMinutes: Number(event.target.value)
+                            },
+                            recipeTotalTime: {
+                                recipeTotalTimeMinutes:
+                                    Number(event.target.value) +
+                                    recipe.recipeCookTime.recipeCookTimeMinutes
                             }
                         });
-                        }}
+                    }}
                     />
                 </GridItem>
                 <GridItem colSpan={2}>
