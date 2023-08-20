@@ -14,7 +14,7 @@ const chakraStyles: ChakraStylesConfig = {
     placeholder: (provided) => ({
         ...provided,
         position:"absolute", 
-        marginTop: "-3", 
+        marginTop: "0", 
         fontSize: "xs"
     }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -68,7 +68,7 @@ const SingleCreatableSelect = ( { options, onChange }: OptionsProps ) => {
                 options={options}
                 chakraStyles={chakraStyles}
                 focusBorderColor="green"
-                placeholder='Enter amount'
+                placeholder='Choose or enter amount'
                 closeMenuOnSelect
                 onInputChange={handleInputChange}
                 isValidNewOption={isValidNewOption}
