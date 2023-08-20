@@ -85,6 +85,15 @@ const SingleRecipePage = () => {
   const CalculateServings = () => {
     if (recipe.recipeServings === servingSize) {
       return recipe.recipeIngredients;
+    }
+    if (recipe.recipeServings === 0) {
+      return recipe.recipeIngredients.map(ingredient => {
+        console.log(ingredient);
+        return {
+          ...ingredient,
+          ingredientAmount: ingredient.ingredientAmount * servingSize
+        };
+      });
     } else {
       return recipe.recipeIngredients.map(ingredient => {
         console.log(ingredient);
@@ -98,7 +107,14 @@ const SingleRecipePage = () => {
   };
 
   const SaveIngredientsToShoppingList = () => {
-    console.log(CalculateServings());
+    CalculateServings();
+
+    localStorage.setItem(
+      "ingredient",
+      JSON.stringify(recipe.recipeIngredients)
+    );
+
+    // console.log();
   };
 
   const nutrition = [
