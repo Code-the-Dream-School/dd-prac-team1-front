@@ -75,8 +75,8 @@ export type EditedRecipe = {
   recipeNutritionInfo: RecipeNutritionInfo;
   recipePrepTime: { recipePrepTimeMinutes: number };
   recipeServings: number;
-  recipeSpecialDiets: Array<string>;
-  recipeTags: Array<RecipeTag>;
+  recipeSpecialDiets: Array<string> | string;
+  recipeTags: Array<RecipeTag> | string;
   recipeTotalTime: { recipeTotalTimeMinutes: number };
   updatedAt: string;
   __v: number;

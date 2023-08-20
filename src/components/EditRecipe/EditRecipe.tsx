@@ -72,6 +72,7 @@ const EditRecipe = () => {
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
+
     editSingleRecipe(recipeId, recipe)
       .then(response => {
         console.log(response);
@@ -132,13 +133,22 @@ const EditRecipe = () => {
       const values = [...tags];
       values.splice(index, 1);
       setTags(values);
-      setRecipe({ ...recipe, recipeTags: values });
+      if (values.length === 0) {
+        setRecipe({ ...recipe, recipeTags: "" });
+      } else {
+        setRecipe({ ...recipe, recipeTags: values });
+      }
     }
     if (arg === "diets") {
       const values = [...diets];
       values.splice(index, 1);
       setDiets(values);
-      setRecipe({ ...recipe, recipeSpecialDiets: values });
+      console.log(diets);
+      if (values.length === 0) {
+        setRecipe({ ...recipe, recipeSpecialDiets: "" });
+      } else {
+        setRecipe({ ...recipe, recipeSpecialDiets: values });
+      }
     }
   };
 
@@ -711,6 +721,7 @@ const EditRecipe = () => {
                     placeholder="Choose diet"
                     value={diet}
                     onChange={e => {
+                      console.log(e);
                       const newDiets = [...diets];
                       newDiets[index] = e.target.value;
                       setDiets(newDiets);
