@@ -67,7 +67,7 @@ const SearchAI = () => {
         my: 0,
         borderWidth: "1px",
         borderColor: "green",
-        borderRadius: "md"
+        borderRadius: "md",
     }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
         ...prev,
@@ -94,12 +94,13 @@ const SearchAI = () => {
       },
     }),
   };
+
   return (
     <Center>
       <Container maxW="6xl">
         <Box
           as="form"
-          onSubmit={event => {
+          onSubmit={(event: { preventDefault: () => void; }) => {
             event.preventDefault();
             handleSearch();
             setError(false);

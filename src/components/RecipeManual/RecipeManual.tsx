@@ -73,7 +73,7 @@ const RecipeManual = () => {
                 console.log(error);
                 toast({
                 title: "Error",
-                description: "Server wasn't be able to add your recipe",
+                description: `${error.response.data.message}`,
                 status: "warning",
                 variant: "subtle",
                 duration: 4000,
