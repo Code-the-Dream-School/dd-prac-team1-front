@@ -2,20 +2,21 @@ import { Box, Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { FormControl, Grid, GridItem, IconButton, Input, Textarea, Text, Button, 
     useToast
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { MultiValue } from "chakra-react-select";
 import { MinusIcon } from "@chakra-ui/icons";
+import { categoriesOptions, ingredientAmountOptions } from "../../utils/OptionsData";
+import { complexityOptions } from "../../utils/OptionsData";
+import { specialDietsOptions } from "../../utils/OptionsData";
+import { unitOptions } from "../../utils/OptionsData";
+import { SaveIngredients, ManualRecipe } from "../../utils/types";
+import { saveManualRecipe } from "../../utils/fetchData";
 import DropImage from "./DropImage";
 import MultipleCreatableSelectForm from "./SelectForms/MultipleCreatableSelectForm";
 import SingleSelectForm from "./SelectForms/SingleSelectForm";
 import MultipleSelectForm from "./SelectForms/MultipleSelectForm";
-import { categoriesOptions } from "../../utils/OptionsData";
-import { complexityOptions } from "../../utils/OptionsData";
-import { specialDietsOptions } from "../../utils/OptionsData";
-import { unitOptions } from "../../utils/OptionsData";
-import { SavedIngredient, ManualRecipe } from "../../utils/types";
-import { saveManualRecipe } from "../../utils/fetchData";
-import { useNavigate } from "react-router-dom";
-import { MultiValue } from "chakra-react-select";
+import SingleCreatableSelect from "./SelectForms/SingleCreatableSelect";
 
 
 const RecipeManual = () => {
@@ -27,12 +28,12 @@ const RecipeManual = () => {
         recipeIngredients: [
             {
                 ingredientName: "",
-                ingredientAmount: 0,
+                ingredientAmount: "",
                 ingredientUnit: "other",
             },
             {
                 ingredientName: "",
-                ingredientAmount: 0,
+                ingredientAmount: "",
                 ingredientUnit: "other",
             },
         ],
@@ -47,17 +48,20 @@ const RecipeManual = () => {
         recipePrepTime: { 
             recipePrepTimeMinutes: 0 
         },
+        recipeTotalTime: { recipeTotalTimeMinutes: 0 },
         recipeServings: 0,
         recipeSpecialDiets: [],
         recipeTags: [],
     });
-    const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([
+
+    const [ingredients, setIngredients] = useState<Array<SaveIngredients>>([
         {
             ingredientName: "",
-            ingredientAmount: 0,
+            ingredientAmount: "",
             ingredientUnit: "other",
         },
     ]);
+
     const [srcImage, setsrcImage] = useState<string>("");
     const navigate = useNavigate();
     const toast = useToast();
@@ -88,7 +92,7 @@ const RecipeManual = () => {
                     ...ingredients,
                     {
                     ingredientName: "",
-                    ingredientAmount: 0,
+                    ingredientAmount: "",
                     ingredientUnit: "other",
                     }
                 ]);
@@ -197,23 +201,20 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={2}>
                     <FormControl isRequired>
-                    <Input
-                        type="number"
-                        id="ingredientAmount"
-                        name="ingredientAmount"
-                        value={ingredient.ingredientAmount === 0 ? "" : ingredient.ingredientAmount}
-                        placeholder="quantity"
-                        _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        onChange={event => {
-                            const newIngredients = [...ingredients];
-                            newIngredients[id].ingredientAmount = Number(event.target.value);
-                            setIngredients(newIngredients);
-                            setRecipe({
-                                ...recipe,
-                                recipeIngredients: newIngredients,
-                                });
-                            }}
-                    />
+                        <SingleCreatableSelect
+                            value={ { value: ingredients[id].ingredientAmount, label: ingredients[id].ingredientAmount } }
+                            options={ingredientAmountOptions}
+                            onChange={event => {
+                                const newIngredients = [...ingredients];
+                                newIngredients[id].ingredientAmount = event.value;
+                                setIngredients(newIngredients);
+                                setRecipe({
+                                    ...recipe,
+                                    recipeIngredients: newIngredients,
+                                    });                                  
+                                }
+                            }
+                        />
                     </FormControl>
                 </GridItem>
                 <GridItem colSpan={2}>

@@ -55,3 +55,9 @@ export const unitOptions = [
     { value: "pinch", label: "pinch" }, 
     { value: "other", label: "other" }, 
 ];
+
+export const ingredientAmountOptions = [
+    { value: "-1", label: "to taste" },
+    { value: "-2", label: "for serving" },
+    { value: "-3", label: "for garnish" }, 
+];    

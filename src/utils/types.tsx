@@ -88,7 +88,7 @@ export type ManualRecipe = {
   recipeComplexityLevel: string;
   recipeCookTime: { recipeCookTimeMinutes: number };
   recipeImage: string | Object;
-  recipeIngredients: Array<SavedIngredient>;
+  recipeIngredients: Array<SaveIngredients>;
   recipeInstructions: string;
   recipeName: string;
   recipeNutritionInfo: RecipeNutritionInfo;
@@ -99,6 +99,12 @@ export type ManualRecipe = {
   recipeTags: Array<RecipeTag>;
 };
 
+export type SaveIngredients = {
+  ingredientAmount: string;
+  ingredientName: string;
+  ingredientUnit: string;
+  _id?: string;
+};
 
 export type Options = {
     value: string;
