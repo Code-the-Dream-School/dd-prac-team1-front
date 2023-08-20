@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Center,
   Flex,
   HStack,
   Heading,
@@ -17,12 +18,13 @@ const SearchChoice = () => {
   };
 
   return (
-    <Flex justifyContent={"center"} h="100vh">
-
-      <HStack>
-        <Card cursor="pointer" onClick={navigateToAISearch}>
+    <Flex justifyContent={"center"} h="md">
+      <HStack spacing={20}>
+        <Card cursor="pointer" onClick={navigateToAISearch} size="lg">
           <CardHeader>
-            <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            <Center>
+              <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            </Center>
           </CardHeader>
           <CardBody>
             <Text>
@@ -33,9 +35,11 @@ const SearchChoice = () => {
           </CardBody>
         </Card>
 
-        <Card cursor="not-allowed">
+        <Card cursor="not-allowed" size="lg">
           <CardHeader>
-            <Heading size="md">ADD YOUR OWN RECIPE By Hand</Heading>
+            <Center>
+              <Heading size="md">ADD YOUR OWN RECIPE By Hand</Heading>
+            </Center>
           </CardHeader>
           <CardBody>
             <Text>Have a recipe you love?</Text>
