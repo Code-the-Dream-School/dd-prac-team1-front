@@ -177,7 +177,7 @@ const RecipeManual = () => {
                     gap={3}
                     key={id}
                 >
-                    <GridItem colSpan={5}>
+                    <GridItem colSpan={4}>
                     <FormControl isRequired>
                     <Input
                         type="text"
@@ -199,7 +199,7 @@ const RecipeManual = () => {
                         />
                     </FormControl>
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={3}>
                     <FormControl isRequired>
                         <SingleCreatableSelect
                             value={ { value: ingredients[id].ingredientAmount, label: ingredients[id].ingredientAmount } }

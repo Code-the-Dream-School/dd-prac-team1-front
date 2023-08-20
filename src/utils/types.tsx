@@ -106,6 +106,11 @@ export type SaveIngredients = {
   _id?: string;
 };
 
+export type AmountOptions = {
+  value: string;
+  label: string;
+};
+
 export type Options = {
     value: string;
     label: string;

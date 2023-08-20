@@ -18,6 +18,7 @@ import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
 import { specialDietsOptions } from "../../utils/OptionsData";
 
+
 const SearchAI = () => {
   const [search, setSearch] = useState<string>("");
   const [error, setError] = useState<boolean>(false);

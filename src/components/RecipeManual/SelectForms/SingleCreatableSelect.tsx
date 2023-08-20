@@ -50,7 +50,17 @@ type OptionsProps = {
 };
     
 
-const SingleCreatableSelect = ( { options, onChange }: OptionsProps ) => (
+const SingleCreatableSelect = ( { options, onChange }: OptionsProps ) => {
+    const handleInputChange = (inputValue: string) => {
+        const sanitizedValue = inputValue.replace(/[^\d.]/g, "");
+        return sanitizedValue;
+    };
+    
+    const isValidNewOption = (inputValue: string) => {
+        return /^[\d.]+$/.test(inputValue);
+    };
+    
+    return(
         <Box>
             <FormControl>
             <CreatableSelect        
@@ -58,12 +68,15 @@ const SingleCreatableSelect = ( { options, onChange }: OptionsProps ) => (
                 options={options}
                 chakraStyles={chakraStyles}
                 focusBorderColor="green"
-                placeholder='Amount'
+                placeholder='Enter amount'
                 closeMenuOnSelect
+                onInputChange={handleInputChange}
+                isValidNewOption={isValidNewOption}
                 onChange={onChange}
             />  
             </FormControl>
         </Box>
-);
+    )
+};
 
 export default SingleCreatableSelect;
