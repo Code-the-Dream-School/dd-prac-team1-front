@@ -249,111 +249,117 @@ const EditRecipe = () => {
                   </Select>
                 </FormControl>
               </Box>
-              <Flex marginY="2">
-                <FormControl>
-                  <FormLabel>
-                    <b>Prep time</b>
-                  </FormLabel>
-                  <InputGroup w="50%">
-                    <Input
+              <Grid templateColumns="repeat(2, 1fr)" gap="2">
+                <GridItem colSpan={1} w="100%">
+                  <FormControl>
+                    <FormLabel>
+                      <b>Prep time</b>
+                    </FormLabel>
+                    <InputGroup w="50%">
+                      <Input
+                        size="sm"
+                        type="number"
+                        value={
+                          recipe.recipePrepTime.recipePrepTimeMinutes || ""
+                        }
+                        min="0"
+                        onChange={e => {
+                          setRecipe({
+                            ...recipe,
+                            recipePrepTime: {
+                              recipePrepTimeMinutes: Number(e.target.value)
+                            },
+                            recipeTotalTime: {
+                              recipeTotalTimeMinutes:
+                                Number(e.target.value) +
+                                recipe.recipeCookTime.recipeCookTimeMinutes
+                            }
+                          });
+                          console.log(recipe);
+                        }}
+                      />
+                      <InputRightElement>
+                        <Text fontSize="12">min</Text>
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>
+                      <b>Complexity level</b>
+                    </FormLabel>
+                    <Select
+                      w="50%"
                       size="sm"
-                      type="number"
-                      value={recipe.recipePrepTime.recipePrepTimeMinutes || ""}
-                      min="0"
+                      value={recipe.recipeComplexityLevel}
+                      placeholder="Choose complexity level"
                       onChange={e => {
                         setRecipe({
                           ...recipe,
-                          recipePrepTime: {
-                            recipePrepTimeMinutes: Number(e.target.value)
-                          },
-                          recipeTotalTime: {
-                            recipeTotalTimeMinutes:
-                              Number(e.target.value) +
-                              recipe.recipeCookTime.recipeCookTimeMinutes
-                          }
+                          recipeComplexityLevel: e.target.value
                         });
-                        console.log(recipe);
-                      }}
-                    />
-                    <InputRightElement>
-                      <Text fontSize="12">min</Text>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>
-                    <b>Cooking time</b>
-                  </FormLabel>
-                  <InputGroup w="50%">
-                    <Input
-                      size="sm"
-                      type="number"
-                      value={recipe.recipeCookTime.recipeCookTimeMinutes || ""}
-                      min="0"
-                      onChange={e => {
-                        setRecipe({
-                          ...recipe,
-                          recipeCookTime: {
-                            recipeCookTimeMinutes: Number(e.target.value)
-                          },
-                          recipeTotalTime: {
-                            recipeTotalTimeMinutes:
-                              Number(e.target.value) +
-                              recipe.recipePrepTime.recipePrepTimeMinutes
-                          }
-                        });
-                        console.log(recipe);
-                      }}
-                    />
-                    <InputRightElement>
-                      <Text fontSize="12">min</Text>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-              </Flex>
-              <Flex marginY="2">
-                <FormControl>
-                  <FormLabel>
-                    <b>Complexity level</b>
-                  </FormLabel>
-                  <Select
-                    w="50%"
-                    size="sm"
-                    value={recipe.recipeComplexityLevel}
-                    placeholder="Choose complexity level"
-                    onChange={e => {
-                      setRecipe({
-                        ...recipe,
-                        recipeComplexityLevel: e.target.value
-                      });
-                    }}>
-                    <option value="easy">easy</option>
-                    <option value="medium">medium</option>
-                    <option value="difficult">difficult</option>
-                  </Select>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>
-                    <b>Servings</b>
-                  </FormLabel>
-                  <InputGroup w="50%">
-                    <Input
-                      size="sm"
-                      value={recipe.recipeServings || ""}
-                      min="0"
-                      onChange={e => {
-                        setRecipe({
-                          ...recipe,
-                          recipeServings: Number(e.target.value)
-                        });
-                      }}
-                    />
-                    <InputRightElement mr="5">
-                      <Text fontSize="12">persons</Text>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-              </Flex>
+                      }}>
+                      <option value="easy">easy</option>
+                      <option value="medium">medium</option>
+                      <option value="difficult">difficult</option>
+                    </Select>
+                  </FormControl>
+                </GridItem>
+                <GridItem colSpan={1} w="100%">
+                  <FormControl>
+                    <FormLabel>
+                      <b>Cooking time</b>
+                    </FormLabel>
+                    <InputGroup w="50%">
+                      <Input
+                        size="sm"
+                        type="number"
+                        value={
+                          recipe.recipeCookTime.recipeCookTimeMinutes || ""
+                        }
+                        min="0"
+                        onChange={e => {
+                          setRecipe({
+                            ...recipe,
+                            recipeCookTime: {
+                              recipeCookTimeMinutes: Number(e.target.value)
+                            },
+                            recipeTotalTime: {
+                              recipeTotalTimeMinutes:
+                                Number(e.target.value) +
+                                recipe.recipePrepTime.recipePrepTimeMinutes
+                            }
+                          });
+                          console.log(recipe);
+                        }}
+                      />
+                      <InputRightElement>
+                        <Text fontSize="12">min</Text>
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>
+                      <b>Servings</b>
+                    </FormLabel>
+                    <InputGroup w="50%">
+                      <Input
+                        size="sm"
+                        value={recipe.recipeServings || ""}
+                        min="0"
+                        onChange={e => {
+                          setRecipe({
+                            ...recipe,
+                            recipeServings: Number(e.target.value)
+                          });
+                        }}
+                      />
+                      <InputRightElement mr="5">
+                        <Text fontSize="12">persons</Text>
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                </GridItem>
+              </Grid>
               <Flex flexDirection="column" gap="4">
                 <Flex mt="5" alignItems="center">
                   <Text mr="2">
@@ -498,122 +504,134 @@ const EditRecipe = () => {
                 <Text>
                   <b>Nutrition Information</b>
                 </Text>
-                <Flex>
-                  <FormControl mr="2" w="20%">
-                    <FormLabel>
-                      <i>Calories</i>
-                    </FormLabel>
-                    <InputGroup>
-                      <Input
-                        size="sm"
-                        type="number"
-                        value={
-                          recipe.recipeNutritionInfo.NutritionInfoCalories || ""
-                        }
-                        min="0"
-                        onChange={e => {
-                          setRecipe({
-                            ...recipe,
-                            recipeNutritionInfo: {
-                              ...recipe.recipeNutritionInfo,
-                              NutritionInfoCalories: Number(e.target.value)
-                            }
-                          });
-                        }}
-                      />
-                      <InputRightElement>
-                        <Text fontSize="12">kcal</Text>
-                      </InputRightElement>
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl mr="2" w="20%">
-                    <FormLabel>
-                      <i>Carbs</i>
-                    </FormLabel>
-                    <InputGroup>
-                      <Input
-                        size="sm"
-                        type="number"
-                        value={
-                          recipe.recipeNutritionInfo.NutritionInfoCarbs || ""
-                        }
-                        min="0"
-                        onChange={e => {
-                          setRecipe({
-                            ...recipe,
-                            recipeNutritionInfo: {
-                              ...recipe.recipeNutritionInfo,
-                              NutritionInfoCarbs: Number(e.target.value)
-                            }
-                          });
-                        }}
-                      />
-                      <InputRightElement>
-                        <Text fontSize="12">g</Text>
-                      </InputRightElement>
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl mr="2" w="20%">
-                    <FormLabel>
-                      <i>Protein</i>
-                    </FormLabel>
-                    <InputGroup>
-                      <Input
-                        size="sm"
-                        type="number"
-                        value={
-                          recipe.recipeNutritionInfo.NutritionInfoProtein || ""
-                        }
-                        min="0"
-                        onChange={e => {
-                          setRecipe({
-                            ...recipe,
-                            recipeNutritionInfo: {
-                              ...recipe.recipeNutritionInfo,
-                              NutritionInfoProtein: Number(e.target.value)
-                            }
-                          });
-                        }}
-                      />
-                      <InputRightElement>
-                        <Text fontSize="12">g</Text>
-                      </InputRightElement>
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl mr="2" w="20  %">
-                    <FormLabel>
-                      <i>Fat</i>
-                    </FormLabel>
-                    <InputGroup>
-                      <Input
-                        size="sm"
-                        type="number"
-                        value={
-                          recipe.recipeNutritionInfo.NutritionInfoFat || ""
-                        }
-                        min="0"
-                        onChange={e => {
-                          setRecipe({
-                            ...recipe,
-                            recipeNutritionInfo: {
-                              ...recipe.recipeNutritionInfo,
-                              NutritionInfoFat: Number(e.target.value)
-                            }
-                          });
-                        }}
-                      />
-                      <InputRightElement>
-                        <Text fontSize="12">g</Text>
-                      </InputRightElement>
-                    </InputGroup>
-                  </FormControl>
-                </Flex>
+                <Grid templateColumns="repeat(4, 1fr)" mt="2" gap="2">
+                  <GridItem colSpan={1} w="100%">
+                    {" "}
+                    <FormControl mr="2">
+                      <FormLabel>
+                        <i>Calories</i>
+                      </FormLabel>
+                      <InputGroup>
+                        <Input
+                          size="sm"
+                          type="number"
+                          value={
+                            recipe.recipeNutritionInfo.NutritionInfoCalories ||
+                            ""
+                          }
+                          min="0"
+                          onChange={e => {
+                            setRecipe({
+                              ...recipe,
+                              recipeNutritionInfo: {
+                                ...recipe.recipeNutritionInfo,
+                                NutritionInfoCalories: Number(e.target.value)
+                              }
+                            });
+                          }}
+                        />
+                        <InputRightElement>
+                          <Text fontSize="12">kcal</Text>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem colSpan={1} w="100%">
+                    <FormControl mr="2">
+                      <FormLabel>
+                        <i>Carbs</i>
+                      </FormLabel>
+                      <InputGroup>
+                        <Input
+                          size="sm"
+                          type="number"
+                          value={
+                            recipe.recipeNutritionInfo.NutritionInfoCarbs || ""
+                          }
+                          min="0"
+                          onChange={e => {
+                            setRecipe({
+                              ...recipe,
+                              recipeNutritionInfo: {
+                                ...recipe.recipeNutritionInfo,
+                                NutritionInfoCarbs: Number(e.target.value)
+                              }
+                            });
+                          }}
+                        />
+                        <InputRightElement>
+                          <Text fontSize="12">g</Text>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem colSpan={1} w="100%">
+                    <FormControl mr="2">
+                      <FormLabel>
+                        <i>Protein</i>
+                      </FormLabel>
+                      <InputGroup>
+                        <Input
+                          size="sm"
+                          type="number"
+                          value={
+                            recipe.recipeNutritionInfo.NutritionInfoProtein ||
+                            ""
+                          }
+                          min="0"
+                          onChange={e => {
+                            setRecipe({
+                              ...recipe,
+                              recipeNutritionInfo: {
+                                ...recipe.recipeNutritionInfo,
+                                NutritionInfoProtein: Number(e.target.value)
+                              }
+                            });
+                          }}
+                        />
+                        <InputRightElement>
+                          <Text fontSize="12">g</Text>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem colSpan={1} w="100%">
+                    <FormControl mr="2">
+                      <FormLabel>
+                        <i>Fat</i>
+                      </FormLabel>
+                      <InputGroup>
+                        <Input
+                          size="sm"
+                          type="number"
+                          value={
+                            recipe.recipeNutritionInfo.NutritionInfoFat || ""
+                          }
+                          min="0"
+                          onChange={e => {
+                            setRecipe({
+                              ...recipe,
+                              recipeNutritionInfo: {
+                                ...recipe.recipeNutritionInfo,
+                                NutritionInfoFat: Number(e.target.value)
+                              }
+                            });
+                          }}
+                        />
+                        <InputRightElement>
+                          <Text fontSize="12">g</Text>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
+                  </GridItem>
+                </Grid>
               </Box>
             </Flex>
           </GridItem>
           <GridItem colSpan={1} w="100%">
             <ChakraImage
               w="100%"
+              borderRadius="5"
               src={editSrcImage || ""}
               alt={recipe.recipeName}
             />
@@ -643,7 +661,6 @@ const EditRecipe = () => {
                 />
               </FormControl>
             </Flex>
-
             <Button
               w="100%"
               onClick={() => {
