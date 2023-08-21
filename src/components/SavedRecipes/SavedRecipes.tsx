@@ -143,7 +143,7 @@ const SavedRecipes = () => {
         <GridItem colSpan={1} w="100%" h="100"></GridItem>
         <GridItem colSpan={2} w="100%" h="100">
           <Center h="100">
-            <Text fontSize="3xl">SAVED RECIPES</Text>
+            <Heading fontSize="3xl">SAVED RECIPES</Heading>
           </Center>
         </GridItem>
       </Grid>

@@ -68,6 +68,7 @@ const OurTeam: React.FC = () => {
               alignItems="center"
               borderRadius="lg"
               borderWidth="1px"
+              borderColor="green"
               p={4}>
               <a
                 href={member.githubUrl}

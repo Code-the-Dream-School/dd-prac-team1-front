@@ -13,7 +13,7 @@ const Footer = () => {
       bg="brandGray"
       color="black">
       <Container maxW="7xl">
-        <Flex justify="space-between" align="center" textAlign="left">
+        <Flex justify="space-between" align="center">
           <Text pl={4} style={{ float: "left" }}>
             &copy; 2023 Olivier Meal Planner
           </Text>
@@ -57,7 +57,7 @@ const Footer = () => {
             />
             <IconButton
               as="a"
-              href="https://www.instagram.com/your-username"
+              href="https://www.instagram.com/olivier_meal_planner/"
               target="_blank"
               aria-label="Instagram"
               icon={<FaInstagram />}

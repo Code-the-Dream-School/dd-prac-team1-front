@@ -26,6 +26,7 @@ root.render(
   <Box minHeight="100vh" width="100%" display="flex" flexDirection="column">
     <ChakraProvider theme={theme}>
       <BrowserRouter>
+      <Box flexGrow={1}>
         <Routes>
           <Route path="/app" element={<App />} />
           <Route path="/" element={<Home />} />
@@ -46,6 +47,7 @@ root.render(
           <Route path="/404" element={<NotFound />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
+        </Box>
         <Footer />
       </BrowserRouter>
     </ChakraProvider>
