@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AIRecipe, SavedRecipe } from "./types";
+import { AIRecipe, SavedRecipe, EditedRecipe, ManualRecipe } from "./types";
 
 export const register = (name: string, email: string, password: string) => {
   return axios.post(
@@ -69,6 +69,22 @@ export const saveRecipe = (recipe: AIRecipe) => {
   );
 };
 
+export const saveManualRecipe = (recipe: ManualRecipe) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+  return axios.post(
+    "http://localhost:3000/api/v1/recipes/add-manual",
+    {
+      ...recipe
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
 export const getRecipe = () => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get("http://localhost:3000/api/v1/recipes/", {
@@ -89,7 +105,10 @@ export const getSingleRecipe = (recipeId: string) => {
   });
 };
 
-export const editSingleRecipe = (recipeId: string, recipe: SavedRecipe) => {
+export const editSingleRecipe = (
+  recipeId: string,
+  recipe: SavedRecipe | EditedRecipe
+) => {
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.patch(
     `http://localhost:3000/api/v1/recipes/${recipeId}`,
@@ -98,7 +117,7 @@ export const editSingleRecipe = (recipeId: string, recipe: SavedRecipe) => {
     },
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${jwtToken}`
       }
     }

@@ -19,6 +19,7 @@ import Planner from "./components/Planner/Planner";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
 import NotFound from "./components/Layout/NotFound";
 import theme from "./CustomTheme";
+import RecipeManual from "./components/RecipeManual/RecipeManual";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -33,6 +34,7 @@ root.render(
           <Route element={<Layout />}>
             <Route path="/search-choice" element={<SearchChoice />} />
             <Route path="/ai-recipe" element={<SearchAI />} />
+            <Route path="/manual-recipe" element={<RecipeManual />} />
             <Route path="/saved-recipes" element={<SavedRecipes />} />
             <Route path="/saved-recipes/:slug" element={<SingleRecipePage />} />
             <Route path="/team" element={<OurTeam />} />

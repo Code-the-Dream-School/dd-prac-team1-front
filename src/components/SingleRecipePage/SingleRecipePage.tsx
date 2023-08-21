@@ -11,7 +11,8 @@ import {
   GridItem,
   Heading,
   Text,
-  useDisclosure
+  useDisclosure,
+  UnorderedList
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../../utils/types";
@@ -25,8 +26,8 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredients from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
+import SingleRecipeIngredient from "./SingleRecipeIngredient";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -130,11 +131,13 @@ const SingleRecipePage = () => {
             {`${recipe.recipeComplexityLevel}`}
             &nbsp;&nbsp;
           </Text>
-          <Text>
-            <b>Servings:</b>&nbsp;
-            {`${recipe.recipeServings}`}
-            &nbsp;&nbsp;
-          </Text>
+          {recipe.recipeServings > 0 && (
+            <Text>
+              <b>Servings:</b>&nbsp;
+              {`${recipe.recipeServings}`}
+              &nbsp;&nbsp;
+            </Text>
+          )}
         </GridItem>
         <GridItem colSpan={1} w="100%" position="relative">
           <Flex
@@ -228,9 +231,11 @@ const SingleRecipePage = () => {
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
-              {recipe.recipeIngredients.map((ingredient, _id) => (
-                <SingleRecipeIngredients key={_id} ingredient={ingredient} />
-              ))}
+              <UnorderedList>
+                {recipe.recipeIngredients.map((ingredient, _id) => (
+                  <SingleRecipeIngredient key={_id} ingredient={ingredient} />
+                ))}
+              </UnorderedList>
             </Box>
             <Box marginTop="5">
               <Heading as="h3" size="md" marginBottom="3">
@@ -238,20 +243,21 @@ const SingleRecipePage = () => {
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
             </Box>
-            {recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+            {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
-              (recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 && (
-                <Box marginTop="5">
-                  <Flex onClick={onToggle} cursor="pointer">
-                    <Heading as="h3" size="md" marginBottom="3">
-                      Nutrition Information
-                    </Heading>
-                    <Box as="span">
-                      <Icon as={ChevronDownIcon} />
-                    </Box>
-                  </Flex>
-                  <Collapse in={isOpen} animateOpacity>
+              recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
+              <Box marginTop="5">
+                <Flex onClick={onToggle} cursor="pointer">
+                  <Heading as="h3" size="md" marginBottom="3">
+                    Nutrition Information
+                  </Heading>
+                  <Box as="span">
+                    <Icon as={ChevronDownIcon} />
+                  </Box>
+                </Flex>
+                <Collapse in={isOpen} animateOpacity>
+                  <Flex>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <Box key={index}>
                         {content > 0 && (
@@ -262,9 +268,10 @@ const SingleRecipePage = () => {
                         )}
                       </Box>
                     ))}
-                  </Collapse>
-                </Box>
-              ))}
+                  </Flex>
+                </Collapse>
+              </Box>
+            )}
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">

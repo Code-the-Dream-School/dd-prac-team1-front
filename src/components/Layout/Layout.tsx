@@ -4,10 +4,10 @@ import {
   HStack,
   IconButton,
   useDisclosure,
-  useColorModeValue,
   useToast,
   Stack,
-  Button
+  Button,
+  Image
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet } from "react-router-dom";
@@ -46,7 +46,7 @@ export default function Layout() {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg="brandGray" px={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <IconButton
             size="md"
@@ -61,7 +61,9 @@ export default function Layout() {
             justifyContent="space-between"
             ml="1rem"
             alignItems="center">
-            <Box>Olivier Logo</Box>
+            <Box>
+              <Image borderRadius="sm" src="/images/Logo_Olivier.svg" />
+            </Box>
             <HStack>
               <RecipeSearch />
             </HStack>
@@ -93,7 +95,6 @@ export default function Layout() {
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/planner">PLANNER</NavLink>
               <NavLink to="/shopping-list">SHOPPING</NavLink>
-
               <Button onClick={handleLogout}>LOGOUT</Button>
             </Stack>
           </Box>
