@@ -30,7 +30,6 @@ root.render(
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/contact" element={<Contact />} />
           <Route element={<Layout />}>
             <Route path="/search-choice" element={<SearchChoice />} />
             <Route path="/ai-recipe" element={<SearchAI />} />
@@ -40,6 +39,7 @@ root.render(
             <Route path="/edit/:slug" element={<EditRecipe />} />
             <Route path="/planner" element={<Planner />} />
             <Route path="/shopping-list" element={<ShoppingList />} />
+            <Route path="/contact" element={<Contact />} />
           </Route>
           <Route path="/404" element={<NotFound />} />
           <Route path="/*" element={<NotFound />} />

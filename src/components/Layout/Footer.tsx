@@ -8,12 +8,15 @@ const Footer = () => {
       py={4}
       height="70"
       width="100%"
-      bottom="0"
+      display="flex"
+      margin-top="auto"
       bg="brandGray"
       color="black">
-      <Container maxW="6xl">
-        <Flex justify="space-between" align="center">
-          <Text pl={4}>&copy; 2023 Olivier Meal Planner</Text>
+      <Container maxW="7xl">
+        <Flex justify="space-between" align="center" textAlign="left">
+          <Text pl={4} style={{ float: "left" }}>
+            &copy; 2023 Olivier Meal Planner
+          </Text>
 
           <Flex justify="center" alignItems="center">
             <Box as="a" href="/team" mx={10}>
@@ -27,7 +30,7 @@ const Footer = () => {
               </Text>
             </Box>
 
-            <Box as="a" href="/ContactUs" mr={10}>
+            <Box as="a" href="/Contact" mr={10}>
               <Text
                 _hover={{
                   borderBottomColor: "green",
