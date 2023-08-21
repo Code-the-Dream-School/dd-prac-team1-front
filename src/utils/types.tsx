@@ -75,8 +75,8 @@ export type EditedRecipe = {
   recipeNutritionInfo: RecipeNutritionInfo;
   recipePrepTime: { recipePrepTimeMinutes: number };
   recipeServings: number;
-  recipeSpecialDiets: Array<string>;
-  recipeTags: Array<RecipeTag>;
+  recipeSpecialDiets: Array<string> | string;
+  recipeTags: Array<RecipeTag> | string;
   recipeTotalTime: { recipeTotalTimeMinutes: number };
   updatedAt: string;
   __v: number;
@@ -112,31 +112,31 @@ export type AmountOptions = {
 };
 
 export type Options = {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 };
 
 export type AnimationVariants = {
   rest: {
-      rotate?: string,
-      scale?: number,
-      x?: string,
-      filter?: string,
-      transition?: {
-      duration?: number,
-      type?: string,
-      ease?: string,
-      }
-  }
+    rotate?: string;
+    scale?: number;
+    x?: string;
+    filter?: string;
+    transition?: {
+      duration?: number;
+      type?: string;
+      ease?: string;
+    };
+  };
   hover: {
-      x?: string,
-      scale?: number,
-      rotate?: string,
-      filter?: string,
-      transition?: {
-      duration?: number,
-      type?: string,
-      ease?: string,
-      }
-  }
+    x?: string;
+    scale?: number;
+    rotate?: string;
+    filter?: string;
+    transition?: {
+      duration?: number;
+      type?: string;
+      ease?: string;
+    };
+  };
 };
