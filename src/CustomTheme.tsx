@@ -19,10 +19,10 @@ const theme = extendTheme({
     Button: {
       variants: {
         solid: {
-          bg: "green"
+          bg: "green",
         },
         outline: {
-          bg: "brandGray"
+          bg: "brandGray",
         },
       }
     },

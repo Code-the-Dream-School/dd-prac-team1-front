@@ -20,17 +20,17 @@ const SingleRecipeIngredient = ({
     return ingredient.ingredientAmount;
   };
   return (
-    <ListItem>
-      {`${ingredient.ingredientName}
-      ${amount()} 
-        ${
-          ingredient.ingredientAmount <= 0
-            ? ""
-            : ingredient.ingredientUnit !== "other"
-            ? ingredient.ingredientUnit
-            : ""
-        } `}
-    </ListItem>
+      <ListItem>
+        {`${ingredient.ingredientName}
+        ${amount()} 
+          ${
+            ingredient.ingredientAmount <= 0
+              ? ""
+              : ingredient.ingredientUnit !== "other"
+              ? ingredient.ingredientUnit
+              : ""
+          } `}
+      </ListItem>
   );
 };
 export default SingleRecipeIngredient;
