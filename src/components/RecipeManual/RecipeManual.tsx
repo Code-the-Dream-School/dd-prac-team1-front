@@ -113,16 +113,16 @@ const RecipeManual = () => {
                 saveRecipe()
                 }}
             >
-            <Container mt='20' maxW="2xl">
+            <Container mt="20" maxW="2xl">
             <Grid
-            h='200px'
-            templateRows='repeat(2, 1fr)'
-            templateColumns='repeat(10, 1fr)'
+            h="200px"
+            templateRows="repeat(2, 1fr)"
+            templateColumns="repeat(10, 1fr)"
             gap={4}
             >
                 <GridItem colSpan={10}> 
                 <Center>
-                    <Heading as='h1' size='lg' noOfLines={1}>
+                    <Heading as="h1" size="lg" noOfLines={1}>
                         ADD YOUR OWN RECIPE
                     </Heading>
                 </Center>
@@ -149,8 +149,8 @@ const RecipeManual = () => {
             </Container>
             <Container maxW="7xl">
             <Grid
-                h='100%'
-                templateColumns='repeat(10, 1fr)'
+                h="100%"
+                templateColumns="repeat(10, 1fr)"
                 gap={4}
                 >
             <GridItem colSpan={10}>
@@ -172,8 +172,8 @@ const RecipeManual = () => {
             {ingredients.map((ingredient, id) => (
                 <Grid
                     h="70px" 
-                    templateRows='repeat(1, 1fr)'
-                    templateColumns='repeat(10, 1fr)'
+                    templateRows="repeat(1, 1fr)"
+                    templateColumns="repeat(10, 1fr)"
                     gap={3}
                     key={id}
                 >
@@ -249,8 +249,8 @@ const RecipeManual = () => {
                 ))}
                 <Grid
                 h="600px" 
-                templateRows='repeat(8, 1fr)'
-                templateColumns='repeat(10, 1fr)'
+                templateRows="repeat(8, 1fr)"
+                templateColumns="repeat(10, 1fr)"
                 gap={3}
                 > 
                 <GridItem colSpan={2}>
@@ -415,7 +415,7 @@ const RecipeManual = () => {
                 </GridItem>
                 <GridItem colSpan={3}> 
                     <Input
-                        value={recipe.recipeServings !== 0 ? recipe.recipeServings : ''}
+                        value={recipe.recipeServings !== 0 ? recipe.recipeServings : ""}
                         type="number"
                         placeholder="person(s)"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
@@ -430,7 +430,7 @@ const RecipeManual = () => {
                 </Grid> 
 
                 <Grid
-                templateColumns='repeat(12, 1fr)'
+                templateColumns="repeat(12, 1fr)"
                 gap={3}
                 > 
                 <GridItem colSpan={1}>
@@ -443,7 +443,7 @@ const RecipeManual = () => {
                         type="number"
                         placeholder="kcal"
                         _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        value={recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ? recipe.recipeNutritionInfo.NutritionInfoCalories : ''}
+                        value={recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ? recipe.recipeNutritionInfo.NutritionInfoCalories : ""}
                         min="0"
                         onChange={event => {
                             setRecipe({
@@ -549,7 +549,7 @@ const RecipeManual = () => {
             <Flex m="3rem 0" justifyContent="center">
                 <Button 
                     type="submit"
-                    size='lg'
+                    size="lg"
                 >SAVE
                 </Button>
             </Flex>
