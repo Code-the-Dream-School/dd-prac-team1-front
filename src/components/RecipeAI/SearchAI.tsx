@@ -12,10 +12,12 @@ import {
   Stack
 } from "@chakra-ui/react";
 import { searchAI } from "../../utils/fetchData";
-import { MultiValue, Select } from "chakra-react-select";
+import { ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
 import { AIRecipe } from "../../utils/types";
 import RecipeAI from "./RecipeAI";
 import Loader from "./Loader";
+import { specialDietsOptions } from "../../utils/OptionsData";
+
 
 const SearchAI = () => {
   const [search, setSearch] = useState<string>("");
@@ -25,11 +27,10 @@ const SearchAI = () => {
   const [recipe, setRecipe] = useState<AIRecipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  let valuesArray: Array<string> = [];
   const handleSelect = (
-    event: MultiValue<{ label: string; value: string }>
+    newValue: MultiValue<any>,
   ) => {
-    valuesArray = event.map(item => item.value);
+    let valuesArray = newValue.map(item => item.value);
     setValues(valuesArray);
   };
 
@@ -61,13 +62,47 @@ const SearchAI = () => {
   };
   const name = sessionStorage.getItem("username");
 
+  const chakraStyles: ChakraStylesConfig = {
+    menu: (provided) => ({
+        ...provided,
+        my: 0,
+        borderWidth: "1px",
+        borderColor: "green",
+        borderRadius: "md",
+    }),
+    dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+        ...prev,
+        bg: "green",
+        "> svg": {
+            transitionDuration: "normal",
+            transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
+        }
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "green", 
+      color: "black", 
+      borderRadius: "md",
+    }),
+    option: (base, { isSelected }) => ({
+      ...base,
+      backgroundColor: isSelected ? "green" : "white",
+      color: "black",
+      cursor: "pointer",
+      transition: "background-color 0.2s",
+      _hover: {
+          backgroundColor: "brandGray", 
+      },
+    }),
+  };
+
   return (
     <Center>
       <Container maxW="6xl">
         <Box
           as="form"
-          onSubmit={e => {
-            e.preventDefault();
+          onSubmit={(event: { preventDefault: () => void; }) => {
+            event.preventDefault();
             handleSearch();
             setError(false);
             setIsLoading(true);
@@ -92,16 +127,11 @@ const SearchAI = () => {
               <Stack>
                 <Select
                   isMulti
+                  chakraStyles={chakraStyles}
                   variant="outline"
+                  focusBorderColor="green"
                   placeholder="You can select options below"
-                  colorScheme="green"
-                  options={[
-                    { label: "VEGETARIAN", value: "vegetarian" },
-                    { label: "VEGAN", value: "vegan" },
-                    { label: "GLUTEN FREE", value: "gluten-free" },
-                    { label: "DAIRY FREE", value: "dairy-free" },
-                    { label: "LOW CALORIE", value: "low-calorie" }
-                  ]}
+                  options={specialDietsOptions}
                   onChange={handleSelect}
                 />
               </Stack>
