@@ -222,7 +222,7 @@ const EditRecipe = () => {
                     <option value="Side Dish">Side Dish</option>
                     <option value="Sandwich">Sandwich</option>
                     <option value="Picnic Ideas">Picnic Ideas</option>
-                    <option value="Smoothy">Smoothy</option>
+                    <option value="Smoothie">Smoothie</option>
                     <option value="Party Menu">Party Menu</option>
                   </Select>
                 </FormControl>

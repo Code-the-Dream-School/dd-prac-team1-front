@@ -11,7 +11,8 @@ import {
   GridItem,
   Heading,
   Text,
-  useDisclosure
+  useDisclosure,
+  UnorderedList
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../../utils/types";
@@ -25,8 +26,8 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredients from "./SingleRecipeIngredients";
 import SingleRecipeTag from "./SingleRecipeTag";
+import SingleRecipeIngredient from "./SingleRecipeIngredient";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -228,9 +229,11 @@ const SingleRecipePage = () => {
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
-              {recipe.recipeIngredients.map((ingredient, _id) => (
-                <SingleRecipeIngredients key={_id} ingredient={ingredient} />
-              ))}
+              <UnorderedList>
+                {recipe.recipeIngredients.map((ingredient, _id) => (
+                  <SingleRecipeIngredient key={_id} ingredient={ingredient} />
+                ))}
+              </UnorderedList>
             </Box>
             <Box marginTop="5">
               <Heading as="h3" size="md" marginBottom="3">
