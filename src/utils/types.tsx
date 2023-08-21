@@ -112,31 +112,31 @@ export type AmountOptions = {
 };
 
 export type Options = {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 };
 
 export type AnimationVariants = {
   rest: {
-      rotate?: string,
-      scale?: number,
-      x?: string,
-      filter?: string,
-      transition?: {
-      duration?: number,
-      type?: string,
-      ease?: string,
-      }
-  }
+    rotate?: string;
+    scale?: number;
+    x?: string;
+    filter?: string;
+    transition?: {
+      duration?: number;
+      type?: string;
+      ease?: string;
+    };
+  };
   hover: {
-      x?: string,
-      scale?: number,
-      rotate?: string,
-      filter?: string,
-      transition?: {
-      duration?: number,
-      type?: string,
-      ease?: string,
-      }
-  }
+    x?: string;
+    scale?: number;
+    rotate?: string;
+    filter?: string;
+    transition?: {
+      duration?: number;
+      type?: string;
+      ease?: string;
+    };
+  };
 };

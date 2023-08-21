@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
   Center,
   Container,
   IconButton,
-  Image,
+  Image as ChakraImage,
   Input,
   InputGroup,
   InputRightElement,
@@ -32,12 +32,12 @@ import {
 import IngredientAmountHandle from "./IngredientAmountHandle";
 
 const EditRecipe = () => {
-  const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
-  const [ingredients, setIngredients] = useState<Array<SavedIngredient> | null>(
-    null
-  );
-  const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
-  const [diets, setDiets] = useState<Array<string> | null>(null);
+  const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
+  const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
+  const [tags, setTags] = useState<Array<RecipeTag>>([]);
+  const [diets, setDiets] = useState<Array<string>>([]);
+  const [editSrcImage, setEditSrcImage] = useState<string>("");
+  const nativeFilePickerRef = useRef<HTMLInputElement>(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const EditRecipe = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
+        setEditSrcImage(response.data.recipeImage);
         setIngredients(
           response.data.recipeIngredients.map(
             ({ _id, ...rest }: SavedIngredient) => {
@@ -95,9 +96,6 @@ const EditRecipe = () => {
   };
 
   if (recipe === null) return null;
-  if (ingredients === null) return null;
-  if (tags === null) return null;
-  if (diets === null) return null;
 
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
@@ -180,7 +178,6 @@ const EditRecipe = () => {
                 icon={<CheckIcon />}
                 title="edit recipe"
                 type="submit"
-                // onClick={saveRecipe}
               />
               <IconButton
                 size="lg"
