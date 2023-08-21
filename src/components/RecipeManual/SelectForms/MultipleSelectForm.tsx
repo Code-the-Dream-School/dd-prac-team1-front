@@ -27,7 +27,8 @@ const chakraStyles: ChakraStylesConfig = {
         "> svg": {
             transitionDuration: "normal",
             transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
-        }
+        },
+        width: "10px"
     }),
     multiValue: (base) => ({
         ...base,

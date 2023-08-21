@@ -115,19 +115,20 @@ const RecipeManual = () => {
             >
             <Container mt="20" maxW="2xl">
             <Grid
-            h="200px"
-            templateRows="repeat(2, 1fr)"
-            templateColumns="repeat(10, 1fr)"
+            h={{ base: "auto", md: "200px" }}
+            templateRows={{ base: "repeat(2, 1fr)", md: "repeat(2, 1fr)", sm: "repeat(3, 1fr)",  }}
+            templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
             gap={4}
             >
-                <GridItem colSpan={10}> 
+                <GridItem 
+                    colSpan={{ base: 1, md: 10 }}> 
                 <Center>
                     <Heading as="h1" size="lg" noOfLines={1}>
                         ADD YOUR OWN RECIPE
                     </Heading>
                 </Center>
                 </GridItem>
-                <GridItem colSpan={10} > 
+                <GridItem colSpan={{ base: 1, md: 10 }}> 
                     <Center>
                         <FormControl isRequired>
                         <Input
@@ -149,11 +150,11 @@ const RecipeManual = () => {
             </Container>
             <Container maxW="7xl">
             <Grid
-                h="100%"
-                templateColumns="repeat(10, 1fr)"
+                templateRows={{ base: "repeat(1, 2fr)", md: "repeat(1, 2fr)" }}
+                templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
                 gap={4}
                 >
-            <GridItem colSpan={10}>
+            <GridItem colSpan={{ base: 1, md: 10 }}> 
                 <Flex justifyContent="start" alignItems="center">
                     <Text>INGREDIENTS</Text>
                     <Button
@@ -167,17 +168,16 @@ const RecipeManual = () => {
                     </Button>
                 </Flex>
             </GridItem>
-            <GridItem colSpan={6}>
-            
+            <GridItem colSpan={{ base: 1, md: 6 }}> 
             {ingredients.map((ingredient, id) => (
                 <Grid
-                    h="70px" 
-                    templateRows="repeat(1, 1fr)"
-                    templateColumns="repeat(10, 1fr)"
+                    h={{ base: "auto", md: "70px", sm: "220px" }}
+                    templateRows={{ base: "repeat(1, 1fr)", md: "repeat(1, 1fr)", sm: "repeat(5, 1fr)" }}
+                    templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
                     gap={3}
                     key={id}
                 >
-                    <GridItem colSpan={4}>
+                    <GridItem colSpan={{ base: 1, md: 4 }}> 
                     <FormControl isRequired>
                     <Input
                         type="text"
@@ -185,7 +185,7 @@ const RecipeManual = () => {
                         name={`ingredientName-${id}`}
                         value={ingredient.ingredientName}
                         placeholder="Add ingredients"
-                        _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
+                        _placeholder={{ position:"absolute", fontSize: "xs" }}
                         onChange={event => {
                             const newIngredients = [...ingredients];
                             newIngredients[id].ingredientName = event.target.value;
@@ -199,7 +199,7 @@ const RecipeManual = () => {
                         />
                     </FormControl>
                 </GridItem>
-                <GridItem colSpan={3}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                     <FormControl isRequired>
                         <SingleCreatableSelect
                             value={ { value: ingredients[id].ingredientAmount, label: ingredients[id].ingredientAmount } }
@@ -217,10 +217,9 @@ const RecipeManual = () => {
                         />
                     </FormControl>
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 2}}> 
                     <SingleSelectForm 
                         value={ { value: ingredients[id].ingredientUnit, label: ingredients[id].ingredientUnit } }
-                        placeholder="unit"
                         options={unitOptions} 
                         onChange={(selectedOption: { value: string; } ) => {
                             const newIngredients = [...ingredients];
@@ -234,7 +233,7 @@ const RecipeManual = () => {
                         }}
                         />
                 </GridItem>
-                <GridItem colSpan={1}>
+                <GridItem colSpan={{ base: 1, md: 1 }}> 
                     <Flex justifyContent="end" > 
                     <IconButton
                         size="md"
@@ -248,17 +247,17 @@ const RecipeManual = () => {
                 </Grid>
                 ))}
                 <Grid
-                h="600px" 
-                templateRows="repeat(8, 1fr)"
-                templateColumns="repeat(10, 1fr)"
+                h={{ base: "auto", md: "600px", sm: "1350px" }}
+                templateRows={{ base: "repeat(9, 1fr)", md: "repeat18, 1fr)"}}
+                templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
                 gap={3}
                 > 
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                     <Flex  h="40px" justifyContent="start"  alignItems="center">
                         <Text>INSTRUCTIONS</Text>
                     </Flex>
                 </GridItem>
-                <GridItem colSpan={8} mb="30px"> 
+                <GridItem colSpan={{ base: 1, md: 7 }}> 
                     <Center>
                         <FormControl isRequired>
                         <Textarea
@@ -267,7 +266,7 @@ const RecipeManual = () => {
                             name="recipeInstructions"
                             value={recipe.recipeInstructions}
                             placeholder="Instructions how to cook the dish"
-                            _placeholder={{ position:"absolute", marginTop: "-0.5", fontSize: "xs" }}
+                            _placeholder={{ position:"absolute", fontSize: "xs" }}
                             onChange={event => {
                                 setRecipe({
                                 ...recipe,
@@ -278,14 +277,13 @@ const RecipeManual = () => {
                         </FormControl>
                     </Center>
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                     <Flex  h="40px" justifyContent="start"  alignItems="center">
                         <Text>COMPLEXITY</Text>
                     </Flex>
                 </GridItem>
-                <GridItem colSpan={8} > 
+                <GridItem colSpan={{ base: 1, md: 7 }}> 
                     <SingleSelectForm 
-                        placeholder={"Choose a complexity level"} 
                         options={complexityOptions} 
                         value={{ value: recipe.recipeComplexityLevel, label: recipe.recipeComplexityLevel }} 
                         onChange={(event: { value: string; }) => {
@@ -296,14 +294,13 @@ const RecipeManual = () => {
                         }}
                     />
                 </GridItem>
-                <GridItem  colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                     <Flex h="40px" justifyContent="start"  alignItems="center">
                         <Text>CATEGORIES</Text>
                     </Flex>
                 </GridItem>
-                <GridItem colSpan={8} > 
+                <GridItem colSpan={{ base: 1, md: 7 }}>  
                     <SingleSelectForm 
-                        placeholder={"Choose a category"} 
                         options={categoriesOptions} 
                         value={{ value: recipe.recipeCategory, label: recipe.recipeCategory }} 
                         onChange={(event: { value: string; }) => {
@@ -314,12 +311,12 @@ const RecipeManual = () => {
                         }}
                     />
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>TAGS</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={8}> 
+                <GridItem colSpan={{ base: 1, md: 7 }}> 
                     <MultipleCreatableSelectForm 
                         onChange={(
                             event
@@ -334,12 +331,12 @@ const RecipeManual = () => {
                     } 
                         />
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>SPECIAL DIETS</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={8}> 
+                <GridItem colSpan={{ base: 1, md: 7 }}> 
                     <MultipleSelectForm  
                         options={specialDietsOptions}
                         onChange={(
@@ -354,12 +351,12 @@ const RecipeManual = () => {
                     />
                 </GridItem>
 
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>COOKING TIME</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={3}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         value={recipe.recipeCookTime.recipeCookTimeMinutes !== 0 ? recipe.recipeCookTime.recipeCookTimeMinutes : ""}
                         type="number"
@@ -381,12 +378,12 @@ const RecipeManual = () => {
     
                     />
                 </GridItem>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>PREP TIME</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={3}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         value={recipe.recipePrepTime.recipePrepTimeMinutes !== 0 ? recipe.recipePrepTime.recipePrepTimeMinutes : ""}
                         type="number"
@@ -408,37 +405,12 @@ const RecipeManual = () => {
                     }}
                     />
                 </GridItem>
-                <GridItem colSpan={2}>
-                <Flex h="40px" justifyContent="start"  alignItems="center">
-                    <Text>SERVINGS</Text>
-                </Flex>
-                </GridItem>
-                <GridItem colSpan={3}> 
-                    <Input
-                        value={recipe.recipeServings !== 0 ? recipe.recipeServings : ""}
-                        type="number"
-                        placeholder="person(s)"
-                        _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
-                        onChange={event => {
-                            setRecipe({
-                                ...recipe,
-                                recipeServings: Number(event.target.value),
-                            });
-                        }}
-                    />
-                </GridItem>
-                </Grid> 
-
-                <Grid
-                templateColumns="repeat(12, 1fr)"
-                gap={3}
-                > 
-                <GridItem colSpan={1}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>CALORIES</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={2}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         type="number"
                         placeholder="kcal"
@@ -457,12 +429,12 @@ const RecipeManual = () => {
                     />
                 </GridItem>
 
-                <GridItem colSpan={1}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>CARBS</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={2}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         type="number"
                         placeholder="g"
@@ -481,12 +453,12 @@ const RecipeManual = () => {
                     />
                 </GridItem>
 
-                <GridItem colSpan={1}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>PROREIN</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={2}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         type="number"
                         placeholder="g"
@@ -505,12 +477,12 @@ const RecipeManual = () => {
                     />
                 </GridItem>
 
-                <GridItem colSpan={1}>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
                     <Text>FAT</Text>
                 </Flex>
                 </GridItem>
-                <GridItem colSpan={2}> 
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
                     <Input
                         type="number"
                         value={recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ? recipe.recipeNutritionInfo.NutritionInfoFat : ""}
@@ -526,12 +498,30 @@ const RecipeManual = () => {
                                 }
                             });
                         }}
-
+                    />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, md: 3 }}> 
+                <Flex h="40px" justifyContent="start"  alignItems="center">
+                    <Text>SERVINGS</Text>
+                </Flex>
+                </GridItem>
+                <GridItem colSpan={{ base: 1, md: 2 }}> 
+                    <Input
+                        value={recipe.recipeServings !== 0 ? recipe.recipeServings : ""}
+                        type="number"
+                        placeholder="person(s)"
+                        _placeholder={{ position:"absolute", marginTop: "-1", fontSize: "xs" }}
+                        onChange={event => {
+                            setRecipe({
+                                ...recipe,
+                                recipeServings: Number(event.target.value),
+                            });
+                        }}
                     />
                 </GridItem>
                 </Grid>
             </GridItem>
-            <GridItem colSpan={4}>
+            <GridItem colSpan={{ base: 1, md: 4 }}> 
                 <DropImage srcImage={srcImage} onChange={event => {
                     if (event.target.files === null) return;
                     const file = event.target.files[0];

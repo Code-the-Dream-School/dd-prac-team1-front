@@ -15,7 +15,7 @@ const chakraStyles: ChakraStylesConfig = {
     placeholder: (provided) => ({
         ...provided,
         position:"absolute", 
-        marginTop: "-3", 
+        marginTop: "0", 
         fontSize: "xs"
     }),
     dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -24,7 +24,8 @@ const chakraStyles: ChakraStylesConfig = {
         "> svg": {
             transitionDuration: "normal",
             transform: `rotate(${menuIsOpen ? -180 : 0}deg)`
-        }
+        },
+        width: "10px"
     }),
     multiValue: (base) => ({
         ...base,
@@ -45,13 +46,12 @@ const chakraStyles: ChakraStylesConfig = {
     };
     
 type OptionsProps = {
-    placeholder: string, 
     options : Options[],   
     value: Options,
     onChange: ((newValue: any, actionMeta: ActionMeta<any>) => void) | undefined,
 };
 
-const SingleSelectForm = ( {placeholder, options, value, onChange}: OptionsProps ) => (
+const SingleSelectForm = ( { options, value, onChange}: OptionsProps ) => (
         <Box >
             <FormControl>
             <Select
@@ -60,7 +60,7 @@ const SingleSelectForm = ( {placeholder, options, value, onChange}: OptionsProps
                 chakraStyles={chakraStyles}
                 focusBorderColor="green"
                 options={options}
-                placeholder={placeholder}
+                placeholder='Unit'
                 closeMenuOnSelect
                 onChange={onChange}
             />  
