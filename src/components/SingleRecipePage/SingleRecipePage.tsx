@@ -26,7 +26,7 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredient from "./SingleRecipeIngredients";
+import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import SingleRecipeTag from "./SingleRecipeTag";
 import ModalForServings from "../ShoppingList/ModalForServings";
 
