@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
   Center,
   Container,
   IconButton,
-  Image as ChakraImage,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -32,12 +32,12 @@ import {
 import IngredientAmountHandle from "./IngredientAmountHandle";
 
 const EditRecipe = () => {
-  const [recipe, setRecipe] = useState<SavedRecipe | EditedRecipe | null>(null);
-  const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
-  const [tags, setTags] = useState<Array<RecipeTag>>([]);
-  const [diets, setDiets] = useState<Array<string>>([]);
-  const [editSrcImage, setEditSrcImage] = useState<string>("");
-  const nativeFilePickerRef = useRef<HTMLInputElement>(null);
+  const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
+  const [ingredients, setIngredients] = useState<Array<SavedIngredient> | null>(
+    null
+  );
+  const [tags, setTags] = useState<Array<RecipeTag> | null>(null);
+  const [diets, setDiets] = useState<Array<string> | null>(null);
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -48,7 +48,6 @@ const EditRecipe = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
-        setEditSrcImage(response.data.recipeImage);
         setIngredients(
           response.data.recipeIngredients.map(
             ({ _id, ...rest }: SavedIngredient) => {
@@ -63,7 +62,6 @@ const EditRecipe = () => {
         );
         setDiets(response.data.recipeSpecialDiets);
       })
-
       .catch(error => {
         console.log(error);
       });
@@ -97,6 +95,9 @@ const EditRecipe = () => {
   };
 
   if (recipe === null) return null;
+  if (ingredients === null) return null;
+  if (tags === null) return null;
+  if (diets === null) return null;
 
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
@@ -157,7 +158,6 @@ const EditRecipe = () => {
       as="form"
       onSubmit={e => {
         e.preventDefault();
-        console.log(recipe);
         saveRecipe();
       }}>
       <Container maxW="5xl">
@@ -175,15 +175,16 @@ const EditRecipe = () => {
               justifyContent="center">
               <IconButton
                 size="lg"
-                variant="solid"
+                variant="outline"
                 aria-label="Edit recipe"
                 icon={<CheckIcon />}
                 title="edit recipe"
                 type="submit"
+                // onClick={saveRecipe}
               />
               <IconButton
                 size="lg"
-                variant="solid"
+                variant="outline"
                 aria-label="Do not edit the recipe"
                 icon={<CloseIcon />}
                 title="Cancel"
@@ -244,7 +245,7 @@ const EditRecipe = () => {
                     <option value="Side Dish">Side Dish</option>
                     <option value="Sandwich">Sandwich</option>
                     <option value="Picnic Ideas">Picnic Ideas</option>
-                    <option value="Smoothie">Smoothy</option>
+                    <option value="Smoothie">Smoothie</option>
                     <option value="Party Menu">Party Menu</option>
                   </Select>
                 </FormControl>
@@ -367,7 +368,7 @@ const EditRecipe = () => {
                   </Text>
                   <IconButton
                     size="sm"
-                    variant="solid"
+                    variant="outline"
                     aria-label="add ingredient"
                     icon={<AddIcon />}
                     title="add ingredient"
@@ -680,7 +681,7 @@ const EditRecipe = () => {
               </Text>
               <IconButton
                 size="sm"
-                variant="solid"
+                variant="outline"
                 aria-label="add tag"
                 icon={<AddIcon />}
                 title="add tag"
@@ -707,7 +708,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="solid"
+                  variant="outline"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
@@ -723,7 +724,7 @@ const EditRecipe = () => {
               </Text>
               <IconButton
                 size="sm"
-                variant="solid"
+                variant="outline"
                 aria-label="add diet"
                 icon={<AddIcon />}
                 title="add diet"
@@ -766,7 +767,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="solid"
+                  variant="outline"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"

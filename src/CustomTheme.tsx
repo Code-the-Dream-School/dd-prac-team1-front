@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import {  extendTheme } from "@chakra-ui/react";
 
 //extend the theme
 const theme = extendTheme({
@@ -19,11 +19,11 @@ const theme = extendTheme({
     Button: {
       variants: {
         solid: {
-          bg: "green"
+          bg: "green",
         },
         outline: {
-          bg: "brandGray"
-        }
+          bg: "brandGray",
+        },
       }
     },
 
@@ -48,11 +48,19 @@ const theme = extendTheme({
             "borderRadius": "5px",
             ":focus": {
               borderColor: "green",
-              bg: "brandGray",
-              borderRadius: "5px"
             }
           }
-        }
+        },
+        flushed: {
+          field: {
+            "bg": "white",
+            "borderColor": "green",
+            ":focus": {
+              borderColor: "green",
+              bg: "brandGray",
+            }
+          }
+        },
       }
     },
     Select: {

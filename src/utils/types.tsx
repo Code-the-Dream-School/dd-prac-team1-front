@@ -82,3 +82,61 @@ export type EditedRecipe = {
   __v: number;
   _id: string;
 };
+
+export type ManualRecipe = {
+  recipeCategory: string;
+  recipeComplexityLevel: string;
+  recipeCookTime: { recipeCookTimeMinutes: number };
+  recipeImage: string | Object;
+  recipeIngredients: Array<SaveIngredients>;
+  recipeInstructions: string;
+  recipeName: string;
+  recipeNutritionInfo: RecipeNutritionInfo;
+  recipePrepTime: { recipePrepTimeMinutes: number };
+  recipeTotalTime: { recipeTotalTimeMinutes: number };
+  recipeServings: number;
+  recipeSpecialDiets: Array<string>;
+  recipeTags: Array<RecipeTag>;
+};
+
+export type SaveIngredients = {
+  ingredientAmount: string;
+  ingredientName: string;
+  ingredientUnit: string;
+  _id?: string;
+};
+
+export type AmountOptions = {
+  value: string;
+  label: string;
+};
+
+export type Options = {
+    value: string;
+    label: string;
+};
+
+export type AnimationVariants = {
+  rest: {
+      rotate?: string,
+      scale?: number,
+      x?: string,
+      filter?: string,
+      transition?: {
+      duration?: number,
+      type?: string,
+      ease?: string,
+      }
+  }
+  hover: {
+      x?: string,
+      scale?: number,
+      rotate?: string,
+      filter?: string,
+      transition?: {
+      duration?: number,
+      type?: string,
+      ease?: string,
+      }
+  }
+};

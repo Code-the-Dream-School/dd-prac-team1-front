@@ -26,8 +26,8 @@ import {
 import { GiPencil, GiCalendar, GiShoppingCart } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import SingleRecipeTag from "./SingleRecipeTag";
+import SingleRecipeIngredient from "./SingleRecipeIngredient";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
