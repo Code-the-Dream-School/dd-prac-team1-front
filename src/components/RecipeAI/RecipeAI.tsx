@@ -7,7 +7,8 @@ import {
   GridItem,
   Text,
   Button,
-  Icon
+  Icon,
+  UnorderedList
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { AIRecipe } from "../../utils/types";
@@ -41,9 +42,11 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
           Sure! Here's a simple and delicious recipe for {recipe.recipeName}:
         </Text>
         <Heading as="h6">Ingredients:</Heading>
-        {recipe.ingredients.map((ingredient, index) => (
-          <IngredientList key={index} ingredient={ingredient} />
-        ))}
+        <UnorderedList>
+          {recipe.ingredients.map((ingredient, index) => (
+            <IngredientList key={index} ingredient={ingredient} />
+          ))}
+        </UnorderedList>
         <Heading as="h6">Instructions:</Heading>
         {recipe.instructions.map((instruction, index) => (
           <InstructionList key={index} instruction={instruction} />
