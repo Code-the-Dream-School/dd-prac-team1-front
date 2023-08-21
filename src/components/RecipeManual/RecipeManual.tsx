@@ -546,8 +546,9 @@ const RecipeManual = () => {
             </GridItem>
             </Grid>
 
-            <Flex mt="3rem" justifyContent="center">
-                <Button type="submit"
+            <Flex m="3rem 0" justifyContent="center">
+                <Button 
+                    type="submit"
                     size='lg'
                 >SAVE
                 </Button>
