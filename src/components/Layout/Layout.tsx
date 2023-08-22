@@ -76,7 +76,7 @@ export default function Layout() {
             size="md"
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label="Open Menu"
-            display={{ md: "none" }}
+            display={{ lg: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack
@@ -86,13 +86,22 @@ export default function Layout() {
             ml="1rem"
             alignItems="center">
             <Box>
-              <Image borderRadius="sm" src="/images/Logo_Olivier.svg" />
+              <Image 
+                src="/images/Logo_Olivier.svg" 
+                maxW="100%"
+                minWidth="150px" 
+                h="auto" 
+                cursor="pointer"
+                onClick={()=> {
+                  navigate("/search-choice")
+                }}
+                />
             </Box>
             <HStack>
               <RecipeSearch />
             </HStack>
             <HStack
-              display={{ base: "none", md: "flex" }}
+              display={{ base: "none", lg: "flex" }}
               justifyContent={"flex-end"}
               spacing={20}>
               <HStack
