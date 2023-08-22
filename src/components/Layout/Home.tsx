@@ -25,7 +25,7 @@ const Home = () => {
       <GridItem
         colSpan={1}
         w="100%"
-        h="90vh"
+        h="70vh"
         padding="50"
         display="flex"
         flexDirection="column">
@@ -44,7 +44,7 @@ const Home = () => {
         </Flex>
         <Center>
           <Flex h="30%">
-            <Button variant="outline" size="lg">
+            <Button variant="solid" size="lg">
               <Link as={RouterLink} to="/register">
                 Create an account
               </Link>
