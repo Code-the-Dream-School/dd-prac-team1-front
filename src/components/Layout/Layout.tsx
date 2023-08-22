@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/fetchData";
 import RecipeSearch from "../Search/RecipeSearch";
 import styled from "styled-components";
+import { useEffect, useRef } from "react";
 
 const AnimatedUnderlineText = styled.a`
 position: relative;
@@ -41,10 +42,25 @@ cursor: pointer;
 
 export default function Layout() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const navigate = useNavigate();
-
   const toast = useToast();
+  const navbarRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handler = (event: { target: any; }) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handler);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, [isOpen, onClose]);
 
   const handleLogout = () => {
     logout()
@@ -70,7 +86,7 @@ export default function Layout() {
 
   return (
     <>
-      <Box bg="brandGray" px={4}>
+      <Box bg="brandGray" className="navbar" ref={navbarRef} px={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <IconButton
             size="md"
@@ -107,7 +123,7 @@ export default function Layout() {
               <HStack
                 as={"nav"}
                 spacing={20}
-                display={{ base: "none", md: "flex" }}
+                display={{ base: "none", lg: "flex" }}
                 justifyContent={"flex-end"}>
                 <AnimatedUnderlineText href="/search-choice">ADD RECIPE</AnimatedUnderlineText>
                 <AnimatedUnderlineText href="/saved-recipes">SAVED</AnimatedUnderlineText>
@@ -120,7 +136,7 @@ export default function Layout() {
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ base: "flex", md: "none" }}>
+          <Box pb={4} display={{ base: "flex", lg: "none" }}>
             <Stack as={"nav"} spacing={4}>
               <NavLink to="/search-choice">ADD RECIPE</NavLink>
               <NavLink to="/saved-recipes">SAVED</NavLink>
