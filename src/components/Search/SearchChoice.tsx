@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Center,
   Flex,
   HStack,
   Heading,
@@ -21,10 +22,12 @@ const SearchChoice = () => {
 
   return (
     <Flex justifyContent={"center"} h="85vh">
-      <HStack>
+      <HStack spacing={20}>
         <Card cursor="pointer" onClick={navigateToAISearch}>
           <CardHeader>
-            <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            <Center>
+              <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            </Center>
           </CardHeader>
           <CardBody>
             <Text>
