@@ -10,7 +10,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/fetchData";
 import RecipeSearch from "../Search/RecipeSearch";
@@ -18,26 +18,26 @@ import styled from "styled-components";
 import { useEffect, useRef } from "react";
 
 const AnimatedUnderlineText = styled.a`
-position: relative;
-display: inline-block;
-text-decoration: none;
-color: #333;
-cursor: pointer;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
 
-&:hover::before {
-  width: 100%;
-}
+  &:hover::before {
+    width: 100%;
+  }
 
-&:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #d7da5e;
-  transition: width 0.3s ease-in-out;
-}
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: ${({ isActive }) => (isActive ? "100%" : "0")};
+    height: 2px;
+    background-color: #d7da5e;
+    transition: width 0.3s ease-in-out;
+  }
 `;
 
 export default function Layout() {
@@ -45,6 +45,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const toast = useToast();
   const navbarRef = useRef<HTMLDivElement>(null);
+  const location = useLocation(); 
   
   useEffect(() => {
     const handler = (event: { target: any; }) => {
@@ -125,11 +126,35 @@ export default function Layout() {
                 spacing={20}
                 display={{ base: "none", lg: "flex" }}
                 justifyContent={"flex-end"}>
-                <AnimatedUnderlineText href="/search-choice">ADD RECIPE</AnimatedUnderlineText>
-                <AnimatedUnderlineText href="/saved-recipes">SAVED</AnimatedUnderlineText>
-                <AnimatedUnderlineText href="/planner">PLANNER</AnimatedUnderlineText>
-                <AnimatedUnderlineText href="/shopping-list">SHOPPING</AnimatedUnderlineText>
-                <AnimatedUnderlineText onClick={handleLogout}>LOGOUT</AnimatedUnderlineText>
+              <AnimatedUnderlineText
+                href="/search-choice"
+                isActive={location.pathname === "/search-choice"}
+              >
+                    ADD RECIPE
+                </AnimatedUnderlineText>
+                <AnimatedUnderlineText 
+                  href="/saved-recipes"
+                  isActive={location.pathname === "/saved-recipes"}
+                >
+                  SAVED
+                </AnimatedUnderlineText>
+                <AnimatedUnderlineText 
+                  href="/planner"
+                  isActive={location.pathname === "/planner"}
+                >
+                  PLANNER
+                </AnimatedUnderlineText>
+                <AnimatedUnderlineText 
+                  href="/shopping-list"
+                  isActive={location.pathname === "/shopping-list"}
+                >
+                  SHOPPING
+                </AnimatedUnderlineText>
+                <AnimatedUnderlineText 
+                  onClick={handleLogout}
+                >
+                    LOGOUT
+                </AnimatedUnderlineText>
               </HStack>
             </HStack>
           </HStack>
@@ -137,7 +162,7 @@ export default function Layout() {
 
         {isOpen ? (
           <Box pb={4} display={{ base: "flex", lg: "none" }}>
-            <Stack as={"nav"} spacing={4}>
+            <Stack as={"nav"} spacing={4} onClick={onClose}>
               <NavLink to="/search-choice">ADD RECIPE</NavLink>
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/planner">PLANNER</NavLink>
