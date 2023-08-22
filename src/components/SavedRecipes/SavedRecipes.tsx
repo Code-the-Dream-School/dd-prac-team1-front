@@ -24,13 +24,15 @@ const SavedRecipes = () => {
   const [activeTag, setActiveTag] = useState("");
   const [show, setShow] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const searchQueryParam = searchParams.get("search") as string | null;
+  const searchQueryParam = searchParams.get("search") as string;
   const filteredTag = searchParams.get("filterTag") as string | null;
-  const filteredCategory = searchParams.get("filterCategory") as string | null;
+  const filteredCategory = searchParams.get("filterCategory") as string;
 
   const handleRecipeSearch = useCallback(
-   // (searchQueryParam: string, filterCategory:string) => {
-    (searchQueryParam: string) => {
+    (searchQueryParam: string, filteredCategory:string) => {
+      if (searchQueryParam === null) {
+        return
+      }
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const searchQueryParamParsed = searchQueryParam.toLowerCase();
         const nameSearch = recipe.recipeName.toLowerCase();
@@ -48,24 +50,21 @@ const SavedRecipes = () => {
       });
 
       if (searchedRecipes.length > 0) {
-        //
-       /* if (filteredCategory) {
-          console.log(filteredCategory)
+        if (filteredCategory) {
           setActiveCategory(filteredCategory);
-       //   setFilteredRecipes(filteredRecipes);
+          const filteredCategorizedRecipes = searchedRecipes.filter(
+            (recipe: SavedRecipe) => recipe.recipeCategory === filteredCategory
+          )
+          setFilteredRecipes(filteredCategorizedRecipes);
         } else {
-          setActiveCategory("");
           setFilteredRecipes(searchedRecipes);
-        }*/
-        setFilteredRecipes(searchedRecipes);
-        setActiveCategory("");
+          setActiveCategory("");
+        }
         setActiveTag("");
         setShow(true);
       } else if (!searchedRecipes.length) {
         setShow(false);
       }
-      console.log("HERE")
-
     },
     [recipes]
   );
@@ -105,16 +104,13 @@ const SavedRecipes = () => {
   }, [searchQueryParam]);
 
   useEffect(() => {
-    if (searchQueryParam) {
-      handleRecipeSearch(searchQueryParam);
-      //handleRecipeSearch(searchQueryParam, filterCategory);
+    if (searchQueryParam || filteredCategory) {
+      handleRecipeSearch(searchQueryParam, filteredCategory);
     }
-  }, [searchQueryParam, recipes, handleRecipeSearch, searchParams]);
-  // }, [searchQueryParam, recipes, handleRecipeSearch, filteredCategory]);
+  }, [searchQueryParam, recipes, handleRecipeSearch, filteredCategory]);
 
 
   const chooseCategory = useCallback((category: string) => {
-    //code for filtering the search results
     if (searchQueryParam) {
       const filteredCategorizedRecipes = filteredRecipes.filter(
         (recipe: SavedRecipe) => recipe.recipeCategory === category
@@ -130,16 +126,6 @@ const SavedRecipes = () => {
       );
       setFilteredRecipes(categorizedRecipes);
     }
-    //code without filtering
-    /*const categorizedRecipes = recipes.filter(
-      (recipe: SavedRecipe) => recipe.recipeCategory === category
-    );
-    setFilteredRecipes(categorizedRecipes);
-    setShow(true);
-    setActiveCategory(category);
-    setActiveTag("");
-    setSearchParams({ filterCategory: category });
-*/ 
     setActiveCategory(category);
     setShow(true);
     setActiveTag("");
