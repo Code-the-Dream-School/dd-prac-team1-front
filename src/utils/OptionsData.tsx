@@ -11,7 +11,6 @@ export const specialDietsOptions = [
     { value: "Pork-free", label: "Pork-free" },
     { value: "Vegetarian", label: "Vegetarian" },
     { value: "Vegan", label: "Vegan" },
-    { value: "Gluten-free", label: "Gluten-free" },
     { value: "Mediterranean", label: "Mediterranean" },
     { value: "Diabetes Friendly", label: "Diabetes Friendly" },
     { value: "Low Carb", label: "Low Carb" },

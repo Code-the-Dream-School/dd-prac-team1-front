@@ -29,6 +29,7 @@ const SavedRecipes = () => {
   const filteredCategory = searchParams.get("filterCategory") as string | null;
 
   const handleRecipeSearch = useCallback(
+   // (searchQueryParam: string, filterCategory:string) => {
     (searchQueryParam: string) => {
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const searchQueryParamParsed = searchQueryParam.toLowerCase();
@@ -45,17 +46,31 @@ const SavedRecipes = () => {
           tagSearch.includes(searchQueryParamParsed)
         );
       });
+
       if (searchedRecipes.length > 0) {
+        //
+       /* if (filteredCategory) {
+          console.log(filteredCategory)
+          setActiveCategory(filteredCategory);
+       //   setFilteredRecipes(filteredRecipes);
+        } else {
+          setActiveCategory("");
+          setFilteredRecipes(searchedRecipes);
+        }*/
         setFilteredRecipes(searchedRecipes);
-        setActiveTag("");
         setActiveCategory("");
+        setActiveTag("");
         setShow(true);
       } else if (!searchedRecipes.length) {
         setShow(false);
       }
+      console.log("HERE")
+
     },
     [recipes]
   );
+
+
   useEffect(() => {
     getRecipe()
       .then(response => {
@@ -92,19 +107,45 @@ const SavedRecipes = () => {
   useEffect(() => {
     if (searchQueryParam) {
       handleRecipeSearch(searchQueryParam);
+      //handleRecipeSearch(searchQueryParam, filterCategory);
     }
-  }, [searchQueryParam, recipes, handleRecipeSearch, setSearchParams]);
+  }, [searchQueryParam, recipes, handleRecipeSearch, searchParams]);
+  // }, [searchQueryParam, recipes, handleRecipeSearch, filteredCategory]);
 
-  const chooseCategory = (category: string) => {
-    const categorizedRecipes = recipes.filter(
+
+  const chooseCategory = useCallback((category: string) => {
+    //code for filtering the search results
+    if (searchQueryParam) {
+      const filteredCategorizedRecipes = filteredRecipes.filter(
+        (recipe: SavedRecipe) => recipe.recipeCategory === category
+      );
+      const existingSearchParams = new URLSearchParams(searchParams.toString());
+      existingSearchParams.set("filterCategory", category);
+      setSearchParams(existingSearchParams);
+      setFilteredRecipes(filteredCategorizedRecipes);
+    }  else {
+      setSearchParams({ ...searchParams, filterCategory: category });
+      const categorizedRecipes = recipes.filter(
+        (recipe: SavedRecipe) => recipe.recipeCategory === category
+      );
+      setFilteredRecipes(categorizedRecipes);
+    }
+    //code without filtering
+    /*const categorizedRecipes = recipes.filter(
       (recipe: SavedRecipe) => recipe.recipeCategory === category
     );
-    setShow(true);
     setFilteredRecipes(categorizedRecipes);
+    setShow(true);
     setActiveCategory(category);
     setActiveTag("");
     setSearchParams({ filterCategory: category });
-  };
+*/ 
+    setActiveCategory(category);
+    setShow(true);
+    setActiveTag("");
+
+    
+  }, [filteredRecipes, searchParams, recipes, searchQueryParam, setSearchParams])
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
     return recipe.recipeTags.some(
@@ -119,15 +160,14 @@ const SavedRecipes = () => {
     setActiveTag("");
     setSearchParams({});
   };
+
   const categories = recipes.reduce(
     (acc: Array<string>, recipe: SavedRecipe) => {
       if (!acc.includes(recipe.recipeCategory)) {
         acc.push(recipe.recipeCategory);
       }
       return acc;
-    },
-    []
-  );
+    }, []);
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeTags.forEach((tag: RecipeTag) => {
@@ -137,6 +177,7 @@ const SavedRecipes = () => {
     });
     return acc;
   }, []);
+
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>

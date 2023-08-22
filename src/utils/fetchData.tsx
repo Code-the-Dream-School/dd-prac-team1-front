@@ -54,6 +54,7 @@ export const searchAI = (search: string, values: Array<string>) => {
 };
 
 export const saveRecipe = (recipe: AIRecipe) => {
+  console.log(recipe)
   const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-ai",
