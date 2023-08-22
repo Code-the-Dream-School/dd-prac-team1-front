@@ -21,6 +21,7 @@ const SavedRecipes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState("");
+  const [filterAlert, setFilterAlert] = useState(false);
   const [activeTag, setActiveTag] = useState("");
   const [show, setShow] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ const SavedRecipes = () => {
   const handleRecipeSearch = useCallback(
     (searchQueryParam: string, filteredCategory:string) => {
       if (searchQueryParam === null) {
+        setFilterAlert(false);
         return
       }
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
@@ -56,6 +58,7 @@ const SavedRecipes = () => {
             (recipe: SavedRecipe) => recipe.recipeCategory === filteredCategory
           )
           setFilteredRecipes(filteredCategorizedRecipes);
+          setFilterAlert(true);
         } else {
           setFilteredRecipes(searchedRecipes);
           setActiveCategory("");
@@ -141,6 +144,7 @@ const SavedRecipes = () => {
 
   const showAllCategories = () => {
     setShow(true);
+    setFilterAlert(false);
     setFilteredRecipes(recipes);
     setActiveCategory("");
     setActiveTag("");
@@ -176,6 +180,13 @@ const SavedRecipes = () => {
       </Grid>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <GridItem colSpan={1} w="100%">
+            {filterAlert && 
+            <Box>
+              <Heading as="h5" size="sm" marginBottom="3">You may have "{searchQueryParam}" in these categories:</Heading>
+              <Text fontSize="xs" marginBottom="3">Press "all categories" to filter through all recipes again.</Text>
+            </Box>
+            }
+
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
