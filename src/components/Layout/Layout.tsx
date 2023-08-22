@@ -17,7 +17,11 @@ import RecipeSearch from "../Search/RecipeSearch";
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 
-const AnimatedUnderlineText = styled.a`
+type LayoutProps = {
+  isActive?: any;
+};
+
+const AnimatedUnderlineText = styled.a<LayoutProps>`
   position: relative;
   display: inline-block;
   text-decoration: none;
