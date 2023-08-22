@@ -17,7 +17,7 @@ type ModalForServingsProps = {
   isOpen: boolean;
   onClose: () => void;
   value: number;
-  SaveIngredientsToShoppingList: Function;
+  saveIngredientsToShoppingList: Function;
   valueOfServings: Function;
   // setRecipe: Function;
   // recipe: SavedRecipe;
@@ -28,7 +28,7 @@ const ModalForServings = ({
   isOpen,
   onClose,
   value,
-  SaveIngredientsToShoppingList,
+  saveIngredientsToShoppingList,
   // recipe,
   valueOfServings
 }: // setServingSize,
@@ -65,7 +65,7 @@ ModalForServingsProps) => {
           <Button mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={SaveIngredientsToShoppingList}>
+          <Button onClick={saveIngredientsToShoppingList}>
             Add to Shopping List
           </Button>
         </ModalFooter>

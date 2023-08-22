@@ -29,6 +29,7 @@ import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import SingleRecipeTag from "./SingleRecipeTag";
 import ModalForServings from "../ShoppingList/ModalForServings";
+import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -106,7 +107,21 @@ const SingleRecipePage = () => {
     }
   };
 
-  const SaveIngredientsToShoppingList = () => {
+  const sendIngredients = () => {
+    console.log(recipe);
+    if (recipeId === undefined) return;
+    console.log(recipeId);
+    saveRecipeIngredientsToShoppingList(recipeId)
+      .then(response => {
+        console.log(response);
+        // setSave("SAVED");
+        // setIfSaved(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const saveIngredientsToShoppingList = () => {
     CalculateServings();
 
     localStorage.setItem(
@@ -251,7 +266,8 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  onClick={onOpen}
+                  // onClick={onOpen}
+                  onClick={sendIngredients}
                 />
                 <ModalForServings
                   isOpen={openModal}
@@ -260,7 +276,7 @@ const SingleRecipePage = () => {
                     setServingSize(recipe.recipeServings);
                   }}
                   value={servingSize}
-                  SaveIngredientsToShoppingList={SaveIngredientsToShoppingList}
+                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
                   valueOfServings={valueOfServings}
                   // recipe={recipe}
                   // setServingSize={setServingSize}
