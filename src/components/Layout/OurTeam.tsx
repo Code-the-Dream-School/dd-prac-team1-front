@@ -74,27 +74,33 @@ const OurTeam: React.FC = () => {
                 href={member.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer">
-                <Box w={40} h={40} borderRadius="full" overflow="hidden" mb={4}>
+                <Box
+                  w={40}
+                  h={40}
+                  borderRadius="full"
+                  overflow="hidden"
+                  mb={4}
+                  mx="auto">
                   <img
                     src={member.imageUrl}
                     alt={member.name}
                     style={{
                       objectFit: "cover",
-                      width: "100%",
-                      height: "100%"
+                      width: "100%"
+                      // height: "100%",
                     }}
                   />
                 </Box>
+                <Heading size="md" mb={2} textAlign="center">
+                  {member.name}
+                </Heading>
+                <Text fontSize="sm" textAlign="center">
+                  {member.role}
+                </Text>
+                <Text fontSize="sm" mt={2} textAlign="justify">
+                  {member.bio}
+                </Text>
               </a>
-              <Heading size="md" mb={2}>
-                {member.name}
-              </Heading>
-              <Text fontSize="sm" textAlign="center">
-                {member.role}
-              </Text>
-              <Text fontSize="sm" mt={2} textAlign="justify">
-                {member.bio}
-              </Text>
             </Flex>
           ))}
         </SimpleGrid>

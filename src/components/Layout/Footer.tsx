@@ -9,7 +9,7 @@ const Footer = () => {
       height="70"
       width="100%"
       display="flex"
-      margin-top="auto"
+      marginTop="auto"
       bg="brandGray"
       color="black">
       <Container maxW="7xl">
