@@ -35,16 +35,25 @@ const SavedRecipes = () => {
         setFilterAlert(false);
         return
       }
+
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
-        const searchQueryParamParsed = searchQueryParam.trim().toLowerCase();
-        const nameMatch = recipe.recipeName.toLowerCase().includes(searchQueryParamParsed);
-        const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
-          ingredient.ingredientName.toLowerCase().includes(searchQueryParamParsed)
+        const searchQueryTags = searchQueryParam.trim().toLowerCase().split(" ");
+      
+        const nameMatch = searchQueryTags.every(queryTag =>
+          recipe.recipeName.toLowerCase().includes(queryTag)
         );
-        const tagMatch = recipe.recipeTags.some(tag =>
-          tag.tagName.toLowerCase().includes(searchQueryParamParsed) ||
-          tag.tagName.toLowerCase().split(" ").some(word => word.includes(searchQueryParamParsed))
-        );      
+      
+        const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
+          searchQueryTags.every(queryTag =>
+            ingredient.ingredientName.toLowerCase().includes(queryTag)
+          )
+        );
+      
+        const tagMatch = recipe.recipeTags.some(tag => {
+          const tagWords = tag.tagName.toLowerCase().split(" ");
+          return searchQueryTags.every(queryTag => tagWords.includes(queryTag));
+        });
+      
         return nameMatch || ingredientMatch || tagMatch;
       });
 
@@ -72,6 +81,7 @@ const SavedRecipes = () => {
         setFilteredRecipes(response.data.recipes);
         setIsLoading(false);
         if (filteredTag) {
+          setFilterAlert(false);
           setActiveTag(filteredTag);
         }
         if (filteredCategory) {
@@ -139,6 +149,7 @@ const SavedRecipes = () => {
     setActiveCategory("");
     setActiveTag("");
     setSearchParams({});
+    setFilterAlert(false);
   };
 
   const categories = recipes.reduce(
