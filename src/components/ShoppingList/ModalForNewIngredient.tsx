@@ -42,7 +42,7 @@ const ModalForNewIngredient = ({
       size="3xl"
       variant="outline"
       isCentered>
-      <ModalOverlay />
+      <ModalOverlay bg="transparent" backdropFilter="blur(0.3px)" />
       <ModalContent>
         <ModalHeader>Add new ingredient</ModalHeader>
         <ModalCloseButton />

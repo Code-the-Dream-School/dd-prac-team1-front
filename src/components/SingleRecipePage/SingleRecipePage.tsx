@@ -28,7 +28,6 @@ import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
-import SingleRecipeTag from "./SingleRecipeTag";
 import ModalForServings from "../ShoppingList/ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 
@@ -37,7 +36,6 @@ const SingleRecipePage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
   const [sendingIngredients, setSendingIngredients] = useState({});
-  // const [];
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
