@@ -41,13 +41,14 @@ const SavedRecipes = () => {
         const ingredientSearch = recipe.recipeIngredients.map(ingredient => {
           return ingredient.ingredientName.toLowerCase();
         });
-        const tagSearch = recipe.recipeTags.map(tag => {
-          return tag.tagName.toLowerCase();
+        const tagSearch = recipe.recipeTags.some((tag) => {
+          const tagWords = tag.tagName.toLowerCase().split(" ");
+          return tagWords.some((word) => word.includes(searchQueryParamParsed));
         });
         return (
           nameSearch.includes(searchQueryParamParsed) ||
           ingredientSearch.includes(searchQueryParamParsed) ||
-          tagSearch.includes(searchQueryParamParsed)
+          tagSearch
         );
       });
 
