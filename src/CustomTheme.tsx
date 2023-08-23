@@ -1,4 +1,5 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { cardTheme } from "./Card";
+import { extendTheme } from "@chakra-ui/react";
 
 //extend the theme
 const theme = extendTheme({
@@ -16,6 +17,7 @@ const theme = extendTheme({
   },
 
   components: {
+    Card: cardTheme,
     Button: {
       variants: {
         solid: {
@@ -48,9 +50,17 @@ const theme = extendTheme({
             "borderColor": "green",
             "borderRadius": "5px",
             ":focus": {
+              borderColor: "green"
+            }
+          }
+        },
+        flushed: {
+          field: {
+            "bg": "white",
+            "borderColor": "green",
+            ":focus": {
               borderColor: "green",
-              bg: "brandGray",
-              borderRadius: "5px"
+              bg: "brandGray"
             }
           }
         }

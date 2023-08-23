@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Center,
   Flex,
   HStack,
   Heading,
@@ -15,14 +16,18 @@ const SearchChoice = () => {
   const navigateToAISearch = () => {
     navigate("/ai-recipe");
   };
+  const navigateToOwnRecipe = () => {
+    navigate("/manual-recipe");
+  };
 
   return (
-    <Flex justifyContent={"center"} h="100vh">
-
-      <HStack>
+    <Flex justifyContent={"center"} h="85vh">
+      <HStack spacing={20}>
         <Card cursor="pointer" onClick={navigateToAISearch}>
           <CardHeader>
-            <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            <Center>
+              <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            </Center>
           </CardHeader>
           <CardBody>
             <Text>
@@ -33,9 +38,9 @@ const SearchChoice = () => {
           </CardBody>
         </Card>
 
-        <Card cursor="not-allowed">
+        <Card cursor="pointer" onClick={navigateToOwnRecipe}>
           <CardHeader>
-            <Heading size="md">ADD YOUR OWN RECIPE By Hand</Heading>
+            <Heading size="md">ADD YOUR OWN RECIPE </Heading>
           </CardHeader>
           <CardBody>
             <Text>Have a recipe you love?</Text>
