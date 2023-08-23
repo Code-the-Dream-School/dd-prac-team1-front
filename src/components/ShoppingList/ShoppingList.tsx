@@ -24,12 +24,15 @@ const ShoppingList = () => {
   const [newIngredientName, setNewIngredientName] = useState<string>("");
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
   const [newIngredientUnit, setNewIngredientUnit] = useState<string>("");
+  const [uncheckedIds, setUncheckedIds] = useState<Array<string>>([]);
+  const [checkedIds, setCheckedIds] = useState<Array<string>>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     getIngredientsFromShoppingList()
       .then(response => {
         console.log(response);
         setIngredients(response.data.ingredients);
+        // setUncheckedIds(response.data.ingredients._id);
       })
       .catch(error => {
         console.log(error);
@@ -47,6 +50,8 @@ const ShoppingList = () => {
     ]);
     onClose();
   };
+  console.log(ingredients);
+  console.log(checkedIds);
   const handleNewIngredientName = (e: any) => {
     setNewIngredientName(e.target.value);
   };
@@ -56,10 +61,23 @@ const ShoppingList = () => {
   const handleNewIngredientUnit = (e: any) => {
     setNewIngredientUnit(e.target.value);
   };
+  //if (ingredients === undefined) return;
 
-  console.log(newIngredientName);
-  console.log(newIngredientAmount);
-  console.log(newIngredientUnit);
+  const checkedIngredients = ingredients.filter(ingredient => {
+    return checkedIds.includes(ingredient._id);
+  });
+
+  const uncheckedIngredients = ingredients.filter(ingredient => {
+    return !checkedIds.includes(ingredient._id);
+  });
+
+  console.log(checkedIngredients);
+  console.log(uncheckedIngredients);
+  // const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
+  //   return recipe.recipeTags.some(
+  //     (tag: RecipeTag) => tag.tagName === activeTag
+  //   );
+  // });
   const print = () => {
     window.print();
   };
@@ -109,7 +127,7 @@ const ShoppingList = () => {
         </Grid>
       </Button>
 
-      {ingredients.map(ingredient => (
+      {uncheckedIngredients.map(ingredient => (
         <Box key={ingredient._id}>
           <ModalForNewIngredient
             isOpen={isOpen}
@@ -137,7 +155,17 @@ const ShoppingList = () => {
               // m="5"
               alignItems="center">
               <GridItem colSpan={1} w="100%">
-                <Checkbox size="lg" colorScheme="gray" />
+                <Checkbox
+                  size="lg"
+                  colorScheme="gray"
+                  id={ingredient._id}
+                  onChange={e => {
+                    console.log(e);
+                    if (e.target.checked) {
+                      setCheckedIds(prevIds => [...prevIds, e.target.id]);
+                    }
+                  }}
+                />
               </GridItem>
               <GridItem colSpan={9} w="100%">
                 <Flex>
@@ -184,6 +212,66 @@ const ShoppingList = () => {
           </GridItem>
         </Grid>
       </Button>
+      {checkedIngredients.map(ingredient => (
+        <Box key={ingredient._id}>
+          <ModalForNewIngredient
+            isOpen={isOpen}
+            newIngredientName={newIngredientName}
+            newIngredientAmount={newIngredientAmount}
+            newIngredientUnit={newIngredientUnit}
+            handleNewIngredientName={handleNewIngredientName}
+            handleNewIngredientAmount={handleNewIngredientAmount}
+            handleNewIngredientUnit={handleNewIngredientUnit}
+            handleIngredientAdd={handleIngredientAdd}
+            onClose={() => {
+              onClose();
+            }}
+          />
+          <Button
+            variant="outline"
+            w="100%"
+            m="1"
+            bg="white"
+            borderColor="green">
+            <Grid
+              templateColumns="repeat(12, 1fr)"
+              w="100%"
+              gap="2"
+              // m="5"
+              alignItems="center">
+              <GridItem colSpan={1} w="100%">
+                <Checkbox
+                  size="lg"
+                  colorScheme="gray"
+                  defaultChecked
+                  id={ingredient._id}
+                  onChange={e => {
+                    console.log(e);
+                    if (!e.target.checked) {
+                      const updateId = checkedIds.filter(id => {
+                        return id !== ingredient._id;
+                      });
+                      return setCheckedIds(updateId);
+                      //   setCheckedIds(prevIds => [...prevIds, e.target.id]);
+                    }
+                  }}
+                />
+              </GridItem>
+              <GridItem colSpan={9} w="100%">
+                <Flex>
+                  {`${ingredient.ingredientName} (${ingredient.ingredientAmount} ${ingredient.ingredientUnit})`}
+                </Flex>
+              </GridItem>
+              <GridItem colSpan={1} w="100%" p="2">
+                <Icon as={GiPencil} />
+              </GridItem>
+              <GridItem colSpan={1} w="100%" p="2">
+                <Icon as={GrClose} />
+              </GridItem>
+            </Grid>
+          </Button>
+        </Box>
+      ))}
     </Container>
   );
 };
