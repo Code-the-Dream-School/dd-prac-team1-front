@@ -36,15 +36,15 @@ const SavedRecipes = () => {
         return
       }
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
-        const searchQueryParamParsed = searchQueryParam.toLowerCase();
+        const searchQueryParamParsed = searchQueryParam.trim().toLowerCase();
         const nameMatch = recipe.recipeName.toLowerCase().includes(searchQueryParamParsed);
         const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
           ingredient.ingredientName.toLowerCase().includes(searchQueryParamParsed)
         );
         const tagMatch = recipe.recipeTags.some(tag =>
+          tag.tagName.toLowerCase().includes(searchQueryParamParsed) ||
           tag.tagName.toLowerCase().split(" ").some(word => word.includes(searchQueryParamParsed))
-        );
-        
+        );      
         return nameMatch || ingredientMatch || tagMatch;
       });
 
@@ -124,8 +124,6 @@ const SavedRecipes = () => {
     setActiveCategory(category);
     setShow(true);
     setActiveTag("");
-
-    
   }, [filteredRecipes, searchParams, recipes, searchQueryParam, setSearchParams])
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
