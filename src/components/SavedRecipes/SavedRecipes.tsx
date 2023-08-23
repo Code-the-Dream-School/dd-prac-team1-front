@@ -37,19 +37,15 @@ const SavedRecipes = () => {
       }
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
         const searchQueryParamParsed = searchQueryParam.toLowerCase();
-        const nameSearch = recipe.recipeName.toLowerCase();
-        const ingredientSearch = recipe.recipeIngredients.map(ingredient => {
-          return ingredient.ingredientName.toLowerCase();
-        });
-        const tagSearch = recipe.recipeTags.some((tag) => {
-          const tagWords = tag.tagName.toLowerCase().split(" ");
-          return tagWords.some((word) => word.includes(searchQueryParamParsed));
-        });
-        return (
-          nameSearch.includes(searchQueryParamParsed) ||
-          ingredientSearch.includes(searchQueryParamParsed) ||
-          tagSearch
+        const nameMatch = recipe.recipeName.toLowerCase().includes(searchQueryParamParsed);
+        const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
+          ingredient.ingredientName.toLowerCase().includes(searchQueryParamParsed)
         );
+        const tagMatch = recipe.recipeTags.some(tag =>
+          tag.tagName.toLowerCase().split(" ").some(word => word.includes(searchQueryParamParsed))
+        );
+        
+        return nameMatch || ingredientMatch || tagMatch;
       });
 
       if (searchedRecipes.length > 0) {
