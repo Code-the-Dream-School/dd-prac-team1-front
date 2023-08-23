@@ -22,7 +22,8 @@ const theme = extendTheme({
           bg: "green"
         },
         outline: {
-          bg: "brandGray"
+          bg: "brandGray",
+          borderColor: "green"
         }
       }
     },

@@ -2,7 +2,6 @@ import React from "react";
 import {
   Button,
   Input,
-  Text,
   Center,
   Modal,
   ModalOverlay,
@@ -12,16 +11,12 @@ import {
   ModalBody,
   ModalCloseButton
 } from "@chakra-ui/react";
-import { SavedRecipe } from "../../utils/types";
 type ModalForServingsProps = {
   isOpen: boolean;
   onClose: () => void;
   value: number;
   saveIngredientsToShoppingList: Function;
   valueOfServings: Function;
-  // setRecipe: Function;
-  // recipe: SavedRecipe;
-  // setServingSize: Function;
 };
 
 const ModalForServings = ({
@@ -29,11 +24,8 @@ const ModalForServings = ({
   onClose,
   value,
   saveIngredientsToShoppingList,
-  // recipe,
   valueOfServings
-}: // setServingSize,
-// setRecipe
-ModalForServingsProps) => {
+}: ModalForServingsProps) => {
   return (
     <Modal
       blockScrollOnMount={false}
@@ -46,7 +38,6 @@ ModalForServingsProps) => {
       <ModalContent>
         <ModalHeader>Adjust serving size</ModalHeader>
         <ModalCloseButton />
-
         <ModalBody>
           <Center>
             <Input
@@ -60,12 +51,11 @@ ModalForServingsProps) => {
             />
           </Center>
         </ModalBody>
-
         <ModalFooter>
           <Button mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={saveIngredientsToShoppingList}>
+          <Button onClick={() => saveIngredientsToShoppingList()}>
             Add to Shopping List
           </Button>
         </ModalFooter>

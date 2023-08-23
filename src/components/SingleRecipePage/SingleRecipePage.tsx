@@ -114,8 +114,6 @@ const SingleRecipePage = () => {
     saveRecipeIngredientsToShoppingList(recipeId)
       .then(response => {
         console.log(response);
-        // setSave("SAVED");
-        // setIfSaved(true);
       })
       .catch(error => {
         console.log(error);
@@ -128,8 +126,6 @@ const SingleRecipePage = () => {
       "ingredient",
       JSON.stringify(recipe.recipeIngredients)
     );
-
-    // console.log();
   };
 
   const nutrition = [
@@ -266,7 +262,7 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  // onClick={onOpen}
+                  //onClick={onOpen}
                   onClick={sendIngredients}
                 />
                 <ModalForServings
@@ -279,8 +275,6 @@ const SingleRecipePage = () => {
                   saveIngredientsToShoppingList={saveIngredientsToShoppingList}
                   valueOfServings={valueOfServings}
                   // recipe={recipe}
-                  // setServingSize={setServingSize}
-                  // setRecipe={setRecipe}
                 />
                 <IconButton
                   size="lg"

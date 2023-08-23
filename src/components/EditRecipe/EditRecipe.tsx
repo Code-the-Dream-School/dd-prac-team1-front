@@ -139,7 +139,7 @@ const EditRecipe = () => {
   return (
     <Box
       as="form"
-      onSubmit={e => {
+      onSubmit={(e: any) => {
         e.preventDefault();
         console.log(recipe);
         saveRecipe();
@@ -226,7 +226,7 @@ const EditRecipe = () => {
                     <option value="Side Dish">Side Dish</option>
                     <option value="Sandwich">Sandwich</option>
                     <option value="Picnic Ideas">Picnic Ideas</option>
-                    <option value="Smoothie">Smoothy</option>
+                    <option value="Smoothie">Smoothie</option>
                     <option value="Party Menu">Party Menu</option>
                   </Select>
                 </FormControl>
