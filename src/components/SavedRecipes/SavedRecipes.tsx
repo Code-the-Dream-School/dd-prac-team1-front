@@ -17,14 +17,14 @@ import CategoriesList from "./CategoriesList";
 import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Array<SavedRecipe>>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<Array<SavedRecipe>>([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState("");
-  const [filterAlert, setFilterAlert] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>("");
+  const [filterAlert, setFilterAlert] = useState<boolean>(false);
   const [activeTag, setActiveTag] = useState("");
-  const [show, setShow] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [show, setShow] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const searchQueryParam = searchParams.get("search") as string;
   const filteredTag = searchParams.get("filterTag") as string | null;
   const filteredCategory = searchParams.get("filterCategory") as string;
@@ -48,7 +48,6 @@ const SavedRecipes = () => {
         return nameMatch || ingredientMatch || tagMatch;
       });
 
-      if (searchedRecipes.length > 0) {
         if (filteredCategory) {
           setActiveCategory(filteredCategory);
           const filteredCategorizedRecipes = searchedRecipes.filter(
@@ -61,14 +60,10 @@ const SavedRecipes = () => {
           setActiveCategory("");
         }
         setActiveTag("");
-        setShow(true);
-      } else if (!searchedRecipes.length) {
-        setShow(false);
-      }
+        setShow(searchedRecipes.length > 0);
     },
     [recipes]
   );
-
 
   useEffect(() => {
     getRecipe()
@@ -177,13 +172,12 @@ const SavedRecipes = () => {
       </Grid>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <GridItem colSpan={1} w="100%">
-            {filterAlert && 
+          {filterAlert && 
             <Box>
               <Heading as="h5" size="sm" marginBottom="3">You may have "{searchQueryParam}" in these categories:</Heading>
               <Text fontSize="xs" marginBottom="3">Press "all categories" to filter through all recipes again.</Text>
             </Box>
             }
-
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
