@@ -11,8 +11,6 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  Grid,
-  GridItem,
   useToast
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -71,84 +69,74 @@ const Login = () => {
   };
 
   return (
-    <Grid>
-      <GridItem
-        colSpan={1}
-        w="100%"
-        h="90vh"
-        padding="50"
-        display="flex"
-        flexDirection="column">
-        <Box>
-          <Container maxW="xl">
-            <Box
-              as="form"
-              onSubmit={e => {
-                e.preventDefault();
-                handleLogin();
-              }}>
-              <Box p="10px">
-                <FormControl isRequired>
-                  <FormLabel htmlFor="loginEmail">Email</FormLabel>
-                  <Input
-                    type="email"
-                    id="loginEmail"
-                    variant="flushed"
-                    value={email}
-                    onChange={event => {
-                      setEmail(event.target.value);
-                      setErrorOccur(false);
-                    }}
-                  />
-                </FormControl>
-              </Box>
-              <Box p="10px">
-                <FormControl isInvalid={errorOccur} isRequired>
-                  <FormLabel htmlFor="loginPassword">Password</FormLabel>
-                  <InputGroup>
-                    <Input
-                      type={type}
-                      value={password}
-                      id="loginPassword"
-                      variant="flushed"
-                      onChange={event => {
-                        setPassword(event.target.value);
-                        setErrorOccur(false);
-                      }}
-                    />
-                    <InputRightElement>
-                      <Button
-                        size="xs"
-                        variant="ghost"
-                        onClick={handleShowPassword}>
-                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                  {errorOccur && (
-                    <FormErrorMessage>
-                      Combination email/password was not recognized
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </Box>
-              <Box p="10px">
-                <Center>
-                  <Button variant="solid" type="submit">
-                    SIGN IN
+    <Box>
+      <Container maxW="xl">
+        <Box
+          as="form"
+          onSubmit={e => {
+            e.preventDefault();
+            handleLogin();
+          }}>
+          <Box p="10px">
+            <FormControl isRequired>
+              <FormLabel htmlFor="loginEmail">Email</FormLabel>
+              <Input
+                type="email"
+                id="loginEmail"
+                variant="flushed"
+                value={email}
+                onChange={event => {
+                  setEmail(event.target.value);
+                  setErrorOccur(false);
+                }}
+              />
+            </FormControl>
+          </Box>
+          <Box p="10px">
+            <FormControl isInvalid={errorOccur} isRequired>
+              <FormLabel htmlFor="loginPassword">Password</FormLabel>
+              <InputGroup>
+                <Input
+                  type={type}
+                  value={password}
+                  id="loginPassword"
+                  variant="flushed"
+                  onChange={event => {
+                    setPassword(event.target.value);
+                    setErrorOccur(false);
+                  }}
+                />
+                <InputRightElement>
+                  <Button
+                    size="xs"
+                    variant="ghost"
+                    onClick={handleShowPassword}>
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
-                </Center>
-              </Box>
-            </Box>
+                </InputRightElement>
+              </InputGroup>
+              {errorOccur && (
+                <FormErrorMessage>
+                  Combination email/password was not recognized
+                </FormErrorMessage>
+              )}
+            </FormControl>
+          </Box>
+          <Box p="10px">
             <Center>
-              <Button variant="link" size="xs" onClick={navigateToRegister}>
-                <Text as="ins">or create an account</Text>
+              <Button variant="solid" type="submit">
+                SIGN IN
               </Button>
             </Center>
-          </Container>
+          </Box>
         </Box>
-      </GridItem>
-    </Grid>
+        <Center>
+          <Button variant="link" size="xs" onClick={navigateToRegister}>
+            <Text as="ins">or create an account</Text>
+          </Button>
+        </Center>
+      </Container>
+    </Box>
   );
 };
 
