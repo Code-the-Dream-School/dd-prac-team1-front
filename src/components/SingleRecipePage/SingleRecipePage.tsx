@@ -28,7 +28,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
-import ModalForServings from "../ShoppingList/ModalForServings";
+import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 
 const SingleRecipePage = () => {
