@@ -99,8 +99,7 @@ const ShoppingList = () => {
     setIngredients(checked);
   };
 
-  const handleRemoveButton = (e: any) => {
-    const id = e.target.id;
+  const handleRemoveButton = (id: string) => {
     const newIngredients = ingredients.filter(ingredient => {
       return id !== ingredient._id;
     });
@@ -163,6 +162,10 @@ const ShoppingList = () => {
         h="14"
         ml="2"
         bg="white"
+        _hover={{
+          background: "white",
+          color: "teal.500"
+        }}
         onClick={onOpenChangedIngredient}>
         <Grid
           templateColumns="repeat(12, 1fr)"

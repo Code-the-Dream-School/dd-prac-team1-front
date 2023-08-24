@@ -26,6 +26,14 @@ const theme = extendTheme({
         outline: {
           bg: "brandGray",
           borderColor: "green"
+        },
+        ghost: {
+          _hover: {
+            bg: "white"
+          },
+          _active: {
+            bg: "white"
+          }
         }
       }
     },

@@ -108,7 +108,7 @@ const ShoppingListIngredient = ({
                 variant="ghost"
                 id={ingredient._id}
                 icon={<GrClose />}
-                onClick={e => handleRemoveButton(e)}
+                onClick={() => handleRemoveButton(id)}
               />
             </GridItem>
           </Grid>
@@ -165,9 +165,8 @@ const ShoppingListIngredient = ({
                 aria-label="Delete ingredient"
                 size="lg"
                 variant="ghost"
-                id={ingredient._id}
                 icon={<GrClose />}
-                onClick={e => handleRemoveButton(e)}
+                onClick={() => handleRemoveButton(ingredient._id)}
               />
             </GridItem>
           </Grid>
