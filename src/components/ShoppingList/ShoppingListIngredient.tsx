@@ -34,8 +34,7 @@ const ShoppingListIngredient = ({
   defaultChecked
 }: ShoppingListIngredientProps) => {
   const [isEditIngredient, setIsEditIngredient] = useState<string>("");
-  console.log(ingredient);
-  console.log(isEditIngredient);
+
   return (
     <>
       {isEditIngredient === ingredient._id ? (
