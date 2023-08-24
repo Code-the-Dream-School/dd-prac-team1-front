@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, CardBody, GridItem, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Center,
+  GridItem,
+  Image,
+  Stack,
+  Text
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../../utils/types";
 
@@ -28,9 +36,11 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
             alt={recipe.recipeName}
           />
           <Stack mt="3">
-            <Text fontSize="xs" h="7">
-              {recipe.recipeName}
-            </Text>
+            <Center>
+              <Text fontSize="xs" h="7">
+                {recipe.recipeName}
+              </Text>
+            </Center>
           </Stack>
         </CardBody>
       </Card>
