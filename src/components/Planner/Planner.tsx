@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Center, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Text, Image, Container } from "@chakra-ui/react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
@@ -25,7 +25,7 @@ const Planner = () => {
     newRecipes.splice(result.destination.index, 0, reorderedItem);
     setRecipes(newRecipes);
   };
-
+console.log(recipes)
   return (
     <DragDropContext onDragEnd={result => handleDragEnd(result)}>
       <Grid
@@ -54,13 +54,33 @@ const Planner = () => {
                     key={recipe._id}
                     draggableId={recipe._id}
                     index={index}>
-                    {provided => (
-                      <Box
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}>
-                        {recipe.recipeName}
-                      </Box>
+                    {(provided, snapshot) => (
+                    <Container
+                      opacity={snapshot.isDragging ? 0.7 : 1} 
+                      transition="opacity 0.2s ease"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      border="2px solid green"
+                      borderRadius="5px"
+                      padding="1rem 0.5rem"
+                      margin="1rem 0.5rem"
+                      width="rem"
+                      height="170px"
+                      >
+                      <Image 
+                        src={recipe.recipeImage} 
+                        alt={recipe.recipeName}
+                        borderRadius="lg"
+                        w="200px" 
+                        h="100px" 
+                        objectFit="cover" 
+                      />
+                      <Center>
+                        <Text textAlign="center">{recipe.recipeName}</Text>
+                      </Center>
+                  </Container>
+
                     )}
                   </Draggable>
                 ))}
@@ -80,6 +100,7 @@ const Planner = () => {
                   key={index}
                   colSpan={{ base: 1, md: 1 }}
                   bg="gray"
+                  color="brandGray"
                   p="3">
                   {weekday}
                 </GridItem>
