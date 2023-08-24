@@ -25,25 +25,22 @@ const ModalForSendEmail = ({ isOpen, onClose }: ModalForSendEmailProps) => {
       size="3xl"
       variant="outline"
       isCentered>
-      <ModalOverlay bg="transparent" backdropFilter="blur(0.3px)" />
+      <ModalOverlay
+        bg="transparent"
+        backdropFilter="blur(05px) brightness(0.5)"
+      />
       <ModalContent>
         <ModalHeader>Enter email</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
           <Center>
-            <Input
-              size="sm"
-              w="100%"
-              type="email"
-              placeholder="Enter email"
-              // value={email}
-            />
+            <Input size="sm" w="100%" type="email" placeholder="Enter email" />
           </Center>
         </ModalBody>
 
         <ModalFooter>
-          <Button mr={3} onClick={onClose}>
+          <Button mr="3" bg="brandGray" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={onClose}>Send email</Button>

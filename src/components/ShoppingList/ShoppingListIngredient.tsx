@@ -109,7 +109,7 @@ const ShoppingListIngredient = ({
                 variant="ghost"
                 id={ingredient._id}
                 icon={<GrClose />}
-                onClick={() => handleRemoveButton(id)}
+                onClick={() => handleRemoveButton(ingredient._id)}
               />
             </GridItem>
           </Grid>

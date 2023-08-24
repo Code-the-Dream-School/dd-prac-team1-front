@@ -21,9 +21,6 @@ import ShoppingListIngredient from "./ShoppingListIngredient";
 
 const ShoppingList = () => {
   const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
-  const [newIngredientName, setNewIngredientName] = useState<string>("");
-  const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
-  const [newIngredientUnit, setNewIngredientUnit] = useState<string>("");
   const [checkedIds, setCheckedIds] = useState<Array<string>>([]);
 
   const {
@@ -48,36 +45,17 @@ const ShoppingList = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(newIngredientName);
-  console.log(newIngredientAmount);
-  console.log(newIngredientUnit);
 
-  console.log(ingredients);
-  console.log(checkedIds);
-  const handleNewIngredientName = (e: any) => {
-    setNewIngredientName(e.target.value);
-  };
-  const handleNewIngredientAmount = (e: any) => {
-    setNewIngredientAmount(Number(e.target.value));
-  };
-  const handleNewIngredientUnit = (e: any) => {
-    setNewIngredientUnit(e.target.value);
-  };
-  const handleIngredientAdd = () => {
+  const handleIngredientAdd = (newIngredient: SavedIngredient) => {
     const id = new Date().toString();
     setIngredients([
       {
-        ingredientName: newIngredientName,
-        ingredientAmount: newIngredientAmount,
-        ingredientUnit: newIngredientUnit,
+        ...newIngredient,
         _id: id
       },
       ...ingredients
     ]);
     onCloseChangedIngredient();
-    setNewIngredientName("");
-    setNewIngredientAmount(0);
-    setNewIngredientUnit("");
   };
   const checkedIngredients = ingredients.filter(ingredient => {
     if (ingredient._id === undefined) return false;
@@ -198,12 +176,6 @@ const ShoppingList = () => {
       />
       <ModalForNewIngredient
         isOpen={isOpenChangedIngredient}
-        newIngredientName={newIngredientName}
-        newIngredientAmount={newIngredientAmount}
-        newIngredientUnit={newIngredientUnit}
-        handleNewIngredientName={handleNewIngredientName}
-        handleNewIngredientAmount={handleNewIngredientAmount}
-        handleNewIngredientUnit={handleNewIngredientUnit}
         handleIngredientAdd={handleIngredientAdd}
         onClose={() => {
           onCloseChangedIngredient();
