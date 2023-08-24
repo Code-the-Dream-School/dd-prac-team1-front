@@ -7,6 +7,7 @@ import {
   IconButton,
   Grid,
   GridItem,
+  Heading,
   Text,
   useDisclosure
 } from "@chakra-ui/react";
@@ -47,18 +48,10 @@ const ShoppingList = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(newIngredientName);
+  console.log(newIngredientAmount);
+  console.log(newIngredientUnit);
 
-  const handleIngredientAdd = () => {
-    setIngredients([
-      ...ingredients,
-      {
-        ingredientName: newIngredientName,
-        ingredientAmount: newIngredientAmount,
-        ingredientUnit: newIngredientUnit
-      }
-    ]);
-    onCloseChangedIngredient();
-  };
   console.log(ingredients);
   console.log(checkedIds);
   const handleNewIngredientName = (e: any) => {
@@ -70,7 +63,22 @@ const ShoppingList = () => {
   const handleNewIngredientUnit = (e: any) => {
     setNewIngredientUnit(e.target.value);
   };
-
+  const handleIngredientAdd = () => {
+    const id = new Date().toString();
+    setIngredients([
+      {
+        ingredientName: newIngredientName,
+        ingredientAmount: newIngredientAmount,
+        ingredientUnit: newIngredientUnit,
+        _id: id
+      },
+      ...ingredients
+    ]);
+    onCloseChangedIngredient();
+    setNewIngredientName("");
+    setNewIngredientAmount(0);
+    setNewIngredientUnit("");
+  };
   const checkedIngredients = ingredients.filter(ingredient => {
     if (ingredient._id === undefined) return false;
     return checkedIds.includes(ingredient._id);
@@ -128,9 +136,9 @@ const ShoppingList = () => {
         gap="2"
         h="20"
         alignItems="center">
-        <GridItem colSpan={2} w="100%" mt="5"></GridItem>
-        <GridItem colSpan={7} w="100%">
-          <Text fontSize="2xl">Shopping list</Text>
+        <GridItem colSpan={1} w="100%"></GridItem>
+        <GridItem colSpan={8} w="100%">
+          <Heading fontSize="2xl">Shopping list</Heading>
         </GridItem>
         <GridItem colSpan={1} w="100%" mt="5">
           <Button
