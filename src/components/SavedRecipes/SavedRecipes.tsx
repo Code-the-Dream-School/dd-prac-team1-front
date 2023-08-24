@@ -129,14 +129,33 @@ const SavedRecipes = () => {
     []
   );
 
+  // const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+  //   recipe.recipeTags.forEach((tag: RecipeTag) => {
+  //     if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
+  //       acc.push(tag.tagName);
+  //     }
+  //   });
+  //   return acc;
+  // }, []);
+
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
-    recipe.recipeTags.forEach((tag: RecipeTag) => {
-      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
-        acc.push(tag.tagName);
+    const renderingTags: string[] = [];
+    recipe.recipeTags.map(tag =>
+      renderingTags.push(tag.tagName.toLocaleLowerCase())
+    );
+    recipe.recipeSpecialDiets.map(diet => {
+      if (diet !== "None") {
+        renderingTags.push(diet.toLocaleLowerCase());
       }
     });
-    return acc;
+    const removeDuplicates = (renderingTags: any[]) => {
+      return renderingTags.filter(
+        (tag: any, index: any) => renderingTags.indexOf(tag) === index
+      );
+    };
+    return removeDuplicates(renderingTags);
   }, []);
+
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
