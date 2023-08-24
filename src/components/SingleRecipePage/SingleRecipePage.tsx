@@ -63,6 +63,40 @@ const SingleRecipePage = () => {
       });
   };
   if (recipe === null) return null;
+
+  const tagsAndDiets = () => {
+    // const renderingTags = [];
+    const renderingTags: string[] = [];
+    // recipe.recipeTags.forEach(tag => {
+    //   if (!renderingTags.includes(tag.tagName.toLocaleLowerCase())) {
+    //     renderingTags.push(tag.tagName.toLocaleLowerCase());
+    //   }
+    // });
+    // recipe.recipeSpecialDiets.forEach(diet => {
+    //   if (diet !== "None") {
+    //     if (!renderingTags.includes(diet.toLocaleLowerCase())) {
+    //       renderingTags.push(diet.toLocaleLowerCase());
+    //     }
+    recipe.recipeTags.map(tag =>
+      renderingTags.push(tag.tagName.toLocaleLowerCase())
+    );
+    recipe.recipeSpecialDiets.map(diet => {
+      if (diet !== "None") {
+        renderingTags.push(diet.toLocaleLowerCase());
+      }
+    });
+    //  const removeDuplicates = (renderingTags) => {
+    //   return [...new Set (renderingTags: any)]
+    //  }
+    const removeDuplicates = (renderingTags: any[]) => {
+      return renderingTags.filter(
+        (tag: any, index: any) => renderingTags.indexOf(tag) === index
+      );
+    };
+    return removeDuplicates(renderingTags);
+    // return renderingTags;
+  };
+  console.log(tagsAndDiets());
   const nutrition = [
     {
       displayName: "Calories",
@@ -277,8 +311,8 @@ const SingleRecipePage = () => {
         <GridItem colSpan={1} w="100%">
           <Image w="100%" src={recipe.recipeImage} alt={recipe.recipeName} />
           <Flex marginTop="2" wrap="wrap">
-            {recipe.recipeTags.map((tag, _id) => (
-              <SingleRecipeTag key={_id} tag={tag} />
+            {tagsAndDiets().map((tag, index) => (
+              <SingleRecipeTag key={index} tag={tag} />
             ))}
           </Flex>
         </GridItem>

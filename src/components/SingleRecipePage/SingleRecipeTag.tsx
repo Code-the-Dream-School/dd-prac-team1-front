@@ -3,13 +3,13 @@ import { Button } from "@chakra-ui/react";
 import { RecipeTag } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 
-type SingleRecipeTagProps = { tag: RecipeTag };
+type SingleRecipeTagProps = { tag: string };
 
 const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
   const navigate = useNavigate();
 
   const navigateToFilteredTag = () => {
-    const filterByTag = `${tag.tagName}`;
+    const filterByTag = `${tag}`;
     navigate(`/saved-recipes?filterTag=${filterByTag}`);
   };
 
@@ -20,7 +20,7 @@ const SingleRecipeTag = ({ tag }: SingleRecipeTagProps) => {
       onClick={() => {
         navigateToFilteredTag();
       }}>
-      {tag.tagName}
+      {tag}
     </Button>
   );
 };
