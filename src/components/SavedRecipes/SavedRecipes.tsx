@@ -132,24 +132,38 @@ const SavedRecipes = () => {
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeTags.forEach((tag: RecipeTag) => {
-      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
-        acc.push(tag.tagName);
+      if (
+        !acc.includes(tag.tagName.toLocaleLowerCase()) &&
+        !tag.tagName.includes("--")
+      ) {
+        acc.push(tag.tagName.toLocaleLowerCase());
       }
     });
     return acc;
   }, []);
-  console.log(tags);
+  console.log("tags", tags);
   const diets = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeSpecialDiets.forEach((diet: string) => {
-      if (!acc.includes(diet)) {
-        acc.push(diet);
+      if (!acc.includes(diet.toLocaleLowerCase())) {
+        acc.push(diet.toLocaleLowerCase());
       }
     });
     return acc;
   }, []);
   console.log(diets);
 
-  const tagsAndDiets = [...tags, ...diets];
+  // const tagsAndDiets = [...tags, ...diets].sort();
+  const tagsAndDiets = [...tags, ...diets].reduce(
+    (acc: Array<string>, item: string) => {
+      if (!acc.includes(item) && item !== "none") {
+        acc.push(item.toLocaleLowerCase());
+      }
+
+      return acc.sort();
+    },
+    []
+  );
+
   console.log(tagsAndDiets);
 
   // const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
@@ -215,7 +229,7 @@ const SavedRecipes = () => {
               Tags
             </Heading>
             <Box as="span">
-              {tags.map(tag => (
+              {tagsAndDiets.map(tag => (
                 <Button
                   size="sm"
                   variant={activeTag === tag ? "solid" : "outline"}
