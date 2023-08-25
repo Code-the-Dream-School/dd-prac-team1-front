@@ -110,6 +110,7 @@ const SavedRecipes = () => {
     return recipe.recipeTags.some(
       (tag: RecipeTag) => tag.tagName === activeTag
     );
+    // || recipe.recipeSpecialDiets.some((diet: any ) => diet.dietName === activeTag)
   });
 
   const showAllCategories = () => {
@@ -129,32 +130,65 @@ const SavedRecipes = () => {
     []
   );
 
-  // const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
-  //   recipe.recipeTags.forEach((tag: RecipeTag) => {
-  //     if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
-  //       acc.push(tag.tagName);
-  //     }
-  //   });
-  //   return acc;
-  // }, []);
-
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
-    const renderingTags: string[] = [];
-    recipe.recipeTags.map(tag =>
-      renderingTags.push(tag.tagName.toLocaleLowerCase())
-    );
-    recipe.recipeSpecialDiets.map(diet => {
-      if (diet !== "None") {
-        renderingTags.push(diet.toLocaleLowerCase());
+    recipe.recipeTags.forEach((tag: RecipeTag) => {
+      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
+        acc.push(tag.tagName);
       }
     });
-    const removeDuplicates = (renderingTags: any[]) => {
-      return renderingTags.filter(
-        (tag: any, index: any) => renderingTags.indexOf(tag) === index
-      );
-    };
-    return removeDuplicates(renderingTags);
+    return acc;
   }, []);
+  console.log(tags);
+  const diets = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+    recipe.recipeSpecialDiets.forEach((diet: string) => {
+      if (!acc.includes(diet)) {
+        acc.push(diet);
+      }
+    });
+    return acc;
+  }, []);
+  console.log(diets);
+
+  const tagsAndDiets = [...tags, ...diets];
+  console.log(tagsAndDiets);
+
+  // const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+  // recipe.recipeTags.forEach((tag: RecipeTag) => {
+  //   if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
+  //     acc.push(tag.tagName.toLowerCase());
+  //   }
+  // });
+  // recipe.recipeSpecialDiets.forEach((diet: string) => {
+  //   if (!acc.includes(diet)) {
+  //     acc.push(diet);
+  //   }
+  // });
+  //   return acc;
+  // }, []);
+  // const tags = recipes.map((recipe: SavedRecipe) => {
+
+  //   recipe.recipeTags.map(tag =>
+  //      const renderingTags: string[] = [];
+  //     renderingTags.push(tag.tagName.toLocaleLowerCase())
+  //   );
+  //   recipe.recipeSpecialDiets.map(diet => {
+  //     if (diet !== "None") {
+  //       renderingTags.push(diet.toLocaleLowerCase());
+  //     }
+  //   });
+  //   return renderingTags;
+  // });
+
+  // const removeDuplicates = (renderingTags: any[]) => {
+  //   return renderingTags.filter(
+  //     (tag: any, index: any) => renderingTags.indexOf(tag) === index
+  //   );
+  // };
+  // return renderingTags;
+  // };
+
+  // return removeDuplicates(renderingTags);
+  // }, []);
 
   return (
     <Container maxW="7xl">
