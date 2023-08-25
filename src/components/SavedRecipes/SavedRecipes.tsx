@@ -106,8 +106,6 @@ const SavedRecipes = () => {
     setSearchParams({ filterCategory: category });
   };
 
-  console.log(activeTag);
-
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
     return (
       recipe.recipeTags.some(

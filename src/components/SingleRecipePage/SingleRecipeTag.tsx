@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
-import { RecipeTag } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 
 type SingleRecipeTagProps = { tag: string };

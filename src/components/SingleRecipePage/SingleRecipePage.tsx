@@ -15,7 +15,7 @@ import {
   UnorderedList
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
-import { SavedRecipe } from "../../utils/types";
+import { SavedRecipe, RecipeTag } from "../../utils/types";
 import { getSingleRecipe, deleteSingleRecipe } from "../../utils/fetchData";
 import {
   ArrowBackIcon,
@@ -65,38 +65,23 @@ const SingleRecipePage = () => {
   if (recipe === null) return null;
 
   const tagsAndDiets = () => {
-    // const renderingTags = [];
     const renderingTags: string[] = [];
-    // recipe.recipeTags.forEach(tag => {
-    //   if (!renderingTags.includes(tag.tagName.toLocaleLowerCase())) {
-    //     renderingTags.push(tag.tagName.toLocaleLowerCase());
-    //   }
-    // });
-    // recipe.recipeSpecialDiets.forEach(diet => {
-    //   if (diet !== "None") {
-    //     if (!renderingTags.includes(diet.toLocaleLowerCase())) {
-    //       renderingTags.push(diet.toLocaleLowerCase());
-    //     }
-    recipe.recipeTags.map(tag =>
+    recipe.recipeTags.map((tag: RecipeTag) =>
       renderingTags.push(tag.tagName.toLocaleLowerCase())
     );
-    recipe.recipeSpecialDiets.map(diet => {
+    recipe.recipeSpecialDiets.map((diet: string) => {
       if (diet !== "None") {
         renderingTags.push(diet.toLocaleLowerCase());
       }
     });
-    //  const removeDuplicates = (renderingTags) => {
-    //   return [...new Set (renderingTags: any)]
-    //  }
-    const removeDuplicates = (renderingTags: any[]) => {
+    const removeDuplicates = (renderingTags: string[]) => {
       return renderingTags.filter(
         (tag: any, index: any) => renderingTags.indexOf(tag) === index
       );
     };
     return removeDuplicates(renderingTags);
-    // return renderingTags;
   };
-  console.log(tagsAndDiets());
+
   const nutrition = [
     {
       displayName: "Calories",
