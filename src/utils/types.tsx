@@ -140,3 +140,12 @@ export type AnimationVariants = {
     };
   };
 };
+
+export type PlannerRecipe = {
+    _id: any;
+    recipeImage: any;
+    recipeName: any;
+    id: string;
+    name: string;
+    image: string;
+};
