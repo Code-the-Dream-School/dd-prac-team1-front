@@ -186,9 +186,6 @@ const SavedRecipes = () => {
             />
           </Flex>
           <Flex flexDirection="column" marginTop="5">
-            <Heading as="h3" size="md" marginBottom="3">
-              Tags and Diets
-            </Heading>
             <Box as="span">
               {tagsAndDiets.map(tag => (
                 <Button
