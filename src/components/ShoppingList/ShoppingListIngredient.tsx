@@ -22,7 +22,7 @@ type ShoppingListIngredientProps = {
   ingredient: SavedIngredient;
   onChange: Function;
   handleEditAmount: Function;
-  handleRemoveButton: Function;
+  handleRemoveIngredient: Function;
   defaultChecked: boolean;
 };
 
@@ -30,7 +30,7 @@ const ShoppingListIngredient = ({
   ingredient,
   onChange,
   handleEditAmount,
-  handleRemoveButton,
+  handleRemoveIngredient,
   defaultChecked
 }: ShoppingListIngredientProps) => {
   const [isEditIngredient, setIsEditIngredient] = useState<string>("");
@@ -108,7 +108,9 @@ const ShoppingListIngredient = ({
                 variant="ghost"
                 id={ingredient._id}
                 icon={<GrClose />}
-                onClick={() => handleRemoveButton(ingredient._id)}
+                onClick={() =>
+                  handleRemoveIngredient(ingredient.ingredientName)
+                }
               />
             </GridItem>
           </Grid>
@@ -166,7 +168,9 @@ const ShoppingListIngredient = ({
                 size="lg"
                 variant="ghost"
                 icon={<GrClose />}
-                onClick={() => handleRemoveButton(ingredient._id)}
+                onClick={() =>
+                  handleRemoveIngredient(ingredient.ingredientName)
+                }
               />
             </GridItem>
           </Grid>

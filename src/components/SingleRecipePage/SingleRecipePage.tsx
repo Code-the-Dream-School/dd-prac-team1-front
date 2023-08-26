@@ -33,6 +33,7 @@ import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
+import { unmountComponentAtNode } from "react-dom";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -151,6 +152,7 @@ const SingleRecipePage = () => {
                     variant="outline"
                     onClick={() => {
                       navigate("/shopping-list");
+                      toast.closeAll();
                     }}>
                     Take me to the Shopping List
                   </Button>

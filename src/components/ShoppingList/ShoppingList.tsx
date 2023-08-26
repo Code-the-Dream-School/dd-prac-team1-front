@@ -13,7 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { GrAdd, GrClose, GrDown } from "react-icons/gr";
 import { TfiPrinter } from "react-icons/tfi";
-import { getIngredientsFromShoppingList } from "../../utils/fetchData";
+import {
+  getIngredientsFromShoppingList,
+  deleteAnIngredientFromShoppingList,
+  deleteAllShoppingList
+} from "../../utils/fetchData";
 import { SavedIngredient } from "../../utils/types";
 import ModalForNewIngredient from "./ModalForNewIngredient";
 import ModalForSendEmail from "./ModalForSendEmail";
@@ -85,11 +89,29 @@ const ShoppingList = () => {
     setIngredients(checked);
   };
 
-  const handleRemoveButton = (id: string) => {
-    const newIngredients = ingredients.filter(ingredient => {
-      return id !== ingredient._id;
-    });
-    setIngredients(newIngredients);
+  const handleRemoveIngredients = () => {
+    deleteAllShoppingList()
+      .then(response => {
+        console.log(response);
+        setIngredients([]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleRemoveIngredient = (ingredientName: string) => {
+    deleteAnIngredientFromShoppingList(ingredientName)
+      .then(response => {
+        console.log(response);
+        const newIngredients = ingredients.filter(ingredient => {
+          return ingredientName !== ingredient.ingredientName;
+        });
+        setIngredients(newIngredients);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const handleCheckedBox = (e: any) => {
@@ -124,7 +146,7 @@ const ShoppingList = () => {
           <Button
             variant="outline"
             bg="white"
-            onClick={() => setIngredients([])}>
+            onClick={handleRemoveIngredients}>
             Clear list
           </Button>
         </GridItem>
@@ -189,7 +211,7 @@ const ShoppingList = () => {
             ingredient={ingredient}
             onChange={handleCheckedBox}
             handleEditAmount={handleEditAmount}
-            handleRemoveButton={handleRemoveButton}
+            handleRemoveIngredient={handleRemoveIngredient}
             defaultChecked={false}
           />
         </Box>
@@ -231,7 +253,7 @@ const ShoppingList = () => {
             ingredient={ingredient}
             onChange={handleCheckedBox}
             handleEditAmount={handleEditAmount}
-            handleRemoveButton={handleRemoveButton}
+            handleRemoveIngredient={handleRemoveIngredient}
             defaultChecked={true}
           />
         </Box>
