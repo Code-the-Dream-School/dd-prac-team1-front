@@ -11,69 +11,71 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { getRecipe } from "../../utils/fetchData";
-import { PlannerRecipe } from "../../utils/types";
+import { Id, PlannerDays, PlannerRecipe } from "../../utils/types";
 
 const Planner = () => {
-  const [columns, setColumns] = useState({
-    column1: [],
-    column2: [],
-    column3: [],
-    column4: [],
-    column5: [],
-    column6: [],
-    column7: [],
-    column8: []
+  const [days, setDays] = useState<PlannerDays<PlannerRecipe>>({
+    savedRecipes: { sortOrder: 0, recipes: [] },
+    day1: { sortOrder: 1, recipes: [] },
+    day2: { sortOrder: 2, recipes: [] },
+    day3: { sortOrder: 3, recipes: [] },
+    day4: { sortOrder: 4, recipes: [] },
+    day5: { sortOrder: 5, recipes: [] },
+    day6: { sortOrder: 6, recipes: [] },
+    day7: { sortOrder: 7, recipes: [] },
   });
+
+  const daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const borderColor = "2px solid #d7da5e";
 
   useEffect(() => {
     getRecipe()
       .then(response => {
         const fetchedRecipes = response.data.recipes;
-        const column1Items = fetchedRecipes.map((recipe: PlannerRecipe) => ({
-          id: recipe._id,
-          name: recipe.recipeName,
-          image: recipe.recipeImage
+        const savedRecipesItems = fetchedRecipes.map(
+          (recipe: PlannerRecipe, index: number) => ({
+            id: recipe._id,
+            name: recipe.recipeName,
+            image: recipe.recipeImage,
+            sortOrder: index,
+          })
+        );
+        setDays(prevDays => ({
+          ...prevDays,
+          savedRecipes: { ...prevDays.savedRecipes, recipes: savedRecipesItems },
         }));
-        setColumns({
-          column1: column1Items,
-          column2: [],
-          column3: [],
-          column4: [],
-          column5: [],
-          column6: [],
-          column7: [],
-          column8: []
-        });
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
 
-  type ColumnId = keyof typeof columns;
-
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-
-    const sourceColumnId: ColumnId = result.source.droppableId as ColumnId;
-    const destinationColumnId: ColumnId = result.destination
-      .droppableId as ColumnId;
-    console.log(typeof columns);
-    const sourceColumn = columns[sourceColumnId];
-    const destinationColumn = columns[destinationColumnId];
-
-    const movedItem = sourceColumn.splice(result.source.index, 1)[0];
-
-    if (destinationColumnId !== "column1" && destinationColumn.length >= 3) {
-      columns.column1.push(movedItem);
+  
+    const sourceDayId: Id = result.source.droppableId;
+    const destinationDayId: Id = result.destination.droppableId;
+    const sourceDay = days[sourceDayId].recipes;
+    const destinationDay = days[destinationDayId].recipes;
+  
+    const movedItem = sourceDay.splice(result.source.index, 1)[0];
+  
+    if (
+      destinationDayId !== "savedRecipes" &&
+      destinationDay.length >= 3
+    ) {
+      days.savedRecipes.recipes.push(movedItem);
     } else {
-      destinationColumn.splice(result.destination.index, 0, movedItem);
+      destinationDay.splice(result.destination.index, 0, movedItem);
     }
-
-    setColumns({
-      ...columns,
-      [sourceColumnId]: sourceColumn,
-      [destinationColumnId]: destinationColumn
+  
+    setDays({
+      ...days,
+      [sourceDayId]: { ...days[sourceDayId], recipes: sourceDay },
+      [destinationDayId]: {
+        ...days[destinationDayId],
+        recipes: destinationDay,
+      },
     });
   };
 
@@ -91,7 +93,7 @@ const Planner = () => {
         gridAutoRows="1fr">
         <GridItem colSpan={{ base: 1, md: 8 }} bg="white" p="3"></GridItem>
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
-          <Text>calender and buttons space</Text>
+          <Text>calendar and buttons space</Text>
         </GridItem>
         <GridItem
           colSpan={{ base: 1, md: 1 }}
@@ -104,7 +106,7 @@ const Planner = () => {
           </Center>
         </GridItem>
 
-        {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
+        {daysOfTheWeek.map(
           (weekday, index) => (
             <GridItem
               key={index}
@@ -127,23 +129,25 @@ const Planner = () => {
         gap="16px"
         padding="16px"
         bg="lightGray">
-        {Object.keys(columns).map((columnId, index) => (
-          <Droppable key={columnId} droppableId={columnId} direction="vertical">
+        {Object.keys(days)
+        .sort((a, b) => days[a].sortOrder - days[b].sortOrder) 
+        .map((dayId, index) => (
+          <Droppable key={dayId} droppableId={dayId} direction="vertical">
             {provided => (
               <GridItem
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 colSpan={{ base: 1, md: 1 }}
                 height="60vh"
-                overflowY={columnId === "column1" ? "scroll" : "hidden"}
+                overflowY={dayId === "savedRecipes" ? "scroll" : "hidden"}
                 borderRight={
-                  index !== 0 && index !== 7 ? "2px solid #d7da5e" : "none"
+                  index !== 0 && index !== 7 ? borderColor : "none"
                 }>
-                {columns[columnId as keyof typeof columns]
+                {days[dayId].recipes
                   .slice(
                     0,
-                    columnId === "column1"
-                      ? columns[columnId as keyof typeof columns].length
+                    dayId === "savedRecipes"
+                      ? days[dayId].recipes.length
                       : 3
                   )
                   .map((item: PlannerRecipe, index: number) => (
@@ -159,12 +163,12 @@ const Planner = () => {
                           {...providedDraggable.draggableProps.style}
                           opacity={snapshot.isDragging ? 0.7 : 1}
                           transition="opacity 0.2s ease"
-                          border="2px solid #d7da5e"
+                          border={borderColor}
                           borderRadius="5px"
                           padding="0.5rem"
-                          mt={columnId !== "column1" ? "2.2rem" : "0"}
-                          mb={columnId !== "column1" ? "2rem" : "0.2rem"}
-                          mr={columnId !== "column1" ? "1rem" : "1.2rem"}
+                          mt={dayId !== "savedRecipes" ? "2.2rem" : "0"}
+                          mb={dayId !== "savedRecipes" ? "2rem" : "0.2rem"}
+                          mr={dayId !== "savedRecipes" ? "1rem" : "1.2rem"}
                           width="rem"
                           height="140px">
                           <Image
@@ -197,4 +201,5 @@ const Planner = () => {
     </DragDropContext>
   );
 };
+
 export default Planner;

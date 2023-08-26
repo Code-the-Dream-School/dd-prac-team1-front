@@ -142,10 +142,20 @@ export type AnimationVariants = {
 };
 
 export type PlannerRecipe = {
-    _id: any;
-    recipeImage: any;
-    recipeName: any;
-    id: string;
-    name: string;
-    image: string;
+  id: string;
+  name: string;
+  image: string;
+  _id: string;
+  recipeImage: string;
+  recipeName: string;
+  sortOrder: number;
+};
+
+export type Id = string;
+
+export type PlannerDays<PlannerRecipe> = {
+  [index: string]: { 
+    sortOrder: number; 
+    recipes: PlannerRecipe[] 
+  };
 };
