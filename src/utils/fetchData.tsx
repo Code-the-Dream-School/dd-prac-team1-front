@@ -134,3 +134,29 @@ export const deleteSingleRecipe = (recipeId: string) => {
     }
   });
 };
+
+export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.post(
+    `http://localhost:3000/api/v1/shopping-list/${recipeId}`,
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const getIngredientsFromShoppingList = () => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.get("http://localhost:3000/api/v1/shopping-list", {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};

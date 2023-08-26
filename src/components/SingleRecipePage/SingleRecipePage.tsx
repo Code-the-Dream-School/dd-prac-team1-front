@@ -28,11 +28,17 @@ import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
+import ModalForServings from "../ShoppingList/ModalForServings";
+import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const { isOpen, onToggle } = useDisclosure();
+  const [servingSize, setServingSize] = useState(0);
+  const [sendingIngredients, setSendingIngredients] = useState({});
+  // const [openModal, setOpenModal] = useState(false);
+  const { isOpen: openNutrition, onToggle } = useDisclosure();
+  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -42,6 +48,8 @@ const SingleRecipePage = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
+        setServingSize(response.data.recipeServings);
+        setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
         console.log(error);
@@ -62,7 +70,63 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   };
+
   if (recipe === null) return null;
+
+  const valueOfServings = (e: any) => {
+    console.log(e);
+    // setRecipe({
+    //   ...recipe,
+    //   recipeServings: Number(e.target.value)
+    // });
+    setServingSize(Number(e.target.value));
+  };
+  console.log(servingSize);
+  const CalculateServings = () => {
+    if (recipe.recipeServings === servingSize) {
+      return recipe.recipeIngredients;
+    }
+    if (recipe.recipeServings === 0) {
+      return recipe.recipeIngredients.map(ingredient => {
+        console.log(ingredient);
+        return {
+          ...ingredient,
+          ingredientAmount: ingredient.ingredientAmount * servingSize
+        };
+      });
+    } else {
+      return recipe.recipeIngredients.map(ingredient => {
+        console.log(ingredient);
+        return {
+          ...ingredient,
+          ingredientAmount:
+            (ingredient.ingredientAmount / recipe.recipeServings) * servingSize
+        };
+      });
+    }
+  };
+
+  const sendIngredients = () => {
+    console.log(recipe);
+    if (recipeId === undefined) return;
+    console.log(recipeId);
+    saveRecipeIngredientsToShoppingList(recipeId)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const saveIngredientsToShoppingList = () => {
+    CalculateServings();
+
+    localStorage.setItem(
+      "ingredient",
+      JSON.stringify(recipe.recipeIngredients)
+    );
+  };
+
   const nutrition = [
     {
       displayName: "Calories",
@@ -131,11 +195,13 @@ const SingleRecipePage = () => {
             {`${recipe.recipeComplexityLevel}`}
             &nbsp;&nbsp;
           </Text>
-          <Text>
-            <b>Servings:</b>&nbsp;
-            {`${recipe.recipeServings}`}
-            &nbsp;&nbsp;
-          </Text>
+          {recipe.recipeServings > 0 && (
+            <Text>
+              <b>Servings:</b>&nbsp;
+              {`${recipe.recipeServings}`}
+              &nbsp;&nbsp;
+            </Text>
+          )}
         </GridItem>
         <GridItem colSpan={1} w="100%" position="relative">
           <Flex
@@ -195,9 +261,19 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  onClick={() => {
-                    navigate("/shopping-list");
+                  //onClick={onOpen}
+                  onClick={sendIngredients}
+                />
+                <ModalForServings
+                  isOpen={openModal}
+                  onClose={() => {
+                    onClose();
+                    setServingSize(recipe.recipeServings);
                   }}
+                  value={servingSize}
+                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
+                  valueOfServings={valueOfServings}
+                  // recipe={recipe}
                 />
                 <IconButton
                   size="lg"
@@ -241,20 +317,21 @@ const SingleRecipePage = () => {
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
             </Box>
-            {recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+            {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
-              (recipe.recipeNutritionInfo.NutritionInfoProtein !== 0 && (
-                <Box marginTop="5">
-                  <Flex onClick={onToggle} cursor="pointer">
-                    <Heading as="h3" size="md" marginBottom="3">
-                      Nutrition Information
-                    </Heading>
-                    <Box as="span">
-                      <Icon as={ChevronDownIcon} />
-                    </Box>
-                  </Flex>
-                  <Collapse in={isOpen} animateOpacity>
+              recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
+              <Box marginTop="5">
+                <Flex onClick={onToggle} cursor="pointer">
+                  <Heading as="h3" size="md" marginBottom="3">
+                    Nutrition Information
+                  </Heading>
+                  <Box as="span">
+                    <Icon as={ChevronDownIcon} />
+                  </Box>
+                </Flex>
+                <Collapse in={openNutrition} animateOpacity>
+                  <Flex>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <Box key={index}>
                         {content > 0 && (
@@ -265,9 +342,10 @@ const SingleRecipePage = () => {
                         )}
                       </Box>
                     ))}
-                  </Collapse>
-                </Box>
-              ))}
+                  </Flex>
+                </Collapse>
+              </Box>
+            )}
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">

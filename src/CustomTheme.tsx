@@ -1,4 +1,5 @@
-import {  extendTheme } from "@chakra-ui/react";
+import { cardTheme } from "./Card";
+import { extendTheme } from "@chakra-ui/react";
 
 //extend the theme
 const theme = extendTheme({
@@ -16,14 +17,16 @@ const theme = extendTheme({
   },
 
   components: {
+    Card: cardTheme,
     Button: {
       variants: {
         solid: {
-          bg: "green",
+          bg: "green"
         },
         outline: {
           bg: "brandGray",
-        },
+          borderColor: "green"
+        }
       }
     },
 
@@ -47,7 +50,7 @@ const theme = extendTheme({
             "borderColor": "green",
             "borderRadius": "5px",
             ":focus": {
-              borderColor: "green",
+              borderColor: "green"
             }
           }
         },
@@ -57,10 +60,10 @@ const theme = extendTheme({
             "borderColor": "green",
             ":focus": {
               borderColor: "green",
-              bg: "brandGray",
+              bg: "brandGray"
             }
           }
-        },
+        }
       }
     },
     Select: {
@@ -83,6 +86,14 @@ const theme = extendTheme({
       variants: {
         outline: {
           borderColor: "green"
+        }
+      }
+    },
+    Modal: {
+      variants: {
+        outline: {
+          borderColor: "green",
+          bg: "brandGray"
         }
       }
     }
