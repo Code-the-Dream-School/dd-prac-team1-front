@@ -114,9 +114,10 @@ const ShoppingList = () => {
         gap="2"
         h="20"
         alignItems="center">
-        <GridItem colSpan={1} w="100%"></GridItem>
-        <GridItem colSpan={8} w="100%">
-          <Heading fontSize="2xl">Shopping list</Heading>
+        <GridItem colSpan={9} w="100%">
+          <Heading ml="2" fontSize="2xl">
+            Shopping List
+          </Heading>
         </GridItem>
         <GridItem colSpan={1} w="100%" mt="5">
           <Button

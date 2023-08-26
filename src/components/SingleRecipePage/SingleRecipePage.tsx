@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
+  Button,
+  Center,
   Collapse,
   Container,
   Icon,
@@ -12,7 +14,8 @@ import {
   Heading,
   Text,
   useDisclosure,
-  UnorderedList
+  UnorderedList,
+  useToast
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SavedRecipe } from "../../utils/types";
@@ -42,6 +45,7 @@ const SingleRecipePage = () => {
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     if (recipeId === undefined) return;
@@ -113,8 +117,44 @@ const SingleRecipePage = () => {
     saveRecipeIngredientsToShoppingList(recipeId)
       .then(response => {
         console.log(response);
+        toast({
+          title: "",
+          description: "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          render: () => (
+            <>
+              <Box p="3" bg="green">
+                <Flex flexDirection="column">
+                  Your recipe was added to the shopping list
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      navigate("/shopping-list");
+                    }}>
+                    Take me to the Shopping List
+                  </Button>
+                </Flex>
+              </Box>
+            </>
+          )
+        });
       })
       .catch(error => {
+        toast({
+          title: "Error",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          render: () => (
+            <Box p="3" bg="red">
+              {error.response.data.msg}
+            </Box>
+          )
+        });
         console.log(error);
       });
   };
