@@ -21,8 +21,8 @@ export type AIRecipe = {
 };
 
 export type SavedIngredient = {
-  ingredientAmount: number;
   ingredientName: string;
+  ingredientAmount: number;
   ingredientUnit: string;
   _id?: string;
 };

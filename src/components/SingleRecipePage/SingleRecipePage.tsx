@@ -28,11 +28,17 @@ import { IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
+import ModalForServings from "../ShoppingList/ModalForServings";
+import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const { isOpen, onToggle } = useDisclosure();
+  const [servingSize, setServingSize] = useState(0);
+  const [sendingIngredients, setSendingIngredients] = useState({});
+  // const [openModal, setOpenModal] = useState(false);
+  const { isOpen: openNutrition, onToggle } = useDisclosure();
+  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -42,6 +48,8 @@ const SingleRecipePage = () => {
     getSingleRecipe(recipeId)
       .then(response => {
         setRecipe(response.data);
+        setServingSize(response.data.recipeServings);
+        setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
         console.log(error);
@@ -62,6 +70,7 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   };
+
   if (recipe === null) return null;
 
   const tagsAndDiets = () => {
@@ -80,6 +89,60 @@ const SingleRecipePage = () => {
       );
     };
     return removeDuplicates(renderingTags);
+  };
+
+  const valueOfServings = (e: any) => {
+    console.log(e);
+    // setRecipe({
+    //   ...recipe,
+    //   recipeServings: Number(e.target.value)
+    // });
+    setServingSize(Number(e.target.value));
+  };
+  console.log(servingSize);
+  const CalculateServings = () => {
+    if (recipe.recipeServings === servingSize) {
+      return recipe.recipeIngredients;
+    }
+    if (recipe.recipeServings === 0) {
+      return recipe.recipeIngredients.map(ingredient => {
+        console.log(ingredient);
+        return {
+          ...ingredient,
+          ingredientAmount: ingredient.ingredientAmount * servingSize
+        };
+      });
+    } else {
+      return recipe.recipeIngredients.map(ingredient => {
+        console.log(ingredient);
+        return {
+          ...ingredient,
+          ingredientAmount:
+            (ingredient.ingredientAmount / recipe.recipeServings) * servingSize
+        };
+      });
+    }
+  };
+
+  const sendIngredients = () => {
+    console.log(recipe);
+    if (recipeId === undefined) return;
+    console.log(recipeId);
+    saveRecipeIngredientsToShoppingList(recipeId)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const saveIngredientsToShoppingList = () => {
+    CalculateServings();
+
+    localStorage.setItem(
+      "ingredient",
+      JSON.stringify(recipe.recipeIngredients)
+    );
   };
 
   const nutrition = [
@@ -216,9 +279,19 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  onClick={() => {
-                    navigate("/shopping-list");
+                  //onClick={onOpen}
+                  onClick={sendIngredients}
+                />
+                <ModalForServings
+                  isOpen={openModal}
+                  onClose={() => {
+                    onClose();
+                    setServingSize(recipe.recipeServings);
                   }}
+                  value={servingSize}
+                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
+                  valueOfServings={valueOfServings}
+                  // recipe={recipe}
                 />
                 <IconButton
                   size="lg"
@@ -275,7 +348,7 @@ const SingleRecipePage = () => {
                     <Icon as={ChevronDownIcon} />
                   </Box>
                 </Flex>
-                <Collapse in={isOpen} animateOpacity>
+                <Collapse in={openNutrition} animateOpacity>
                   <Flex>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <Box key={index}>
