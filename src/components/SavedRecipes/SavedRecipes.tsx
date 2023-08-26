@@ -18,7 +18,9 @@ import { useSearchParams } from "react-router-dom";
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState<Array<SavedRecipe>>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<Array<SavedRecipe>>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<Array<SavedRecipe>>(
+    []
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<string>("");
   const [filterAlert, setFilterAlert] = useState<boolean>(false);
@@ -30,46 +32,49 @@ const SavedRecipes = () => {
   const filteredCategory = searchParams.get("filterCategory") as string;
 
   const handleRecipeSearch = useCallback(
-    (searchQueryParam: string, filteredCategory:string) => {
+    (searchQueryParam: string, filteredCategory: string) => {
       if (searchQueryParam === null) {
         setFilterAlert(false);
-        return
+        return;
       }
 
       const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
-        const searchQueryParamsParsed = searchQueryParam.trim().toLowerCase().split(" ");
-      
+        const searchQueryParamsParsed = searchQueryParam
+          .trim()
+          .toLowerCase()
+          .split(" ");
+
         const nameMatch = searchQueryParamsParsed.every(item =>
           recipe.recipeName.toLowerCase().includes(item)
         );
-      
+
         const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
           searchQueryParamsParsed.every(item =>
             ingredient.ingredientName.toLowerCase().includes(item)
           )
         );
-      
+
         const tagMatch = recipe.recipeTags.some(tag => {
           const tagWords = tag.tagName.toLowerCase().split(" ");
           return searchQueryParamsParsed.every(item => tagWords.includes(item));
         });
-      
+
         return nameMatch || ingredientMatch || tagMatch;
       });
 
-        if (filteredCategory) {
-          setActiveCategory(filteredCategory);
-          const filteredCategorizedRecipes = searchedRecipes.filter(
-            (recipe: SavedRecipe) => recipe.recipeCategory === filteredCategory
-          )
-          setFilteredRecipes(filteredCategorizedRecipes);
-          setFilterAlert(true);
-        } else {
-          setFilteredRecipes(searchedRecipes);
-          setActiveCategory("");
-        }
-        setActiveTag("");
-        setShow(searchedRecipes.length > 0);
+      if (filteredCategory) {
+        setActiveCategory(filteredCategory);
+        const filteredCategorizedRecipes = searchedRecipes.filter(
+          (recipe: SavedRecipe) => recipe.recipeCategory === filteredCategory
+        );
+        setFilteredRecipes(filteredCategorizedRecipes);
+        setFilterAlert(true);
+      } else {
+        setFilteredRecipes(searchedRecipes);
+        setActiveCategory("");
+      }
+      setActiveTag("");
+      setShow(searchedRecipes.length > 0);
     },
     [recipes]
   );
@@ -114,27 +119,31 @@ const SavedRecipes = () => {
     }
   }, [searchQueryParam, recipes, handleRecipeSearch, filteredCategory]);
 
-
-  const chooseCategory = useCallback((category: string) => {
-    if (searchQueryParam) {
-      const filteredCategorizedRecipes = filteredRecipes.filter(
-        (recipe: SavedRecipe) => recipe.recipeCategory === category
-      );
-      const existingSearchParams = new URLSearchParams(searchParams.toString());
-      existingSearchParams.set("filterCategory", category);
-      setSearchParams(existingSearchParams);
-      setFilteredRecipes(filteredCategorizedRecipes);
-    }  else {
-      setSearchParams({ ...searchParams, filterCategory: category });
-      const categorizedRecipes = recipes.filter(
-        (recipe: SavedRecipe) => recipe.recipeCategory === category
-      );
-      setFilteredRecipes(categorizedRecipes);
-    }
-    setActiveCategory(category);
-    setShow(true);
-    setActiveTag("");
-  }, [filteredRecipes, searchParams, recipes, searchQueryParam, setSearchParams])
+  const chooseCategory = useCallback(
+    (category: string) => {
+      if (searchQueryParam) {
+        const filteredCategorizedRecipes = filteredRecipes.filter(
+          (recipe: SavedRecipe) => recipe.recipeCategory === category
+        );
+        const existingSearchParams = new URLSearchParams(
+          searchParams.toString()
+        );
+        existingSearchParams.set("filterCategory", category);
+        setSearchParams(existingSearchParams);
+        setFilteredRecipes(filteredCategorizedRecipes);
+      } else {
+        setSearchParams({ ...searchParams, filterCategory: category });
+        const categorizedRecipes = recipes.filter(
+          (recipe: SavedRecipe) => recipe.recipeCategory === category
+        );
+        setFilteredRecipes(categorizedRecipes);
+      }
+      setActiveCategory(category);
+      setShow(true);
+      setActiveTag("");
+    },
+    [filteredRecipes, searchParams, recipes, searchQueryParam, setSearchParams]
+  );
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
     return recipe.recipeTags.some(
@@ -158,7 +167,9 @@ const SavedRecipes = () => {
         acc.push(recipe.recipeCategory);
       }
       return acc;
-    }, []);
+    },
+    []
+  );
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeTags.forEach((tag: RecipeTag) => {
@@ -181,12 +192,16 @@ const SavedRecipes = () => {
       </Grid>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <GridItem colSpan={1} w="100%">
-          {filterAlert && 
+          {filterAlert && (
             <Box>
-              <Heading as="h5" size="sm" marginBottom="3">You may have "{searchQueryParam}" in these categories:</Heading>
-              <Text fontSize="xs" marginBottom="3">Press "all categories" to filter through all recipes again.</Text>
+              <Heading as="h5" size="sm" marginBottom="3">
+                You may have "{searchQueryParam}" in these categories:
+              </Heading>
+              <Text fontSize="xs" marginBottom="3">
+                Press "all categories" to filter through all recipes again.
+              </Text>
             </Box>
-            }
+          )}
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
@@ -219,10 +234,23 @@ const SavedRecipes = () => {
         </GridItem>
         {show || isLoading ? (
           <GridItem colSpan={2} w="100%">
-            {activeTag ? (
-              <SavedRecipesList recipes={filteredByTag} />
+            {searchQueryParam &&
+            activeCategory &&
+            filteredRecipes.length === 0 ? (
+              <Center h="300">
+                <Text fontSize="3xl">
+                  No results for "{searchQueryParam}" in the "{activeCategory}"
+                  category
+                </Text>
+              </Center>
             ) : (
-              <SavedRecipesList recipes={filteredRecipes} />
+              <>
+                {activeTag ? (
+                  <SavedRecipesList recipes={filteredByTag} />
+                ) : (
+                  <SavedRecipesList recipes={filteredRecipes} />
+                )}
+              </>
             )}
           </GridItem>
         ) : (
@@ -230,8 +258,8 @@ const SavedRecipes = () => {
             colSpan={2}
             w="100%"
             textAlign="center"
-            alignItems={"center"}
-            h={"10rem"}>
+            alignItems="center"
+            h="10rem">
             <Center h="300">
               <Text fontSize="3xl">No results for "{searchQueryParam}"</Text>
             </Center>
