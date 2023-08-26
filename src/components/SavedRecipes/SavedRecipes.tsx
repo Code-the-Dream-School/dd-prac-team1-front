@@ -183,16 +183,14 @@ const SavedRecipes = () => {
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={1} w="100%" h="100"></GridItem>
-        <GridItem colSpan={2} w="100%" h="100">
-          <Center h="100">
+        <GridItem colSpan={1} w="100%" h="70"></GridItem>
+        <GridItem colSpan={2} w="100%" h="70">
+          <Center h="150">
             <Text fontSize="3xl">SAVED RECIPES</Text>
           </Center>
         </GridItem>
-      </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={1} w="100%">
-          {filterAlert && (
+        <GridItem colSpan={1} w="100%" h="55">
+        {filterAlert && (
             <Box>
               <Heading as="h5" size="sm" marginBottom="3">
                 You may have "{searchQueryParam}" in these categories:
@@ -202,6 +200,12 @@ const SavedRecipes = () => {
               </Text>
             </Box>
           )}
+        </GridItem>
+        <GridItem colSpan={2}>
+        </GridItem>
+      </Grid>
+      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <GridItem colSpan={1} w="100%">
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
