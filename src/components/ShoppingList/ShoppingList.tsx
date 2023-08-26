@@ -112,6 +112,7 @@ const ShoppingList = () => {
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap="2"
+        mt="5"
         h="20"
         alignItems="center">
         <GridItem colSpan={9} w="100%">
@@ -119,7 +120,7 @@ const ShoppingList = () => {
             Shopping List
           </Heading>
         </GridItem>
-        <GridItem colSpan={1} w="100%" mt="5">
+        <GridItem colSpan={1} w="100%">
           <Button
             variant="outline"
             bg="white"
@@ -127,12 +128,12 @@ const ShoppingList = () => {
             Clear list
           </Button>
         </GridItem>
-        <GridItem colSpan={1} w="100%" mt="5">
+        <GridItem colSpan={1} w="100%">
           <Button variant="outline" bg="white" onClick={onOpenSendEmail}>
             Share
           </Button>
         </GridItem>
-        <GridItem colSpan={1} w="100%" mt="5">
+        <GridItem colSpan={1} w="100%">
           <IconButton
             size="lg"
             variant="ghost"
