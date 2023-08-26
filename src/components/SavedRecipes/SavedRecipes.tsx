@@ -146,8 +146,13 @@ const SavedRecipes = () => {
   );
 
   const filteredByTag = recipes.filter((recipe: SavedRecipe) => {
-    return recipe.recipeTags.some(
-      (tag: RecipeTag) => tag.tagName === activeTag
+    return (
+      recipe.recipeTags.some(
+        (tag: RecipeTag) => tag.tagName.toLocaleLowerCase() === activeTag
+      ) ||
+      recipe.recipeSpecialDiets.some(
+        (diet: string) => diet.toLocaleLowerCase() === activeTag
+      )
     );
   });
 
@@ -173,12 +178,34 @@ const SavedRecipes = () => {
 
   const tags = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
     recipe.recipeTags.forEach((tag: RecipeTag) => {
-      if (!acc.includes(tag.tagName) && !tag.tagName.includes("--")) {
-        acc.push(tag.tagName);
+      if (
+        !acc.includes(tag.tagName.toLocaleLowerCase()) &&
+        !tag.tagName.includes("--")
+      ) {
+        acc.push(tag.tagName.toLocaleLowerCase());
       }
     });
     return acc;
   }, []);
+
+  const diets = recipes.reduce((acc: Array<string>, recipe: SavedRecipe) => {
+    recipe.recipeSpecialDiets.forEach((diet: string) => {
+      if (!acc.includes(diet.toLocaleLowerCase())) {
+        acc.push(diet.toLocaleLowerCase());
+      }
+    });
+    return acc;
+  }, []);
+
+  const tagsAndDiets = [...tags, ...diets].reduce(
+    (acc: Array<string>, item: string) => {
+      if (!acc.includes(item) && item !== "none") {
+        acc.push(item.toLocaleLowerCase());
+      }
+      return acc.sort();
+    },
+    []
+  );
 
   return (
     <Container maxW="7xl">
@@ -190,22 +217,21 @@ const SavedRecipes = () => {
           </Center>
         </GridItem>
         <GridItem colSpan={1} w="100%" h="55">
-        {filterAlert && (
+          {filterAlert && (
             <Box>
-              <Heading as="h5" size="sm" marginBottom="3">
+              <Heading as="h5" size="sm" mb="3">
                 You may have "{searchQueryParam}" in these categories:
               </Heading>
-              <Text fontSize="xs" marginBottom="3">
+              <Text fontSize="xs">
                 Press "all categories" to filter through all recipes again.
               </Text>
             </Box>
           )}
         </GridItem>
-        <GridItem colSpan={2}>
-        </GridItem>
+        <GridItem colSpan={2}></GridItem>
       </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={1} w="100%">
+      <Grid templateColumns="repeat(3, 1fr)" gap="6">
+        <GridItem colSpan={1} w="100%" mt="3">
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
@@ -215,11 +241,8 @@ const SavedRecipes = () => {
             />
           </Flex>
           <Flex flexDirection="column" marginTop="5">
-            <Heading as="h3" size="md" marginBottom="3">
-              Tags
-            </Heading>
             <Box as="span">
-              {tags.map(tag => (
+              {tagsAndDiets.map(tag => (
                 <Button
                   size="sm"
                   variant={activeTag === tag ? "solid" : "outline"}
