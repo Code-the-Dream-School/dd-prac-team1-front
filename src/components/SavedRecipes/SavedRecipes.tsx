@@ -219,10 +219,10 @@ const SavedRecipes = () => {
         <GridItem colSpan={1} w="100%" h="55">
           {filterAlert && (
             <Box>
-              <Heading as="h5" size="sm" marginBottom="3">
+              <Heading as="h5" size="sm" mb="3">
                 You may have "{searchQueryParam}" in these categories:
               </Heading>
-              <Text fontSize="xs" marginBottom="3">
+              <Text fontSize="xs">
                 Press "all categories" to filter through all recipes again.
               </Text>
             </Box>
@@ -230,8 +230,8 @@ const SavedRecipes = () => {
         </GridItem>
         <GridItem colSpan={2}></GridItem>
       </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={1} w="100%">
+      <Grid templateColumns="repeat(3, 1fr)" gap="6">
+        <GridItem colSpan={1} w="100%" mt="3">
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
