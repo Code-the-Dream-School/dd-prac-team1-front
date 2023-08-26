@@ -455,7 +455,7 @@ const RecipeManual = () => {
 
                 <GridItem colSpan={{ base: 1, md: 3 }}> 
                 <Flex h="40px" justifyContent="start"  alignItems="center">
-                    <Text>PROREIN</Text>
+                    <Text>PROTEIN</Text>
                 </Flex>
                 </GridItem>
                 <GridItem colSpan={{ base: 1, md: 2 }}> 

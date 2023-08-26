@@ -1,4 +1,5 @@
-import { Container, Grid } from "@chakra-ui/react";
+import React from "react";
+import {  Container, Grid } from "@chakra-ui/react";
 
 
 const OurTeam = () => {
