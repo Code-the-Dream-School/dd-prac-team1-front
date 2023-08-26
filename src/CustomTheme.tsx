@@ -24,7 +24,8 @@ const theme = extendTheme({
           bg: "green"
         },
         outline: {
-          bg: "brandGray"
+          bg: "brandGray",
+          borderColor: "green"
         }
       }
     },
@@ -85,6 +86,14 @@ const theme = extendTheme({
       variants: {
         outline: {
           borderColor: "green"
+        }
+      }
+    },
+    Modal: {
+      variants: {
+        outline: {
+          borderColor: "green",
+          bg: "brandGray"
         }
       }
     }
