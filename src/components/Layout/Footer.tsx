@@ -1,4 +1,7 @@
 import {
+  Stack,
+  HStack,
+  Link,
   Box,
   Flex,
   Text,
@@ -15,27 +18,30 @@ const Footer = () => {
     <Box
       as="footer"
       py={4}
-      height={{ base: "auto", md: "70px" }}
+      height={{ base: "auto", md: "80px" }}
       width="100%"
       display="flex"
       flexDirection={{ base: "column", md: "row" }}
       justifyContent="center"
-      // alignItems="center"
+      alignItems="center"
       marginTop="auto"
       bg="brandGray"
       color="black">
-      <Container maxW="7xl">
-        <Flex
-          justify="space-between"
-          align={{ base: "center", md: "flex-start" }}
-          flexWrap="wrap">
-          <Text
-            pl={{ base: 0, md: 0 }}
-            mb={{ base: 2, md: 0 }}
-            textAlign="center">
-            &copy; 2023 Olivier Meal Planner
-          </Text>
+      
+      <Stack
+      maxW="7xl"
+      marginInline="auto"
+      p={5}
+      spacing={{ base: 4, md: 0 }}
+      justifyContent="space-between"
+      alignItems="center"
+      direction={{ base: 'column', md: 'row' }}
+      > 
+        <Text>
+          &copy; 2023 Olivier Meal Planner
+        </Text>
 
+      
           <Box
             as="a"
             href="/team"
@@ -48,7 +54,7 @@ const Footer = () => {
                 borderBottomWidth: "2px",
                 borderBottomStyle: "solid"
               }}
-              fontSize={{ base: "sm", md: "md" }}>
+              fontSize={{ base: "sm", md: "sm" }}>
               MEET THE TEAM
             </Text>
           </Box>
@@ -65,15 +71,12 @@ const Footer = () => {
                 borderBottomWidth: "2px",
                 borderBottomStyle: "solid"
               }}
-              fontSize={{ base: "sm", md: "md" }}>
+              fontSize="sm">
               CONTACT
             </Text>
           </Box>
-        </Flex>
-
+        
         <Flex
-          // justify={{ base: "center", md: "flex-end" }}
-          alignItems={{ base: "center", md: "flex-end" }}
           mt={{ base: 2, md: 0 }}>
           <IconButton
             as="a"
@@ -118,7 +121,7 @@ const Footer = () => {
             }}
           />
         </Flex>
-      </Container>
+      </Stack>
     </Box>
   );
 };

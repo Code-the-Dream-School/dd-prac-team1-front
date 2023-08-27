@@ -51,7 +51,7 @@ root.render(
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </Box>
-        <Footer />
+        <Footer/>
       </BrowserRouter>
     </ChakraProvider>
   </Box>

@@ -5,7 +5,7 @@ const teamMembers = [
   {
     name: "Anna Pestova",
     role: "Front-end team",
-    imageUrl: "/images/AnnaPestova_edit.png", 
+    imageUrl: "/images/AnnaPestova.png", 
     bio: "A Frontend Developer (React, JavaScript). Passionate to math, logic, and order, trying to implement it in the code. Eager to learn and improve skills. Code is a puzzle that has to be solved.",
     githubUrl: "https://github.com/AnnaPestova1"
   },
@@ -21,7 +21,7 @@ const teamMembers = [
     role: "Back-end team",
     imageUrl: "/images/kitten.png",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    githubUrl: "https://github.com/AigulYe"
+    githubUrl: "https://github.com/AigulY"
   },
   {
     name: "Elena Cherpakova",
@@ -62,7 +62,7 @@ const teamMembers = [
   {
     name: "Ekaterina Bondareva",
     role: "Mentor",
-    imageUrl: "/images/kitten.png",
+    imageUrl: "/images/EkaterinaBondareva.png",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     githubUrl: "https://github.com/Ekaterina-Bondareva"
   },
@@ -100,17 +100,17 @@ const OurTeam: React.FC = () => {
                   <img
                     src={member.imageUrl}
                     alt={member.name}
-                    style={{
-                      objectFit: "cover",
-                      width: "100%"
+                    // style={{
+                    //   objectFit: "cover",
+                      // width: "100%"
                       // height: "100%",
-                    }}
+                    // }}
                   />
                 </Box>
                 <Heading size="md" mb={2} textAlign="center">
                   {member.name}
                 </Heading>
-                <Text fontSize="sm" textAlign="center">
+                <Text fontSize="sm" fontStyle="italic" textAlign="center" >
                   {member.role}
                 </Text>
                 <Text fontSize="sm" mt={2} textAlign="justify">
