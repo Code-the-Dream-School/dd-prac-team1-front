@@ -8,7 +8,8 @@ import {
   Heading,
   Grid,
   GridItem,
-  Text
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import { SavedRecipe, RecipeTag } from "../../utils/types";
 import { getRecipe } from "../../utils/fetchData";
@@ -30,6 +31,7 @@ const SavedRecipes = () => {
   const searchQueryParam = searchParams.get("search") as string;
   const filteredTag = searchParams.get("filterTag") as string | null;
   const filteredCategory = searchParams.get("filterCategory") as string;
+  const toast = useToast();
 
   const handleRecipeSearch = useCallback(
     (searchQueryParam: string, filteredCategory: string) => {
@@ -109,6 +111,20 @@ const SavedRecipes = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQueryParam]);

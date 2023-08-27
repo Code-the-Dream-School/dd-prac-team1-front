@@ -88,7 +88,11 @@ const RecipeManual = () => {
         toast({
           title: "Error",
           description: `${
-            error?.response?.data || error.message || "unknown error"
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
           }`,
           status: "error",
           duration: 4000,

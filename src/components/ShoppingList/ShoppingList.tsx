@@ -9,7 +9,8 @@ import {
   GridItem,
   Heading,
   Text,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 import { GrAdd, GrClose, GrDown } from "react-icons/gr";
 import { TfiPrinter } from "react-icons/tfi";
@@ -34,6 +35,8 @@ const ShoppingList = () => {
     onOpen: onOpenSendEmail,
     onClose: onCloseSendEmail
   } = useDisclosure();
+  const toast = useToast();
+
   useEffect(() => {
     getIngredientsFromShoppingList()
       .then(response => {
@@ -42,6 +45,20 @@ const ShoppingList = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

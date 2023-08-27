@@ -38,12 +38,11 @@ const SearchAI = () => {
         setIsLoading(false);
       })
       .catch(error => {
+        console.log(error);
         if (error.message.includes("500")) {
           setError(true);
           setIsLoading(false);
-          setErrorMessage(
-            `${error.response.status} - ${error.response.data.error}`
-          );
+          setErrorMessage(`${error.response.status} - ${error.response.data}`);
           setRecipe(null);
         } else {
           setError(true);
