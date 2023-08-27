@@ -77,16 +77,6 @@ const Register = () => {
         if (error.response.data.msg.includes("requests")) {
           setErrorPassword(error.response.data.msg);
         }
-        if (error) {
-          toast({
-            title: "Error",
-            description: "Look underline description",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
-            position: "top"
-          });
-        }
       });
   };
   return (
