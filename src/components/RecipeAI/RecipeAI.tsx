@@ -60,7 +60,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "red" : ""}
+                color={ifSaved ? "customRed" : ""}
               />
             }
             isDisabled={ifSaved}
