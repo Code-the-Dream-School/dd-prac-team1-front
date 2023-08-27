@@ -57,6 +57,16 @@ const SingleRecipePage = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data || error.message || "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   }, [recipeId]);
 
@@ -163,7 +173,9 @@ const SingleRecipePage = () => {
       .catch(error => {
         toast({
           title: "Error",
-          description: `${error.message}`,
+          description: `${
+            error?.response?.data || error.message || "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,

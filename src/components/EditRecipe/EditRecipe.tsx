@@ -67,7 +67,9 @@ const EditRecipe = () => {
         console.log(error);
         toast({
           title: "Error",
-          description: `${error.message}`,
+          description: `${
+            error?.response?.data || error.message || "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -88,7 +90,9 @@ const EditRecipe = () => {
         console.log(error);
         toast({
           title: "Error",
-          description: `${error.message}`,
+          description: `${
+            error?.response?.data || error.message || "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
