@@ -12,6 +12,7 @@ import {
 import { SavedIngredient } from "../../utils/types";
 import { GiPencil } from "react-icons/gi";
 import { GrClose, GrCheckmark } from "react-icons/gr";
+import { MdDone, MdCheck, MdClose } from "react-icons/md";
 
 type ShoppingListIngredientProps = {
   ingredient: SavedIngredient;
@@ -38,12 +39,14 @@ const ShoppingListIngredient = ({
     <>
       {isEditIngredient === ingredient._id ? (
         <Box
+          key="option1"
           borderColor="green"
           w="100%"
           mb="-1px"
           borderWidth="thin"
           textDecoration={textDecoration}
-          borderRadius="5">
+          // borderRadius="5"
+        >
           <Grid
             templateColumns="repeat(12, 1fr)"
             w="100%"
@@ -91,23 +94,25 @@ const ShoppingListIngredient = ({
                 aria-label="Edit ingredient amount"
                 size="sm"
                 variant="ghost"
-                icon={<GrCheckmark />}
+                color="#505050"
+                icon={<MdCheck style={{ fontSize: 20 }} />}
                 onClick={e => {
                   handleEditIngredient(e);
                   setIsEditIngredient("");
                 }}
               />
             </GridItem>
-            <GridItem colSpan={1} w="100%" p="2"></GridItem>
+            <GridItem colSpan={1} w="100%" p="2" flexShrink="0"></GridItem>
           </Grid>
         </Box>
       ) : (
         <Box
+          key="option2"
           borderColor="green"
           w="100%"
           mb="-1px"
           borderWidth="thin"
-          borderRadius="5"
+          // borderRadius="5"
           textDecoration={textDecoration}
           alignItems="center">
           <Grid
@@ -134,6 +139,7 @@ const ShoppingListIngredient = ({
                 aria-label="Edit ingredient's amount"
                 size="sm"
                 variant="ghost"
+                color="#505050"
                 icon={<GiPencil />}
                 onClick={() => {
                   if (ingredient._id !== undefined)
@@ -146,7 +152,8 @@ const ShoppingListIngredient = ({
                 aria-label="Delete ingredient"
                 size="sm"
                 variant="ghost"
-                icon={<GrClose />}
+                color="#505050"
+                icon={<MdClose style={{ fontSize: "20" }} />}
                 onClick={() =>
                   handleRemoveIngredient(ingredient.ingredientName)
                 }
