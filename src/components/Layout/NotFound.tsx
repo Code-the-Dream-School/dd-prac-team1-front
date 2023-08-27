@@ -13,8 +13,8 @@ import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
   const navigate = useNavigate();
-  const navigateToHome = () => {
-    navigate("/");
+  const navigateBack = () => {
+    navigate(-1);
   };
   return (
     <Grid>
@@ -55,10 +55,8 @@ const NotFound = () => {
                 alignItems="center"
                 justifyContent="space-between"
                 flexBasis="5px">
-                <Button variant="link" size="lg" onClick={navigateToHome}>
-                  <Text as="ins" color="blackAlpha.700">
-                    Lead Me Back to Deliciousness
-                  </Text>
+                <Button variant="link" size="lg" onClick={navigateBack}>
+                  <Text as="ins">Lead Me Back to Deliciousness</Text>
                 </Button>
               </Flex>
             </VStack>

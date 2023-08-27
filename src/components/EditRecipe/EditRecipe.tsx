@@ -154,7 +154,7 @@ const EditRecipe = () => {
   return (
     <Box
       as="form"
-      onSubmit={e => {
+      onSubmit={(e: any) => {
         e.preventDefault();
         saveRecipe();
       }}>

@@ -8,6 +8,8 @@ const theme = extendTheme({
     white: "#fafafa",
     green: "#d7da5e",
     brandGray: "#f4f4eb",
+    lightGray: "#FFFFF9",
+    gray: "#A6A6A6",
     red: "#E53E3E"
   },
 
@@ -24,7 +26,16 @@ const theme = extendTheme({
           bg: "green"
         },
         outline: {
-          bg: "brandGray"
+          bg: "brandGray",
+          borderColor: "green"
+        },
+        ghost: {
+          _hover: {
+            bg: "white"
+          },
+          _active: {
+            bg: "white"
+          }
         }
       }
     },
@@ -85,6 +96,14 @@ const theme = extendTheme({
       variants: {
         outline: {
           borderColor: "green"
+        }
+      }
+    },
+    Modal: {
+      variants: {
+        outline: {
+          borderColor: "green",
+          bg: "brandGray"
         }
       }
     }

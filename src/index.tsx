@@ -2,7 +2,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import reportWebVitals from "./reportWebVitals";
-import App from "./App";
 import Home from "./components/Layout/Home";
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
@@ -28,8 +27,7 @@ root.render(
       <BrowserRouter>
         <Box flexGrow={1}>
           <Routes>
-            <Route path="/app" element={<App />} />
-            <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route element={<Layout />}>

@@ -158,11 +158,13 @@ const Register = () => {
             {errorPassword.length > 0 && (
               <FormErrorMessage>{errorPassword}</FormErrorMessage>
             )}
-            <Center>
-              <Button variant="solid" type="submit">
-                SIGN UP
-              </Button>
-            </Center>
+            <Box p="10px">
+              <Center>
+                <Button variant="solid" type="submit">
+                  SIGN UP
+                </Button>
+              </Center>
+            </Box>
           </FormControl>
         </Box>
         <Center>
