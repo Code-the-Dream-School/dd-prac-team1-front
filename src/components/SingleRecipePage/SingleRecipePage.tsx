@@ -163,16 +163,13 @@ const SingleRecipePage = () => {
       .catch(error => {
         toast({
           title: "Error",
+          description: `${error.message}`,
           status: "error",
           duration: 3000,
           isClosable: true,
-          position: "top",
-          render: () => (
-            <Box p="3" bg="red">
-              {error.response.data.msg}
-            </Box>
-          )
+          position: "top"
         });
+
         console.log(error);
       });
   };
