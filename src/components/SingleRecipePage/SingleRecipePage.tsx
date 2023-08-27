@@ -170,7 +170,7 @@ const SingleRecipePage = () => {
           isClosable: true,
           position: "top",
           render: () => (
-            <Box p="3" bg="red">
+            <Box p="3" bg="customRed">
               {error.response.data.msg}
             </Box>
           )

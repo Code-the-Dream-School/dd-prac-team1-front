@@ -1,5 +1,13 @@
 import axios from "axios";
-import { AIRecipe, SavedRecipe, EditedRecipe, ManualRecipe } from "./types";
+import {
+  AIRecipe,
+  SavedRecipe,
+  EditedRecipe,
+  ManualRecipe,
+  SavedIngredient
+} from "./types";
+
+const jwtToken = sessionStorage.getItem("jwtToken");
 
 export const register = (name: string, email: string, password: string) => {
   return axios.post(
@@ -37,7 +45,7 @@ export const logout = () => {
 };
 
 export const searchAI = (search: string, values: Array<string>) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/",
     {
@@ -55,7 +63,7 @@ export const searchAI = (search: string, values: Array<string>) => {
 
 export const saveRecipe = (recipe: AIRecipe) => {
   console.log(recipe);
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-ai",
     {
@@ -71,7 +79,7 @@ export const saveRecipe = (recipe: AIRecipe) => {
 };
 
 export const saveManualRecipe = (recipe: ManualRecipe) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-manual",
     {
@@ -87,7 +95,7 @@ export const saveManualRecipe = (recipe: ManualRecipe) => {
 };
 
 export const getRecipe = () => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get("http://localhost:3000/api/v1/recipes/", {
     headers: {
       "Content-Type": "application/json",
@@ -97,7 +105,7 @@ export const getRecipe = () => {
 };
 
 export const getSingleRecipe = (recipeId: string) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
     headers: {
       "Content-Type": "application/json",
@@ -110,7 +118,7 @@ export const editSingleRecipe = (
   recipeId: string,
   recipe: SavedRecipe | EditedRecipe
 ) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.patch(
     `http://localhost:3000/api/v1/recipes/${recipeId}`,
     {
@@ -126,7 +134,7 @@ export const editSingleRecipe = (
 };
 
 export const deleteSingleRecipe = (recipeId: string) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.delete(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
     headers: {
       "Content-Type": "application/json",
@@ -136,8 +144,7 @@ export const deleteSingleRecipe = (recipeId: string) => {
 };
 
 export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
-
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     `http://localhost:3000/api/v1/shopping-list/${recipeId}`,
     {},
@@ -151,8 +158,7 @@ export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
 };
 
 export const getIngredientsFromShoppingList = () => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
-
+  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get("http://localhost:3000/api/v1/shopping-list", {
     headers: {
       "Content-Type": "application/json",
@@ -161,9 +167,33 @@ export const getIngredientsFromShoppingList = () => {
   });
 };
 
-export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+export const editAnIngredientFromShoppingList = (
+  ingredient: SavedIngredient
+) => {
+  console.log(ingredient);
+  const ingredientName = ingredient.ingredientName;
+  const ingredientAmount = ingredient.ingredientAmount;
+  console.log(ingredientName);
   const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
+  console.log(uri);
+  console.log(encodeURI(uri));
+  return axios.put(
+    encodeURI(uri),
+    { ingredientAmount: ingredientAmount },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
+  // const jwtToken = sessionStorage.getItem("jwtToken");
+  const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
+  console.log(uri);
+  console.log(encodeURI(uri));
   return axios.delete(encodeURI(uri), {
     headers: {
       "Content-Type": "application/json",
@@ -173,7 +203,6 @@ export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
 };
 
 export const deleteAllShoppingList = () => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.delete("http://localhost:3000/api/v1/shopping-list/", {
     headers: {
       "Content-Type": "application/json",

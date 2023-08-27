@@ -15,6 +15,7 @@ import { GrAdd, GrClose, GrDown } from "react-icons/gr";
 import { TfiPrinter } from "react-icons/tfi";
 import {
   getIngredientsFromShoppingList,
+  editAnIngredientFromShoppingList,
   deleteAnIngredientFromShoppingList,
   deleteAllShoppingList
 } from "../../utils/fetchData";
@@ -25,7 +26,9 @@ import ShoppingListIngredient from "./ShoppingListIngredient";
 
 const ShoppingList = () => {
   const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
-  const [checkedIds, setCheckedIds] = useState<Array<string>>([]);
+  const [checkedIngredientNames, setCheckedIngredientNames] = useState<
+    Array<string>
+  >([]);
 
   const {
     isOpen: isOpenChangedIngredient,
@@ -62,42 +65,80 @@ const ShoppingList = () => {
     onCloseChangedIngredient();
   };
   const checkedIngredients = ingredients.filter(ingredient => {
-    if (ingredient._id === undefined) return false;
-    return checkedIds.includes(ingredient._id);
+    if (ingredient.ingredientName === undefined) return false;
+    return checkedIngredientNames.includes(ingredient.ingredientName);
   });
 
   const uncheckedIngredients = ingredients.filter(ingredient => {
-    if (ingredient._id === undefined) return false;
-    return !checkedIds.includes(ingredient._id);
+    if (ingredient.ingredientName === undefined) return false;
+    return !checkedIngredientNames.includes(ingredient.ingredientName);
   });
 
   const handleEditAmount = (e: any) => {
-    const id = e.target.id;
+    const ingredientName = e.target.name;
     const newIngredients = [...ingredients];
     const changedIngredient = newIngredients.findIndex(
-      ingredient => ingredient._id === id
+      ingredient => ingredient.ingredientName === ingredientName
     );
     newIngredients[changedIngredient].ingredientAmount = e.target.value;
     setIngredients(newIngredients);
   };
 
-  const removeChecked = () => {
-    const checked = ingredients.filter(ingredient => {
-      if (ingredient._id === undefined) return false;
-      return !checkedIds.includes(ingredient._id);
-    });
-    setIngredients(checked);
-  };
-
-  const handleRemoveIngredients = () => {
-    deleteAllShoppingList()
+  const handleEditIngredient = (e: any) => {
+    const ingredientName = e.target.name;
+    console.log(ingredients);
+    const editedIngredient = ingredients.filter(
+      ingredient => ingredientName === ingredient.ingredientName
+    );
+    const newIngredient = editedIngredient.pop();
+    console.log(newIngredient);
+    if (newIngredient === undefined) return;
+    editAnIngredientFromShoppingList(newIngredient)
       .then(response => {
         console.log(response);
-        setIngredients([]);
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  const handleCheckedBox = (e: any) => {
+    console.log(e);
+    if (e.target.checked) {
+      setCheckedIngredientNames(prevName => [...prevName, e.target.name]);
+    } else {
+      const updateName = checkedIngredientNames.filter(name => {
+        return name !== e.target.name;
+      });
+      return setCheckedIngredientNames(updateName);
+    }
+  };
+
+  const removeChecked = () => {
+    const checked = ingredients.filter(ingredient => {
+      if (ingredient.ingredientName === undefined) return false;
+      return checkedIngredientNames.includes(ingredient.ingredientName);
+    });
+    const unChecked = ingredients.filter(ingredient => {
+      if (ingredient.ingredientName === undefined) return false;
+      return !checkedIngredientNames.includes(ingredient.ingredientName);
+    });
+    checked.forEach((ingredient, index) => {
+      setTimeout(() => {
+        const ingredientName = ingredient.ingredientName;
+        console.log(ingredientName);
+        deleteAnIngredientFromShoppingList(ingredientName)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        console.log("Delayed for 1 second.");
+      }, 250 * index);
+    });
+    console.log(checked);
+    setIngredients(unChecked);
   };
 
   const handleRemoveIngredient = (ingredientName: string) => {
@@ -114,15 +155,15 @@ const ShoppingList = () => {
       });
   };
 
-  const handleCheckedBox = (e: any) => {
-    if (e.target.checked) {
-      setCheckedIds(prevIds => [...prevIds, e.target.id]);
-    } else {
-      const updateId = checkedIds.filter(id => {
-        return id !== e.target.id;
+  const handleRemoveIngredients = () => {
+    deleteAllShoppingList()
+      .then(response => {
+        console.log(response);
+        setIngredients([]);
+      })
+      .catch(error => {
+        console.log(error);
       });
-      return setCheckedIds(updateId);
-    }
   };
 
   const print = () => {
@@ -170,7 +211,7 @@ const ShoppingList = () => {
         variant="outline"
         w="100%"
         h="14"
-        ml="2"
+        mb="2"
         bg="white"
         _hover={{
           background: "white",
@@ -212,14 +253,17 @@ const ShoppingList = () => {
             onChange={handleCheckedBox}
             handleEditAmount={handleEditAmount}
             handleRemoveIngredient={handleRemoveIngredient}
+            handleEditIngredient={handleEditIngredient}
             defaultChecked={false}
+            textDecoration={"none"}
           />
         </Box>
       ))}
       <Box
         borderColor="green"
         w="100%"
-        m="2"
+        mt="2"
+        mb="2"
         borderWidth="thin"
         borderRadius="5">
         <Grid
@@ -232,14 +276,14 @@ const ShoppingList = () => {
             <Icon as={GrDown} ml="5" />
           </GridItem>
           <GridItem colSpan={9} w="100%">
-            <Text color="gray" fontWeight="normal" textAlign="left">
+            <Text color="customGray" fontWeight="normal" textAlign="left">
               CHECKED ITEMS
             </Text>
           </GridItem>
           <GridItem colSpan={2} w="100%">
             <Button
               variant="ghost"
-              bg="gray"
+              bg="customGray"
               leftIcon={<GrClose />}
               onClick={removeChecked}>
               Clear
@@ -254,7 +298,9 @@ const ShoppingList = () => {
             onChange={handleCheckedBox}
             handleEditAmount={handleEditAmount}
             handleRemoveIngredient={handleRemoveIngredient}
+            handleEditIngredient={handleEditIngredient}
             defaultChecked={true}
+            textDecoration={"line-through"}
           />
         </Box>
       ))}
