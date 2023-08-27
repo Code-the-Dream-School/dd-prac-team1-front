@@ -21,8 +21,8 @@ export type AIRecipe = {
 };
 
 export type SavedIngredient = {
-  ingredientAmount: number;
   ingredientName: string;
+  ingredientAmount: number;
   ingredientUnit: string;
   _id?: string;
 };
@@ -138,5 +138,24 @@ export type AnimationVariants = {
       type?: string;
       ease?: string;
     };
+  };
+};
+
+export type PlannerRecipe = {
+  id: string;
+  name: string;
+  image: string;
+  _id: string;
+  recipeImage: string;
+  recipeName: string;
+  sortOrder: number;
+};
+
+export type Id = string;
+
+export type PlannerDays<PlannerRecipe> = {
+  [index: string]: { 
+    sortOrder: number; 
+    recipes: PlannerRecipe[] 
   };
 };
