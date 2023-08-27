@@ -9,7 +9,8 @@ import {
   GridItem,
   Heading,
   Text,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 import { GrAdd, GrClose, GrDown } from "react-icons/gr";
 import { TfiPrinter } from "react-icons/tfi";
@@ -29,19 +30,19 @@ const ShoppingList = () => {
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
     Array<string>
   >([]);
-
   const {
     isOpen: isOpenChangedIngredient,
     onOpen: onOpenChangedIngredient,
     onClose: onCloseChangedIngredient
   } = useDisclosure();
-
   const {
     isOpen: isOpenSendEmail,
     onOpen: onOpenSendEmail,
     onClose: onCloseSendEmail
   } = useDisclosure();
-  useEffect(() => {
+  const toast = useToast();
+
+  const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
         console.log(response);
@@ -49,7 +50,18 @@ const ShoppingList = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${error.message}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
+  };
+  useEffect(() => {
+    getIngredients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -98,6 +110,7 @@ const ShoppingList = () => {
         console.log(response);
       })
       .catch(error => {
+        getIngredients();
         console.log(error);
       });
   };
@@ -133,6 +146,14 @@ const ShoppingList = () => {
           })
           .catch(error => {
             console.log(error);
+            toast({
+              title: "Error",
+              description: `${error.message}`,
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top"
+            });
           });
         console.log("Delayed for 1 second.");
       }, 250 * index);
@@ -163,6 +184,14 @@ const ShoppingList = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${error.message}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -210,8 +239,8 @@ const ShoppingList = () => {
       <Button
         variant="outline"
         w="100%"
-        h="14"
-        mb="2"
+        h="12"
+        mb="1"
         bg="white"
         _hover={{
           background: "white",
@@ -262,8 +291,8 @@ const ShoppingList = () => {
       <Box
         borderColor="green"
         w="100%"
-        mt="2"
-        mb="2"
+        mt="1"
+        mb="1"
         borderWidth="thin"
         borderRadius="5">
         <Grid
@@ -283,6 +312,8 @@ const ShoppingList = () => {
           <GridItem colSpan={2} w="100%">
             <Button
               variant="ghost"
+              w="100%"
+              size="sm"
               bg="customGray"
               leftIcon={<GrClose />}
               onClick={removeChecked}>
