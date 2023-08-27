@@ -65,13 +65,20 @@ const EditRecipe = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${error.message}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   }, [recipeId]);
 
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
-
     editSingleRecipe(recipeId, recipe)
       .then(response => {
         console.log(response);
@@ -79,18 +86,13 @@ const EditRecipe = () => {
       })
       .catch(error => {
         console.log(error);
-
         toast({
           title: "Error",
+          description: `${error.message}`,
           status: "error",
           duration: 3000,
           isClosable: true,
-          position: "top",
-          render: () => (
-            <Box p="3" bg="red">
-              {error.response.data.message}
-            </Box>
-          )
+          position: "top"
         });
       });
   };
