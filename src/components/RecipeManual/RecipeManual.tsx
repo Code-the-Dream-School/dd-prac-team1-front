@@ -88,8 +88,7 @@ const RecipeManual = () => {
         toast({
           title: "Error",
           description: `${error.message}`,
-          status: "warning",
-          variant: "subtle",
+          status: "error",
           duration: 4000,
           isClosable: true,
           position: "top"
