@@ -31,7 +31,7 @@ const Home = () => {
         flexDirection="column">
         <Flex justifyContent="space-between" flexBasis="50px">
           <Image borderRadius="lg" src="/images/Logo_Olivier.svg" />
-          <Button variant="outline">
+          <Button variant="outline" background={"green"}>
             <Link as={RouterLink} to="/login">
               SIGN IN
             </Link>
@@ -44,7 +44,7 @@ const Home = () => {
         </Flex>
         <Center>
           <Flex h="30%">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" background={"green"}>
               <Link as={RouterLink} to="/register">
                 Create an account
               </Link>

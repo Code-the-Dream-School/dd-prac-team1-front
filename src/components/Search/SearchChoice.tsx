@@ -37,7 +37,6 @@ const SearchChoice = () => {
             <Text>Save the recipes you like to your recipe gallery!</Text>
           </CardBody>
         </Card>
-
         <Card cursor="pointer" onClick={navigateToOwnRecipe}>
           <CardHeader>
             <Heading size="md">ADD YOUR OWN RECIPE </Heading>
