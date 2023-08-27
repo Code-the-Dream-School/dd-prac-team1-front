@@ -11,8 +11,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
-  useToast
+  Text
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +31,6 @@ const Register = () => {
   const navigateToLogin = () => {
     navigate("/login");
   };
-
-  const toast = useToast();
 
   const handleShowPassword = () => {
     if (type === "password") {
