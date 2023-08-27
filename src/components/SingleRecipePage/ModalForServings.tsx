@@ -34,7 +34,10 @@ const ModalForServings = ({
       size="xs"
       variant="outline"
       isCentered>
-      <ModalOverlay />
+      <ModalOverlay
+        bg="transparent"
+        backdropFilter="blur(05px) brightness(0.5)"
+      />
       <ModalContent>
         <ModalHeader>Adjust serving size</ModalHeader>
         <ModalCloseButton />
@@ -52,7 +55,7 @@ const ModalForServings = ({
           </Center>
         </ModalBody>
         <ModalFooter>
-          <Button mr={3} onClick={onClose}>
+          <Button mr="3" bg="brandGray" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={() => saveIngredientsToShoppingList()}>
