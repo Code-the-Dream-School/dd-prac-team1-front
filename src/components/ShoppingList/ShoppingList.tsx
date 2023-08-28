@@ -247,7 +247,7 @@ const ShoppingList = () => {
   };
 
   return (
-    <Container maxW="3xl" mb="5">
+    <Container maxW="3xl">
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap="2"
@@ -383,19 +383,21 @@ const ShoppingList = () => {
           </GridItem>
         </Grid>
       </Box>
-      {checkedIngredients.map(ingredient => (
-        <Box key={ingredient._id}>
-          <ShoppingListIngredient
-            ingredient={ingredient}
-            onChange={handleCheckedBox}
-            handleEditAmount={handleEditAmount}
-            handleRemoveIngredient={handleRemoveIngredient}
-            handleEditIngredient={handleEditIngredient}
-            defaultChecked={true}
-            textDecoration={"line-through"}
-          />
-        </Box>
-      ))}
+      <Box mb="10">
+        {checkedIngredients.map(ingredient => (
+          <Box key={ingredient._id}>
+            <ShoppingListIngredient
+              ingredient={ingredient}
+              onChange={handleCheckedBox}
+              handleEditAmount={handleEditAmount}
+              handleRemoveIngredient={handleRemoveIngredient}
+              handleEditIngredient={handleEditIngredient}
+              defaultChecked={true}
+              textDecoration={"line-through"}
+            />
+          </Box>
+        ))}
+      </Box>
     </Container>
   );
 };
