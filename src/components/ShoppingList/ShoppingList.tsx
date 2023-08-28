@@ -12,7 +12,7 @@ import {
   useDisclosure,
   useToast
 } from "@chakra-ui/react";
-import { IoAdd, IoTrashOutline, IoChevronDown } from "react-icons/io5";
+import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
 import { MdIosShare } from "react-icons/md";
 import {
@@ -355,13 +355,7 @@ const ShoppingList = () => {
           gap="2"
           alignItems="center"
           w="100%">
-          <GridItem colSpan={1} w="100%">
-            <Icon
-              style={{ color: "#505050", fontSize: 20 }}
-              as={IoChevronDown}
-              ml="5"
-            />
-          </GridItem>
+          <GridItem colSpan={1} w="100%"></GridItem>
           <GridItem colSpan={10} w="100%">
             <Text color="#505050" fontWeight="normal" textAlign="left">
               CHECKED ITEMS
