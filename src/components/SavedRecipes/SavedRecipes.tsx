@@ -210,17 +210,10 @@ const SavedRecipes = () => {
   return (
     <Container maxW="7xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-<<<<<<< HEAD
-        <GridItem colSpan={1} w="100%" h="100"></GridItem>
-        <GridItem colSpan={2} w="100%" h="100">
-          <Center h="100">
-            <Heading fontSize="3xl">SAVED RECIPES</Heading>
-=======
         <GridItem colSpan={1} w="100%" h="70"></GridItem>
         <GridItem colSpan={2} w="100%" h="70">
           <Center h="150">
             <Text fontSize="3xl">SAVED RECIPES</Text>
->>>>>>> 9c679af709b648ef5d00b855e0b48d195121d87a
           </Center>
         </GridItem>
         <GridItem colSpan={1} w="100%" h="55">
