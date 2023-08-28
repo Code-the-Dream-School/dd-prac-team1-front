@@ -42,13 +42,22 @@ const SearchAI = () => {
         if (error.message.includes("500")) {
           setError(true);
           setIsLoading(false);
-          setErrorMessage(`${error.response.status} - ${error.response.data}`);
+          setErrorMessage(
+            `${error.response.status} - ${error.response.data.error}`
+          );
           setRecipe(null);
         } else {
           setError(true);
           setIsLoading(false);
           setErrorMessage(
-            `${error.response.status} - ${error.response.data.msg}`
+            `${error?.response?.status || ""} - ${
+              error?.response?.data?.msg ||
+              error?.response?.data?.message ||
+              error?.response?.data?.error ||
+              error?.response?.data ||
+              error.message ||
+              "unknown error"
+            }`
           );
           setRecipe(null);
         }
