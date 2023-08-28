@@ -16,12 +16,16 @@ const SingleRecipeIngredient = ({
       return "for serving";
     } else if (ingredient.ingredientAmount === -3) {
       return "for garnish";
+    } else if (ingredient.ingredientAmount === -4) {
+      return "to serve";
+    } else if (ingredient.ingredientAmount === -5) {
+      return "to garnish";
     }
     return ingredient.ingredientAmount;
   };
   return (
-      <ListItem>
-        {`${ingredient.ingredientName}
+    <ListItem>
+      {`${ingredient.ingredientName}
         ${amount()} 
           ${
             ingredient.ingredientAmount <= 0
@@ -30,7 +34,7 @@ const SingleRecipeIngredient = ({
               ? ingredient.ingredientUnit
               : ""
           } `}
-      </ListItem>
+    </ListItem>
   );
 };
 export default SingleRecipeIngredient;
