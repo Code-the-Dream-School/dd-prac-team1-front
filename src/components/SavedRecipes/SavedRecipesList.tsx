@@ -9,7 +9,13 @@ type SavedRecipesProps = {
 
 const SavedRecipesList = ({ recipes }: SavedRecipesProps) => {
   return (
-    <Grid templateColumns="repeat(4, 1fr)" gap={3}>
+    <Grid
+      templateColumns={{
+        base: "repeat(2, 1fr)",
+        md: "repeat(3, 1fr)",
+        lg: "repeat(4, 1fr)"
+      }}
+      gap={3}>
       {recipes.map(recipe => (
         <SavedRecipesItem key={recipe._id} recipe={recipe} />
       ))}
