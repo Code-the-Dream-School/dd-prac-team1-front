@@ -65,7 +65,7 @@ const Contact = () => {
               </Stack>
               <Box p="10px">
                 <Center>
-                  <Button variant="outline" size="lg">
+                  <Button variant="solid" size="lg" background={"green"}>
                     Submit
                   </Button>
                 </Center>
