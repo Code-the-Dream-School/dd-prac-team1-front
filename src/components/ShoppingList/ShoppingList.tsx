@@ -247,7 +247,7 @@ const ShoppingList = () => {
   };
 
   return (
-    <Container maxW="3xl">
+    <Container maxW="3xl" mb="5">
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap="2"
