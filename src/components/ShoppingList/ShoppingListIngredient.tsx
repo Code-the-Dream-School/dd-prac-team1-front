@@ -50,7 +50,7 @@ const ShoppingListIngredient = ({
             gap="2"
             alignItems="center">
             <GridItem colSpan={10} w="100%" gap="6">
-              <Flex pl="7" alignItems="center">
+              <Flex pl="5" alignItems="center">
                 <Checkbox
                   size="lg"
                   colorScheme="gray"
@@ -118,7 +118,7 @@ const ShoppingListIngredient = ({
             gap="2"
             alignItems="center">
             <GridItem colSpan={10} w="100%">
-              <Flex pl="7">
+              <Flex pl="5">
                 <Checkbox
                   size="lg"
                   colorScheme="gray"

@@ -13,8 +13,10 @@ import {
   useToast
 } from "@chakra-ui/react";
 import { IoAdd, IoTrashOutline } from "react-icons/io5";
+//import { PiShareFatLight } from "react-icons/pi";
+import { TbShare3 } from "react-icons/tb";
 import { TfiPrinter } from "react-icons/tfi";
-import { MdIosShare } from "react-icons/md";
+//import { MdIosShare } from "react-icons/md";
 import {
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
@@ -56,6 +58,7 @@ const ShoppingList = () => {
           description: `${
             error?.response?.data?.msg ||
             error?.response?.data?.message ||
+            error?.response?.data?.error ||
             error?.response?.data ||
             error.message ||
             "unknown error"
@@ -124,6 +127,7 @@ const ShoppingList = () => {
           description: `${
             error?.response?.data?.msg ||
             error?.response?.data?.message ||
+            error?.response?.data?.error ||
             error?.response?.data ||
             error.message ||
             "unknown error"
@@ -172,6 +176,7 @@ const ShoppingList = () => {
               description: `${
                 error?.response?.data?.msg ||
                 error?.response?.data?.message ||
+                error?.response?.data?.error ||
                 error?.response?.data ||
                 error.message ||
                 "unknown error"
@@ -277,8 +282,9 @@ const ShoppingList = () => {
             variant="ghost"
             color="#505050"
             bg="brandGray"
-            aria-label="Delete all ingredients"
-            icon={<MdIosShare />}
+            aria-label="Send the shopping List"
+            fontSize="20"
+            icon={<TbShare3 />}
             title="delete all"
             onClick={onOpenSendEmail}
           />
