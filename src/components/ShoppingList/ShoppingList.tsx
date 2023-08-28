@@ -53,7 +53,13 @@ const ShoppingList = () => {
         console.log(error);
         toast({
           title: "Error",
-          description: `${error.message}`,
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -194,6 +200,20 @@ const ShoppingList = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -207,7 +227,13 @@ const ShoppingList = () => {
         console.log(error);
         toast({
           title: "Error",
-          description: `${error.message}`,
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
