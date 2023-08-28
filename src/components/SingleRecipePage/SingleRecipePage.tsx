@@ -210,9 +210,9 @@ const SingleRecipePage = () => {
 
   return (
     <Container maxW="5xl">
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={2} w="100%">
-          <Flex marginTop="10" marginBottom="5" alignItems="center" gap={2}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="2">
+        <GridItem colSpan={2} w="100">
+          <Flex marginTop="10" marginBottom="5" alignItems="center" gap="4">
             <IconButton
               size="lg"
               variant="ghost"
@@ -225,67 +225,41 @@ const SingleRecipePage = () => {
             />
             <Heading size="lg">{recipe.recipeName.toUpperCase()}</Heading>
           </Flex>
-          <Box>
-            {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
-              <Text as="span">
-                <b>Prep time:</b>&nbsp;
-                {`${recipe.recipePrepTime.recipePrepTimeMinutes} min`}
-                &nbsp;&nbsp;
-              </Text>
-            )}
-            {recipe.recipeCookTime.recipeCookTimeMinutes > 0 && (
-              <Text as="span">
-                <b>Cooking time:</b>&nbsp;
-                {`${recipe.recipeCookTime.recipeCookTimeMinutes} min`}
-                &nbsp;&nbsp;
-              </Text>
-            )}
-            {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
-              <Text as="span">
-                <b>Total:</b>&nbsp;
-                {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
-                &nbsp;&nbsp;
-              </Text>
-            )}
-          </Box>
-          <Text>
-            <b>Complexity level:</b>&nbsp;
-            {`${recipe.recipeComplexityLevel}`}
-            &nbsp;&nbsp;
-          </Text>
-          {recipe.recipeServings > 0 && (
-            <Text>
-              <b>Servings:</b>&nbsp;
-              {`${recipe.recipeServings}`}
-              &nbsp;&nbsp;
-            </Text>
-          )}
         </GridItem>
-        <GridItem colSpan={1} w="100%" position="relative">
+        <GridItem
+          colSpan={1}
+          w="100%"
+          display="flex"
+          alignItems="end"
+          justifyContent="center">
           <Flex
-            w="100%"
+            w={{
+              base: "80%",
+              md: "68%",
+              lg: "100%"
+            }}
             gap="2"
             flexShrink="1"
             flexWrap="wrap"
-            position="absolute"
-            bottom="2"
+            mt="5"
+            mb="5"
             justifyContent="center">
             {showConfirm ? (
               <>
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Edit recipe"
+                  aria-label="Confirm delete"
                   icon={<CheckIcon />}
-                  title="yes, delete the recipe"
+                  title="confirm delete"
                   onClick={deleteRecipe}
                 />
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Add to menu planner"
+                  aria-label="Cancel delete"
                   icon={<CloseIcon />}
-                  title="do not delete the recipe"
+                  title="cancel delete"
                   onClick={() => {
                     setShowConfirm(false);
                   }}
@@ -356,10 +330,45 @@ const SingleRecipePage = () => {
           </Flex>
         </GridItem>
       </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="6">
         <GridItem colSpan={2} w="95%">
+          <Box>
+            {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Prep time:</b>&nbsp;
+                {`${recipe.recipePrepTime.recipePrepTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
+            {recipe.recipeCookTime.recipeCookTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Cooking time:</b>&nbsp;
+                {`${recipe.recipeCookTime.recipeCookTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
+            {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
+              <Text as="span">
+                <b>Total:</b>&nbsp;
+                {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
+                &nbsp;&nbsp;
+              </Text>
+            )}
+          </Box>
+          <Text>
+            <b>Complexity level:</b>&nbsp;
+            {`${recipe.recipeComplexityLevel}`}
+            &nbsp;&nbsp;
+          </Text>
+          {recipe.recipeServings > 0 && (
+            <Text>
+              <b>Servings:</b>&nbsp;
+              {`${recipe.recipeServings}`}
+              &nbsp;&nbsp;
+            </Text>
+          )}
           <Flex flexDirection="column">
-            <Box marginTop="5">
+            <Box mt="5">
               <Heading as="h3" size="md" marginBottom="3">
                 Ingredients
               </Heading>
@@ -369,7 +378,7 @@ const SingleRecipePage = () => {
                 ))}
               </UnorderedList>
             </Box>
-            <Box marginTop="5">
+            <Box mt="5">
               <Heading as="h3" size="md" marginBottom="3">
                 Instructions
               </Heading>
@@ -379,7 +388,7 @@ const SingleRecipePage = () => {
               recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
               recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
-              <Box marginTop="5">
+              <Box mt="5">
                 <Flex onClick={onToggle} cursor="pointer">
                   <Heading as="h3" size="md" marginBottom="3">
                     Nutrition Information
@@ -389,7 +398,11 @@ const SingleRecipePage = () => {
                   </Box>
                 </Flex>
                 <Collapse in={openNutrition} animateOpacity>
-                  <Flex>
+                  <Flex
+                    direction={{
+                      base: "column",
+                      md: "row"
+                    }}>
                     {nutrition.map(({ displayName, content, unit }, index) => (
                       <Box key={index}>
                         {content > 0 && (
@@ -407,8 +420,13 @@ const SingleRecipePage = () => {
           </Flex>
         </GridItem>
         <GridItem colSpan={1} w="100%">
-          <Image w="100%" src={recipe.recipeImage} alt={recipe.recipeName} />
-          <Flex marginTop="2" wrap="wrap">
+          <Image
+            w="100%"
+            borderRadius="5"
+            src={recipe.recipeImage}
+            alt={recipe.recipeName}
+          />
+          <Flex mt="2" flexWrap="wrap">
             {tagsAndDiets().map((tag, index) => (
               <SingleRecipeTag key={index} tag={tag} />
             ))}
