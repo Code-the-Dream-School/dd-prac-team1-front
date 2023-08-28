@@ -11,8 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { SavedIngredient } from "../../utils/types";
 import { GiPencil } from "react-icons/gi";
-import { GrClose, GrCheckmark } from "react-icons/gr";
-import { MdDone, MdCheck, MdClose } from "react-icons/md";
+import { MdCheck, MdClose } from "react-icons/md";
 
 type ShoppingListIngredientProps = {
   ingredient: SavedIngredient;
@@ -44,9 +43,7 @@ const ShoppingListIngredient = ({
           w="100%"
           mb="-1px"
           borderWidth="thin"
-          textDecoration={textDecoration}
-          // borderRadius="5"
-        >
+          textDecoration={textDecoration}>
           <Grid
             templateColumns="repeat(12, 1fr)"
             w="100%"

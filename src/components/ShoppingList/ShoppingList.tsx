@@ -5,7 +5,6 @@ import {
   Container,
   Icon,
   IconButton,
-  Flex,
   Grid,
   GridItem,
   Heading,
@@ -13,10 +12,9 @@ import {
   useDisclosure,
   useToast
 } from "@chakra-ui/react";
-import { GrAdd, GrClose, GrDown } from "react-icons/gr";
-import { IoTrashOutline } from "react-icons/io5";
+import { IoAdd, IoTrashOutline, IoChevronDown } from "react-icons/io5";
 import { TfiPrinter } from "react-icons/tfi";
-import { MdDone, MdCheck, MdClose } from "react-icons/md";
+import { MdIosShare } from "react-icons/md";
 import {
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
@@ -115,6 +113,20 @@ const ShoppingList = () => {
       .catch(error => {
         getIngredients();
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -151,7 +163,13 @@ const ShoppingList = () => {
             console.log(error);
             toast({
               title: "Error",
-              description: `${error.message}`,
+              description: `${
+                error?.response?.data?.msg ||
+                error?.response?.data?.message ||
+                error?.response?.data ||
+                error.message ||
+                "unknown error"
+              }`,
               status: "error",
               duration: 3000,
               isClosable: true,
@@ -216,30 +234,28 @@ const ShoppingList = () => {
           </Heading>
         </GridItem>
         <GridItem colSpan={1} w="100%">
-          {/* <IconButton
+          <IconButton
             size="lg"
             variant="ghost"
+            color="#505050"
+            bg="brandGray"
             aria-label="Delete all ingredients"
             icon={<IoTrashOutline />}
             title="delete all"
             onClick={handleRemoveIngredients}
-          /> */}
-          <Button
-            variant="outline"
-            bg="white"
-            textColor="#505050"
-            onClick={handleRemoveIngredients}>
-            Clear list
-          </Button>
+          />
         </GridItem>
         <GridItem colSpan={1} w="100%">
-          <Button
-            variant="outline"
-            bg="white"
+          <IconButton
+            size="lg"
+            variant="ghost"
+            color="#505050"
+            bg="brandGray"
+            aria-label="Delete all ingredients"
+            icon={<MdIosShare />}
+            title="delete all"
             onClick={onOpenSendEmail}
-            textColor="#505050">
-            Share
-          </Button>
+          />
         </GridItem>
         <GridItem colSpan={1} w="100%">
           <IconButton
@@ -247,6 +263,7 @@ const ShoppingList = () => {
             variant="ghost"
             aria-label="Print ingredients"
             color="#505050"
+            bg="brandGray"
             icon={<TfiPrinter />}
             title="print"
             onClick={print}
@@ -271,10 +288,10 @@ const ShoppingList = () => {
           alignItems="center"
           w="100%">
           <GridItem colSpan={1} w="100%">
-            <Icon as={GrAdd} />
+            <Icon style={{ color: "#505050", fontSize: 20 }} as={IoAdd} />
           </GridItem>
           <GridItem colSpan={11} w="100%">
-            <Text color="gray" fontWeight="normal" textAlign="left">
+            <Text color="#505050" fontWeight="normal" textAlign="left">
               ADD ITEM
             </Text>
           </GridItem>
@@ -306,49 +323,37 @@ const ShoppingList = () => {
           />
         </Box>
       ))}
-      <Box
-        borderColor="green"
-        w="100%"
-        mt="1"
-        mb="1"
-        borderWidth="thin"
-        // borderRadius="5"
-      >
+      <Box borderColor="green" w="100%" mt="1" mb="1" borderWidth="thin">
         <Grid
           templateColumns="repeat(12, 1fr)"
           gap="2"
           alignItems="center"
-          w="100%"
-          p="2">
+          w="100%">
           <GridItem colSpan={1} w="100%">
-            <Icon as={GrDown} ml="5" />
+            <Icon
+              style={{ color: "#505050", fontSize: 20 }}
+              as={IoChevronDown}
+              ml="5"
+            />
           </GridItem>
-          <GridItem colSpan={9} w="100%">
-            <Text color="customGray" fontWeight="normal" textAlign="left">
+          <GridItem colSpan={10} w="100%">
+            <Text color="#505050" fontWeight="normal" textAlign="left">
               CHECKED ITEMS
             </Text>
           </GridItem>
-          <GridItem colSpan={2} w="100%">
-            <Button
-              variant="ghost"
-              w="100%"
-              size="sm"
-              bg="brandGray"
-              color="#505050"
-              leftIcon={<MdClose />}
-              textColor="#505050"
-              onClick={removeChecked}>
-              Clear
-            </Button>
-
-            {/* <IconButton
+          <GridItem colSpan={1} w="100%">
+            <IconButton
               size="lg"
               variant="ghost"
               aria-label="Delete checked ingredients"
+              color="#505050"
+              bg="brandGray"
+              w="100%"
+              borderRadius="0"
               icon={<IoTrashOutline />}
               title="delete checked"
               onClick={removeChecked}
-            /> */}
+            />
           </GridItem>
         </Grid>
       </Box>
