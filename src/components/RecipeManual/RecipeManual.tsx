@@ -90,6 +90,7 @@ const RecipeManual = () => {
           description: `${
             error?.response?.data?.msg ||
             error?.response?.data?.message ||
+            error?.response?.data?.error ||
             error?.response?.data ||
             error.message ||
             "unknown error"
