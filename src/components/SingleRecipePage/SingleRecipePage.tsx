@@ -396,7 +396,7 @@ const SingleRecipePage = () => {
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
           borderRadius="5">
-          <Flex mt="2" flexWrap="wrap">
+          <Flex mt="2" flexWrap="wrap" justifyContent="center">
             {tagsAndDiets().map((tag, index) => (
               <SingleRecipeTag key={index} tag={tag} />
             ))}
