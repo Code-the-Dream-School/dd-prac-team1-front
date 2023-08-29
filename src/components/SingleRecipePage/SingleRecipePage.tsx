@@ -338,8 +338,6 @@ const SingleRecipePage = () => {
             )}
           </Flex>
         </GridItem>
-        {/* </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap="2"> */}
         <GridItem colSpan={{ base: 2, md: 2 }} w="95%">
           <Box>
             {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
@@ -389,13 +387,15 @@ const SingleRecipePage = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
-          <Image
-            w="100%"
-            borderRadius="5"
-            src={recipe.recipeImage}
-            alt={recipe.recipeName}
-          />
+        <GridItem
+          colSpan={{ base: 2, md: 1 }}
+          w="100%"
+          h="300px"
+          backgroundImage={recipe.recipeImage}
+          backgroundPosition="center"
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          borderRadius="5">
           <Flex mt="2" flexWrap="wrap">
             {tagsAndDiets().map((tag, index) => (
               <SingleRecipeTag key={index} tag={tag} />
