@@ -215,9 +215,13 @@ const SingleRecipePage = () => {
           base: "repeat(4, 1fr)",
           md: "repeat(3, 1fr)"
         }}
-        gap={{ base: "2", md: "6" }}>
+        gap="2">
         <GridItem colSpan={{ base: 3, md: 2 }} w="100">
-          <Flex marginTop="10" marginBottom="5" alignItems="center" gap="4">
+          <Flex
+            mt={{ base: "5", md: "10" }}
+            mb={{ base: "0", md: "5" }}
+            alignItems="center"
+            gap="4">
             <IconButton
               size="lg"
               variant="ghost"
@@ -334,9 +338,9 @@ const SingleRecipePage = () => {
             )}
           </Flex>
         </GridItem>
-      </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap="6">
-        <GridItem colSpan={2} w="95%">
+        {/* </Grid>
+      <Grid templateColumns="repeat(3, 1fr)" gap="2"> */}
+        <GridItem colSpan={{ base: 2, md: 2 }} w="95%">
           <Box>
             {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
               <Text as="span">
@@ -374,7 +378,7 @@ const SingleRecipePage = () => {
           )}
           <Flex flexDirection="column">
             <Box mt="5">
-              <Heading as="h3" size="md" marginBottom="3">
+              <Heading as="h3" size="md" mb="3">
                 Ingredients
               </Heading>
               <UnorderedList>
@@ -383,48 +387,9 @@ const SingleRecipePage = () => {
                 ))}
               </UnorderedList>
             </Box>
-            <Box mt="5">
-              <Heading as="h3" size="md" marginBottom="3">
-                Instructions
-              </Heading>
-              <Text>{recipe.recipeInstructions}</Text>
-            </Box>
-            {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
-              recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
-              recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
-              recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
-              <Box mt="5">
-                <Flex onClick={onToggle} cursor="pointer">
-                  <Heading as="h3" size="md" marginBottom="3">
-                    Nutrition Information
-                  </Heading>
-                  <Box as="span">
-                    <Icon as={ChevronDownIcon} />
-                  </Box>
-                </Flex>
-                <Collapse in={openNutrition} animateOpacity>
-                  <Flex
-                    direction={{
-                      base: "column",
-                      md: "row"
-                    }}>
-                    {nutrition.map(({ displayName, content, unit }, index) => (
-                      <Box key={index}>
-                        {content > 0 && (
-                          <Text as="span">
-                            <b>{displayName}:</b> {content}
-                            {unit}&nbsp;
-                          </Text>
-                        )}
-                      </Box>
-                    ))}
-                  </Flex>
-                </Collapse>
-              </Box>
-            )}
           </Flex>
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
           <Image
             w="100%"
             borderRadius="5"
@@ -437,6 +402,48 @@ const SingleRecipePage = () => {
             ))}
           </Flex>
         </GridItem>
+        <GridItem colSpan={{ base: 4, md: 2 }}>
+          <Box mt="5">
+            <Heading as="h3" size="md" mb="3">
+              Instructions
+            </Heading>
+            <Text>{recipe.recipeInstructions}</Text>
+          </Box>
+          {(recipe.recipeNutritionInfo.NutritionInfoCalories !== 0 ||
+            recipe.recipeNutritionInfo.NutritionInfoCarbs !== 0 ||
+            recipe.recipeNutritionInfo.NutritionInfoFat !== 0 ||
+            recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
+            <Box mt="5">
+              <Flex onClick={onToggle} cursor="pointer">
+                <Heading as="h3" size="md" mb="3">
+                  Nutrition Information
+                </Heading>
+                <Box as="span">
+                  <Icon as={ChevronDownIcon} />
+                </Box>
+              </Flex>
+              <Collapse in={openNutrition} animateOpacity>
+                <Flex
+                  direction={{
+                    base: "column",
+                    md: "row"
+                  }}>
+                  {nutrition.map(({ displayName, content, unit }, index) => (
+                    <Box key={index}>
+                      {content > 0 && (
+                        <Text as="span">
+                          <b>{displayName}:</b> {content}
+                          {unit}&nbsp;
+                        </Text>
+                      )}
+                    </Box>
+                  ))}
+                </Flex>
+              </Collapse>
+            </Box>
+          )}
+        </GridItem>
+        <GridItem colSpan={{ base: 0, md: 1 }} />
       </Grid>
     </Container>
   );
