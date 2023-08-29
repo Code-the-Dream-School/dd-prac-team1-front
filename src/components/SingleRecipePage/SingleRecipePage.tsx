@@ -210,8 +210,13 @@ const SingleRecipePage = () => {
 
   return (
     <Container maxW="5xl">
-      <Grid templateColumns="repeat(3, 1fr)" gap="2">
-        <GridItem colSpan={2} w="100">
+      <Grid
+        templateColumns={{
+          base: "repeat(4, 1fr)",
+          md: "repeat(3, 1fr)"
+        }}
+        gap={{ base: "2", md: "6" }}>
+        <GridItem colSpan={{ base: 3, md: 2 }} w="100">
           <Flex marginTop="10" marginBottom="5" alignItems="center" gap="4">
             <IconButton
               size="lg"
@@ -227,7 +232,7 @@ const SingleRecipePage = () => {
           </Flex>
         </GridItem>
         <GridItem
-          colSpan={1}
+          colSpan={{ base: 4, md: 1 }}
           w="100%"
           display="flex"
           alignItems="end"
