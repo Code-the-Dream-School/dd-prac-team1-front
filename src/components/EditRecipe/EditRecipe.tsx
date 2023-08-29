@@ -159,8 +159,15 @@ const EditRecipe = () => {
         saveRecipe();
       }}>
       <Container maxW="5xl">
-        <Grid templateColumns="repeat(3, 1fr)" gap="2" mt="10" mb="5">
-          <GridItem colSpan={2} w="100%">
+        <Grid
+          templateColumns={{
+            base: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)"
+          }}
+          gap="2"
+          mt="10"
+          h="70">
+          <GridItem colSpan={{ base: 1, md: 2 }} w="100%">
             <Heading as="h3">Edit your recipe</Heading>
           </GridItem>
           <GridItem colSpan={1} w="100%" position="relative">
@@ -192,8 +199,13 @@ const EditRecipe = () => {
             </Flex>
           </GridItem>
         </Grid>
-        <Grid templateColumns="repeat(3, 1fr)" gap="2">
-          <GridItem colSpan={2} w="95%">
+        <Grid
+          templateColumns={{
+            base: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)"
+          }}
+          gap="2">
+          <GridItem colSpan={{ base: 1, md: 2 }} w="100%">
             <Flex flexDirection="column">
               <Box mt="10" alignItems="center" gap="2">
                 <FormControl w="70%" marginY="5">
@@ -281,7 +293,7 @@ const EditRecipe = () => {
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <FormControl>
+                  <FormControl mt="5">
                     <FormLabel>
                       <b>Complexity level</b>
                     </FormLabel>
@@ -335,7 +347,7 @@ const EditRecipe = () => {
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <FormControl>
+                  <FormControl mt="5">
                     <FormLabel>
                       <b>Servings</b>
                     </FormLabel>
@@ -372,18 +384,23 @@ const EditRecipe = () => {
                     onClick={() => handleInputAdd("ingredients")}
                   />
                 </Flex>
-                <Grid templateColumns="repeat(3, 1fr)" gap="6">
-                  <GridItem colSpan={1} w="100%">
+                <Grid
+                  templateColumns={{
+                    base: "repeat(4, 1fr)",
+                    md: "repeat(12, 1fr)"
+                  }}
+                  gap={{ base: 1, md: 6 }}>
+                  <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
                     <Text>
                       <i>ingredient</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={1} w="100%">
+                  <GridItem colSpan={{ base: 1, md: 3 }} w="100%">
                     <Text>
                       <i>amount</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={1} w="100%">
+                  <GridItem colSpan={{ base: 3, md: 3 }} w="100%">
                     <Text>
                       <i>unit</i>
                     </Text>
@@ -391,8 +408,16 @@ const EditRecipe = () => {
                 </Grid>
 
                 {ingredients.map((ingredient, index) => (
-                  <Grid templateColumns="repeat(6, 1fr)" key={index} gap="2">
-                    <GridItem colSpan={2} w="100%">
+                  <Grid
+                    templateColumns={{
+                      base: "repeat(9, 1fr)",
+                      md: "repeat(12, 1fr)"
+                    }}
+                    w="95%"
+                    gap="2"
+                    mb={{ base: "2", md: "0" }}
+                    key={index}>
+                    <GridItem colSpan={{ base: 11, md: 3 }} w="100%">
                       <FormControl w="100%">
                         <Input
                           isRequired
@@ -414,7 +439,7 @@ const EditRecipe = () => {
                         />
                       </FormControl>
                     </GridItem>
-                    <GridItem colSpan={2} w="100%">
+                    <GridItem colSpan={{ base: 6, md: 5 }} w="100%">
                       <IngredientAmountHandle
                         ingredient={ingredient}
                         onChange={(value: any) => {
@@ -430,7 +455,7 @@ const EditRecipe = () => {
                         }}
                       />
                     </GridItem>
-                    <GridItem colSpan={1} w="100%">
+                    <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
                       {ingredient.ingredientAmount >= 0 && (
                         <FormControl mr="1" w="100%">
                           <Select
@@ -465,7 +490,7 @@ const EditRecipe = () => {
                         </FormControl>
                       )}
                     </GridItem>
-                    <GridItem colSpan={1} w="100%">
+                    <GridItem colSpan={{ base: 1, md: 1 }} w="100%">
                       <IconButton
                         size="sm"
                         variant="solid"
@@ -503,8 +528,7 @@ const EditRecipe = () => {
                   <b>Nutrition Information</b>
                 </Text>
                 <Grid templateColumns="repeat(4, 1fr)" mt="2" gap="2">
-                  <GridItem colSpan={1} w="100%">
-                    {" "}
+                  <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                     <FormControl mr="2">
                       <FormLabel>
                         <i>Calories</i>
@@ -534,7 +558,7 @@ const EditRecipe = () => {
                       </InputGroup>
                     </FormControl>
                   </GridItem>
-                  <GridItem colSpan={1} w="100%">
+                  <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                     <FormControl mr="2">
                       <FormLabel>
                         <i>Carbs</i>
@@ -563,7 +587,7 @@ const EditRecipe = () => {
                       </InputGroup>
                     </FormControl>
                   </GridItem>
-                  <GridItem colSpan={1} w="100%">
+                  <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                     <FormControl mr="2">
                       <FormLabel>
                         <i>Protein</i>
@@ -593,7 +617,7 @@ const EditRecipe = () => {
                       </InputGroup>
                     </FormControl>
                   </GridItem>
-                  <GridItem colSpan={1} w="100%">
+                  <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                     <FormControl mr="2">
                       <FormLabel>
                         <i>Fat</i>
@@ -686,8 +710,8 @@ const EditRecipe = () => {
               />
             </Flex>
             {tags.map((tag, index) => (
-              <Flex key={index}>
-                <FormControl mr="1">
+              <Flex key={index} alignItems="center">
+                <FormControl m="2">
                   <Input
                     size="sm"
                     type="text"
@@ -709,7 +733,7 @@ const EditRecipe = () => {
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
-                  m="2"
+                  // m="2"
                   onClick={() => handleInputRemove("tags", index)}
                 />
               </Flex>
@@ -729,8 +753,8 @@ const EditRecipe = () => {
               />
             </Flex>
             {diets.map((diet, index) => (
-              <Flex key={index}>
-                <FormControl mr="1">
+              <Flex key={index} alignItems="center">
+                <FormControl m="2">
                   <Select
                     size="sm"
                     placeholder="Choose diet"
@@ -768,7 +792,6 @@ const EditRecipe = () => {
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
-                  m="2"
                   onClick={() => handleInputRemove("diets", index)}
                 />
               </Flex>

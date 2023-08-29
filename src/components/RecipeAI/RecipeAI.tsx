@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Center,
   Heading,
-  Image,
   Grid,
   GridItem,
   Text,
@@ -36,23 +35,13 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   };
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-      <GridItem w="100%">
+    <Grid templateColumns="repeat(2, 1fr)" gap="2" mt="5">
+      <GridItem w="100%" colSpan={1}>
         <Text>
           Sure! Here's a simple and delicious recipe for {recipe.recipeName}:
         </Text>
-        <Heading as="h6">Ingredients:</Heading>
-        <UnorderedList>
-          {recipe.ingredients.map((ingredient, index) => (
-            <IngredientList key={index} ingredient={ingredient} />
-          ))}
-        </UnorderedList>
-        <Heading as="h6">Instructions:</Heading>
-        {recipe.instructions.map((instruction, index) => (
-          <InstructionList key={index} instruction={instruction} />
-        ))}
       </GridItem>
-      <GridItem w="100%">
+      <GridItem w="100%" colSpan={1}>
         <Center>
           <Button
             variant="outline"
@@ -68,8 +57,32 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             {save}
           </Button>
         </Center>
-        <Image w="100%" src={recipe.image} alt={recipe.recipeName} />
       </GridItem>
+      <GridItem w="100%" colSpan={1}>
+        <Heading as="h6">Ingredients:</Heading>
+        <UnorderedList>
+          {recipe.ingredients.map((ingredient, index) => (
+            <IngredientList key={index} ingredient={ingredient} />
+          ))}
+        </UnorderedList>
+      </GridItem>
+      <GridItem
+        colSpan={1}
+        // w="100%"
+        h="50vh"
+        backgroundImage={recipe.image}
+        backgroundPosition="center"
+        backgroundSize="cover"
+        backgroundRepeat="no-repeat"
+        borderRadius="5"
+      />
+      <GridItem w="100%" colSpan={{ base: 2, md: 1 }}>
+        <Heading as="h6">Instructions:</Heading>
+        {recipe.instructions.map((instruction, index) => (
+          <InstructionList key={index} instruction={instruction} />
+        ))}
+      </GridItem>
+      <GridItem colSpan={{ base: 0, md: 1 }} />
     </Grid>
   );
 };
