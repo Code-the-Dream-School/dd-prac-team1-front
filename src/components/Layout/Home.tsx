@@ -8,10 +8,7 @@ import {
   Center,
   Flex,
   Box,
-  Text,
-  Stack,
-  Container,
-  StackDivider
+  Text
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
