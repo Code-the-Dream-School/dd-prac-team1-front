@@ -387,15 +387,15 @@ const SingleRecipePage = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem
-          colSpan={{ base: 2, md: 1 }}
-          w="100%"
-          h="300px"
-          backgroundImage={recipe.recipeImage}
-          backgroundPosition="center"
-          backgroundSize="cover"
-          backgroundRepeat="no-repeat"
-          borderRadius="5">
+        <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
+          <Box
+            h="300px"
+            backgroundImage={recipe.recipeImage}
+            backgroundPosition="center"
+            backgroundSize="cover"
+            backgroundRepeat="no-repeat"
+            borderRadius="5"
+          />
           <Flex mt="2" flexWrap="wrap" justifyContent="center">
             {tagsAndDiets().map((tag, index) => (
               <SingleRecipeTag key={index} tag={tag} />
