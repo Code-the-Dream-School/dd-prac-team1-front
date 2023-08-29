@@ -19,11 +19,23 @@ const SearchChoice = () => {
   const navigateToOwnRecipe = () => {
     navigate("/manual-recipe");
   };
+  const backgroundImageUrl = "url('/images/produce.png')";
 
   return (
     <Flex justifyContent={"center"} h="85vh">
+      <Flex
+        backgroundImage={backgroundImageUrl}
+        backgroundPosition="center"
+        backgroundRepeat="no-repeat"
+        backgroundSize="cover"
+        opacity={0.8}
+        position="absolute"
+        width="100%"
+        height="90%"
+        zIndex={-1}
+      />
       <HStack spacing={20}>
-        <Card cursor="pointer" onClick={navigateToAISearch}>
+        <Card cursor="pointer" onClick={navigateToAISearch} maxW="sm">
           <CardHeader>
             <Center>
               <Heading size="md">RECIPE FROM OLIVIER</Heading>
@@ -37,15 +49,29 @@ const SearchChoice = () => {
             <Text>Save the recipes you like to your recipe gallery!</Text>
           </CardBody>
         </Card>
-        <Card cursor="pointer" onClick={navigateToOwnRecipe}>
+
+        <Card cursor="pointer" onClick={navigateToOwnRecipe} maxW="sm">
           <CardHeader>
-            <Heading size="md">ADD YOUR OWN RECIPE </Heading>
+            <Center>
+              <Heading size="md">ADD YOUR OWN RECIPE </Heading>
+            </Center>
           </CardHeader>
           <CardBody>
             <Text>Have a recipe you love?</Text>
             <Text>You can always type it out in our recipe friendly form.</Text>
           </CardBody>
         </Card>
+        {/* <Card cursor="pointer" onClick={navigateToOwnRecipe} maxW="sm">
+          <CardHeader>
+            <Center>
+              <Heading size="md">ADD BY URL </Heading>
+            </Center>
+          </CardHeader>
+          <CardBody>
+            <Text>Discovered a recipe you enjoy online? </Text>
+            <Text>Simply copy and paste the website URL right here.</Text>
+          </CardBody>
+        </Card> */}
       </HStack>
     </Flex>
   );
