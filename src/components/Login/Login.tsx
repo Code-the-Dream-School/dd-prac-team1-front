@@ -77,7 +77,7 @@ const Login = () => {
           handleLogin();
         }}>
         <Box p="10px">
-          <FormControl isRequired>
+          <FormControl isRequired marginY="25">
             <FormLabel htmlFor="loginEmail">Email</FormLabel>
             <Input
               type="email"
@@ -92,7 +92,7 @@ const Login = () => {
           </FormControl>
         </Box>
         <Box p="10px">
-          <FormControl isInvalid={errorOccur} isRequired>
+          <FormControl isInvalid={errorOccur} isRequired marginY="25">
             <FormLabel htmlFor="loginPassword">Password</FormLabel>
             <InputGroup>
               <Input
@@ -127,7 +127,7 @@ const Login = () => {
         </Box>
       </Box>
       <Center>
-        <Button variant="link" size="xs" mt="10" onClick={navigateToRegister}>
+        <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
           <Text as="ins">or create an account</Text>
         </Button>
       </Center>
