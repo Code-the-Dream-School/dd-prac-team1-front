@@ -4,7 +4,6 @@ import {
   CardHeader,
   Center,
   Flex,
-  HStack,
   Heading,
   Text
 } from "@chakra-ui/react";
@@ -24,21 +23,26 @@ const SearchChoice = () => {
   return (
     <Flex
       justifyContent="center"
-      // h="85vh"
+      alignItems="center"
+      h="80vh"
+      gap="20"
       direction={{ base: "column", md: "row" }}>
       <Flex
         backgroundImage={backgroundImageUrl}
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
-        opacity={0.8}
+        opacity="0.8"
         position="absolute"
-        width="100%"
-        height="90%"
-        zIndex={-1}
+        w="100%"
+        h="100vh"
+        zIndex="-1"
       />
-      {/* <HStack spacing={20}> */}
-      <Card cursor="pointer" onClick={navigateToAISearch} maxW="sm" h="200px">
+      <Card
+        cursor="pointer"
+        onClick={navigateToAISearch}
+        w={{ base: "75%", md: "300px", lg: "400px" }}
+        h="200px">
         <CardHeader>
           <Center>
             <Heading size="md">RECIPE FROM OLIVIER</Heading>
@@ -53,7 +57,11 @@ const SearchChoice = () => {
         </CardBody>
       </Card>
 
-      <Card cursor="pointer" onClick={navigateToOwnRecipe} maxW="sm" h="200px">
+      <Card
+        cursor="pointer"
+        onClick={navigateToOwnRecipe}
+        w={{ base: "75%", md: "300px", lg: "400px" }}
+        h="200px">
         <CardHeader>
           <Center>
             <Heading size="md">ADD YOUR OWN RECIPE </Heading>
@@ -75,7 +83,6 @@ const SearchChoice = () => {
             <Text>Simply copy and paste the website URL right here.</Text>
           </CardBody>
         </Card> */}
-      {/* </HStack> */}
     </Flex>
   );
 };
