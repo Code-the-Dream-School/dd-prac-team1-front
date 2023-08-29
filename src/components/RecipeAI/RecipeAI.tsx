@@ -58,8 +58,10 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
           </Button>
         </Center>
       </GridItem>
-      <GridItem w="100%" colSpan={1}>
-        <Heading as="h6">Ingredients:</Heading>
+      <GridItem w="100%" colSpan={1} mt="10">
+        <Heading as="h6" mb="10">
+          Ingredients:
+        </Heading>
         <UnorderedList>
           {recipe.ingredients.map((ingredient, index) => (
             <IngredientList key={index} ingredient={ingredient} />
@@ -68,8 +70,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
       </GridItem>
       <GridItem
         colSpan={1}
-        // w="100%"
-        h="50vh"
+        h="400px"
         backgroundImage={recipe.image}
         backgroundPosition="center"
         backgroundSize="cover"
@@ -77,7 +78,9 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         borderRadius="5"
       />
       <GridItem w="100%" colSpan={{ base: 2, md: 1 }}>
-        <Heading as="h6">Instructions:</Heading>
+        <Heading as="h6" mb="10">
+          Instructions:
+        </Heading>
         {recipe.instructions.map((instruction, index) => (
           <InstructionList key={index} instruction={instruction} />
         ))}
