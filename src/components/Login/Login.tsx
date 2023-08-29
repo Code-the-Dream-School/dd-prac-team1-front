@@ -118,13 +118,11 @@ const Login = () => {
             )}
           </FormControl>
         </Box>
-        <Box p="10px" mt="10">
-          <Center>
-            <Button variant="solid" type="submit">
-              SIGN IN
-            </Button>
-          </Center>
-        </Box>
+        <Center mt="10">
+          <Button variant="solid" type="submit">
+            SIGN IN
+          </Button>
+        </Center>
       </Box>
       <Center>
         <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
