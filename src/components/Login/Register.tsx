@@ -90,90 +90,89 @@ const Register = () => {
       });
   };
   return (
-    <Box>
-      <Container maxW="xl">
-        <Box
-          as="form"
-          onSubmit={e => {
-            e.preventDefault();
-            handleRegister();
-          }}>
-          <FormControl isRequired>
-            <FormLabel htmlFor="registerName">Name</FormLabel>
+    <Container maxW="xl" mt="30" mb="50">
+      <Box
+        as="form"
+        onSubmit={e => {
+          e.preventDefault();
+          handleRegister();
+        }}>
+        <FormControl isRequired marginY="25">
+          <FormLabel htmlFor="registerName">Name</FormLabel>
+          <Input
+            type="text"
+            id="registerName"
+            variant="flushed"
+            value={name}
+            onChange={event => setName(event.target.value)}
+          />
+          <FormHelperText>Please enter your name</FormHelperText>
+        </FormControl>
+        <FormControl isInvalid={errorEmail.length > 0} isRequired marginY="25">
+          <FormLabel htmlFor="registerEmail">Email</FormLabel>
+          <Input
+            type="email"
+            id="registerEmail"
+            variant="flushed"
+            value={email}
+            onChange={event => {
+              setEmail(event.target.value);
+              setErrorEmail("");
+            }}
+          />
+          {errorEmail.length === 0 && (
+            <FormHelperText>
+              Please enter a valid email address in this format:
+              name@example.com
+            </FormHelperText>
+          )}
+          {errorEmail.length > 0 && (
+            <FormErrorMessage>{errorEmail}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl
+          isInvalid={errorPassword.length > 0}
+          isRequired
+          marginY="25">
+          <FormLabel htmlFor="registerPassword">Password</FormLabel>
+          <InputGroup>
             <Input
-              type="text"
-              id="registerName"
+              type={type}
+              value={password}
+              id="registerPassword"
               variant="flushed"
-              value={name}
-              onChange={event => setName(event.target.value)}
-            />
-            <FormHelperText>Please enter your name</FormHelperText>
-          </FormControl>
-          <FormControl isInvalid={errorEmail.length > 0} isRequired>
-            <FormLabel htmlFor="registerEmail">Email</FormLabel>
-            <Input
-              type="email"
-              id="registerEmail"
-              variant="flushed"
-              value={email}
               onChange={event => {
-                setEmail(event.target.value);
-                setErrorEmail("");
+                setPassword(event.target.value);
+                setErrorPassword("");
               }}
             />
-            {errorEmail.length === 0 && (
-              <FormHelperText>
-                Please enter a valid email address in this format:
-                name@example.com
-              </FormHelperText>
-            )}
-            {errorEmail.length > 0 && (
-              <FormErrorMessage>{errorEmail}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isInvalid={errorPassword.length > 0} isRequired>
-            <FormLabel htmlFor="registerPassword">Password</FormLabel>
-            <InputGroup>
-              <Input
-                type={type}
-                value={password}
-                id="registerPassword"
-                variant="flushed"
-                onChange={event => {
-                  setPassword(event.target.value);
-                  setErrorPassword("");
-                }}
-              />
-              <InputRightElement>
-                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            {password.length < 8 && errorPassword.length === 0 && (
-              <FormHelperText>
-                Password must be at least 8 characters long
-              </FormHelperText>
-            )}
-            {errorPassword.length > 0 && (
-              <FormErrorMessage>{errorPassword}</FormErrorMessage>
-            )}
-            <Box p="10px">
-              <Center>
-                <Button variant="solid" type="submit">
-                  SIGN UP
-                </Button>
-              </Center>
-            </Box>
-          </FormControl>
-        </Box>
+            <InputRightElement>
+              <Button size="xs" variant="ghost" onClick={handleShowPassword}>
+                {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          {password.length < 8 && errorPassword.length === 0 && (
+            <FormHelperText>
+              Password must be at least 8 characters long
+            </FormHelperText>
+          )}
+          {errorPassword.length > 0 && (
+            <FormErrorMessage>{errorPassword}</FormErrorMessage>
+          )}
+        </FormControl>
         <Center>
-          <Button variant="link" size="xs" onClick={navigateToLogin}>
-            <Text as="ins">or sign in</Text>
+          <Button variant="solid" type="submit" mt="5">
+            SIGN UP
           </Button>
         </Center>
-      </Container>
-    </Box>
+      </Box>
+      <Center>
+        <Button variant="link" size="xs" mt="5" onClick={navigateToLogin}>
+          <Text as="ins">or sign in</Text>
+        </Button>
+      </Center>
+    </Container>
   );
 };
 
