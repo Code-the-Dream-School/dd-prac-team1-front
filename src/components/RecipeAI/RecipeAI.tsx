@@ -8,7 +8,8 @@ import {
   Text,
   Button,
   Icon,
-  UnorderedList
+  UnorderedList,
+  useToast
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { AIRecipe } from "../../utils/types";
@@ -23,7 +24,7 @@ type RecipeProps = {
 const RecipeAI = ({ recipe }: RecipeProps) => {
   const [save, setSave] = useState<string>("SAVE");
   const [ifSaved, setIfSaved] = useState<boolean>(false);
-
+  const toast = useToast();
   const handleSaveRecipe = () => {
     saveRecipe(recipe)
       .then(response => {
@@ -32,6 +33,21 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -60,7 +76,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
             leftIcon={
               <Icon
                 as={ifSaved ? BsHeartFill : BsHeart}
-                color={ifSaved ? "red" : ""}
+                color={ifSaved ? "customRed" : ""}
               />
             }
             isDisabled={ifSaved}

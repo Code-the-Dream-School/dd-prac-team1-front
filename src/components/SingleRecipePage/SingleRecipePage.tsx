@@ -57,6 +57,21 @@ const SingleRecipePage = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   }, [recipeId]);
 
@@ -72,6 +87,21 @@ const SingleRecipePage = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -163,16 +193,20 @@ const SingleRecipePage = () => {
       .catch(error => {
         toast({
           title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
-          position: "top",
-          render: () => (
-            <Box p="3" bg="red">
-              {error.response.data.msg}
-            </Box>
-          )
+          position: "top"
         });
+
         console.log(error);
       });
   };
