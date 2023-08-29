@@ -212,7 +212,7 @@ const SingleRecipePage = () => {
     <Container maxW="5xl">
       <Grid templateColumns="repeat(3, 1fr)" gap="2">
         <GridItem colSpan={2} w="100">
-          <Flex marginTop="10" marginBottom="5" alignItems="center" gap="4">
+          <Flex mt="10" mb="5" alignItems="center" gap="4">
             <IconButton
               size="lg"
               variant="ghost"
@@ -369,7 +369,7 @@ const SingleRecipePage = () => {
           )}
           <Flex flexDirection="column">
             <Box mt="5">
-              <Heading as="h3" size="md" marginBottom="3">
+              <Heading as="h3" size="md" mb="3">
                 Ingredients
               </Heading>
               <UnorderedList>
@@ -379,7 +379,7 @@ const SingleRecipePage = () => {
               </UnorderedList>
             </Box>
             <Box mt="5">
-              <Heading as="h3" size="md" marginBottom="3">
+              <Heading as="h3" size="md" mb="3">
                 Instructions
               </Heading>
               <Text>{recipe.recipeInstructions}</Text>
@@ -390,7 +390,7 @@ const SingleRecipePage = () => {
               recipe.recipeNutritionInfo.NutritionInfoProtein !== 0) && (
               <Box mt="5">
                 <Flex onClick={onToggle} cursor="pointer">
-                  <Heading as="h3" size="md" marginBottom="3">
+                  <Heading as="h3" size="md" mb="3">
                     Nutrition Information
                   </Heading>
                   <Box as="span">
