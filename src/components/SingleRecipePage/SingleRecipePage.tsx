@@ -339,29 +339,29 @@ const SingleRecipePage = () => {
           </Flex>
         </GridItem>
         <GridItem colSpan={{ base: 2, md: 2 }} w="95%">
-          <Box>
+          <Flex direction={{ base: "column", md: "row" }}>
             {recipe.recipePrepTime.recipePrepTimeMinutes > 0 && (
-              <Text as="span">
+              <Text>
                 <b>Prep time:</b>&nbsp;
                 {`${recipe.recipePrepTime.recipePrepTimeMinutes} min`}
                 &nbsp;&nbsp;
               </Text>
             )}
             {recipe.recipeCookTime.recipeCookTimeMinutes > 0 && (
-              <Text as="span">
+              <Text>
                 <b>Cooking time:</b>&nbsp;
                 {`${recipe.recipeCookTime.recipeCookTimeMinutes} min`}
                 &nbsp;&nbsp;
               </Text>
             )}
             {recipe.recipeTotalTime.recipeTotalTimeMinutes > 0 && (
-              <Text as="span">
+              <Text>
                 <b>Total:</b>&nbsp;
                 {`${recipe.recipeTotalTime.recipeTotalTimeMinutes} min`}
                 &nbsp;&nbsp;
               </Text>
             )}
-          </Box>
+          </Flex>
           <Text>
             <b>Complexity level:</b>&nbsp;
             {`${recipe.recipeComplexityLevel}`}
