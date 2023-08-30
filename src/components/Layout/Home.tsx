@@ -37,9 +37,7 @@ const Home = () => {
           colSpan={{ base: 2, md: 1 }}
           w="100%"
           h={{ base: "40vh", md: "95vh" }}
-          mt={{ base: "15", md: "30" }}
-          ml={{ base: "15", md: "30" }}
-          mr={{ base: "15", md: "30" }}
+          p="15"
           position="relative"
           borderRadius="20px"
           overflow="hidden" // Hide any content that exceeds the rounded corners
@@ -48,8 +46,6 @@ const Home = () => {
             justifyContent="center"
             alignItems="center"
             position="relative"
-            top="0"
-            left="0"
             width="100%"
             height="100%">
             <Image
@@ -59,8 +55,6 @@ const Home = () => {
               width="100%"
               height="100%"
               position="absolute"
-              top="0"
-              left="0"
               borderRadius="20px"
             />
           </Flex>
@@ -114,41 +108,28 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="95%"
-          h={{ base: "30vh", md: "90vh" }}
-          // mt={{ base: "15", md: "30" }}
-          // ml={{ base: "15", md: "30" }}
-          // mr={{ base: "15", md: "30" }}
-          // mb={{ base: "25", md: "0" }}
+          h={{ base: "30vh", sm: "50vh", md: "90vh" }}
           position="relative"
           borderRadius="20px">
           <Flex
             justifyContent="center"
             alignItems="center"
-            // position="relative"
-
             width="100%"
             height="100%">
-            <Box
-              width="100%"
-              // maxWidth="100%"
-              //  maxHeight="100%"
-            >
+            <Box width="100%">
               {images.map((image, index) => (
                 <Image
                   key={index}
                   src={image}
                   alt={`Slide ${index + 1}`}
-                  h={{ base: "100%", md: "40%" }}
+                  h={{ base: "100%", md: "50%" }}
+                  p="15"
                   opacity={index === currentSlide ? 1 : 0}
                   transition="opacity 1s ease-in-out"
                   position="absolute"
-                  // style={{ maxWidth: "100%", maxHeight: "100%" }}
                   top="10"
                   left="inherit"
-                  mt={{ base: "15", md: "30" }}
-                  ml={{ base: "15", md: "30" }}
-                  mr={{ base: "15", md: "30" }}
-                  mb={{ base: "25", md: "0" }}
+                  m="5"
                   objectFit="cover"
                   backgroundPosition="center"
                   borderRadius="20px"
@@ -161,10 +142,8 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
-          mt={{ sm: "85", md: "30" }}
-          p={{ base: "10px", md: "25" }}
-          // position="absolute"
-        >
+          mt={{ base: "50", md: "30" }}
+          p={{ base: "10px", md: "25" }}>
           <Flex flexDirection="column">
             <Box p="5">
               <Text fontSize="xl">Discover new recipes</Text>
