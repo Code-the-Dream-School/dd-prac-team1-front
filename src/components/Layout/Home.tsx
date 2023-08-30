@@ -33,9 +33,9 @@ const Home = () => {
   return (
     <Grid templateColumns="repeat(2, 1fr)" gap={2}>
       <GridItem
-        colSpan={1}
+        colSpan={{ base: 2, md: 1 }}
         w="100%"
-        h="90vh"
+        h={{ base: "30vh", md: "90vh" }}
         padding="30"
         position="relative"
         borderRadius="20px"
@@ -63,28 +63,42 @@ const Home = () => {
         </Flex>
       </GridItem>
       <GridItem
-        colSpan={1}
+        colSpan={{ base: 2, md: 1 }}
         w="100%"
-        h="70vh"
-        padding="50"
+        h={{ base: "40vh", md: "100%" }}
+        padding={{ base: "25px", md: "50" }}
         display="flex"
         flexDirection="column">
-        <Flex justifyContent="space-between" flexBasis="50px">
-          <Image borderRadius="lg" src="/images/Logo_Olivier.svg" />
-          <Button variant="outline" background={"green"}>
+        <Flex
+          justifyContent="space-between"
+          flexBasis="50px"
+          alignItems="center">
+          <Image
+            borderRadius="lg"
+            src="/images/Logo_Olivier.svg"
+            alt="logo image"
+            h={{ base: "35px", sm: "40px", md: "45px", lg: "55px" }}
+          />
+          <Button
+            variant="outline"
+            background={"green"}
+            size={{ base: "sm", sm: "md", md: "lg" }}>
             <Link as={RouterLink} to="/login">
               SIGN IN
             </Link>
           </Button>
         </Flex>
-        <Flex flexGrow="1" alignItems="center">
-          <Heading as="h3" size="3xl">
+        <Flex flexGrow="1" alignItems="center" justifyContent="center">
+          <Heading as="h3" size={{ base: "lg", md: "3xl" }}>
             PLAN YOUR MEALS WITH OLIVIER!
           </Heading>
         </Flex>
         <Center>
-          <Flex h="30%">
-            <Button variant="outline" size="lg" background={"green"}>
+          <Flex>
+            <Button
+              variant="outline"
+              size={{ base: "sm", sm: "md", md: "lg" }}
+              background={"green"}>
               <Link as={RouterLink} to="/register">
                 Create an account
               </Link>
