@@ -36,29 +36,13 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
-          h={{ base: "40vh", md: "95vh" }}
-          p="15"
-          position="relative"
-          borderRadius="20px"
-          overflow="hidden" // Hide any content that exceeds the rounded corners
-        >
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            position="relative"
-            width="100%"
-            height="100%">
-            <Image
-              src="/images/avocado_toast.png"
-              alt="Background Image"
-              objectFit="cover"
-              width="100%"
-              height="100%"
-              position="absolute"
-              borderRadius="20px"
-            />
-          </Flex>
-        </GridItem>
+          h={{ base: "40vh", md: "100vh" }}
+          backgroundImage="url('/images/avocado_toast.png')"
+          backgroundPosition="center"
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          borderRadius="lg"
+        />
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
@@ -107,14 +91,14 @@ const Home = () => {
       <Grid templateColumns="repeat(2, 1fr)" gap={2}>
         <GridItem
           colSpan={{ base: 2, md: 1 }}
-          w="95%"
+          w="100%"
           h={{ base: "30vh", sm: "50vh", md: "90vh" }}
           position="relative"
           borderRadius="20px">
           <Flex
             justifyContent="center"
             alignItems="center"
-            width="100%"
+            width="95%"
             height="100%">
             <Box width="100%">
               {images.map((image, index) => (
@@ -123,13 +107,11 @@ const Home = () => {
                   src={image}
                   alt={`Slide ${index + 1}`}
                   h={{ base: "100%", md: "50%" }}
-                  p="15"
                   opacity={index === currentSlide ? 1 : 0}
                   transition="opacity 1s ease-in-out"
                   position="absolute"
                   top="10"
                   left="inherit"
-                  m="5"
                   objectFit="cover"
                   backgroundPosition="center"
                   borderRadius="20px"
