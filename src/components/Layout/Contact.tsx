@@ -22,7 +22,7 @@ const Contact = () => {
       <GridItem
         colSpan={1}
         w="100%"
-        h="90vh"
+        h="70vh"
         padding="50"
         display="flex"
         flexDirection="column">
@@ -34,7 +34,7 @@ const Contact = () => {
                 direction={["column"]}
                 spacing="6px">
                 <Box>
-                  <Heading size="md">Contact</Heading>
+                  <Heading>Contact</Heading>
                   <Text pt="2" fontSize="sm">
                     Hi there! Thanks for visiting Olivier. If you have another
                     question (or just want to say hello!) please feel free to

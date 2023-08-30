@@ -87,9 +87,15 @@ const RecipeManual = () => {
         console.log(error);
         toast({
           title: "Error",
-          description: `${error.message}`,
-          status: "warning",
-          variant: "subtle",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
           duration: 4000,
           isClosable: true,
           position: "top"

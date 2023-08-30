@@ -50,7 +50,14 @@ const SearchAI = () => {
           setError(true);
           setIsLoading(false);
           setErrorMessage(
-            `${error.response.status} - ${error.response.data.msg}`
+            `${error?.response?.status || ""} - ${
+              error?.response?.data?.msg ||
+              error?.response?.data?.message ||
+              error?.response?.data?.error ||
+              error?.response?.data ||
+              error.message ||
+              "unknown error"
+            }`
           );
           setRecipe(null);
         }
