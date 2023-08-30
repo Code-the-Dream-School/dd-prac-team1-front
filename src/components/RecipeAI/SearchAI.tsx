@@ -38,6 +38,7 @@ const SearchAI = () => {
         setIsLoading(false);
       })
       .catch(error => {
+        console.log(error);
         if (error.message.includes("500")) {
           setError(true);
           setIsLoading(false);
