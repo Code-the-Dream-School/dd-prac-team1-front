@@ -114,7 +114,7 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="95%"
-          // h={{ base: "30vh", md: "90vh" }}
+          h={{ base: "30vh", md: "90vh" }}
           // mt={{ base: "15", md: "30" }}
           // ml={{ base: "15", md: "30" }}
           // mr={{ base: "15", md: "30" }}
@@ -138,6 +138,7 @@ const Home = () => {
                   key={index}
                   src={image}
                   alt={`Slide ${index + 1}`}
+                  h={{ base: "100%", md: "40%" }}
                   opacity={index === currentSlide ? 1 : 0}
                   transition="opacity 1s ease-in-out"
                   position="absolute"
@@ -160,7 +161,7 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
-          mt={{ base: "15", md: "30" }}
+          mt={{ sm: "85", md: "30" }}
           p={{ base: "10px", md: "25" }}
           // position="absolute"
         >
