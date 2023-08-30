@@ -31,7 +31,7 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
             <Image
               boxSize={{
                 base: "100px",
-                sm: "150px",
+                sm: "135px",
                 md: "150px"
               }}
               borderRadius="lg"
@@ -41,9 +41,9 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
               alt={recipe.recipeName}
             />
           </Center>
-          <Stack mt="3">
+          <Stack mt={{ base: "1", sm: "2", md: "3" }}>
             <Center>
-              <Text fontSize="xs" h="7">
+              <Text fontSize="xs" h={{ base: "3", sm: "5", md: "7" }}>
                 {recipe.recipeName}
               </Text>
             </Center>

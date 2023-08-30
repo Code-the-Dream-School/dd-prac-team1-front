@@ -11,7 +11,8 @@ const SavedRecipesList = ({ recipes }: SavedRecipesProps) => {
   return (
     <Grid
       templateColumns={{
-        base: "repeat(2, 1fr)",
+        base: "repeat(1, 1fr)",
+        sm: "repeat(2, 1fr)",
         md: "repeat(3, 1fr)",
         lg: "repeat(4, 1fr)"
       }}
