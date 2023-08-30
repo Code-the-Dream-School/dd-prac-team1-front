@@ -410,14 +410,14 @@ const EditRecipe = () => {
                 {ingredients.map((ingredient, index) => (
                   <Grid
                     templateColumns={{
-                      base: "repeat(9, 1fr)",
-                      md: "repeat(12, 1fr)"
+                      base: "repeat(11, 1fr)",
+                      lg: "repeat(12, 1fr)"
                     }}
                     w="95%"
                     gap="2"
                     mb={{ base: "2", md: "0" }}
                     key={index}>
-                    <GridItem colSpan={{ base: 11, md: 3 }} w="100%">
+                    <GridItem colSpan={{ base: 11, md: 10, lg: 3 }} w="100%">
                       <FormControl w="100%">
                         <Input
                           isRequired
@@ -439,7 +439,7 @@ const EditRecipe = () => {
                         />
                       </FormControl>
                     </GridItem>
-                    <GridItem colSpan={{ base: 6, md: 5 }} w="100%">
+                    <GridItem colSpan={{ base: 11, md: 6, lg: 5 }} w="100%">
                       <IngredientAmountHandle
                         ingredient={ingredient}
                         onChange={(value: any) => {
@@ -455,7 +455,7 @@ const EditRecipe = () => {
                         }}
                       />
                     </GridItem>
-                    <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
+                    <GridItem colSpan={{ base: 10, md: 4, lg: 3 }} w="100%">
                       {ingredient.ingredientAmount >= 0 && (
                         <FormControl mr="1" w="100%">
                           <Select
@@ -490,7 +490,7 @@ const EditRecipe = () => {
                         </FormControl>
                       )}
                     </GridItem>
-                    <GridItem colSpan={{ base: 1, md: 1 }} w="100%">
+                    <GridItem colSpan={1} w="100%">
                       <IconButton
                         size="sm"
                         variant="solid"
@@ -729,7 +729,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
@@ -788,7 +788,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
