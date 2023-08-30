@@ -36,7 +36,7 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
-          h={{ base: "40vh", md: "100vh" }}
+          h={{ base: "40vh", md: "90vh" }}
           backgroundImage="url('/images/avocado_toast.png')"
           backgroundPosition="center"
           backgroundSize="cover"
@@ -94,6 +94,7 @@ const Home = () => {
           w="100%"
           h={{ base: "30vh", sm: "50vh", md: "90vh" }}
           position="relative"
+          mt="10"
           borderRadius="20px">
           <Flex
             justifyContent="center"
