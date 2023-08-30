@@ -25,7 +25,7 @@ const SearchChoice = () => {
       justifyContent="center"
       alignItems="center"
       h="calc(100vh - 250px)"
-      gap="20"
+      gap={{ base: "10", lg: "20" }}
       direction={{ base: "column", md: "row" }}>
       <Flex
         backgroundImage={backgroundImageUrl}
@@ -40,36 +40,48 @@ const SearchChoice = () => {
       />
       <Card
         cursor="pointer"
+        overflow="auto"
         onClick={navigateToAISearch}
-        w={{ base: "75%", md: "300px", lg: "400px" }}
-        h={{ base: "150px", md: "200px" }}>
+        w={{ base: "75%", md: "350px", lg: "450px" }}
+        h={{ base: "150px", md: "200px", lg: "150px" }}>
         <CardHeader>
           <Center>
-            <Heading size="md">RECIPE FROM OLIVIER</Heading>
+            <Heading size={{ base: "sm", md: "md" }}>
+              RECIPE FROM OLIVIER
+            </Heading>
           </Center>
         </CardHeader>
         <CardBody>
-          <Text>
+          <Text fontSize={{ base: "16", md: "18" }} pb="1">
             AI powered menu planning helper Olivier will search for delicious
             recipes.
           </Text>
-          <Text>Save the recipes you like to your recipe gallery!</Text>
+          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+            Save the recipes you like to your recipe gallery!
+          </Text>
         </CardBody>
       </Card>
 
       <Card
         cursor="pointer"
+        overflow="auto"
         onClick={navigateToOwnRecipe}
-        w={{ base: "75%", md: "300px", lg: "400px" }}
-        h={{ base: "150px", md: "200px" }}>
+        w={{ base: "75%", md: "325px", lg: "450px" }}
+        h={{ base: "150px", md: "200px", lg: "150px" }}>
         <CardHeader>
           <Center>
-            <Heading size="md">ADD YOUR OWN RECIPE </Heading>
+            <Heading size={{ base: "sm", md: "md" }}>
+              ADD YOUR OWN RECIPE{" "}
+            </Heading>
           </Center>
         </CardHeader>
         <CardBody>
-          <Text>Have a recipe you love?</Text>
-          <Text>You can always type it out in our recipe friendly form.</Text>
+          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+            Have a recipe you love?
+          </Text>
+          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+            You can always type it out in our recipe friendly form.
+          </Text>
         </CardBody>
       </Card>
       {/* if we will add this part we need to fix rendering (change sizes of cards), gaps between them and margins
