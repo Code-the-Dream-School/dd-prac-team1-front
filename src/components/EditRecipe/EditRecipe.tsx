@@ -260,12 +260,12 @@ const EditRecipe = () => {
                 </FormControl>
               </Box>
               <Grid templateColumns="repeat(2, 1fr)" gap="2">
-                <GridItem colSpan={1} w="100%">
+                <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
                     <FormLabel>
                       <b>Prep time</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "50%" }}>
                       <Input
                         size="sm"
                         type="number"
@@ -298,7 +298,7 @@ const EditRecipe = () => {
                       <b>Complexity level</b>
                     </FormLabel>
                     <Select
-                      w="50%"
+                      w={{ base: "95%", md: "50%" }}
                       size="sm"
                       value={recipe.recipeComplexityLevel}
                       placeholder="Choose complexity level"
@@ -314,12 +314,12 @@ const EditRecipe = () => {
                     </Select>
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={1} w="100%">
+                <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
                     <FormLabel>
                       <b>Cooking time</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "50%" }}>
                       <Input
                         size="sm"
                         type="number"
@@ -351,7 +351,7 @@ const EditRecipe = () => {
                     <FormLabel>
                       <b>Servings</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "50%" }}>
                       <Input
                         size="sm"
                         value={recipe.recipeServings || ""}
