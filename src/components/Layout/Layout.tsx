@@ -99,11 +99,9 @@ export default function Layout() {
         className="navbar"
         ref={navbarRef}
         px={4}
-        pt={{ base: "4", sm: "0" }}
-        display="flex"
-        flexDirection={{ base: "column", sm: "row" }}>
+        pt={{ base: "4", sm: "0" }}>
         <Flex
-          h={{ base: "32", sm: "16" }}
+          h={{ base: "28", sm: "16" }}
           alignItems={{ base: "flex-start", sm: "center" }}
           justifyContent="space-between">
           <IconButton
@@ -124,7 +122,6 @@ export default function Layout() {
               <Image
                 src="/images/Logo_Olivier.svg"
                 maxW="100%"
-                minWidth="150px"
                 h="auto"
                 cursor="pointer"
                 onClick={() => {
@@ -132,7 +129,7 @@ export default function Layout() {
                 }}
               />
             </Box>
-            <Box mt={{ base: "4", sm: "0" }}>
+            <Box ml={{ base: "-20", sm: "0" }}>
               <RecipeSearch />
             </Box>
             <HStack
