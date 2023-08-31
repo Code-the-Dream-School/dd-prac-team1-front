@@ -142,6 +142,7 @@ export type AnimationVariants = {
 };
 
 export type PlannerRecipe = {
+  mealSlot: any;
   id: string;
   name: string;
   image: string;
@@ -149,13 +150,23 @@ export type PlannerRecipe = {
   recipeImage: string;
   recipeName: string;
   sortOrder: number;
+  mealId: string,
+  recipeId: string,
 };
 
 export type Id = string;
 
 export type PlannerDays<PlannerRecipe> = {
-  [index: string]: {
-    sortOrder: number;
-    recipes: PlannerRecipe[];
+  [index: string]: { 
+    sortOrder: number; 
+    meals?: [string, string, string],
+    recipes: PlannerRecipe[] 
   };
 };
+
+export type FetchedPlan = {
+  _id?: string;
+  mealSlot?: string ;
+  dayOfWeek?: string; 
+  recipeId: string; 
+}
