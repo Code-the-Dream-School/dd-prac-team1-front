@@ -113,7 +113,7 @@ export default function Layout() {
             display={{ lg: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <Box
+          <HStack
             width="95%"
             display="flex"
             flexDirection={{ base: "column", sm: "row" }}
@@ -169,7 +169,7 @@ export default function Layout() {
                 </AnimatedUnderlineText>
               </HStack>
             </HStack>
-          </Box>
+          </HStack>
         </Flex>
 
         {isOpen ? (
