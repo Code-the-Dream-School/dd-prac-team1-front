@@ -171,7 +171,10 @@ const RecipeManual = () => {
           templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
           gap={4}>
           <GridItem colSpan={{ base: 1, md: 10 }}>
-            <Flex justifyContent="start" alignItems="center">
+            <Flex
+              justifyContent="start"
+              alignItems="center"
+              mt={{ base: "5", md: "0" }}>
               <Text>INGREDIENTS</Text>
               <Button
                 ml="10px"
@@ -192,10 +195,10 @@ const RecipeManual = () => {
                   md: "repeat(1, 1fr)",
                   sm: "repeat(5, 1fr)"
                 }}
-                templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
+                templateColumns="repeat(10, 1fr)"
                 gap={3}
                 key={id}>
-                <GridItem colSpan={{ base: 1, md: 4 }}>
+                <GridItem colSpan={{ base: 10, md: 4 }}>
                   <FormControl isRequired>
                     <Input
                       type="text"
@@ -216,7 +219,7 @@ const RecipeManual = () => {
                     />
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={{ base: 1, md: 3 }}>
+                <GridItem colSpan={{ base: 10, md: 3 }}>
                   <FormControl isRequired>
                     <SingleCreatableSelect
                       value={{
@@ -236,7 +239,7 @@ const RecipeManual = () => {
                     />
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={{ base: 1, md: 2 }}>
+                <GridItem colSpan={{ base: 8, md: 2 }}>
                   <SingleSelectForm
                     value={{
                       value: ingredients[id].ingredientUnit,
@@ -255,7 +258,7 @@ const RecipeManual = () => {
                     }}
                   />
                 </GridItem>
-                <GridItem colSpan={{ base: 1, md: 1 }}>
+                <GridItem colSpan={{ base: 2, md: 1 }}>
                   <Flex justifyContent="end">
                     <IconButton
                       size="md"
