@@ -16,6 +16,7 @@ const SavedRecipesList = ({ recipes }: SavedRecipesProps) => {
         md: "repeat(3, 1fr)",
         lg: "repeat(4, 1fr)"
       }}
+      justifyItems="center"
       gap={3}>
       {recipes.map(recipe => (
         <SavedRecipesItem key={recipe._id} recipe={recipe} />
