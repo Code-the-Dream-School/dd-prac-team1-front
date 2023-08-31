@@ -122,6 +122,7 @@ export default function Layout() {
               <Image
                 src="/images/Logo_Olivier.svg"
                 maxW="100%"
+                minWidth={{ sm: "150px" }}
                 h="auto"
                 cursor="pointer"
                 onClick={() => {
