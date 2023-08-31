@@ -128,47 +128,51 @@ const RecipeManual = () => {
         event.preventDefault();
         saveRecipe();
       }}>
-      <Container mt="20" maxW="2xl">
-        <Grid
+      <Container mt="20" maxW="6xl">
+        {/* <Grid
           h={{ base: "auto", md: "200px" }}
           templateRows={{
             base: "repeat(2, 1fr)",
             md: "repeat(2, 1fr)",
             sm: "repeat(3, 1fr)"
           }}
-          templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
-          gap={4}>
-          <GridItem colSpan={{ base: 1, md: 10 }}>
-            <Center>
-              <Heading as="h1" size="lg" noOfLines={1}>
-                ADD YOUR OWN RECIPE
-              </Heading>
-            </Center>
-          </GridItem>
-          <GridItem colSpan={{ base: 1, md: 10 }}>
-            <Center>
-              <FormControl isRequired>
-                <Input
-                  type="text"
-                  variant="flushed"
-                  value={recipe.recipeName}
-                  placeholder="TITLE"
-                  onChange={event => {
-                    setRecipe({
-                      ...recipe,
-                      recipeName: event.target.value
-                    });
-                  }}
-                />
-              </FormControl>
-            </Center>
-          </GridItem>
-        </Grid>
-      </Container>
-      <Container maxW="7xl">
+          templateColumns="repeat(1, 1fr)"
+          gap={4}> */}
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column">
+          <Center>
+            <Heading as="h1" size="lg" noOfLines={1}>
+              ADD YOUR OWN RECIPE
+            </Heading>
+          </Center>
+
+          {/* <GridItem colSpan={1}> */}
+          <Center>
+            <FormControl isRequired>
+              <Input
+                type="text"
+                variant="flushed"
+                value={recipe.recipeName}
+                placeholder="TITLE"
+                maxLength={50}
+                onChange={event => {
+                  setRecipe({
+                    ...recipe,
+                    recipeName: event.target.value
+                  });
+                }}
+              />
+            </FormControl>
+          </Center>
+        </Flex>
+        {/* </GridItem> */}
+        {/* </Grid> */}
+
         <Grid
           templateRows={{ base: "repeat(1, 2fr)", md: "repeat(1, 2fr)" }}
-          templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
+          templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(10, 1fr)" }}
           gap={4}>
           <GridItem colSpan={{ base: 1, md: 10 }}>
             <Flex
@@ -189,7 +193,7 @@ const RecipeManual = () => {
           <GridItem colSpan={{ base: 1, md: 6 }}>
             {ingredients.map((ingredient, id) => (
               <Grid
-                h={{ base: "auto", md: "70px", sm: "220px" }}
+                h={{ md: "100px", sm: "220px" }}
                 templateRows={{
                   base: "repeat(1, 1fr)",
                   md: "repeat(1, 1fr)",
@@ -198,7 +202,7 @@ const RecipeManual = () => {
                 templateColumns="repeat(10, 1fr)"
                 gap={3}
                 key={id}>
-                <GridItem colSpan={{ base: 10, md: 4 }}>
+                <GridItem colSpan={{ base: 10, lg: 4 }}>
                   <FormControl isRequired>
                     <Input
                       type="text"
@@ -206,6 +210,7 @@ const RecipeManual = () => {
                       name={`ingredientName-${id}`}
                       value={ingredient.ingredientName}
                       placeholder="Add ingredients"
+                      // maxW={{ base: "350px", sm: "auto" }}
                       _placeholder={{ position: "absolute", fontSize: "xs" }}
                       onChange={event => {
                         const newIngredients = [...ingredients];
@@ -219,7 +224,7 @@ const RecipeManual = () => {
                     />
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={{ base: 10, md: 3 }}>
+                <GridItem colSpan={{ base: 10, md: 5, lg: 3 }}>
                   <FormControl isRequired>
                     <SingleCreatableSelect
                       value={{
@@ -239,7 +244,7 @@ const RecipeManual = () => {
                     />
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={{ base: 8, md: 2 }}>
+                <GridItem colSpan={{ base: 8, md: 4, lg: 2 }}>
                   <SingleSelectForm
                     value={{
                       value: ingredients[id].ingredientUnit,
@@ -274,7 +279,11 @@ const RecipeManual = () => {
             <Grid
               h={{ base: "auto", md: "600px", sm: "1350px" }}
               templateRows={{ base: "repeat(9, 1fr)", md: "repeat18, 1fr)" }}
-              templateColumns={{ base: "1fr", md: "repeat(10, 1fr)" }}
+              templateColumns={{
+                base: "repeat(1, 1fr)",
+                md: "repeat(10, 1fr)"
+              }}
+              mt={{ md: "3", lg: "0" }}
               gap={3}>
               <GridItem colSpan={{ base: 1, md: 3 }}>
                 <Flex h="40px" justifyContent="start" alignItems="center">
@@ -603,7 +612,7 @@ const RecipeManual = () => {
               </GridItem>
             </Grid>
           </GridItem>
-          <GridItem colSpan={{ base: 1, md: 4 }}>
+          <GridItem colSpan={{ base: 1, md: 4 }} mt={{ base: "4", md: "0" }}>
             <DropImage
               srcImage={srcImage}
               onChange={event => {

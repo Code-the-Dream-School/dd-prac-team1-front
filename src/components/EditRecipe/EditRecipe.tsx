@@ -234,6 +234,7 @@ const EditRecipe = () => {
                     type="text"
                     placeholder="recipe name is required"
                     value={recipe.recipeName}
+                    maxLength={50}
                     onChange={e => {
                       setRecipe({
                         ...recipe,
