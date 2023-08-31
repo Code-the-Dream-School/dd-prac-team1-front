@@ -58,74 +58,67 @@ const Login = () => {
   };
 
   return (
-    <Box>
-      <Container maxW="xl">
-        <Box
-          as="form"
-          onSubmit={e => {
-            e.preventDefault();
-            handleLogin();
-          }}>
-          <Box p="10px">
-            <FormControl isRequired>
-              <FormLabel htmlFor="loginEmail">Email</FormLabel>
+    <Container maxW="xl" mt="30">
+      <Box
+        as="form"
+        onSubmit={e => {
+          e.preventDefault();
+          handleLogin();
+        }}>
+        <Box p="10px">
+          <FormControl isRequired marginY="25">
+            <FormLabel htmlFor="loginEmail">Email</FormLabel>
+            <Input
+              type="email"
+              id="loginEmail"
+              variant="flushed"
+              value={email}
+              onChange={event => {
+                setEmail(event.target.value);
+                setErrorOccur(false);
+              }}
+            />
+          </FormControl>
+        </Box>
+        <Box p="10px">
+          <FormControl isInvalid={errorOccur} isRequired marginY="25">
+            <FormLabel htmlFor="loginPassword">Password</FormLabel>
+            <InputGroup>
               <Input
-                type="email"
-                id="loginEmail"
+                type={type}
+                value={password}
+                id="loginPassword"
                 variant="flushed"
-                value={email}
                 onChange={event => {
-                  setEmail(event.target.value);
+                  setPassword(event.target.value);
                   setErrorOccur(false);
                 }}
               />
-            </FormControl>
-          </Box>
-          <Box p="10px">
-            <FormControl isInvalid={errorOccur} isRequired>
-              <FormLabel htmlFor="loginPassword">Password</FormLabel>
-              <InputGroup>
-                <Input
-                  type={type}
-                  value={password}
-                  id="loginPassword"
-                  variant="flushed"
-                  onChange={event => {
-                    setPassword(event.target.value);
-                    setErrorOccur(false);
-                  }}
-                />
-                <InputRightElement>
-                  <Button
-                    size="xs"
-                    variant="ghost"
-                    onClick={handleShowPassword}>
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              {errorOccur && (
-                <FormErrorMessage>
-                  Combination email/password was not recognized
-                </FormErrorMessage>
-              )}
-            </FormControl>
-          </Box>
-          <Box p="10px">
-            <Center>
-              <Button variant="solid" type="submit">
-                SIGN IN
-              </Button>
-            </Center>
-          </Box>
+              <InputRightElement>
+                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {errorOccur && (
+              <FormErrorMessage>
+                Combination email/password was not recognized
+              </FormErrorMessage>
+            )}
+          </FormControl>
         </Box>
-        <Center>
-          <Button variant="link" size="xs" onClick={navigateToRegister}>
-            <Text as="ins">or create an account</Text>
+        <Center mt="10">
+          <Button variant="solid" type="submit">
+            SIGN IN
           </Button>
         </Center>
-      </Container>
-    </Box>
+      </Box>
+      <Center>
+        <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
+          <Text as="ins">or create an account</Text>
+        </Button>
+      </Center>
+    </Container>
   );
 };
 
