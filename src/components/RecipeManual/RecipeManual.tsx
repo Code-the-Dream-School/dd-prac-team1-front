@@ -129,28 +129,18 @@ const RecipeManual = () => {
         saveRecipe();
       }}>
       <Container p="10" maxW="7xl">
-        {/* <Grid
-          h={{ base: "auto", md: "200px" }}
-          templateRows={{
-            base: "repeat(2, 1fr)",
-            md: "repeat(2, 1fr)",
-            sm: "repeat(3, 1fr)"
-          }}
-          templateColumns="repeat(1, 1fr)"
-          gap={4}> */}
         <Flex
           mt={{ base: "0", sm: "5", md: "10" }}
           alignItems="center"
           justifyContent="center"
           flexDirection="column">
-          {/* <Center> */}
-          <Heading as="h1" size="lg" noOfLines={1}>
+          <Heading
+            as="h1"
+            size="lg"
+            noOfLines={1}
+            mb={{ base: "0", sm: "5", md: "10" }}>
             ADD YOUR OWN RECIPE
           </Heading>
-          {/* </Center> */}
-
-          {/* <GridItem colSpan={1}> */}
-          {/* <Center> */}
           <FormControl
             isRequired
             w={{ base: "100%", sm: "80%", md: "70", lg: "50%" }}>
@@ -168,15 +158,8 @@ const RecipeManual = () => {
               }}
             />
           </FormControl>
-          {/* </Center> */}
         </Flex>
-        {/* </GridItem> */}
-        {/* </Grid> */}
-
-        <Grid
-          // templateRows={{ base: "repeat(1, 2fr)", md: "repeat(1, 2fr)" }}
-          templateColumns={"repeat(10, 1fr)"}
-          gap={4}>
+        <Grid templateColumns={"repeat(10, 1fr)"} gap={4}>
           <GridItem
             colSpan={{ base: 10, md: 6 }}
             marginY={{ base: "5", md: "10" }}>
@@ -191,20 +174,8 @@ const RecipeManual = () => {
                 ADD
               </Button>
             </Flex>
-            {/* </GridItem> */}
-            {/* <Grid
-            // templateRows={{ base: "repeat(1, 2fr)", md: "repeat(1, 2fr)" }}
-            templateColumns={"repeat(10, 1fr)"}
-            gap={4}> */}
-            {/* <GridItem colSpan={{ base: 1, md: 6 }}> */}
             {ingredients.map((ingredient, id) => (
               <Grid
-                // h={{ md: "100px", sm: "220px" }}
-                // templateRows={{
-                //   base: "repeat(1, 1fr)",
-                //   md: "repeat(1, 1fr)",
-                //   sm: "repeat(5, 1fr)"
-                // }}
                 templateColumns="repeat(10, 1fr)"
                 gap="3"
                 marginY="5"
@@ -491,7 +462,6 @@ const RecipeManual = () => {
                   }}
                 />
               </GridItem>
-
               <GridItem colSpan={{ base: 10, md: 3 }}>
                 <Flex h="40px" justifyContent="start" alignItems="center">
                   <Text>CARBS</Text>
@@ -523,7 +493,6 @@ const RecipeManual = () => {
                   }}
                 />
               </GridItem>
-
               <GridItem colSpan={{ base: 10, md: 3 }}>
                 <Flex h="40px" justifyContent="start" alignItems="center">
                   <Text>PROTEIN</Text>
@@ -555,7 +524,6 @@ const RecipeManual = () => {
                   }}
                 />
               </GridItem>
-
               <GridItem colSpan={{ base: 10, md: 3 }}>
                 <Flex h="40px" justifyContent="start" alignItems="center">
                   <Text>FAT</Text>
@@ -634,8 +602,7 @@ const RecipeManual = () => {
             />
           </GridItem>
         </Grid>
-
-        <Flex m="3rem 0" justifyContent="center">
+        <Flex justifyContent="center">
           <Button type="submit" size="lg">
             SAVE
           </Button>
