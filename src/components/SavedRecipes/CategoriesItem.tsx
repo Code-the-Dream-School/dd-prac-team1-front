@@ -21,7 +21,7 @@ const CategoriesItem = ({
       variant={active ? "solid" : "outline"}
       borderRadius="0"
       border="1px"
-      marginTop="-1px"
+      mt="-1px"
       textDecoration="none"
       onClick={() => handleClick(category)}>
       {title}

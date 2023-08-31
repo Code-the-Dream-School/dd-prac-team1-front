@@ -25,7 +25,7 @@ const Home = () => {
       <GridItem
         colSpan={1}
         w="100%"
-        h="90vh"
+        h="70vh"
         padding="50"
         display="flex"
         flexDirection="column">
