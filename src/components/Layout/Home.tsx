@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <>
-      <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+      <Grid templateColumns="repeat(2, 1fr)" gap={2} p="5">
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
@@ -47,7 +47,7 @@ const Home = () => {
           colSpan={{ base: 2, md: 1 }}
           w="100%"
           h={{ base: "40vh", md: "100%" }}
-          p={{ base: "25px", md: "50" }}
+          p={{ base: "25px", md: "45" }}
           display="flex"
           flexDirection="column">
           <Flex
@@ -63,7 +63,8 @@ const Home = () => {
             <Button
               variant="outline"
               background={"green"}
-              size={{ base: "sm", sm: "md", md: "lg" }}>
+              size={{ base: "sm", sm: "md", md: "lg" }}
+              noOfLines={1}>
               <Link as={RouterLink} to="/login">
                 SIGN IN
               </Link>
@@ -87,8 +88,6 @@ const Home = () => {
             </Flex>
           </Center>
         </GridItem>
-      </Grid>
-      <Grid templateColumns="repeat(2, 1fr)" gap={2}>
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
@@ -111,7 +110,7 @@ const Home = () => {
                   opacity={index === currentSlide ? 1 : 0}
                   transition="opacity 1s ease-in-out"
                   position="absolute"
-                  top="10"
+                  top="5"
                   left="inherit"
                   objectFit="cover"
                   backgroundPosition="center"
@@ -125,8 +124,7 @@ const Home = () => {
         <GridItem
           colSpan={{ base: 2, md: 1 }}
           w="100%"
-          mt={{ base: "50", md: "30" }}
-          p={{ base: "10px", md: "25" }}>
+          mt={{ base: "50", md: "30" }}>
           <Flex flexDirection="column">
             <Box p="5">
               <Text fontSize="xl">Discover new recipes</Text>
