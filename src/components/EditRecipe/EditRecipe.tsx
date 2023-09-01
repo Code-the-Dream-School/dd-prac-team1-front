@@ -81,7 +81,7 @@ const EditRecipe = () => {
           position: "top"
         });
       });
-  }, [recipeId]);
+  }, [recipeId, toast]);
 
   const saveRecipe = () => {
     if (recipeId === undefined) return;
