@@ -221,6 +221,7 @@ export const createMealPlan = (data: FetchedPlan) => {
     },
     {
       headers: {
+        'Pragma': 'no-cache',
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwtToken}`
       }
@@ -233,6 +234,7 @@ export const getAllMealPlan = () => {
 
   return axios.get("http://localhost:3000/api/v1/meal-planner", {
     headers: {
+      'Pragma': 'no-cache',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }
@@ -247,6 +249,7 @@ export const  updateMealPlan = (data: FetchedPlan) => {
     ...data
   }, {
     headers: {
+      'Pragma': 'no-cache',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }
@@ -258,6 +261,7 @@ export const deleteMealPlan  = (mealId: string) => {
 
   return axios.delete(`http://localhost:3000/api/v1/meal-planner/${mealId}`, {
     headers: {
+      'Pragma': 'no-cache',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }

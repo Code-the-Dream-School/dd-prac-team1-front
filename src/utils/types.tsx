@@ -142,6 +142,7 @@ export type AnimationVariants = {
 };
 
 export type PlannerRecipe = {
+  uniqueKey: string;
   mealSlot: any;
   id: string;
   name: string;
@@ -165,8 +166,8 @@ export type PlannerDays<PlannerRecipe> = {
 };
 
 export type FetchedPlan = {
-  _id?: string;
-  mealSlot?: string ;
-  dayOfWeek?: string; 
+  _id: string;
+  mealSlot: string;
+  dayOfWeek: string; 
   recipeId: string; 
 }

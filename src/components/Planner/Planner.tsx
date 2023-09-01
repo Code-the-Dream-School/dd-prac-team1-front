@@ -65,7 +65,7 @@ const Planner = () => {
   });
 
   const toast = useToast();
-  const showErrorToast = (error: { response: { data: { message: any; }; }; }) => {
+  const showErrorToast = (error: { response: { data: { message: any } } }) => {
     toast({
       title: "Error",
       description: `${error.response.data.message}`,
@@ -155,80 +155,98 @@ const Planner = () => {
         console.log(error);
       });
   }, [days.savedRecipes]);
-  //console.log(days) - working console.log
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
-  
+
     if (!destination) return;
-  
-    const sourceDayId: Id = source.droppableId;
-    const destinationDayId: Id = destination.droppableId;
-  //conditions as an attempt to differentiate droppables
-    if (sourceDayId === "savedRecipes") {
-      const sourceDay = [...days[sourceDayId].recipes];
+
+    const sourceId: Id = source.droppableId;
+    const destinationId: Id = destination.droppableId;
+
+    if (sourceId === "savedRecipes") {
+      console.log(destinationId)
+      const sourceDay = [...days[sourceId].recipes];
       const [movedItem] = sourceDay.splice(source.index, 1);
-      const destinationDay = [...days[destinationDayId].recipes]; //recipes are not defined on this line 
-    //recipes are "lost" in the second droppable when we map on line 371 
-    //that is why we even can't console.log an item on line 399
-    //while in the first droppable on line 324 we can console.log an item and get a result
+      const [destDayId, destMealSlot] = destinationId.split("-");
+
+      const destinationDay = [...(days[destDayId]?.recipes || [])];
+      movedItem.mealSlot = destMealSlot;
+      destinationDay.splice(destination.index, 0, movedItem);
+
       setDays(prevDays => ({
         ...prevDays,
-        [sourceDayId]: {
-          ...prevDays[sourceDayId],
+        [sourceId]: {
+          ...prevDays[sourceId],
           recipes: sourceDay
         },
-        [destinationDayId]: {
-          ...prevDays[destinationDayId],
+        [destDayId]: {
+          ...prevDays[destDayId],
           recipes: destinationDay
         }
       }));
-      
-  
+
       const data = {
         _id: movedItem.mealId,
         recipeId: movedItem.id,
-        dayOfWeek: destinationDayId,
-        mealSlot: days[destinationDayId].meals[destination.index]
+        dayOfWeek: destDayId,
+        mealSlot: destMealSlot
       };
-  
+    
       createMealPlan(data).catch(error => {
         showErrorToast(error);
       });
-    } 
-    if (sourceDayId !== "savedRecipes")  {
+    } else if (sourceId !== "savedRecipes") {
+      console.log(destinationId)
+      const [sourceDayId, sourceMealSlot] = sourceId.split("-");
+      const [destDayId, destMealSlot] = destinationId.split("-");
 
-      const sourceDay = [...days[sourceDayId].recipes];//recipes are not defined on this line either
-      const destinationDay = [...days[destinationDayId].recipes];
-      const [movedItem] = sourceDay.splice(source.index, 1);
+      const sourceDay = [...(days[sourceDayId]?.recipes || [])];
+      const destinationDay = [...(days[destDayId]?.recipes || [])];
 
-      const destinationMealSlot = destinationDayId.split("-")[1];
-      const mealExistsInSlot = destinationDay.some(
-        (item) => item.mealSlot === destinationMealSlot
+      const [movedItem] = sourceDay.splice(
+        sourceDay.findIndex(item => item.mealSlot === sourceMealSlot),
+        1
       );
-  
+      const mealExistsInSlot = destinationDay.some(
+        item => item.mealSlot === destMealSlot
+      );
+
       if (!mealExistsInSlot) {
-        movedItem.mealSlot = destinationMealSlot;
-        destinationDay.splice(destination.index, 0, movedItem);
-  
-        setDays(prevDays => ({
-          ...prevDays,
-          [sourceDayId]: {
-            ...prevDays[sourceDayId],
-            recipes: sourceDay
-          },
-          [destinationDayId]: {
-            ...prevDays[destinationDayId],
-            recipes: destinationDay
-          }
-        }));
-        
+        movedItem.mealSlot = destMealSlot;
+        if (sourceDayId === destDayId) {
+          sourceDay.splice(destination.index, 0, movedItem);
+
+          setDays(prevDays => ({
+            ...prevDays,
+            [sourceDayId]: {
+              ...prevDays[sourceDayId],
+              recipes: sourceDay
+            }
+          }));
+        } else {
+          destinationDay.splice(destination.index, 0, movedItem);
+
+          setDays(prevDays => ({
+            ...prevDays,
+            [sourceDayId]: {
+              ...prevDays[sourceDayId],
+              recipes: sourceDay
+            },
+            [destDayId]: {
+              ...prevDays[destDayId],
+              recipes: destinationDay
+            }
+          }));
+        }
+
         const data = {
           _id: movedItem.mealId,
           recipeId: movedItem.id,
-          dayOfWeek: destinationDayId,
+          dayOfWeek: destDayId,
           mealSlot: movedItem.mealSlot
         };
-  
+
         updateMealPlan(data)
           .then(response => {
             console.log(response);
@@ -324,55 +342,55 @@ const Planner = () => {
                         (item: PlannerRecipe, index: number) => {
                           //console.log(item)
                           return (
-                          <Draggable
-                            key={`${dayId}-${item.id}`}
-                            draggableId={`${dayId}-${item.id}`}
-                            index={index}>
-                            {(providedDraggable, snapshot) => (
-                              <Container
-                                ref={providedDraggable.innerRef}
-                                {...providedDraggable.draggableProps}
-                                {...providedDraggable.dragHandleProps}
-                                {...providedDraggable.draggableProps.style}
-                                opacity={snapshot.isDragging ? 0.7 : 1}
-                                transition={
-                                  snapshot.isDragging
-                                    ? "none"
-                                    : "opacity 0.2s ease"
-                                }
-                                border={borderColor}
-                                borderRadius="5px"
-                                padding="0.5rem"
-                                mt="0.2rem"
-                                width="135px"
-                                height="120px">
-                                <Center>
-                                  <Image
-                                    mt="0.2rem"
-                                    src={item.image}
-                                    alt={item.name}
-                                    w="110px"
-                                    h="60px"
-                                    objectFit="cover"
-                                  />
-                                </Center>
-                                <Center>
-                                  <Text
-                                    fontWeight="normal"
-                                    textAlign="center"
-                                    fontSize="xs">
-                                    {item.name}
-                                  </Text>
-                                </Center>
-                              </Container>
-                            )}
-                          </Draggable>
-                        )}
+                            <Draggable
+                              key={`${dayId}-${item.id}`}
+                              draggableId={`${dayId}-${item.id}`}
+                              index={index}>
+                              {(providedDraggable, snapshot) => (
+                                <Container
+                                  ref={providedDraggable.innerRef}
+                                  {...providedDraggable.draggableProps}
+                                  {...providedDraggable.dragHandleProps}
+                                  {...providedDraggable.draggableProps.style}
+                                  opacity={snapshot.isDragging ? 0.7 : 1}
+                                  transition={
+                                    snapshot.isDragging
+                                      ? "none"
+                                      : "opacity 0.2s ease"
+                                  }
+                                  border={borderColor}
+                                  borderRadius="5px"
+                                  padding="0.5rem"
+                                  mt="0.2rem"
+                                  width="135px"
+                                  height="120px">
+                                  <Center>
+                                    <Image
+                                      mt="0.2rem"
+                                      src={item.image}
+                                      alt={item.name}
+                                      w="110px"
+                                      h="60px"
+                                      objectFit="cover"
+                                    />
+                                  </Center>
+                                  <Center>
+                                    <Text
+                                      fontWeight="normal"
+                                      textAlign="center"
+                                      fontSize="xs">
+                                      {item.name}
+                                    </Text>
+                                  </Center>
+                                </Container>
+                              )}
+                            </Draggable>
+                          );
+                        }
                       )}
 
                     {dayId !== "savedRecipes" &&
-                      days[dayId].meals &&
-                      days[dayId].meals.map(mealSlot => (
+                      days[dayId]?.meals?.map(mealSlot => (
                         <React.Fragment key={mealSlot}>
                           <Box
                             p="2"
@@ -400,55 +418,56 @@ const Planner = () => {
                                     .filter(item => item.mealSlot === mealSlot)
                                     .map(
                                       (item: PlannerRecipe, index: number) => {
-                                       // console.log(item)
+                                        //console.log(item)
                                         return (
-                                        <Draggable
-                                          key={`${item.id}-${mealSlot}-${item.recipeId}`}
-                                          draggableId={`${dayId}-${mealSlot}-${item.recipeId}`}
-                                          index={index}>
-                                          {(providedDraggable, snapshot) => (
-                                            <Container
-                                              ref={providedDraggable.innerRef}
-                                              {...providedDraggable.draggableProps}
-                                              {...providedDraggable.dragHandleProps}
-                                              {...providedDraggable
-                                                .draggableProps.style}
-                                              opacity={
-                                                snapshot.isDragging ? 0.7 : 1
-                                              }
-                                              transition={
-                                                snapshot.isDragging
-                                                  ? "none"
-                                                  : "opacity 0.2s ease"
-                                              }
-                                              width="100%"
-                                              height="70px">
-                                              <Flex
-                                                mt="0.6rem"
-                                                justifyContent="center">
-                                                <Center>
-                                                  <Text
-                                                    fontWeight="normal"
-                                                    fontSize="xs"
-                                                    ml="0"
-                                                    mr="0.5rem">
-                                                    {item.name}
-                                                  </Text>
-                                                </Center>
-                                                <IconButton
-                                                  aria-label="Delete recipe"
-                                                  icon={<CloseIcon />}
-                                                  mr="0rem"
-                                                  size="xs"
-                                                  onClick={() =>
-                                                    handleDelete(item.mealId)
-                                                  }
-                                                />
-                                              </Flex>
-                                            </Container>
-                                          )}
-                                        </Draggable>
-                                      )}
+                                          <Draggable
+                                            key={`${item.id}-${mealSlot}-${item.mealId}`}
+                                            draggableId={`${dayId}-${mealSlot}-${item.mealId}`}
+                                            index={index}>
+                                            {(providedDraggable, snapshot) => (
+                                              <Container
+                                                ref={providedDraggable.innerRef}
+                                                {...providedDraggable.draggableProps}
+                                                {...providedDraggable.dragHandleProps}
+                                                {...providedDraggable
+                                                  .draggableProps.style}
+                                                opacity={
+                                                  snapshot.isDragging ? 0.7 : 1
+                                                }
+                                                transition={
+                                                  snapshot.isDragging
+                                                    ? "none"
+                                                    : "opacity 0.2s ease"
+                                                }
+                                                width="100%"
+                                                height="70px">
+                                                <Flex
+                                                  mt="0.6rem"
+                                                  justifyContent="center">
+                                                  <Center>
+                                                    <Text
+                                                      fontWeight="normal"
+                                                      fontSize="xs"
+                                                      ml="0"
+                                                      mr="0.5rem">
+                                                      {item.name}
+                                                    </Text>
+                                                  </Center>
+                                                  <IconButton
+                                                    aria-label="Delete recipe"
+                                                    icon={<CloseIcon />}
+                                                    mr="0rem"
+                                                    size="xs"
+                                                    onClick={() =>
+                                                      handleDelete(item.mealId)
+                                                    }
+                                                  />
+                                                </Flex>
+                                              </Container>
+                                            )}
+                                          </Draggable>
+                                        );
+                                      }
                                     )}
                                 {providedMealSlot.placeholder}
                               </Container>
