@@ -407,7 +407,7 @@ const EditRecipe = () => {
                   }}
                   gap={{ base: 1, lg: 6 }}>
                   <GridItem
-                    colSpan={{ base: 11, md: 10, lg: 3 }}
+                    colSpan={{ lg: 3 }}
                     textAlign={{ lg: "center" }}
                     display={{ base: "none", lg: "block" }}
                     w="100%">
@@ -416,7 +416,7 @@ const EditRecipe = () => {
                     </Text>
                   </GridItem>
                   <GridItem
-                    colSpan={{ base: 11, md: 6, lg: 4 }}
+                    colSpan={{ lg: 4 }}
                     textAlign={{ lg: "center" }}
                     display={{ base: "none", lg: "block" }}
                     w="100%">
@@ -425,7 +425,7 @@ const EditRecipe = () => {
                     </Text>
                   </GridItem>
                   <GridItem
-                    colSpan={{ base: 11, md: 4, lg: 4 }}
+                    colSpan={{ lg: 4 }}
                     textAlign={{ lg: "center" }}
                     display={{ base: "none", lg: "block" }}
                     w="100%">
@@ -766,7 +766,6 @@ const EditRecipe = () => {
                 />
               </Flex>
             ))}
-
             <Flex marginY="5" alignItems="center">
               <Text mr="2">
                 <b>Special diets</b>
