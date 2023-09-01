@@ -102,7 +102,7 @@ const ShoppingList = () => {
             title: "",
             description: "",
             status: "success",
-            duration: 2000,
+            duration: 3000,
             isClosable: true,
             position: "top",
             render: () => (
@@ -238,7 +238,6 @@ const ShoppingList = () => {
               position: "top"
             });
           });
-        console.log("Delayed for 1 second.");
       }, 250 * index);
     });
     console.log(checked);
