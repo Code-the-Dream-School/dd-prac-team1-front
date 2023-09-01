@@ -45,7 +45,7 @@ const ShoppingList = () => {
     onClose: onCloseSendEmail
   } = useDisclosure();
   const toast = useToast();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const getIngredients = () => {
     getIngredientsFromShoppingList()
@@ -77,7 +77,6 @@ const ShoppingList = () => {
     getIngredients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(highlightExistingIngredient);
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
     addIngredientToShoppingList(newIngredient)
       .then(response => {
@@ -93,14 +92,17 @@ const ShoppingList = () => {
           setTimeout(() => {
             if (ref.current) {
               console.log("REF assigned");
-              ref.current.scrollIntoView({});
+              ref.current.scrollIntoView({ behavior: "smooth" });
             }
-          }, 1000);
+          }, 200);
+          setTimeout(() => {
+            setHighlightExistingIngredient("");
+          }, 3000);
           toast({
             title: "",
             description: "",
             status: "success",
-            duration: 5000,
+            duration: 2000,
             isClosable: true,
             position: "top",
             render: () => (
@@ -443,7 +445,13 @@ const ShoppingList = () => {
       </Box>
       <Box mb="10">
         {checkedIngredients.map(ingredient => (
-          <Box key={ingredient._id}>
+          <Box
+            key={ingredient._id}
+            ref={
+              highlightExistingIngredient === ingredient.ingredientName
+                ? ref
+                : null
+            }>
             <ShoppingListIngredient
               ingredient={ingredient}
               onChange={handleCheckedBox}
@@ -453,7 +461,6 @@ const ShoppingList = () => {
               defaultChecked={true}
               textDecoration={"line-through"}
               highlightExistingIngredient={highlightExistingIngredient}
-              ref={ref}
             />
           </Box>
         ))}
