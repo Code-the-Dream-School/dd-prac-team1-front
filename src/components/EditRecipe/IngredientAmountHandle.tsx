@@ -17,6 +17,8 @@ const IngredientAmountHandle = ({
     if (ingredient.ingredientAmount === -1) setMode(-1);
     if (ingredient.ingredientAmount === -2) setMode(-2);
     if (ingredient.ingredientAmount === -3) setMode(-3);
+    if (ingredient.ingredientAmount === -4) setMode(-4);
+    if (ingredient.ingredientAmount === -5) setMode(-5);
   }, [ingredient.ingredientAmount]);
 
   return (
@@ -37,6 +39,8 @@ const IngredientAmountHandle = ({
           <option value="-1">to taste</option>
           <option value="-2">for serving</option>
           <option value="-3">for garnish</option>
+          <option value="-4">to serve</option>
+          <option value="-5">to garnish</option>
         </Select>
       </FormControl>
       {mode === 0 && (
