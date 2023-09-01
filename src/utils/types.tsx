@@ -170,4 +170,17 @@ export type FetchedPlan = {
   mealSlot: string;
   dayOfWeek: string; 
   recipeId: string; 
+};
+
+export type ErrorResponse = {
+  data: {
+    message?: any;
+    msg?: any;
+    error?: any;
+  }
 }
+
+export type Error = {
+  response?: ErrorResponse;
+  message?: string;
+};

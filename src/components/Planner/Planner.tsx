@@ -21,7 +21,7 @@ import {
   getRecipe,
   updateMealPlan
 } from "../../utils/fetchData";
-import { FetchedPlan, Id, PlannerDays, PlannerRecipe } from "../../utils/types";
+import { Error, FetchedPlan, Id, PlannerDays, PlannerRecipe } from "../../utils/types";
 import { CloseIcon } from "@chakra-ui/icons";
 
 const Planner = () => {
@@ -65,16 +65,22 @@ const Planner = () => {
   });
 
   const toast = useToast();
-  const showErrorToast = (error: { response: { data: { message: any } } }) => {
+  const showErrorToast = (error: Error) => {
     toast({
       title: "Error",
-      description: `${error.response.data.message}`,
-      status: "error",
-      variant: "subtle",
-      duration: 4000,
-      isClosable: true,
-      position: "top"
-    });
+        description: `${
+        error?.response?.data?.msg ||
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error?.response?.data ||
+        error.message ||
+        "unknown error"
+        }`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top"
+      });
   };
 
   const daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -100,7 +106,7 @@ const Planner = () => {
         }));
       })
       .catch(error => {
-        console.log(error);
+        showErrorToast(error)
       });
   }, []);
 
@@ -152,7 +158,7 @@ const Planner = () => {
         });
       })
       .catch(error => {
-        console.log(error);
+        showErrorToast(error)
       });
   }, [days.savedRecipes]);
 
@@ -165,7 +171,6 @@ const Planner = () => {
     const destinationId: Id = destination.droppableId;
 
     if (sourceId === "savedRecipes") {
-      console.log(destinationId)
       const sourceDay = [...days[sourceId].recipes];
       const [movedItem] = sourceDay.splice(source.index, 1);
       const [destDayId, destMealSlot] = destinationId.split("-");
@@ -197,7 +202,6 @@ const Planner = () => {
         showErrorToast(error);
       });
     } else if (sourceId !== "savedRecipes") {
-      console.log(destinationId)
       const [sourceDayId, sourceMealSlot] = sourceId.split("-");
       const [destDayId, destMealSlot] = destinationId.split("-");
 
@@ -247,12 +251,8 @@ const Planner = () => {
           mealSlot: movedItem.mealSlot
         };
 
-        updateMealPlan(data)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
-            showErrorToast(error);
+        updateMealPlan(data).catch(error => {
+            showErrorToast(error)
           });
       }
     }
@@ -270,12 +270,11 @@ const Planner = () => {
               );
             }
           });
-
           return updatedDays;
         });
       })
       .catch(error => {
-        console.error("Failed to delete item:", error);
+        showErrorToast(error)
       });
   };
 
