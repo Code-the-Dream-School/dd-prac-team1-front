@@ -10,8 +10,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
-  useToast
+  Text
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +22,6 @@ const Login = () => {
   const [type, setType] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
   const [errorOccur, setErrorOccur] = useState(false);
-
-  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -55,14 +52,6 @@ const Login = () => {
       .catch(error => {
         console.log(error);
         if (error) {
-          toast({
-            title: "Error",
-            description: "Look underline description",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
-            position: "top"
-          });
           setErrorOccur(true);
         }
       });

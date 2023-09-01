@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  Center,
+  // Center,
   Collapse,
   Container,
   Icon,
@@ -33,6 +33,7 @@ import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
+// import { unmountComponentAtNode } from "react-dom";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
@@ -57,7 +58,23 @@ const SingleRecipePage = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeId]);
 
   const print = () => {
@@ -72,6 +89,21 @@ const SingleRecipePage = () => {
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 
@@ -151,6 +183,7 @@ const SingleRecipePage = () => {
                     variant="outline"
                     onClick={() => {
                       navigate("/shopping-list");
+                      toast.closeAll();
                     }}>
                     Take me to the Shopping List
                   </Button>
@@ -163,16 +196,20 @@ const SingleRecipePage = () => {
       .catch(error => {
         toast({
           title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
           status: "error",
           duration: 3000,
           isClosable: true,
-          position: "top",
-          render: () => (
-            <Box p="3" bg="red">
-              {error.response.data.msg}
-            </Box>
-          )
+          position: "top"
         });
+
         console.log(error);
       });
   };

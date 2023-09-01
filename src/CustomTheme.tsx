@@ -9,8 +9,8 @@ const theme = extendTheme({
     green: "#d7da5e",
     brandGray: "#f4f4eb",
     lightGray: "#FFFFF9",
-    gray: "#A6A6A6",
-    red: "#E53E3E"
+    customGray: "#A6A6A6",
+    customRed: "#E53E3E"
   },
 
   fonts: {

@@ -11,8 +11,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
-  useToast
+  Text
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +31,6 @@ const Register = () => {
   const navigateToLogin = () => {
     navigate("/login");
   };
-
-  const toast = useToast();
 
   const handleShowPassword = () => {
     if (type === "password") {
@@ -76,16 +73,6 @@ const Register = () => {
         }
         if (error.response.data.msg.includes("requests")) {
           setErrorPassword(error.response.data.msg);
-        }
-        if (error) {
-          toast({
-            title: "Error",
-            description: "Look underline description",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
-            position: "top"
-          });
         }
       });
   };
