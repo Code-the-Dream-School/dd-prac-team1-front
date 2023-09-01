@@ -35,7 +35,11 @@ const SearchAI = () => {
     searchAI(search, values)
       .then(response => {
         console.log(response);
-        if (response.data.image.startsWith("https://strapi.pxmo.com")) {
+        if (
+          response.data.image === "" ||
+          response.data.image.startsWith("https://strapi.pxmo.com") ||
+          response.data.image.startsWith("http://www.momsbistro.net")
+        ) {
           setRecipe({
             ...response.data,
             image:
