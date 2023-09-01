@@ -116,24 +116,24 @@ const EditRecipe = () => {
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
       setIngredients([
-        ...ingredients,
         {
           ingredientName: "",
           ingredientAmount: 0,
           ingredientUnit: "other"
-        }
+        },
+        ...ingredients
       ]);
     }
     if (arg === "tags") {
       setTags([
-        ...tags,
         {
           tagName: ""
-        }
+        },
+        ...tags
       ]);
     }
     if (arg === "diets") {
-      setDiets([...diets, ""]);
+      setDiets(["", ...diets]);
     }
   };
 
@@ -409,6 +409,7 @@ const EditRecipe = () => {
                   <GridItem
                     colSpan={{ base: 11, md: 10, lg: 3 }}
                     textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
                     w="100%">
                     <Text>
                       <i>ingredient</i>
@@ -417,6 +418,7 @@ const EditRecipe = () => {
                   <GridItem
                     colSpan={{ base: 11, md: 6, lg: 4 }}
                     textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
                     w="100%">
                     <Text>
                       <i>amount</i>
@@ -425,6 +427,7 @@ const EditRecipe = () => {
                   <GridItem
                     colSpan={{ base: 11, md: 4, lg: 4 }}
                     textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
                     w="100%">
                     <Text>
                       <i>unit</i>
