@@ -1,0 +1,36 @@
+name: App Checks Workflow
+on:
+    pull_request:
+        types: [opened, reopened, synchronize]
+        branches:
+            - "**"
+        paths:
+            - "**"
+            - "!**/*.md"
+jobs:
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 19.x, 20.x]
+        steps:
+            # Setup
+          - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+      - name: npm ci, build and test
+        run: |
+          npm ci
+          npm run build --if-present
+          npm test
+
+
+
+
+
+
+
+
+
