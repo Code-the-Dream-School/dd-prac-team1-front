@@ -15,7 +15,6 @@ jobs:
       matrix:
         node-version: [16.x, 18.x, 19.x, 20.x]
         steps:
-            # Setup
           - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v3
           with:
