@@ -39,10 +39,11 @@ const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_sendingIngredients, setSendingIngredients] = useState({});
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
-  const { isOpen: openModal, onOpen: _onOpen, onClose } = useDisclosure();
+  const { isOpen: openModal, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
