@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Box,
   Grid,
@@ -21,6 +21,8 @@ type ShoppingListIngredientProps = {
   handleEditIngredient: Function;
   defaultChecked: boolean;
   textDecoration: string;
+  highlightExistingIngredient: string;
+  ref: any;
 };
 
 const ShoppingListIngredient = ({
@@ -30,9 +32,12 @@ const ShoppingListIngredient = ({
   handleRemoveIngredient,
   handleEditIngredient,
   defaultChecked,
-  textDecoration
+  textDecoration,
+  highlightExistingIngredient,
+  ref
 }: ShoppingListIngredientProps) => {
   const [isEditIngredient, setIsEditIngredient] = useState<string>("");
+  const scrollToRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -43,14 +48,22 @@ const ShoppingListIngredient = ({
           w="100%"
           mb="-1px"
           borderWidth="thin"
+          // bg="brandGray"
           textDecoration={textDecoration}>
           <Grid
             templateColumns="repeat(12, 1fr)"
             w="100%"
             gap="2"
+            // bg="brandGray"
             alignItems="center">
             <GridItem colSpan={10} w="100%" gap="6">
-              <Flex pl="5" alignItems="center">
+              <Flex
+                pl="5"
+                // bg="brandGray"
+                // {
+                //   highlightExistingIngredient ? "brandGray" : "white"
+                // }
+                alignItems="center">
                 <Checkbox
                   size="lg"
                   colorScheme="gray"
@@ -106,6 +119,30 @@ const ShoppingListIngredient = ({
         <Box
           key="option2"
           borderColor="green"
+          bg={
+            highlightExistingIngredient === ingredient.ingredientName
+              ? "brandGray"
+              : "white"
+          }
+          // ref={
+          //   highlightExistingIngredient === ingredient.ingredientName
+          //     ? scrollToRef
+          //     : null
+          // }
+          // ? scrollToRef.current.autoFocus
+          // ref={
+          //   highlightExistingIngredient !== ingredient.ingredientName
+          //     ? null
+          //     : scrollToRef.current
+          //     ? scrollToRef.current.focus()
+          //     : null
+          // }
+          // ref={scrollToRef}
+          //  ={
+          //     highlightExistingIngredient === ingredient.ingredientName
+          //       ? true
+          //       : false
+          // }
           w="100%"
           mb="-1px"
           borderWidth="thin"

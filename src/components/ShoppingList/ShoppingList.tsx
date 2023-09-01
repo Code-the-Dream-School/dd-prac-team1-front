@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -32,6 +32,8 @@ const ShoppingList = () => {
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
     Array<string>
   >([]);
+  const [highlightExistingIngredient, setHighlightExistingIngredient] =
+    useState<string>("");
   const {
     isOpen: isOpenChangedIngredient,
     onOpen: onOpenChangedIngredient,
@@ -43,11 +45,13 @@ const ShoppingList = () => {
     onClose: onCloseSendEmail
   } = useDisclosure();
   const toast = useToast();
+  const ref = useRef(null);
 
   const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
         console.log(response);
+
         setIngredients(response.data.ingredients);
       })
       .catch(error => {
@@ -73,11 +77,41 @@ const ShoppingList = () => {
     getIngredients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(highlightExistingIngredient);
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
     addIngredientToShoppingList(newIngredient)
       .then(response => {
         console.log(response);
+        if (
+          response.data.message.includes(
+            "Ingredient already exists in shopping list"
+          )
+        ) {
+          setHighlightExistingIngredient(
+            response.data.existingIngredient.ingredientName
+          );
+          setTimeout(() => {
+            if (ref.current) {
+              console.log("REF assigned");
+              ref.current.scrollIntoView({});
+            }
+          }, 1000);
+          toast({
+            title: "",
+            description: "",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "top",
+            render: () => (
+              <>
+                <Box p="3" bg="green">
+                  {response.data.message}
+                </Box>
+              </>
+            )
+          });
+        }
         getIngredients();
       })
       .catch(error => {
@@ -98,14 +132,6 @@ const ShoppingList = () => {
           position: "top"
         });
       });
-    // const id = new Date().toString();
-    // setIngredients([
-    //   {
-    //     ...newIngredient,
-    //     _id: id
-    //   },
-    //   ...ingredients
-    // ]);
     onCloseChangedIngredient();
   };
 
@@ -368,7 +394,13 @@ const ShoppingList = () => {
         }}
       />
       {uncheckedIngredients.map(ingredient => (
-        <Box key={ingredient._id}>
+        <Box
+          key={ingredient._id}
+          ref={
+            highlightExistingIngredient === ingredient.ingredientName
+              ? ref
+              : null
+          }>
           <ShoppingListIngredient
             ingredient={ingredient}
             onChange={handleCheckedBox}
@@ -377,6 +409,7 @@ const ShoppingList = () => {
             handleEditIngredient={handleEditIngredient}
             defaultChecked={false}
             textDecoration={"none"}
+            highlightExistingIngredient={highlightExistingIngredient}
           />
         </Box>
       ))}
@@ -419,6 +452,8 @@ const ShoppingList = () => {
               handleEditIngredient={handleEditIngredient}
               defaultChecked={true}
               textDecoration={"line-through"}
+              highlightExistingIngredient={highlightExistingIngredient}
+              ref={ref}
             />
           </Box>
         ))}
