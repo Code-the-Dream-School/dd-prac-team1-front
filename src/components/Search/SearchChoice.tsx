@@ -40,10 +40,10 @@ const SearchChoice = () => {
       />
       <Card
         cursor="pointer"
-        overflow="auto"
+        overflow="hidden"
         onClick={navigateToAISearch}
         w={{ base: "75%", md: "350px", lg: "450px" }}
-        h={{ base: "150px", md: "200px", lg: "150px" }}>
+        h={{ md: "195px", lg: "150px" }}>
         <CardHeader>
           <Center>
             <Heading size={{ base: "sm", md: "md" }}>
@@ -52,11 +52,17 @@ const SearchChoice = () => {
           </Center>
         </CardHeader>
         <CardBody>
-          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+          <Text
+            fontSize={{ base: "16", md: "18" }}
+            pb="1"
+            display={{ base: "none", sm: "block" }}>
             AI powered menu planning helper Olivier will search for delicious
             recipes.
           </Text>
-          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+          <Text
+            fontSize={{ base: "16", md: "18" }}
+            pb="1"
+            display={{ base: "none", sm: "block" }}>
             Save the recipes you like to your recipe gallery!
           </Text>
         </CardBody>
@@ -64,22 +70,28 @@ const SearchChoice = () => {
 
       <Card
         cursor="pointer"
-        overflow="auto"
+        overflow="hidden"
         onClick={navigateToOwnRecipe}
         w={{ base: "75%", md: "325px", lg: "450px" }}
-        h={{ base: "150px", md: "200px", lg: "150px" }}>
+        h={{ md: "195px", lg: "150px" }}>
         <CardHeader>
           <Center>
             <Heading size={{ base: "sm", md: "md" }}>
-              ADD YOUR OWN RECIPE{" "}
+              ADD YOUR OWN RECIPE
             </Heading>
           </Center>
         </CardHeader>
         <CardBody>
-          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+          <Text
+            fontSize={{ base: "16", md: "18" }}
+            pb="1"
+            display={{ base: "none", sm: "block" }}>
             Have a recipe you love?
           </Text>
-          <Text fontSize={{ base: "16", md: "18" }} pb="1">
+          <Text
+            fontSize={{ base: "16", md: "18" }}
+            pb="1"
+            display={{ base: "none", sm: "block" }}>
             You can always type it out in our recipe friendly form.
           </Text>
         </CardBody>
