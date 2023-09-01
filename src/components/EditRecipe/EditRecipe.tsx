@@ -386,21 +386,30 @@ const EditRecipe = () => {
                 </Flex>
                 <Grid
                   templateColumns={{
-                    base: "repeat(4, 1fr)",
+                    base: "repeat(11, 1fr)",
                     md: "repeat(12, 1fr)"
                   }}
-                  gap={{ base: 1, md: 6 }}>
-                  <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
+                  gap={{ base: 1, lg: 6 }}>
+                  <GridItem
+                    colSpan={{ base: 11, md: 10, lg: 3 }}
+                    textAlign={{ lg: "center" }}
+                    w="100%">
                     <Text>
                       <i>ingredient</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={{ base: 1, md: 3 }} w="100%">
+                  <GridItem
+                    colSpan={{ base: 11, md: 6, lg: 4 }}
+                    textAlign={{ lg: "center" }}
+                    w="100%">
                     <Text>
                       <i>amount</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={{ base: 3, md: 3 }} w="100%">
+                  <GridItem
+                    colSpan={{ base: 11, md: 4, lg: 4 }}
+                    textAlign={{ lg: "center" }}
+                    w="100%">
                     <Text>
                       <i>unit</i>
                     </Text>
