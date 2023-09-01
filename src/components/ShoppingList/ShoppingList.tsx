@@ -16,6 +16,7 @@ import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TbShare3 } from "react-icons/tb";
 import { TfiPrinter } from "react-icons/tfi";
 import {
+  addIngredientToShoppingList,
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
   deleteAnIngredientFromShoppingList,
@@ -74,16 +75,40 @@ const ShoppingList = () => {
   }, []);
 
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
-    const id = new Date().toString();
-    setIngredients([
-      {
-        ...newIngredient,
-        _id: id
-      },
-      ...ingredients
-    ]);
+    addIngredientToShoppingList(newIngredient)
+      .then(response => {
+        console.log(response);
+        getIngredients();
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
+    // const id = new Date().toString();
+    // setIngredients([
+    //   {
+    //     ...newIngredient,
+    //     _id: id
+    //   },
+    //   ...ingredients
+    // ]);
     onCloseChangedIngredient();
   };
+
   const checkedIngredients = ingredients.filter(ingredient => {
     if (ingredient.ingredientName === undefined) return false;
     return checkedIngredientNames.includes(ingredient.ingredientName);
