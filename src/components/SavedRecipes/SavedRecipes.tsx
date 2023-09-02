@@ -225,20 +225,47 @@ const SavedRecipes = () => {
   );
 
   return (
-    <Container maxW="7xl">
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        <GridItem colSpan={1} w="100%" h="70"></GridItem>
-        <GridItem colSpan={2} w="100%" h="70">
-          <Center h="150">
-            <Text fontSize="3xl">SAVED RECIPES</Text>
-          </Center>
-        </GridItem>
-        <GridItem colSpan={1} w="100%" h="55">
+    <Container maxW="7xl" mb="20px">
+      <Grid templateColumns="repeat(3, 1fr)" gap="2">
+        <GridItem
+          colSpan={1}
+          w="100%"
+          h={{
+            base: "100",
+            md: "120",
+            lg: "150"
+          }}>
           {filterAlert && (
-            <Box>
-              <Heading as="h5" size="sm" mb="3">
+            <Box mb="3" h="25" display="flex" alignItems="end">
+              <Heading as="h5" size="sm">
                 You may have "{searchQueryParam}" in these categories:
               </Heading>
+            </Box>
+          )}
+        </GridItem>
+        <GridItem
+          colSpan={2}
+          w="100%"
+          h={{
+            base: "100",
+            md: "120",
+            lg: "150"
+          }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center">
+          <Heading
+            fontSize={{
+              base: "xl",
+              md: "2xl",
+              lg: "3xl"
+            }}>
+            SAVED RECIPES
+          </Heading>
+        </GridItem>
+        <GridItem colSpan={1} w="100%">
+          {filterAlert && (
+            <Box mb="3" h="25">
               <Text fontSize="xs">
                 Press "all categories" to filter through all recipes again.
               </Text>
@@ -248,7 +275,7 @@ const SavedRecipes = () => {
         <GridItem colSpan={2}></GridItem>
       </Grid>
       <Grid templateColumns="repeat(3, 1fr)" gap="6">
-        <GridItem colSpan={1} w="100%" mt="3">
+        <GridItem colSpan={1} w="100%">
           <Flex flexDirection="column">
             <CategoriesList
               categories={categories}
