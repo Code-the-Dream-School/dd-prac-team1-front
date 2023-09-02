@@ -25,7 +25,11 @@ const SearchChoice = () => {
     <Flex
       justifyContent="center"
       alignItems="center"
-      h="calc(100vh - 250px)"
+      h={{
+        base: "calc(100vh - 128px - 167px)",
+        sm: "calc(100vh - 55px - 167px)",
+        md: "calc(100vh - 55px - 70px)"
+      }}
       gap={{ base: "10", lg: "20" }}
       direction={{ base: "column", md: "row" }}>
       <Box
