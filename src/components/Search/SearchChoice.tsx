@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardBody,
   CardHeader,
@@ -27,7 +28,7 @@ const SearchChoice = () => {
       h="calc(100vh - 250px)"
       gap={{ base: "10", lg: "20" }}
       direction={{ base: "column", md: "row" }}>
-      <Flex
+      <Box
         backgroundImage={backgroundImageUrl}
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
