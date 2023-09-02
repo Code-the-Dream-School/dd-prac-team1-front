@@ -1,3 +1,6 @@
+// Mocking async functions that request data from the API
+// These can be used when testing React components that use functions from fetchData.tsx
+// TODO: Mock up the rest of the functions
 import { AxiosResponse, AxiosResponseHeaders } from "axios";
 import { AIRecipe, SavedRecipe } from "../types";
 

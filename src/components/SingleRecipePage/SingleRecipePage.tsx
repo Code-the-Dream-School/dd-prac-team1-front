@@ -7,7 +7,6 @@ import {
   Container,
   Icon,
   IconButton,
-  Image,
   Flex,
   Grid,
   GridItem,
@@ -35,11 +34,7 @@ import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 // import { unmountComponentAtNode } from "react-dom";
 
-const SingleRecipePage = ({
-  testProps
-}: {
-  testProps?: { initialRecipeId: string; isTest: boolean };
-}) => {
+const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
@@ -49,7 +44,7 @@ const SingleRecipePage = ({
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onClose } = useDisclosure();
   const { slug } = useParams();
-  const recipeId = testProps?.isTest ? testProps.initialRecipeId : slug;
+  const recipeId = slug;
   const navigate = useNavigate();
   const toast = useToast();
 
