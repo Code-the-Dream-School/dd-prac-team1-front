@@ -257,14 +257,17 @@ const ShoppingList = () => {
         templateColumns="repeat(12, 1fr)"
         gap="2"
         mt="5"
-        h="20"
-        alignItems="center">
-        <GridItem colSpan={9} w="100%">
+        // h="20"
+        // display={{ base: "flex", sm: "grid" }}
+        // flexDirection={{ base: "column" }}
+        alignItems="center"
+        justifyContent="center">
+        <GridItem colSpan={{ base: 12, sm: 9 }} w="100%">
           <Heading ml="2" fontSize="2xl">
             Shopping List
           </Heading>
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem colSpan={{ base: 4, sm: 1 }} w="100%">
           <IconButton
             size="lg"
             variant="ghost"
@@ -276,7 +279,10 @@ const ShoppingList = () => {
             onClick={handleRemoveIngredients}
           />
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem
+          colSpan={{ base: 4, sm: 1 }}
+          w="100%"
+          textAlign={{ base: "center", sm: "center" }}>
           <IconButton
             size="lg"
             variant="ghost"
@@ -289,7 +295,10 @@ const ShoppingList = () => {
             onClick={onOpenSendEmail}
           />
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem
+          colSpan={{ base: 4, sm: 1 }}
+          w="100%"
+          textAlign={{ base: "end", sm: "center" }}>
           <IconButton
             size="lg"
             variant="ghost"
@@ -307,6 +316,7 @@ const ShoppingList = () => {
         w="100%"
         h="12"
         mb="1"
+        mt="5"
         borderRadius="0"
         bg="white"
         _hover={{
