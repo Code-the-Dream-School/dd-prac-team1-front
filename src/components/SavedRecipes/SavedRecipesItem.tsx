@@ -27,14 +27,20 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
     <GridItem w="100%" onClick={handleClick}>
       <Card>
         <CardBody>
-          <Image
-            boxSize="150px"
-            borderRadius="lg"
-            objectFit="cover"
-            mt="5"
-            src={recipe.recipeImage}
-            alt={recipe.recipeName}
-          />
+          <Center>
+            <Image
+              boxSize={{
+                base: "100px",
+                sm: "150px",
+                md: "150px"
+              }}
+              borderRadius="lg"
+              objectFit="cover"
+              mt="5"
+              src={recipe.recipeImage}
+              alt={recipe.recipeName}
+            />
+          </Center>
           <Stack mt="3">
             <Center>
               <Text fontSize="xs" h="7">
