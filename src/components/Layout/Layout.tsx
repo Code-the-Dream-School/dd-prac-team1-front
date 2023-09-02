@@ -113,6 +113,7 @@ export default function Layout() {
           <HStack
             width="95%"
             display="flex"
+            flexDirection={{ base: "column", sm: "row" }}
             justifyContent="space-between"
             ml="1rem"
             alignItems="center">
