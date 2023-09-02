@@ -35,7 +35,11 @@ import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
 // import { unmountComponentAtNode } from "react-dom";
 
-const SingleRecipePage = () => {
+const SingleRecipePage = ({
+  testProps
+}: {
+  testProps?: { initialRecipeId: string; isTest: boolean };
+}) => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
@@ -45,7 +49,7 @@ const SingleRecipePage = () => {
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onClose } = useDisclosure();
   const { slug } = useParams();
-  const recipeId = slug;
+  const recipeId = testProps?.isTest ? testProps.initialRecipeId : slug;
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -245,7 +249,6 @@ const SingleRecipePage = () => {
       unit: "g"
     }
   ];
-
   return (
     <Container maxW="5xl">
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
