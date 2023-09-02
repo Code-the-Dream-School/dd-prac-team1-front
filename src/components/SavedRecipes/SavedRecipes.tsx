@@ -225,7 +225,7 @@ const SavedRecipes = () => {
   );
 
   return (
-    <Container maxW="7xl">
+    <Container maxW="7xl" mb="20px">
       <Grid templateColumns="repeat(3, 1fr)" gap="2">
         <GridItem
           colSpan={1}
