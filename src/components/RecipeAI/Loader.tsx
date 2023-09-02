@@ -22,7 +22,12 @@ const Loader = ({ text = "Loading..." }) => {
           as="span"
           animation={`${loader} infinite 5s alternate ease-in-out`}
           style={{ animationDelay: `${100 * index}ms` }}
-          fontSize="6xl"
+          fontSize={{
+            base: "lg",
+            sm: "2xl",
+            md: "4xl",
+            lg: "6xl"
+          }}
           letterSpacing="-1px"
           key={index}>
           {letter}
