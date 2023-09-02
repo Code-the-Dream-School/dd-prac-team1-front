@@ -7,7 +7,7 @@ import {
   useToast,
   Stack,
   Button,
-  Image,
+  Image
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
@@ -49,11 +49,14 @@ export default function Layout() {
   const navigate = useNavigate();
   const toast = useToast();
   const navbarRef = useRef<HTMLDivElement>(null);
-  const location = useLocation(); 
-  
+  const location = useLocation();
+
   useEffect(() => {
-    const handler = (event: { target: any; }) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+    const handler = (event: { target: any }) => {
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -91,8 +94,15 @@ export default function Layout() {
 
   return (
     <>
-      <Box bg="brandGray" className="navbar" ref={navbarRef} px={4}>
-        <Flex h={16} alignItems="center" justifyContent="space-between">
+      <Box
+        bg="brandGray"
+        className="navbar"
+        ref={navbarRef}
+        px={4}
+        pt={{ base: "4", sm: "0" }}>
+        <Flex
+          h={{ base: "28", sm: "16" }}
+          alignItems={{ base: "flex-start", sm: "center" }}>
           <IconButton
             size="md"
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -103,20 +113,21 @@ export default function Layout() {
           <HStack
             width="95%"
             display="flex"
+            flexDirection={{ base: "column", sm: "row" }}
             justifyContent="space-between"
             ml="1rem"
             alignItems="center">
-            <Box>
-              <Image 
-                src="/images/Logo_Olivier.svg" 
+            <Box ml={{ base: "-20", sm: "0" }}>
+              <Image
+                src="/images/Logo_Olivier.svg"
                 maxW="100%"
-                minWidth="150px" 
-                h="auto" 
+                minWidth="150px"
+                h="auto"
                 cursor="pointer"
-                onClick={()=> {
-                  navigate("/search-choice")
+                onClick={() => {
+                  navigate("/search-choice");
                 }}
-                />
+              />
             </Box>
             <HStack>
               <RecipeSearch />
@@ -130,34 +141,28 @@ export default function Layout() {
                 spacing={20}
                 display={{ base: "none", lg: "flex" }}
                 justifyContent={"flex-end"}>
-              <AnimatedUnderlineText
-                href="/search-choice"
-                isActive={location.pathname === "/search-choice"}
-              >
-                    ADD RECIPE
+                <AnimatedUnderlineText
+                  href="/search-choice"
+                  isActive={location.pathname === "/search-choice"}>
+                  ADD RECIPE
                 </AnimatedUnderlineText>
-                <AnimatedUnderlineText 
+                <AnimatedUnderlineText
                   href="/saved-recipes"
-                  isActive={location.pathname === "/saved-recipes"}
-                >
+                  isActive={location.pathname === "/saved-recipes"}>
                   SAVED
                 </AnimatedUnderlineText>
-                <AnimatedUnderlineText 
+                <AnimatedUnderlineText
                   href="/planner"
-                  isActive={location.pathname === "/planner"}
-                >
+                  isActive={location.pathname === "/planner"}>
                   PLANNER
                 </AnimatedUnderlineText>
-                <AnimatedUnderlineText 
+                <AnimatedUnderlineText
                   href="/shopping-list"
-                  isActive={location.pathname === "/shopping-list"}
-                >
+                  isActive={location.pathname === "/shopping-list"}>
                   SHOPPING
                 </AnimatedUnderlineText>
-                <AnimatedUnderlineText 
-                  onClick={handleLogout}
-                >
-                    LOGOUT
+                <AnimatedUnderlineText onClick={handleLogout}>
+                  LOGOUT
                 </AnimatedUnderlineText>
               </HStack>
             </HStack>
