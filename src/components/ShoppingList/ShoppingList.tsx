@@ -19,7 +19,8 @@ import {
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
   deleteAnIngredientFromShoppingList,
-  deleteAllShoppingList
+  deleteAllShoppingList,
+  shareShoppingList
 } from "../../utils/fetchData";
 import { SavedIngredient } from "../../utils/types";
 import ModalForNewIngredient from "./ModalForNewIngredient";
@@ -247,6 +248,32 @@ const ShoppingList = () => {
       });
   };
 
+  const share = (email: string) => {
+    console.log(email);
+    shareShoppingList(email)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
+  };
+
   const print = () => {
     window.print();
   };
@@ -341,6 +368,7 @@ const ShoppingList = () => {
       </Button>
       <ModalForSendEmail
         isOpen={isOpenSendEmail}
+        share={share}
         onClose={() => {
           onCloseSendEmail();
         }}

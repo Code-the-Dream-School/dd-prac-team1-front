@@ -43,7 +43,7 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
           </Center>
           <Stack mt="3">
             <Center>
-              <Text fontSize="xs" h="7">
+              <Text fontSize="xs" h="8" noOfLines={1}>
                 {recipe.recipeName}
               </Text>
             </Center>

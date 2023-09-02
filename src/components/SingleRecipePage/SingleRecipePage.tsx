@@ -127,16 +127,21 @@ const SingleRecipePage = () => {
     return removeDuplicates(renderingTags);
   };
 
-  const valueOfServings = (e: any) => {
-    console.log(e);
+  const valueOfServings = (ingredientAmount: number) => {
+    console.log(ingredientAmount);
     // setRecipe({
     //   ...recipe,
     //   recipeServings: Number(e.target.value)
     // });
-    setServingSize(Number(e.target.value));
+    setServingSize(ingredientAmount);
+    console.log(servingSize);
+    // saveIngredientsToShoppingList();
   };
+
   console.log(servingSize);
-  const CalculateServings = () => {
+  const CalculateServings = (ingredientAmount: number) => {
+    const servingSize = ingredientAmount;
+    console.log(servingSize);
     if (recipe.recipeServings === servingSize) {
       return recipe.recipeIngredients;
     }
@@ -159,68 +164,68 @@ const SingleRecipePage = () => {
       });
     }
   };
+  // const saveIngredientsToShoppingList = () => {
 
-  const sendIngredients = () => {
-    console.log(recipe);
+  // };
+
+  console.log(recipe.recipeIngredients);
+  const sendIngredients = (ingredientAmount: number) => {
+    console.log("before", recipe);
     if (recipeId === undefined) return;
     console.log(recipeId);
-    saveRecipeIngredientsToShoppingList(recipeId)
-      .then(response => {
-        console.log(response);
-        toast({
-          title: "",
-          description: "",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
-          render: () => (
-            <>
-              <Box p="3" bg="green">
-                <Flex flexDirection="column">
-                  Your recipe was added to the shopping list
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      navigate("/shopping-list");
-                      toast.closeAll();
-                    }}>
-                    Take me to the Shopping List
-                  </Button>
-                </Flex>
-              </Box>
-            </>
-          )
-        });
-      })
-      .catch(error => {
-        toast({
-          title: "Error",
-          description: `${
-            error?.response?.data?.msg ||
-            error?.response?.data?.message ||
-            error?.response?.data?.error ||
-            error?.response?.data ||
-            error.message ||
-            "unknown error"
-          }`,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "top"
-        });
+    // CalculateServings(ingredientAmount)
+    console.log(CalculateServings(ingredientAmount));
+    // saveRecipeIngredientsToShoppingList(recipeId)
+    //   .then(response => {
+    //     console.log(response);
+    //     toast({
+    //       title: "",
+    //       description: "",
+    //       status: "success",
+    //       duration: 5000,
+    //       isClosable: true,
+    //       position: "top",
+    //       render: () => (
+    //         <>
+    //           <Box p="3" bg="green">
+    //             <Flex flexDirection="column">
+    //               Your recipe was added to the shopping list
+    //               <Button
+    //                 variant="outline"
+    //                 onClick={() => {
+    //                   navigate("/shopping-list");
+    //                   toast.closeAll();
+    //                 }}>
+    //                 Take me to the Shopping List
+    //               </Button>
+    //             </Flex>
+    //           </Box>
+    //         </>
+    //       )
+    //     });
+    //   })
+    //   .catch(error => {
+    //     toast({
+    //       title: "Error",
+    //       description: `${
+    //         error?.response?.data?.msg ||
+    //         error?.response?.data?.message ||
+    //         error?.response?.data?.error ||
+    //         error?.response?.data ||
+    //         error.message ||
+    //         "unknown error"
+    //       }`,
+    //       status: "error",
+    //       duration: 3000,
+    //       isClosable: true,
+    //       position: "top"
+    //     });
 
-        console.log(error);
-      });
+    //     console.log(error);
+    //   });
   };
-  const saveIngredientsToShoppingList = () => {
-    CalculateServings();
-
-    localStorage.setItem(
-      "ingredient",
-      JSON.stringify(recipe.recipeIngredients)
-    );
-  };
+  console.log(recipe);
+  // console.log()
 
   const nutrition = [
     {
@@ -330,8 +335,8 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  //onClick={onOpen}
-                  onClick={sendIngredients}
+                  onClick={onOpen}
+                  // onClick={sendIngredients}
                 />
                 <ModalForServings
                   isOpen={openModal}
@@ -340,8 +345,9 @@ const SingleRecipePage = () => {
                     setServingSize(recipe.recipeServings);
                   }}
                   value={servingSize}
-                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
+                  // saveIngredientsToShoppingList={saveIngredientsToShoppingList}
                   valueOfServings={valueOfServings}
+                  sendIngredients={sendIngredients}
                   // recipe={recipe}
                 />
                 <IconButton
