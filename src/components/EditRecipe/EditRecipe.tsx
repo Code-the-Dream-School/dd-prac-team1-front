@@ -117,24 +117,24 @@ const EditRecipe = () => {
   const handleInputAdd = (arg: string) => {
     if (arg === "ingredients") {
       setIngredients([
-        ...ingredients,
         {
           ingredientName: "",
           ingredientAmount: 0,
           ingredientUnit: "other"
-        }
+        },
+        ...ingredients
       ]);
     }
     if (arg === "tags") {
       setTags([
-        ...tags,
         {
           tagName: ""
-        }
+        },
+        ...tags
       ]);
     }
     if (arg === "diets") {
-      setDiets([...diets, ""]);
+      setDiets(["", ...diets]);
     }
   };
 
@@ -183,11 +183,22 @@ const EditRecipe = () => {
           }}
           gap="2"
           mt="10"
-          h="70">
-          <GridItem colSpan={{ base: 1, md: 2 }} w="100%">
+          h={{ base: "150", sm: "70" }}>
+          <GridItem
+            colSpan={{ base: 2, sm: 1, md: 2 }}
+            w="100%"
+            display={{ base: "flex", sm: "grid" }}
+            justifyContent="center"
+            alignItems="center">
             <Heading as="h3">Edit your recipe</Heading>
           </GridItem>
-          <GridItem colSpan={1} w="100%" position="relative">
+          <GridItem
+            colSpan={{ base: 2, sm: 1, md: 1 }}
+            w="100%"
+            position="relative"
+            display={{ base: "flex", sm: "grid" }}
+            justifyContent="center"
+            alignItems="center">
             <Flex
               w="100%"
               gap="2"
@@ -222,67 +233,76 @@ const EditRecipe = () => {
             md: "repeat(3, 1fr)"
           }}
           gap="2">
-          <GridItem colSpan={{ base: 1, md: 2 }} w="100%">
+          <GridItem colSpan={{ base: 2, sm: 1, md: 2 }} w="100%">
             <Flex flexDirection="column">
-              <Box mt="10" alignItems="center" gap="2">
-                <FormControl w="70%" marginY="5">
-                  <FormLabel>
-                    <b>Recipe name</b>
-                  </FormLabel>
-                  <Input
-                    isRequired
-                    size="sm"
-                    type="text"
-                    placeholder="recipe name is required"
-                    value={recipe.recipeName}
-                    onChange={e => {
-                      setRecipe({
-                        ...recipe,
-                        recipeName: e.target.value
-                      });
-                    }}
-                  />
-                </FormControl>
-                <FormControl w="70%" marginY="5">
-                  <FormLabel>
-                    <b>Recipe category</b>
-                  </FormLabel>
-                  <Select
-                    isRequired
-                    size="sm"
-                    value={recipe.recipeCategory}
-                    placeholder="Choose category"
-                    onChange={e => {
-                      setRecipe({
-                        ...recipe,
-                        recipeCategory: e.target.value
-                      });
-                    }}>
-                    <option value="Main Dish">Main Dish</option>
-                    <option value="Snack">Snack</option>
-                    <option value="Soup">Soup</option>
-                    <option value="Cream Soup">Cream Soup</option>
-                    <option value="Cocktail">Cocktail</option>
-                    <option value="Salad">Salad</option>
-                    <option value="Dessert">Dessert</option>
-                    <option value="Kids Menu">Kids Menu</option>
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Appetizer">Appetizer</option>
-                    <option value="Side Dish">Side Dish</option>
-                    <option value="Sandwich">Sandwich</option>
-                    <option value="Picnic Ideas">Picnic Ideas</option>
-                    <option value="Smoothie">Smoothie</option>
-                    <option value="Party Menu">Party Menu</option>
-                  </Select>
-                </FormControl>
-              </Box>
+              {/* <Box> */}
+              <FormControl
+                w={{ base: "100%", sm: "85%" }}
+                marginY="5"
+                pr={{ base: "15px", sm: "0" }}
+                mt={{ sm: "10" }}
+                alignItems="center"
+                gap={{ sm: "2" }}>
+                <FormLabel>
+                  <b>Recipe name</b>
+                </FormLabel>
+                <Input
+                  isRequired
+                  size="sm"
+                  type="text"
+                  placeholder="recipe name is required"
+                  value={recipe.recipeName}
+                  onChange={e => {
+                    setRecipe({
+                      ...recipe,
+                      recipeName: e.target.value
+                    });
+                  }}
+                />
+              </FormControl>
+              <FormControl
+                w={{ base: "100%", sm: "85%" }}
+                marginY="5"
+                pr={{ base: "15px", sm: "0" }}>
+                <FormLabel>
+                  <b>Recipe category</b>
+                </FormLabel>
+                <Select
+                  isRequired
+                  size="sm"
+                  value={recipe.recipeCategory}
+                  placeholder="Choose category"
+                  onChange={e => {
+                    setRecipe({
+                      ...recipe,
+                      recipeCategory: e.target.value
+                    });
+                  }}>
+                  <option value="Main Dish">Main Dish</option>
+                  <option value="Snack">Snack</option>
+                  <option value="Soup">Soup</option>
+                  <option value="Cream Soup">Cream Soup</option>
+                  <option value="Cocktail">Cocktail</option>
+                  <option value="Salad">Salad</option>
+                  <option value="Dessert">Dessert</option>
+                  <option value="Kids Menu">Kids Menu</option>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Appetizer">Appetizer</option>
+                  <option value="Side Dish">Side Dish</option>
+                  <option value="Sandwich">Sandwich</option>
+                  <option value="Picnic Ideas">Picnic Ideas</option>
+                  <option value="Smoothie">Smoothie</option>
+                  <option value="Party Menu">Party Menu</option>
+                </Select>
+              </FormControl>
+              {/* </Box> */}
               <Grid templateColumns="repeat(2, 1fr)" gap="2">
-                <GridItem colSpan={1} w="100%">
+                <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
                     <FormLabel>
                       <b>Prep time</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "70%" }}>
                       <Input
                         size="sm"
                         type="number"
@@ -315,7 +335,7 @@ const EditRecipe = () => {
                       <b>Complexity level</b>
                     </FormLabel>
                     <Select
-                      w="50%"
+                      w={{ base: "95%", md: "70%" }}
                       size="sm"
                       value={recipe.recipeComplexityLevel}
                       placeholder="Choose complexity level"
@@ -331,12 +351,12 @@ const EditRecipe = () => {
                     </Select>
                   </FormControl>
                 </GridItem>
-                <GridItem colSpan={1} w="100%">
+                <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
                     <FormLabel>
                       <b>Cooking time</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "70%" }}>
                       <Input
                         size="sm"
                         type="number"
@@ -368,7 +388,7 @@ const EditRecipe = () => {
                     <FormLabel>
                       <b>Servings</b>
                     </FormLabel>
-                    <InputGroup w="50%">
+                    <InputGroup w={{ base: "95%", md: "70%" }}>
                       <Input
                         size="sm"
                         value={recipe.recipeServings || ""}
@@ -403,21 +423,33 @@ const EditRecipe = () => {
                 </Flex>
                 <Grid
                   templateColumns={{
-                    base: "repeat(4, 1fr)",
+                    base: "repeat(11, 1fr)",
                     md: "repeat(12, 1fr)"
                   }}
-                  gap={{ base: 1, md: 6 }}>
-                  <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
+                  gap={{ base: 1, lg: 6 }}>
+                  <GridItem
+                    colSpan={{ lg: 3 }}
+                    textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
+                    w="100%">
                     <Text>
                       <i>ingredient</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={{ base: 1, md: 3 }} w="100%">
+                  <GridItem
+                    colSpan={{ lg: 4 }}
+                    textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
+                    w="100%">
                     <Text>
                       <i>amount</i>
                     </Text>
                   </GridItem>
-                  <GridItem colSpan={{ base: 3, md: 3 }} w="100%">
+                  <GridItem
+                    colSpan={{ lg: 4 }}
+                    textAlign={{ lg: "center" }}
+                    display={{ base: "none", lg: "block" }}
+                    w="100%">
                     <Text>
                       <i>unit</i>
                     </Text>
@@ -427,14 +459,14 @@ const EditRecipe = () => {
                 {ingredients.map((ingredient, index) => (
                   <Grid
                     templateColumns={{
-                      base: "repeat(9, 1fr)",
-                      md: "repeat(12, 1fr)"
+                      base: "repeat(11, 1fr)",
+                      lg: "repeat(12, 1fr)"
                     }}
                     w="95%"
                     gap="2"
                     mb={{ base: "2", md: "0" }}
                     key={index}>
-                    <GridItem colSpan={{ base: 11, md: 3 }} w="100%">
+                    <GridItem colSpan={{ base: 11, md: 10, lg: 3 }} w="100%">
                       <FormControl w="100%">
                         <Input
                           isRequired
@@ -456,7 +488,7 @@ const EditRecipe = () => {
                         />
                       </FormControl>
                     </GridItem>
-                    <GridItem colSpan={{ base: 6, md: 5 }} w="100%">
+                    <GridItem colSpan={{ base: 11, md: 6, lg: 5 }} w="100%">
                       <IngredientAmountHandle
                         ingredient={ingredient}
                         onChange={(value: any) => {
@@ -472,7 +504,7 @@ const EditRecipe = () => {
                         }}
                       />
                     </GridItem>
-                    <GridItem colSpan={{ base: 4, md: 3 }} w="100%">
+                    <GridItem colSpan={{ base: 10, md: 4, lg: 3 }} w="100%">
                       {ingredient.ingredientAmount >= 0 && (
                         <FormControl mr="1" w="100%">
                           <Select
@@ -507,7 +539,7 @@ const EditRecipe = () => {
                         </FormControl>
                       )}
                     </GridItem>
-                    <GridItem colSpan={{ base: 1, md: 1 }} w="100%">
+                    <GridItem colSpan={1} w="100%">
                       <IconButton
                         size="sm"
                         variant="solid"
@@ -667,12 +699,13 @@ const EditRecipe = () => {
               </Box>
             </Flex>
           </GridItem>
-          <GridItem colSpan={1} w="100%">
+          <GridItem colSpan={{ base: 2, sm: 1 }} w="100%">
             <ChakraImage
               w="100%"
               borderRadius="5"
               src={editSrcImage || ""}
               alt={recipe.recipeName}
+              maxH="45vh"
             />
             <Flex marginY="5">
               <FormControl w="70%">
@@ -746,16 +779,14 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
-                  // m="2"
                   onClick={() => handleInputRemove("tags", index)}
                 />
               </Flex>
             ))}
-
             <Flex marginY="5" alignItems="center">
               <Text mr="2">
                 <b>Special diets</b>
@@ -805,7 +836,7 @@ const EditRecipe = () => {
                 </FormControl>
                 <IconButton
                   size="sm"
-                  variant="outline"
+                  variant="solid"
                   aria-label="remove ingredient"
                   icon={<MinusIcon />}
                   title="remove ingredient"
