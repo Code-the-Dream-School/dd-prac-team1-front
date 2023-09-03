@@ -475,7 +475,7 @@ const Planner = () => {
                                   borderRadius="5px"
                                   padding="0.5rem"
                                   mt="0.2rem"
-                                  width="135px"
+                                  width="100%"
                                   height="120px">
                                   <Center>
                                     <Image
@@ -577,7 +577,7 @@ const Planner = () => {
                                                         src={item.image}
                                                         alt={item.name}
                                                         w="100px"
-                                                        h="60px"
+                                                        h="50px"
                                                         objectFit="cover"
                                                       />
                                                     </Center>
@@ -587,7 +587,7 @@ const Planner = () => {
                                                         textAlign="center"
                                                         fontSize="xs"
                                                         ml="0"
-                                                        mr="0.5rem">
+                                                        >
                                                         {item.name}
                                                       </Text>
                                                     </Center>
