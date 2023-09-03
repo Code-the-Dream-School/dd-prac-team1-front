@@ -8,6 +8,7 @@ import {
   Container,
   useToast,
   IconButton,
+  Tooltip,
   Flex,
   Box,
   Button
@@ -32,6 +33,8 @@ import {
   PlannerRecipe
 } from "../../utils/types";
 import { CloseIcon } from "@chakra-ui/icons";
+import { GiShoppingCart } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const Planner = () => {
   const [days, setDays] = useState<PlannerDays<PlannerRecipe>>({
@@ -103,6 +106,7 @@ const Planner = () => {
   const daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const borderColor = "2px solid #d7da5e";
 
+  const navigate = useNavigate();
   const toast = useToast();
   const showErrorToast = useCallback(
     (error: Error) => {
@@ -408,15 +412,21 @@ const Planner = () => {
   const addMealsToShoppingList = async () => {
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
     const recipesWithMealId = allRecipes.filter(recipe => recipe.mealId);
-    const recipeIds = recipesWithMealId.map(recipe => recipe.mealId);
+    const recipeIds = recipesWithMealId.map(recipe => recipe.id);
+
+    let allSuccessful = true;
 
     for (const id of recipeIds) {
       try {
         const response = await saveRecipeIngredientsToShoppingList(id);
-        console.log(response);
+        console.log(response)
       } catch (error) {
+        allSuccessful = false;
         showErrorToast(error as Error);
       }
+    }
+    if (allSuccessful) {
+      navigate("/shopping-list");
     }
   };
 
@@ -432,14 +442,34 @@ const Planner = () => {
         templateColumns={{ base: "1fr", md: "repeat(8, 1fr)" }}
         gap={{ base: 0 }}
         gridAutoRows="1fr">
-        <GridItem colSpan={{ base: 1, md: 8 }} bg="white" p="3"></GridItem>
+        <GridItem colSpan={{ base: 1, md: 8 }} bg="white"></GridItem>
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
+        <Flex justifyContent="flex-end">
+          <Tooltip 
+            label="Add ingredients to the shopping list" 
+            aria-label="A tooltip"
+            bg="green"
+            color="black"
+            fontSize="sm"
+            p={1}
+            placement="top-start"
+            >
+            <IconButton 
+              mr="10"
+              _hover={{ bg: "none", transform: "scale(1.2)"  }}
+              transition="transform 0.2s ease-in-out"
+              size="xl"
+              variant="ghost"
+              aria-label="Add ingredients to the shopping list"
+              title="Add to shopping list"
+              icon={<GiShoppingCart  style={{ fontSize: '35px' }}/>}
+              onClick={addMealsToShoppingList}
+            />
+          </Tooltip>
           <Button onClick={deleteAllMeals}>
             Clear all
           </Button>
-          <Button onClick={addMealsToShoppingList}>
-            Add to list
-          </Button>
+        </Flex>
         </GridItem>
         <GridItem
           colSpan={{ base: 1, md: 1 }}
@@ -539,7 +569,7 @@ const Planner = () => {
                       days[dayId]?.meals?.map(mealSlot => (
                         <React.Fragment key={mealSlot}>
                           <Box
-                            p="2"
+                            p="1"
                             borderBottom={borderColor}
                             textAlign="center">
                             {mealSlot.toUpperCase()}
@@ -551,8 +581,8 @@ const Planner = () => {
                               <Container
                                 ref={providedMealSlot.innerRef}
                                 {...providedMealSlot.droppableProps}
-                                border={borderColor}
-                                borderRadius="5px"
+                                //border={borderColor}
+                                //borderRadius="5px"
                                 mt="0.5rem"
                                 mb="0.5rem"
                                 p="0.5rem"
