@@ -16,7 +16,7 @@ const loader = keyframes`
 
 const Loader = ({ text = "Loading..." }) => {
   return (
-    <Box display="flex" justifyContent="center" minH={{ base: "100px" }}>
+    <Box display="flex" justifyContent="center" minH="100px">
       {text.split("").map((letter, index) => (
         <Box
           as="span"
