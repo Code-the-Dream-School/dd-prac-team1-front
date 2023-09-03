@@ -181,7 +181,9 @@ const Planner = () => {
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
 
-    if (!destination) return;
+    if (!destination || destination.droppableId === "savedRecipes") {
+      return;
+    }
 
     const sourceId: Id = source.droppableId;
     const destinationId: Id = destination.droppableId;
@@ -319,6 +321,16 @@ const Planner = () => {
           showErrorToast(error);
         });
       
+      } else {
+        toast({
+          title: "You cannot replace",
+          description: "Delete the meal and add a new one, please",
+          variant: "subtle",
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       }
     }
   };
