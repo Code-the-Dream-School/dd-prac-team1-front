@@ -127,10 +127,7 @@ const SearchAI = () => {
           }}>
           <FormControl isInvalid={error}>
             <Flex flexDirection={"column"} gap="5" alignItems="center">
-              <FormLabel
-                textAlign="center"
-                htmlFor="searchAI"
-                mt={{ base: 2, md: 5 }}>
+              <FormLabel textAlign="center" htmlFor="searchAI">
                 <Heading size="md">
                   Hi {name}, I'm Olivier! Do you want to try a new recipe?
                 </Heading>
@@ -143,7 +140,6 @@ const SearchAI = () => {
                 id="searchAI"
                 value={search}
                 focusBorderColor="green"
-                mb={{ base: 2, md: 0 }}
                 variant="outline"
                 onChange={event => setSearch(event.target.value)}
               />
@@ -160,12 +156,7 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  // mt={{ base: 2, md: 0 }}
-                  // mb={{ base: 2, md: 0 }}
-                  isDisabled={isLoading}>
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
@@ -173,8 +164,8 @@ const SearchAI = () => {
           </FormControl>
         </Box>
       </Box>
-      <Box>
-        {!isLoading ? (
+      <Box p="5">
+        {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
           recipe && <RecipeAI recipe={recipe} />
