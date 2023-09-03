@@ -336,9 +336,6 @@ const ShoppingList = () => {
         templateColumns="repeat(12, 1fr)"
         gap="2"
         mt="5"
-        // h="20"
-        // display={{ base: "flex", sm: "grid" }}
-        // flexDirection={{ base: "column" }}
         alignItems="center"
         justifyContent="center">
         <GridItem colSpan={{ base: 12, sm: 9 }} w="100%">
@@ -367,10 +364,10 @@ const ShoppingList = () => {
             variant="ghost"
             color="#505050"
             bg="brandGray"
-            aria-label="Send the shopping List"
+            aria-label="Share the shopping List"
             fontSize="20"
             icon={<TbShare3 />}
-            title="delete all"
+            title="share the shopping list"
             onClick={onOpenSendEmail}
           />
         </GridItem>
