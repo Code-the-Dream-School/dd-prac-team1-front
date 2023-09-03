@@ -208,8 +208,7 @@ const Planner = () => {
 
     if (!destination || destination.droppableId === "savedRecipes") {
       return;
-    }
-    
+    };
 
     const sourceId: Id = source.droppableId;
     const destinationId: Id = destination.droppableId;
@@ -220,7 +219,31 @@ const Planner = () => {
       const [destDayId, destMealSlot] = destinationId.split("-");
 
       const destinationDay = [...(days[destDayId]?.recipes || [])];
+
+      const mealExistsInSlot = destinationDay.some(
+        item => item.mealSlot === destMealSlot
+      );
+
+      if (mealExistsInSlot) {
+        toast({
+          title: "You cannot replace meals!",
+          description: "Delete the meal and add a new one, please",
+          variant: "subtle",
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+        return;
+      }
+
+
+      /*const newDestinationDay = mealExistsInSlot ? 
+      destinationDay.filter(item => item.mealSlot !== destMealSlot) : 
+      [...destinationDay];*/
+
       movedItem.mealSlot = destMealSlot;
+      //newDestinationDay.splice(destination.index, 0, movedItem);
       destinationDay.splice(destination.index, 0, movedItem);
 
       setDays(prevDays => ({
@@ -231,6 +254,7 @@ const Planner = () => {
         },
         [destDayId]: {
           ...prevDays[destDayId],
+          //recipes: newDestinationDay
           recipes: destinationDay
         }
       }));
@@ -241,6 +265,7 @@ const Planner = () => {
         dayOfWeek: destDayId,
         mealSlot: destMealSlot
       };
+
       createMealPlan(data)
         .then(response => {
           const newMealId = response.data.newMealPlan._id;
@@ -433,7 +458,7 @@ const Planner = () => {
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
-        h="200px"
+        h="160px"
         templateRows={{
           base: "repeat(9, 1fr)",
           md: "repeat(2, 1fr)",
@@ -442,7 +467,7 @@ const Planner = () => {
         templateColumns={{ base: "1fr", md: "repeat(8, 1fr)" }}
         gap={{ base: 0 }}
         gridAutoRows="1fr">
-        <GridItem colSpan={{ base: 1, md: 8 }} bg="white"></GridItem>
+          <GridItem colSpan={{ base: 1, md: 8 }}></GridItem>
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
         <Flex justifyContent="flex-end">
           <Tooltip 
@@ -505,7 +530,7 @@ const Planner = () => {
             <GridItem
               key={dayId}
               colSpan={{ base: 1, md: 1 }}
-              height="60vh"
+              height="35rem"
               overflowY={dayId === "savedRecipes" ? "scroll" : "hidden"}
               borderRight={index !== 0 && index !== 7 ? borderColor : "none"}>
               <Droppable droppableId={dayId} direction="vertical">
@@ -581,12 +606,11 @@ const Planner = () => {
                               <Container
                                 ref={providedMealSlot.innerRef}
                                 {...providedMealSlot.droppableProps}
-                                //border={borderColor}
-                                //borderRadius="5px"
                                 mt="0.5rem"
                                 mb="0.5rem"
                                 p="0.5rem"
                                 minHeight="120px"
+                                position="relative"
                                 maxHeight="120px">
                                 {days[dayId] &&
                                   days[dayId].recipes &&
@@ -627,7 +651,7 @@ const Planner = () => {
                                                   }
                                                   width="100%"
                                                   height="70px"
-                                                  position="relative"
+                                                  position="absolute"
                                                   >
                                                   <Flex
                                                     mt="0.1rem"
