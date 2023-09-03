@@ -9,7 +9,8 @@ import {
   useToast,
   IconButton,
   Flex,
-  Box
+  Box,
+  Button
 } from "@chakra-ui/react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
@@ -379,6 +380,16 @@ const Planner = () => {
       });
   };
 
+  const deleteAllMeals = () => {
+    Object.keys(days).forEach(dayId => {
+      if (dayId !== 'savedRecipes' && days[dayId]?.recipes) {
+        days[dayId].recipes.forEach((recipe: PlannerRecipe) => {
+          handleDelete(recipe.mealId);
+        });
+      }
+    });
+  };
+
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
@@ -393,7 +404,9 @@ const Planner = () => {
         gridAutoRows="1fr">
         <GridItem colSpan={{ base: 1, md: 8 }} bg="white" p="3"></GridItem>
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
-          <Text>calendar and buttons space</Text>
+          <Button onClick={deleteAllMeals}>
+            Clear all
+          </Button>
         </GridItem>
         <GridItem
           colSpan={{ base: 1, md: 1 }}
