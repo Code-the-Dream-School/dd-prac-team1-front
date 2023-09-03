@@ -87,6 +87,18 @@ const EditRecipe = () => {
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
+    console.log(recipe);
+    // if (recipe.recipeServings === 0) {
+    //   setRecipe({
+    //     ...recipe,
+    //     recipeServings: 1
+    //   });
+    // }
+    //  if (e.target.value === "0" || e.target.value === "") {
+    //                         setRecipe({
+    //                           ...recipe,
+    //                           recipeServings: 1
+    //                         });
     editSingleRecipe(recipeId, recipe)
       .then(response => {
         console.log(response);
@@ -173,6 +185,12 @@ const EditRecipe = () => {
       as="form"
       onSubmit={(e: any) => {
         e.preventDefault();
+        if (recipe.recipeServings === "") {
+          setRecipe({
+            ...recipe,
+            recipeServings: 1
+          });
+        }
         saveRecipe();
       }}>
       <Container maxW="5xl">
@@ -235,7 +253,6 @@ const EditRecipe = () => {
           gap="2">
           <GridItem colSpan={{ base: 2, sm: 1, md: 2 }} w="100%">
             <Flex flexDirection="column">
-              {/* <Box> */}
               <FormControl
                 w={{ base: "100%", sm: "85%" }}
                 marginY="5"
@@ -295,7 +312,6 @@ const EditRecipe = () => {
                   <option value="Party Menu">Party Menu</option>
                 </Select>
               </FormControl>
-              {/* </Box> */}
               <Grid templateColumns="repeat(2, 1fr)" gap="2">
                 <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
@@ -394,6 +410,17 @@ const EditRecipe = () => {
                         value={recipe.recipeServings || ""}
                         min="0"
                         onChange={e => {
+                          // if (e.target.value === "0" || e.target.value === "") {
+                          //   setRecipe({
+                          //     ...recipe,
+                          //     recipeServings: 1
+                          //   });
+                          // } else {
+                          //   setRecipe({
+                          //     ...recipe,
+                          //     recipeServings: Number(e.target.value)
+                          //   });
+                          // }
                           setRecipe({
                             ...recipe,
                             recipeServings: Number(e.target.value)

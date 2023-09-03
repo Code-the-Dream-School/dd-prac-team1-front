@@ -52,7 +52,7 @@ export type SavedRecipe = {
   recipeName: string;
   recipeNutritionInfo: RecipeNutritionInfo;
   recipePrepTime: { recipePrepTimeMinutes: number };
-  recipeServings: number;
+  recipeServings: number | string;
   recipeSpecialDiets: Array<string>;
   recipeTags: Array<RecipeTag>;
   recipeTotalTime: { recipeTotalTimeMinutes: number };

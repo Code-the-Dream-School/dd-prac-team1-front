@@ -52,6 +52,7 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
+        console.log(response);
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
         setSendingIngredients(response.data.recipeIngredients);
