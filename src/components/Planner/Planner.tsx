@@ -204,6 +204,7 @@ const Planner = () => {
     if (!destination || destination.droppableId === "savedRecipes") {
       return;
     }
+    
 
     const sourceId: Id = source.droppableId;
     const destinationId: Id = destination.droppableId;
@@ -272,6 +273,19 @@ const Planner = () => {
       const mealExistsInSlot = destinationDay.some(
         item => item.mealSlot === destMealSlot
       );
+
+      if (!destMealSlot || !destDayId || !sourceDayId) {
+        toast({
+          title: "You have missed the slot!",
+          description: "Drop into the slot, please",
+          variant: "subtle",
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+        return;
+      }
 
       if (!mealExistsInSlot) {
         movedItem.mealSlot = destMealSlot;
@@ -346,9 +360,9 @@ const Planner = () => {
           .catch(error => {
             showErrorToast(error);
           });
-      } else {
+      } else if (mealExistsInSlot) {
         toast({
-          title: "You cannot replace",
+          title: "You cannot replace meals!",
           description: "Delete the meal and add a new one, please",
           variant: "subtle",
           status: "warning",
@@ -356,7 +370,7 @@ const Planner = () => {
           isClosable: true,
           position: "top"
         });
-      }
+      } 
     }
   };
 
