@@ -47,7 +47,14 @@ const EditRecipe = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
-        setRecipe(response.data);
+        if (response.data.recipeServings === 0) {
+          setRecipe({
+            ...response.data,
+            recipeServings: 1
+          });
+        } else {
+          setRecipe(response.data);
+        }
         setEditSrcImage(response.data.recipeImage);
         setIngredients(
           response.data.recipeIngredients.map(
@@ -88,18 +95,14 @@ const EditRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
     console.log(recipe);
-    // if (recipe.recipeServings === 0) {
-    //   setRecipe({
-    //     ...recipe,
-    //     recipeServings: 1
-    //   });
-    // }
-    //  if (e.target.value === "0" || e.target.value === "") {
-    //                         setRecipe({
-    //                           ...recipe,
-    //                           recipeServings: 1
-    //                         });
-    editSingleRecipe(recipeId, recipe)
+    let newRecipe = { ...recipe };
+    if (newRecipe.recipeServings === 0) {
+      newRecipe = {
+        ...newRecipe,
+        recipeServings: 1
+      };
+    }
+    editSingleRecipe(recipeId, newRecipe)
       .then(response => {
         console.log(response);
         navigate(`/saved-recipes/${recipeId}`);
@@ -185,12 +188,6 @@ const EditRecipe = () => {
       as="form"
       onSubmit={(e: any) => {
         e.preventDefault();
-        // if (recipe.recipeServings === "") {
-        //   setRecipe({
-        //     ...recipe,
-        //     recipeServings: 1
-        //   });
-        // }
         saveRecipe();
       }}>
       <Container maxW="5xl">
@@ -405,37 +402,12 @@ const EditRecipe = () => {
                       <b>Servings</b>
                     </FormLabel>
                     <InputGroup w={{ base: "95%", md: "70%" }}>
-                      {/* <Select
-                        w={{ base: "95%", md: "70%" }}
-                        size="sm"
-                        value={recipe.recipeServings}
-                        placeholder="Choose serving size"
-                        onChange={e => {
-                          setRecipe({
-                            ...recipe,
-                            recipeServings: Number(e.target.value)
-                          });
-                        }}>
-                        <option value="easy">easy</option>
-                        <option value="medium">medium</option>
-                        <option value="difficult">difficult</option>
-                      </Select> */}
                       <Input
                         size="sm"
+                        type="number"
                         value={recipe.recipeServings || ""}
                         min="1"
                         onChange={e => {
-                          // if (e.target.value === "0" || e.target.value === "") {
-                          //   setRecipe({
-                          //     ...recipe,
-                          //     recipeServings: 1
-                          //   });
-                          // } else {
-                          //   setRecipe({
-                          //     ...recipe,
-                          //     recipeServings: Number(e.target.value)
-                          //   });
-                          // }
                           setRecipe({
                             ...recipe,
                             recipeServings: Number(e.target.value)
