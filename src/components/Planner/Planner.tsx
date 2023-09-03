@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Center,
   Grid,
@@ -26,49 +26,67 @@ import { CloseIcon } from "@chakra-ui/icons";
 
 const Planner = () => {
   const [days, setDays] = useState<PlannerDays<PlannerRecipe>>({
-    savedRecipes: { sortOrder: 0, recipes: [] },
+    savedRecipes: { 
+      sortOrder: 0, 
+      recipes: [],
+      mealId: null,
+    },
     Sunday: {
       sortOrder: 1,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Monday: {
       sortOrder: 2,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Tuesday: {
       sortOrder: 3,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Wednesday: {
       sortOrder: 4,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Thursday: {
       sortOrder: 5,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Friday: {
       sortOrder: 6,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     },
     Saturday: {
       sortOrder: 7,
       meals: ["breakfast", "lunch", "dinner"],
-      recipes: []
+      recipes: [],
+      mealId: null,
+      mealSlot: null
     }
   });
 
   const toast = useToast();
-  const showErrorToast = (error: Error) => {
+  const showErrorToast = useCallback((error: Error) => {
     toast({
       title: "Error",
-        description: `${
+      description: `${
         error?.response?.data?.msg ||
         error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -76,13 +94,13 @@ const Planner = () => {
         error.message ||
         "unknown error"
         }`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "top"
-      });
-  };
-
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+      position: "top"
+    });
+  }, [toast]); 
+  
   const daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const borderColor = "2px solid #d7da5e";
 
@@ -108,7 +126,7 @@ const Planner = () => {
       .catch(error => {
         showErrorToast(error)
       });
-  }, []);
+  }, [showErrorToast]);
 
   useEffect(() => {
     if (!days.savedRecipes || days.savedRecipes.recipes.length === 0) {
@@ -122,16 +140,14 @@ const Planner = () => {
           let updatedDays = { ...prevDays };
 
           fetchedMealPlans.forEach((fetchedPlan: FetchedPlan) => {
-            const { dayOfWeek, mealSlot, recipeId } = fetchedPlan;
+            const { dayOfWeek, recipeId } = fetchedPlan;
             const matchingRecipe = prevDays.savedRecipes.recipes.find(
               recipe => recipe.id === recipeId
             );
 
             if (matchingRecipe) {
-              const newUniqueKey = `${dayOfWeek}-${mealSlot}-${recipeId}`;
               const newRecipeEntry = {
                 ...matchingRecipe,
-                uniqueKey: newUniqueKey,
                 mealId: fetchedPlan._id,
                 mealSlot: fetchedPlan.mealSlot
               };
@@ -140,7 +156,7 @@ const Planner = () => {
               }
               if (
                 !updatedDays[dayOfWeek].recipes.some(
-                  recipe => recipe.uniqueKey === newUniqueKey
+                  recipe =>  recipe.mealId === fetchedPlan._id
                 )
               ) {
                 updatedDays = {
@@ -160,7 +176,7 @@ const Planner = () => {
       .catch(error => {
         showErrorToast(error)
       });
-  }, [days.savedRecipes]);
+  }, [days.savedRecipes, showErrorToast]);  
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -197,9 +213,28 @@ const Planner = () => {
         dayOfWeek: destDayId,
         mealSlot: destMealSlot
       };
-    
-      createMealPlan(data).catch(error => {
-        showErrorToast(error);
+      createMealPlan(data)
+      .then(response => {
+          const newMealId = response.data.newMealPlan._id;
+          setDays(prevDays => {
+              const updatedDay = {...prevDays[data.dayOfWeek]};
+              const updatedRecipes = updatedDay.recipes.map(recipe => {
+                  if (recipe.id === data.recipeId && recipe.mealSlot === data.mealSlot) {
+                      return {...recipe, mealId: newMealId};
+                  }
+                  return recipe;
+              });
+              return {
+                ...prevDays, 
+                [data.dayOfWeek]: 
+                  {...updatedDay, 
+                    recipes: updatedRecipes
+                  }
+                };
+          });
+      })
+      .catch(error => {
+          showErrorToast(error);
       });
     } else if (sourceId !== "savedRecipes") {
       const [sourceDayId, sourceMealSlot] = sourceId.split("-");
@@ -243,17 +278,47 @@ const Planner = () => {
             }
           }));
         }
-
+  
         const data = {
           _id: movedItem.mealId,
           recipeId: movedItem.id,
           dayOfWeek: destDayId,
           mealSlot: movedItem.mealSlot
-        };
+        };  
 
-        updateMealPlan(data).catch(error => {
-            showErrorToast(error)
+        updateMealPlan(data)
+        .then((response) => {
+          const updatedMealPlan = response.data; // Assuming the API returns the updated meal plan
+      
+          setDays(prevDays => {
+            const updatedSourceDay = [...prevDays[sourceDayId]?.recipes];
+            const updatedDestinationDay = [...prevDays[destDayId]?.recipes];
+      
+            const sourceDayIndex = updatedSourceDay.findIndex(
+              item => item.mealSlot === sourceMealSlot
+            );
+            if (sourceDayIndex !== -1) {
+              updatedSourceDay.splice(sourceDayIndex, 1);
+            }
+      
+            const destinationDayIndex = updatedDestinationDay.findIndex(
+              item => item.mealSlot === destMealSlot
+            );
+            if (destinationDayIndex === -1) {
+              updatedDestinationDay.push(updatedMealPlan);
+            }
+      
+            return {
+              ...prevDays,
+              [sourceDayId]: { ...prevDays[sourceDayId], recipes: updatedSourceDay },
+              [destDayId]: { ...prevDays[destDayId], recipes: updatedDestinationDay }
+            };
           });
+        })
+        .catch((error) => {
+          showErrorToast(error);
+        });
+      
       }
     }
   };
@@ -300,7 +365,7 @@ const Planner = () => {
           display="flex"
           flexDirection="column"
           justifyContent="center">
-          <Center p="1" fontSize="25">
+          <Center p="1" fontSize="20">
             <Text>RECIPES</Text>
           </Center>
         </GridItem>
@@ -417,7 +482,7 @@ const Planner = () => {
                                     .filter(item => item.mealSlot === mealSlot)
                                     .map(
                                       (item: PlannerRecipe, index: number) => {
-                                        //console.log(item)
+                                       // console.log(item)
                                         return (
                                           <Draggable
                                             key={`${item.id}-${mealSlot}-${item.mealId}`}

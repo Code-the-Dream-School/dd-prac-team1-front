@@ -161,7 +161,9 @@ export type PlannerDays<PlannerRecipe> = {
   [index: string]: { 
     sortOrder: number; 
     meals?: [string, string, string],
-    recipes: PlannerRecipe[] 
+    recipes: PlannerRecipe[],
+    mealId: string | null,
+    mealSlot?: string | null,
   };
 };
 
@@ -170,6 +172,7 @@ export type FetchedPlan = {
   mealSlot: string;
   dayOfWeek: string; 
   recipeId: string; 
+  mealId?: string,
 };
 
 export type ErrorResponse = {
