@@ -51,7 +51,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   };
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap="2" mt="10">
+    <Grid templateColumns="repeat(2, 1fr)" gap="2" mt="10" mb="10">
       <GridItem w="100%" colSpan={1}>
         <Heading size="lg">
           Sure! Here's a simple and delicious recipe for&nbsp;
