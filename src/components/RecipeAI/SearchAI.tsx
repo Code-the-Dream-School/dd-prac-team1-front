@@ -163,8 +163,8 @@ const SearchAI = () => {
                 <Button
                   variant="solid"
                   type="submit"
-                  mt={{ base: 2, md: 0 }}
-                  mb={{ base: 2, md: 0 }}
+                  // mt={{ base: 2, md: 0 }}
+                  // mb={{ base: 2, md: 0 }}
                   isDisabled={isLoading}>
                   GENERATE
                 </Button>
@@ -173,13 +173,13 @@ const SearchAI = () => {
           </FormControl>
         </Box>
       </Box>
-      <Container maxW="6xl">
-        {isLoading ? (
+      <Box>
+        {!isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
           recipe && <RecipeAI recipe={recipe} />
         )}
-      </Container>
+      </Box>
     </>
   );
 };
