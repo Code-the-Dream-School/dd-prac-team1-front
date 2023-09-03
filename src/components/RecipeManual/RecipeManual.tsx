@@ -78,7 +78,14 @@ const RecipeManual = () => {
 
   const saveRecipe = () => {
     console.log(recipe);
-    saveManualRecipe(recipe)
+    let newRecipe = { ...recipe };
+    if (newRecipe.recipeServings === 0) {
+      newRecipe = {
+        ...newRecipe,
+        recipeServings: 1
+      };
+    }
+    saveManualRecipe(newRecipe)
       .then(response => {
         console.log(response);
         navigate("/saved-recipes");
