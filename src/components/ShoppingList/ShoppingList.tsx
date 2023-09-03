@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TbShare3 } from "react-icons/tb";
 import { TfiPrinter } from "react-icons/tfi";
 import {
+  addIngredientToShoppingList,
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
   deleteAnIngredientFromShoppingList,
@@ -32,6 +33,8 @@ const ShoppingList = () => {
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
     Array<string>
   >([]);
+  const [highlightExistingIngredient, setHighlightExistingIngredient] =
+    useState<string>("");
   const {
     isOpen: isOpenChangedIngredient,
     onOpen: onOpenChangedIngredient,
@@ -43,11 +46,13 @@ const ShoppingList = () => {
     onClose: onCloseSendEmail
   } = useDisclosure();
   const toast = useToast();
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
         console.log(response);
+
         setIngredients(response.data.ingredients);
       })
       .catch(error => {
@@ -73,18 +78,66 @@ const ShoppingList = () => {
     getIngredients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
-    const id = new Date().toString();
-    setIngredients([
-      {
-        ...newIngredient,
-        _id: id
-      },
-      ...ingredients
-    ]);
+    addIngredientToShoppingList(newIngredient)
+      .then(response => {
+        console.log(response);
+        if (
+          response.data.message.includes(
+            "Ingredient already exists in shopping list"
+          )
+        ) {
+          setHighlightExistingIngredient(
+            response.data.existingIngredient.ingredientName
+          );
+          setTimeout(() => {
+            if (ref.current) {
+              console.log("REF assigned");
+              ref.current.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 200);
+          setTimeout(() => {
+            setHighlightExistingIngredient("");
+          }, 3000);
+          toast({
+            title: "",
+            description: "",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+            render: () => (
+              <>
+                <Box p="3" bg="green">
+                  {response.data.message}
+                </Box>
+              </>
+            )
+          });
+        }
+        getIngredients();
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
     onCloseChangedIngredient();
   };
+
   const checkedIngredients = ingredients.filter(ingredient => {
     if (ingredient.ingredientName === undefined) return false;
     return checkedIngredientNames.includes(ingredient.ingredientName);
@@ -186,7 +239,6 @@ const ShoppingList = () => {
               position: "top"
             });
           });
-        console.log("Delayed for 1 second.");
       }, 250 * index);
     });
     console.log(checked);
@@ -381,7 +433,13 @@ const ShoppingList = () => {
         }}
       />
       {uncheckedIngredients.map(ingredient => (
-        <Box key={ingredient._id}>
+        <Box
+          key={ingredient._id}
+          ref={
+            highlightExistingIngredient === ingredient.ingredientName
+              ? ref
+              : null
+          }>
           <ShoppingListIngredient
             ingredient={ingredient}
             onChange={handleCheckedBox}
@@ -390,6 +448,7 @@ const ShoppingList = () => {
             handleEditIngredient={handleEditIngredient}
             defaultChecked={false}
             textDecoration={"none"}
+            highlightExistingIngredient={highlightExistingIngredient}
           />
         </Box>
       ))}
@@ -423,7 +482,13 @@ const ShoppingList = () => {
       </Box>
       <Box mb="10">
         {checkedIngredients.map(ingredient => (
-          <Box key={ingredient._id}>
+          <Box
+            key={ingredient._id}
+            ref={
+              highlightExistingIngredient === ingredient.ingredientName
+                ? ref
+                : null
+            }>
             <ShoppingListIngredient
               ingredient={ingredient}
               onChange={handleCheckedBox}
@@ -432,6 +497,7 @@ const ShoppingList = () => {
               handleEditIngredient={handleEditIngredient}
               defaultChecked={true}
               textDecoration={"line-through"}
+              highlightExistingIngredient={highlightExistingIngredient}
             />
           </Box>
         ))}

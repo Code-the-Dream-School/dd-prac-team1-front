@@ -158,6 +158,19 @@ export const getIngredientsFromShoppingList = () => {
   });
 };
 
+export const addIngredientToShoppingList = (ingredient: SavedIngredient) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/shopping-list/add-ingredient",
+    { ...ingredient },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
 export const editAnIngredientFromShoppingList = (
   ingredient: SavedIngredient
 ) => {
@@ -181,7 +194,6 @@ export const editAnIngredientFromShoppingList = (
 };
 
 export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
   console.log(uri);
   console.log(encodeURI(uri));
