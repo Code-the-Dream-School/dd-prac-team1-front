@@ -41,7 +41,7 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
             overflow="hidden"
             textAlign="center"
             mt={{ base: "1", sm: "2", md: "3" }}
-            h={{ base: "10", sm: "14", md: "20" }}>
+            h={{ base: "10", sm: "14", md: "16", lg: "20" }}>
             <Text fontSize={{ base: "sm", sm: "md", md: "lg" }}>
               {recipe.recipeName}
             </Text>
