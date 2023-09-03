@@ -58,9 +58,11 @@ const Register = () => {
         console.log(error);
         if (error?.response?.data?.msg.includes("already")) {
           setErrorEmail("Account already exists");
+          return;
         }
         if (error?.response?.data?.msg.includes(8)) {
           setErrorPassword(error.response.data.msg);
+          return;
         }
         if (
           error?.response?.data?.msg.includes("format") &&
@@ -70,9 +72,11 @@ const Register = () => {
             "Please enter a valid email address in this format: name@example.com"
           );
           setErrorPassword("Password should be at least 8 characters long");
+          return;
         }
         if (error?.response?.data?.msg.includes("requests")) {
           setErrorPassword(error.response.data.msg);
+          return;
         }
         toast({
           title: "Error",
