@@ -29,6 +29,7 @@ const ModalForSendEmail = ({
     const emailObj = Object.fromEntries(data.entries());
     console.log(data);
     share(emailObj.email);
+    onClose();
   };
   return (
     <Modal
@@ -50,6 +51,7 @@ const ModalForSendEmail = ({
           <ModalBody>
             <Center>
               <Input
+                required
                 size="sm"
                 w="100%"
                 type="email"
@@ -63,9 +65,7 @@ const ModalForSendEmail = ({
             <Button mr="3" bg="brandGray" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" onClick={onClose}>
-              Send email
-            </Button>
+            <Button type="submit">Send email</Button>
           </ModalFooter>
         </ModalContent>
       </Box>
