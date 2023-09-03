@@ -16,8 +16,6 @@ type ModalForServingsProps = {
   isOpen: boolean;
   onClose: () => void;
   value: number;
-  // saveIngredientsToShoppingList: Function;
-  valueOfServings: Function;
   sendIngredients: Function;
 };
 
@@ -25,8 +23,6 @@ const ModalForServings = ({
   isOpen,
   onClose,
   value,
-  // saveIngredientsToShoppingList,
-  valueOfServings,
   sendIngredients
 }: ModalForServingsProps) => {
   const handleServingSize = (e: any) => {
@@ -34,11 +30,8 @@ const ModalForServings = ({
     console.log(e);
     const data = new FormData(e.target);
     const dataObj = Object.fromEntries(data.entries());
-    console.log(data);
-    console.log(dataObj);
-    // valueOfServings(dataObj.ingredientAmount);
-    // saveIngredientsToShoppingList();
-    sendIngredients(dataObj.ingredientAmount);
+    sendIngredients(dataObj.servings);
+    onClose();
   };
 
   return (
@@ -63,12 +56,8 @@ const ModalForServings = ({
                 w="20"
                 type="number"
                 min="0"
-                name="ingredientAmount"
+                name="servings"
                 defaultValue={value}
-                // value=
-                // onChange={e => {
-                //   valueOfServings(e);
-                // }}
               />
             </Center>
           </ModalBody>
@@ -76,12 +65,7 @@ const ModalForServings = ({
             <Button mr="3" bg="brandGray" onClick={onClose}>
               Cancel
             </Button>
-            <Button
-              type="submit"
-              //  onClick={() => saveIngredientsToShoppingList()}
-            >
-              Add to Shopping List
-            </Button>
+            <Button type="submit">Add to Shopping List</Button>
           </ModalFooter>
         </ModalContent>
       </Box>

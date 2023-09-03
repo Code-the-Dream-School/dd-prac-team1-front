@@ -136,10 +136,13 @@ export const deleteSingleRecipe = (recipeId: string) => {
   });
 };
 
-export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
+export const saveRecipeIngredientsToShoppingList = (
+  recipeId: string,
+  servingSize: number
+) => {
   return axios.post(
     `http://localhost:3000/api/v1/shopping-list/${recipeId}`,
-    {},
+    { servingSize },
     {
       headers: {
         "Content-Type": "application/json",

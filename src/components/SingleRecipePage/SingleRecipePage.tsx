@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  // Center,
   Collapse,
   Container,
   Icon,
@@ -33,14 +32,11 @@ import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
-// import { unmountComponentAtNode } from "react-dom";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
-  const [sendingIngredients, setSendingIngredients] = useState({});
-  // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
@@ -54,7 +50,6 @@ const SingleRecipePage = () => {
       .then(response => {
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
-        setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
         console.log(error);
@@ -126,106 +121,57 @@ const SingleRecipePage = () => {
     };
     return removeDuplicates(renderingTags);
   };
-
-  const valueOfServings = (ingredientAmount: number) => {
-    console.log(ingredientAmount);
-    // setRecipe({
-    //   ...recipe,
-    //   recipeServings: Number(e.target.value)
-    // });
-    setServingSize(ingredientAmount);
-    console.log(servingSize);
-    // saveIngredientsToShoppingList();
-  };
-
-  console.log(servingSize);
-  const CalculateServings = (ingredientAmount: number) => {
-    const servingSize = ingredientAmount;
-    console.log(servingSize);
-    if (recipe.recipeServings === servingSize) {
-      return recipe.recipeIngredients;
-    }
-    if (recipe.recipeServings === 0) {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount: ingredient.ingredientAmount * servingSize
-        };
-      });
-    } else {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount:
-            (ingredient.ingredientAmount / recipe.recipeServings) * servingSize
-        };
-      });
-    }
-  };
-  // const saveIngredientsToShoppingList = () => {
-
-  // };
-
-  console.log(recipe.recipeIngredients);
-  const sendIngredients = (ingredientAmount: number) => {
-    console.log("before", recipe);
+  const sendIngredients = (servings: number) => {
     if (recipeId === undefined) return;
-    console.log(recipeId);
-    // CalculateServings(ingredientAmount)
-    console.log(CalculateServings(ingredientAmount));
-    // saveRecipeIngredientsToShoppingList(recipeId)
-    //   .then(response => {
-    //     console.log(response);
-    //     toast({
-    //       title: "",
-    //       description: "",
-    //       status: "success",
-    //       duration: 5000,
-    //       isClosable: true,
-    //       position: "top",
-    //       render: () => (
-    //         <>
-    //           <Box p="3" bg="green">
-    //             <Flex flexDirection="column">
-    //               Your recipe was added to the shopping list
-    //               <Button
-    //                 variant="outline"
-    //                 onClick={() => {
-    //                   navigate("/shopping-list");
-    //                   toast.closeAll();
-    //                 }}>
-    //                 Take me to the Shopping List
-    //               </Button>
-    //             </Flex>
-    //           </Box>
-    //         </>
-    //       )
-    //     });
-    //   })
-    //   .catch(error => {
-    //     toast({
-    //       title: "Error",
-    //       description: `${
-    //         error?.response?.data?.msg ||
-    //         error?.response?.data?.message ||
-    //         error?.response?.data?.error ||
-    //         error?.response?.data ||
-    //         error.message ||
-    //         "unknown error"
-    //       }`,
-    //       status: "error",
-    //       duration: 3000,
-    //       isClosable: true,
-    //       position: "top"
-    //     });
+    saveRecipeIngredientsToShoppingList(recipeId, servings)
+      .then(response => {
+        console.log(response);
+        toast({
+          title: "",
+          description: "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          render: () => (
+            <>
+              <Box p="3" bg="green">
+                <Flex flexDirection="column">
+                  Your recipe was added to the shopping list
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      navigate("/shopping-list");
+                      toast.closeAll();
+                    }}>
+                    Take me to the Shopping List
+                  </Button>
+                </Flex>
+              </Box>
+            </>
+          )
+        });
+      })
+      .catch(error => {
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
 
-    //     console.log(error);
-    //   });
+        console.log(error);
+      });
   };
-  console.log(recipe);
-  // console.log()
 
   const nutrition = [
     {
@@ -342,13 +288,9 @@ const SingleRecipePage = () => {
                   isOpen={openModal}
                   onClose={() => {
                     onClose();
-                    setServingSize(recipe.recipeServings);
                   }}
                   value={servingSize}
-                  // saveIngredientsToShoppingList={saveIngredientsToShoppingList}
-                  valueOfServings={valueOfServings}
                   sendIngredients={sendIngredients}
-                  // recipe={recipe}
                 />
                 <IconButton
                   size="lg"
