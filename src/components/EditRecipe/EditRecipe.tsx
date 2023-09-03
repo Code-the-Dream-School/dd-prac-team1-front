@@ -185,12 +185,12 @@ const EditRecipe = () => {
       as="form"
       onSubmit={(e: any) => {
         e.preventDefault();
-        if (recipe.recipeServings === "") {
-          setRecipe({
-            ...recipe,
-            recipeServings: 1
-          });
-        }
+        // if (recipe.recipeServings === "") {
+        //   setRecipe({
+        //     ...recipe,
+        //     recipeServings: 1
+        //   });
+        // }
         saveRecipe();
       }}>
       <Container maxW="5xl">
@@ -405,10 +405,25 @@ const EditRecipe = () => {
                       <b>Servings</b>
                     </FormLabel>
                     <InputGroup w={{ base: "95%", md: "70%" }}>
+                      {/* <Select
+                        w={{ base: "95%", md: "70%" }}
+                        size="sm"
+                        value={recipe.recipeServings}
+                        placeholder="Choose serving size"
+                        onChange={e => {
+                          setRecipe({
+                            ...recipe,
+                            recipeServings: Number(e.target.value)
+                          });
+                        }}>
+                        <option value="easy">easy</option>
+                        <option value="medium">medium</option>
+                        <option value="difficult">difficult</option>
+                      </Select> */}
                       <Input
                         size="sm"
                         value={recipe.recipeServings || ""}
-                        min="0"
+                        min="1"
                         onChange={e => {
                           // if (e.target.value === "0" || e.target.value === "") {
                           //   setRecipe({
