@@ -8,8 +8,10 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
-  Stack
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { searchAI } from "../../utils/fetchData";
 import { ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
@@ -101,8 +103,8 @@ const SearchAI = () => {
   };
 
   return (
-    <Center>
-      <Container maxW="6xl">
+    <>
+      <Box w="100%" bg="brandGray" mt="5" p="5">
         <Box
           as="form"
           onSubmit={(event: { preventDefault: () => void }) => {
@@ -112,17 +114,17 @@ const SearchAI = () => {
             setIsLoading(true);
           }}>
           <FormControl isInvalid={error}>
-            <Flex
-              flexDirection={"column"}
-              justifyContent={"space-evenly"}
-              h={{ md: "25vh" }}>
+            <Flex flexDirection={"column"} gap="5" alignItems="center">
               <FormLabel
                 textAlign="center"
                 htmlFor="searchAI"
-                mt={{ base: 2, md: 0 }}>
-                Hi {name}, I'm Olivier! Do you want to try a new recipe?
+                mt={{ base: 2, md: 5 }}>
+                <Heading size="md">
+                  Hi {name}, I'm Olivier! Do you want to try a new recipe?
+                </Heading>
               </FormLabel>
               <Input
+                w={{ base: "100%", md: "50%" }}
                 type="text"
                 size="md"
                 placeholder="Type ingredients or recipe title"
@@ -134,7 +136,7 @@ const SearchAI = () => {
                 onChange={event => setSearch(event.target.value)}
               />
               {error && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
-              <Stack>
+              <Stack w={{ base: "100%", md: "50%" }}>
                 <Select
                   isMulti
                   chakraStyles={chakraStyles}
@@ -158,13 +160,15 @@ const SearchAI = () => {
             </Flex>
           </FormControl>
         </Box>
+      </Box>
+      <Container maxW="6xl">
         {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
           recipe && <RecipeAI recipe={recipe} />
         )}
       </Container>
-    </Center>
+    </>
   );
 };
 
