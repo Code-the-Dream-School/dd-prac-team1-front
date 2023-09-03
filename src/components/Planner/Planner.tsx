@@ -20,6 +20,7 @@ import {
   deleteMealPlan,
   getAllMealPlan,
   getRecipe,
+  saveRecipeIngredientsToShoppingList,
   updateMealPlan
 } from "../../utils/fetchData";
 import {
@@ -404,6 +405,21 @@ const Planner = () => {
     });
   };
 
+  const addMealsToShoppingList = async () => {
+    const allRecipes = Object.values(days).flatMap(day => day.recipes);
+    const recipesWithMealId = allRecipes.filter(recipe => recipe.mealId);
+    const recipeIds = recipesWithMealId.map(recipe => recipe.mealId);
+
+    for (const id of recipeIds) {
+      try {
+        const response = await saveRecipeIngredientsToShoppingList(id);
+        console.log(response);
+      } catch (error) {
+        showErrorToast(error as Error);
+      }
+    }
+  };
+
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
@@ -420,6 +436,9 @@ const Planner = () => {
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
           <Button onClick={deleteAllMeals}>
             Clear all
+          </Button>
+          <Button onClick={addMealsToShoppingList}>
+            Add to list
           </Button>
         </GridItem>
         <GridItem

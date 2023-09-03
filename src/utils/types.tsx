@@ -177,8 +177,8 @@ export type FetchedPlan = {
 
 export type ErrorResponse = {
   data: {
-    message?: any;
-    msg?: any;
+    message?: string;
+    msg?: string;
     error?: any;
   }
 }
