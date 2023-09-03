@@ -210,7 +210,7 @@ const Planner = () => {
 
     if (sourceId === "savedRecipes") {
       const sourceDay = [...days[sourceId].recipes];
-      const [movedItem] = sourceDay.splice(source.index, 1);
+      const movedItem = { ...sourceDay[source.index] };  
       const [destDayId, destMealSlot] = destinationId.split("-");
 
       const destinationDay = [...(days[destDayId]?.recipes || [])];
