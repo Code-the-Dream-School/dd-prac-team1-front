@@ -24,29 +24,25 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
   };
 
   return (
-    <GridItem w="100%" onClick={handleClick}>
-      <Card>
-        <CardBody>
+    <GridItem onClick={handleClick} justifySelf="stretch">
+      <Card size="lg">
+        <CardBody p="2" mt="1">
           <Center>
             <Image
-              boxSize={{
-                base: "100px",
-                sm: "150px",
-                md: "150px"
-              }}
+              boxSize="full"
               borderRadius="lg"
               objectFit="cover"
-              mt="5"
+              height="150px"
               src={recipe.recipeImage}
               alt={recipe.recipeName}
             />
           </Center>
-          <Stack mt="3">
-            <Center>
-              <Text fontSize="xs" h="8" noOfLines={1}>
-                {recipe.recipeName}
-              </Text>
-            </Center>
+          <Stack
+            noOfLines={1}
+            textAlign="center"
+            mt={{ base: "1", sm: "2", md: "3" }}
+            h={{ base: "8", sm: "8", md: "9" }}>
+            <Text fontSize="xs">{recipe.recipeName}</Text>
           </Stack>
         </CardBody>
       </Card>
