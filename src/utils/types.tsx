@@ -187,3 +187,7 @@ export type Error = {
   response?: ErrorResponse;
   message?: string;
 };
+
+export type HoveringButtonState = {
+  [mealId: string]: boolean;
+};
