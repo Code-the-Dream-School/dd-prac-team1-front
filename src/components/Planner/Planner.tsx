@@ -41,56 +41,41 @@ const Planner = () => {
     savedRecipes: {
       sortOrder: 0,
       recipes: [],
-      mealId: null
     },
     Sunday: {
       sortOrder: 1,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Monday: {
       sortOrder: 2,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Tuesday: {
       sortOrder: 3,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Wednesday: {
       sortOrder: 4,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Thursday: {
       sortOrder: 5,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Friday: {
       sortOrder: 6,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     },
     Saturday: {
       sortOrder: 7,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
-      mealId: null,
-      mealSlot: null
     }
   });
     

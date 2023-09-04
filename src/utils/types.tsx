@@ -162,8 +162,6 @@ export type PlannerDays<PlannerRecipe> = {
     sortOrder: number; 
     meals?: [string, string, string],
     recipes: PlannerRecipe[],
-    mealId: string | null,
-    mealSlot?: string | null,
   };
 };
 
