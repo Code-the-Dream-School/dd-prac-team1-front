@@ -18,14 +18,15 @@ import {
 
 const Contact = () => {
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap={6} p="5">
-      <GridItem
-        colSpan={{ base: 2, md: 1 }}
-        h={{
-          base: "calc(100vh - 128px - 167px)",
-          sm: "calc(100vh - 55px - 167px)",
-          md: "calc(100vh - 55px - 70px)"
-        }}>
+    <Grid
+      templateColumns="repeat(2, 1fr)"
+      gap={6}
+      p="5"
+      borderRadius="lg"
+      h={{
+        md: "calc(100vh - 55px - 70px)"
+      }}>
+      <GridItem colSpan={{ base: 2, md: 1 }}>
         <Box
           as="form"
           display="flex"
@@ -35,7 +36,7 @@ const Contact = () => {
           <Stack
             divider={<StackDivider />}
             direction="column"
-            w="70%"
+            w={{ md: "70%" }}
             marginY="7">
             <Box>
               <Heading>Contact</Heading>
@@ -79,16 +80,14 @@ const Contact = () => {
               </FormControl>
             </Box>
           </Stack>
-          <Box p="10px">
-            <Center>
-              <Button
-                variant="solid"
-                type="submit"
-                size="lg"
-                background={"green"}>
-                Submit
-              </Button>
-            </Center>
+          <Box>
+            <Button
+              variant="solid"
+              type="submit"
+              size="lg"
+              background={"green"}>
+              Submit
+            </Button>
           </Box>
         </Box>
       </GridItem>
@@ -101,8 +100,8 @@ const Contact = () => {
         backgroundRepeat="no-repeat"
         borderRadius="lg"
         h={{
-          base: "calc(100vh - 128px - 167px)",
-          sm: "calc(100vh - 55px - 167px)",
+          base: "50vh",
+          sm: "50vh",
           md: "calc(100vh - 55px - 70px)"
         }}
       />
