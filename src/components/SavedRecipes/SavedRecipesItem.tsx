@@ -25,7 +25,7 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
 
   return (
     <GridItem onClick={handleClick} justifySelf="stretch">
-      <Card size="lg">
+      <Card size="lg" cursor="pointer">
         <CardBody p="2" mt="1">
           <Center>
             <Image
