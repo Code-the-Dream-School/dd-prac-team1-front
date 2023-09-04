@@ -147,6 +147,7 @@ const Planner = () => {
   }, [showErrorToast]);
 
   useEffect(() => {
+    // exit if no saved recipes are available
     if (!days.savedRecipes || days.savedRecipes.recipes.length === 0) {
       return;
     }
@@ -156,7 +157,8 @@ const Planner = () => {
         setDays(prevDays => {
           let isChanged = false;
           let updatedDays = { ...prevDays };
-
+          //looping through each fetched meal plan to find the matching recipe in savedRecipes by recipeId
+          //to display it on page as we do not get names or images from this call
           fetchedMealPlans.forEach((fetchedPlan: FetchedPlan) => {
             const { dayOfWeek, recipeId } = fetchedPlan;
 
@@ -170,9 +172,11 @@ const Planner = () => {
                 mealId: fetchedPlan._id,
                 mealSlot: fetchedPlan.mealSlot
               };
+              // Initialize array 
               if (!updatedDays[dayOfWeek].recipes) {
                 updatedDays[dayOfWeek].recipes = [];
               }
+              // Add the new meal entry to the array if its mealId is new
               if (
                 !updatedDays[dayOfWeek].recipes.some(
                   recipe => recipe.mealId === fetchedPlan._id
@@ -198,8 +202,11 @@ const Planner = () => {
   }, [days.savedRecipes, showErrorToast]);
 
   const onDragEnd = (result: DropResult) => {
+
+    //destructuring result object to obtain source and destination
     const { source, destination } = result;
 
+    //if there is no destination or the meal is dragged to savedRecipes, return
     if (!destination || destination.droppableId === "savedRecipes") {
       return;
     }
@@ -207,6 +214,7 @@ const Planner = () => {
     const sourceId: Id = source.droppableId;
     const destinationId: Id = destination.droppableId;
 
+    //dragging from savedRecipes to a meal slot
     if (sourceId === "savedRecipes") {
       const sourceDay = [...days[sourceId].recipes];
       const movedItem = { ...sourceDay[source.index] };
@@ -214,6 +222,7 @@ const Planner = () => {
 
       let destinationDay = [...(days[destDayId]?.recipes || [])];
 
+      //checking if the slot is already occupied
       const mealExistsInSlot = destinationDay.some(
         item => item.mealSlot === destMealSlot
       );
@@ -241,6 +250,7 @@ const Planner = () => {
         });
         return;
       }
+
       movedItem.mealSlot = destMealSlot;
       destinationDay.splice(destination.index, 0, movedItem);
 
@@ -286,21 +296,28 @@ const Planner = () => {
         .catch(error => {
           showErrorToast(error);
         });
+    //dragging between different meal slots 
     } else if (sourceId !== "savedRecipes") {
+
+      //splitting IDs to get the day and meal slot
       const [sourceDayId, sourceMealSlot] = sourceId.split("-");
       const [destDayId, destMealSlot] = destinationId.split("-");
 
       const sourceDay = [...(days[sourceDayId]?.recipes || [])];
       let destinationDay = [...(days[destDayId]?.recipes || [])];
 
+      //removing the dragged item from the source
       const [movedItem] = sourceDay.splice(
         sourceDay.findIndex(item => item.mealSlot === sourceMealSlot),
         1
       );
+
+      //checking if the slot is already occupied
       const mealExistsInSlot = destinationDay.some(
         item => item.mealSlot === destMealSlot
       );
 
+      //handling different drag and drop scenarios when user drops not into the slot
       if (!destMealSlot || !destDayId || !sourceDayId) {
         toast({
           title: "",
@@ -324,10 +341,12 @@ const Planner = () => {
         });
         return;
       }
-
+      //if there is no meal in slot, allow dragging there
       if (!mealExistsInSlot) {
         movedItem.mealSlot = destMealSlot;
 
+      //if the source and destination days are the same 
+      //insert moved item into the same day but at the new slot
         if (sourceDayId === destDayId) {
           sourceDay.splice(destination.index, 0, movedItem);
 
@@ -339,6 +358,8 @@ const Planner = () => {
             }
           }));
         } else {
+          //if the source and destination days are different
+          //insert the moved item into the new day and slot
           destinationDay.splice(destination.index, 0, movedItem);
 
           setDays(prevDays => ({
@@ -366,21 +387,27 @@ const Planner = () => {
             const updatedMealPlan = response.data;
 
             setDays(prevDays => {
+              //creating new arrays to avoid mutating state directly
               const updatedSourceDay = [...prevDays[sourceDayId]?.recipes];
-              const updatedDestinationDay = [...prevDays[destDayId]?.recipes];
+              let updatedDestinationDay = [...prevDays[destDayId]?.recipes];
 
+              //finding the index of the item to remove from source
               const sourceDayIndex = updatedSourceDay.findIndex(
                 item => item.mealSlot === sourceMealSlot
               );
+
+              //removing the item if found
               if (sourceDayIndex !== -1) {
                 updatedSourceDay.splice(sourceDayIndex, 1);
               }
-
+              //finding the index of the item to add to destination
               const destinationDayIndex = updatedDestinationDay.findIndex(
                 item => item.mealSlot === destMealSlot
               );
+
+              //adding the new item if not already present
               if (destinationDayIndex === -1) {
-                updatedDestinationDay.push(updatedMealPlan);
+                updatedDestinationDay = [...updatedDestinationDay, updatedMealPlan];
               }
 
               return {
@@ -429,6 +456,7 @@ const Planner = () => {
       .then(() => {
         setDays(prevDays => {
           const updatedDays = { ...prevDays };
+          //updating the state after deleting a meal
           Object.keys(updatedDays).forEach(dayId => {
             if (updatedDays[dayId].recipes) {
               updatedDays[dayId].recipes = updatedDays[dayId].recipes.filter(
@@ -446,6 +474,7 @@ const Planner = () => {
 
   const deleteAllMeals = () => {
     Object.keys(days).forEach(dayId => {
+      //deleting all meals in the meal plan one by one
       if (dayId !== "savedRecipes" && days[dayId]?.recipes) {
         days[dayId].recipes.forEach((recipe: PlannerRecipe) => {
           handleDelete(recipe.mealId);
@@ -455,7 +484,10 @@ const Planner = () => {
   };
 
   const addMealsToShoppingList = async () => {
+    //adding meals' ingredients to the shopping list
+    //we add by recipeIds so we need to extract them and send one by one
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
+    //we need only those that have also mealId so that we do not count recipes in savedRecipes
     const recipesWithMealId = allRecipes.filter(recipe => recipe.mealId);
     const recipeIds = recipesWithMealId.map(recipe => recipe.id);
 
@@ -463,8 +495,7 @@ const Planner = () => {
 
     for (const id of recipeIds) {
       try {
-        const response = await saveRecipeIngredientsToShoppingList(id);
-        console.log(response);
+        await saveRecipeIngredientsToShoppingList(id);
       } catch (error) {
         allSuccessful = false;
         showErrorToast(error as Error);
@@ -566,9 +597,7 @@ const Planner = () => {
                     {...provided.droppableProps}>
                     {dayId === "savedRecipes" &&
                       days[dayId].recipes.map(
-                        (item: PlannerRecipe, index: number) => {
-                          //console.log(item)
-                          return (
+                        (item: PlannerRecipe, index: number) => (
                             <Draggable
                               key={`${dayId}-${item.id}`}
                               draggableId={`${dayId}-${item.id}`}
@@ -613,8 +642,7 @@ const Planner = () => {
                                 </Container>
                               )}
                             </Draggable>
-                          );
-                        }
+                          )
                       )}
                     <GridItem
                       key={index}
@@ -623,7 +651,8 @@ const Planner = () => {
                       textAlign="center"
                       p="2"
                       color="brandGray"
-                      fontSize="20">
+                      fontSize="20"
+                      mb="4">
                       {days[dayId]?.name}
                     </GridItem>
                     {dayId !== "savedRecipes" &&
