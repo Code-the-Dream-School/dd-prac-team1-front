@@ -159,6 +159,7 @@ export type Id = string;
 
 export type PlannerDays<PlannerRecipe> = {
   [index: string]: { 
+    name?: string,
     sortOrder: number; 
     meals?: [string, string, string],
     recipes: PlannerRecipe[],

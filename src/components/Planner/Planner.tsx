@@ -11,7 +11,9 @@ import {
   Tooltip,
   Flex,
   Box,
-  Button
+  Button,
+  Spinner,
+  Heading
 } from "@chakra-ui/react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
@@ -43,36 +45,43 @@ const Planner = () => {
       recipes: [],
     },
     Sunday: {
+      name: "Sunday",
       sortOrder: 1,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Monday: {
+      name: "Monday",
       sortOrder: 2,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Tuesday: {
+      name: "Tuesday",
       sortOrder: 3,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Wednesday: {
+      name: "Wednesday",
       sortOrder: 4,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Thursday: {
+      name: "Thursday",
       sortOrder: 5,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Friday: {
+      name: "Friday",
       sortOrder: 6,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
     },
     Saturday: {
+      name: "Saturday",
       sortOrder: 7,
       meals: ["breakfast", "lunch", "dinner"],
       recipes: [],
@@ -80,6 +89,8 @@ const Planner = () => {
   });
     
   const [isHovering, setIsHovering] = useState<HoveringButtonState>({});
+  const [isLoading, setIsLoading] = useState<{ [mealId: string]: boolean }>({});
+
   const onMouseEnter = (mealId: string) => {
     setIsHovering({ ...isHovering, [mealId]: true });
   };
@@ -88,7 +99,6 @@ const Planner = () => {
     setIsHovering({ ...isHovering, [mealId]: false });
   };
 
-  const daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const borderColor = "2px solid #d7da5e";
 
   const navigate = useNavigate();
@@ -151,6 +161,7 @@ const Planner = () => {
 
           fetchedMealPlans.forEach((fetchedPlan: FetchedPlan) => {
             const { dayOfWeek, recipeId } = fetchedPlan;
+            
             const matchingRecipe = prevDays.savedRecipes.recipes.find(
               recipe => recipe.id === recipeId
             );
@@ -202,10 +213,12 @@ const Planner = () => {
       const sourceDay = [...days[sourceId].recipes];
       const movedItem = { ...sourceDay[source.index] };  
       const [destDayId, destMealSlot] = destinationId.split("-");
+      setIsLoading({ ...isLoading, [movedItem.mealId]: true });
 
-      const destinationDay = [...(days[destDayId]?.recipes || [])];
+      let destinationDay = [...(days[destDayId]?.recipes || [])];
 
-      const mealExistsInSlot = destinationDay.some(
+      //Code without the replacement
+ /*     const mealExistsInSlot = destinationDay.some(
         item => item.mealSlot === destMealSlot
       );
 
@@ -221,15 +234,8 @@ const Planner = () => {
         });
         return;
       }
-
-
-      /*const newDestinationDay = mealExistsInSlot ? 
-      destinationDay.filter(item => item.mealSlot !== destMealSlot) : 
-      [...destinationDay];*/
-
       movedItem.mealSlot = destMealSlot;
-      //newDestinationDay.splice(destination.index, 0, movedItem);
-      destinationDay.splice(destination.index, 0, movedItem);
+      destinationDay.splice(destination.index, 0, movedItem); 
 
       setDays(prevDays => ({
         ...prevDays,
@@ -239,7 +245,25 @@ const Planner = () => {
         },
         [destDayId]: {
           ...prevDays[destDayId],
-          //recipes: newDestinationDay
+          recipes: destinationDay
+        }
+      }));*/
+
+      //Code for replacement after backend update
+
+      destinationDay = destinationDay.filter(item => item.mealSlot !== destMealSlot);
+
+      movedItem.mealSlot = destMealSlot;
+      destinationDay = [...destinationDay, movedItem];
+
+      setDays(prevDays => ({
+        ...prevDays,
+        [sourceId]: {
+          ...prevDays[sourceId],
+          recipes: sourceDay
+        },
+        [destDayId]: {
+          ...prevDays[destDayId],
           recipes: destinationDay
         }
       }));
@@ -253,6 +277,9 @@ const Planner = () => {
 
       createMealPlan(data)
         .then(response => {
+          //Code without the replacement
+          /* 
+          .then(response => {
           const newMealId = response.data.newMealPlan._id;
           setDays(prevDays => {
             const updatedDay = { ...prevDays[data.dayOfWeek] };
@@ -271,7 +298,42 @@ const Planner = () => {
             };
           });
         })
+          */
+         //Code for replacement after backend update
+          const newMeal = response.data.newMealPlan;    
+          setDays(prevDays => {
+            const updatedDays = { ...prevDays };
+      
+            const targetDay = updatedDays[destDayId];
+            if (!targetDay) {
+              return prevDays; 
+            }
+
+            let updatedRecipes = targetDay.recipes.filter(
+              recipe => recipe.mealSlot !== destMealSlot
+            );
+
+            const matchingRecipe = prevDays.savedRecipes.recipes.find(
+              recipe => recipe.id === newMeal.recipeId
+            );
+
+            if (matchingRecipe) {
+              const newRecipeEntry = {
+                ...matchingRecipe,
+                mealId: newMeal._id,
+                mealSlot: newMeal.mealSlot
+              };
+              updatedRecipes = [...updatedRecipes, newRecipeEntry];
+            }
+
+            updatedDays[destDayId].recipes = updatedRecipes;
+            console.log(updatedDays)
+            return updatedDays;
+          });
+          setIsLoading({ ...isLoading, [movedItem.mealId]: false });
+        })
         .catch(error => {
+          setIsLoading({ ...isLoading, [movedItem.mealId]: true });
           showErrorToast(error);
         });
     } else if (sourceId !== "savedRecipes") {
@@ -279,15 +341,15 @@ const Planner = () => {
       const [destDayId, destMealSlot] = destinationId.split("-");
 
       const sourceDay = [...(days[sourceDayId]?.recipes || [])];
-      const destinationDay = [...(days[destDayId]?.recipes || [])];
+      let destinationDay = [...(days[destDayId]?.recipes || [])];
 
       const [movedItem] = sourceDay.splice(
         sourceDay.findIndex(item => item.mealSlot === sourceMealSlot),
         1
       );
-      const mealExistsInSlot = destinationDay.some(
-        item => item.mealSlot === destMealSlot
-      );
+      // const mealExistsInSlot = destinationDay.some(
+      //   item => item.mealSlot === destMealSlot
+      // );
 
       if (!destMealSlot || !destDayId || !sourceDayId) {
         toast({
@@ -301,9 +363,12 @@ const Planner = () => {
         });
         return;
       }
+      //code after update
+      destinationDay = destinationDay.filter(item => item.mealSlot !== destMealSlot);
 
-      if (!mealExistsInSlot) {
+      //if (!mealExistsInSlot) {
         movedItem.mealSlot = destMealSlot;
+        
         if (sourceDayId === destDayId) {
           sourceDay.splice(destination.index, 0, movedItem);
 
@@ -375,7 +440,7 @@ const Planner = () => {
           .catch(error => {
             showErrorToast(error);
           });
-      } else if (mealExistsInSlot) {
+      /*} else if (mealExistsInSlot) {
         toast({
           title: "You cannot replace meals!",
           description: "Delete the meal and add a new one, please",
@@ -385,7 +450,7 @@ const Planner = () => {
           isClosable: true,
           position: "top"
         });
-      } 
+      } */
     }
   };
 
@@ -444,17 +509,22 @@ const Planner = () => {
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
         h="160px"
+        templateColumns={{
+          base: "repeat(8, 1fr)",
+          lg: "repeat(8, 1fr)",
+        }}  
         templateRows={{
           base: "repeat(9, 1fr)",
           md: "repeat(2, 1fr)",
           sm: "repeat(3, 1fr)"
         }}
-        templateColumns={{ base: "1fr", md: "repeat(8, 1fr)" }}
         gap={{ base: 0 }}
         gridAutoRows="1fr">
-          <GridItem colSpan={{ base: 1, md: 8 }}></GridItem>
+        <GridItem colSpan={{ base: 1, md: 8 }} p="2">
+        </GridItem>
         <GridItem colSpan={{ base: 1, md: 8 }} bg="brandGray" p="3">
-        <Flex justifyContent="flex-end">
+        <Flex justifyContent="flex-end" alignItems="center">
+          <Heading mr="10">Menu Planner</Heading>
           <Tooltip 
             label="Add ingredients to the shopping list" 
             aria-label="A tooltip"
@@ -481,42 +551,35 @@ const Planner = () => {
           </Button>
         </Flex>
         </GridItem>
-        <GridItem
-          colSpan={{ base: 1, md: 1 }}
-          bg="lightGray"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center">
-          <Center p="1" fontSize="20">
-            <Text>RECIPES</Text>
-          </Center>
-        </GridItem>
-
-        {daysOfTheWeek.map((weekday, index) => (
-          <GridItem
-            key={index}
-            colSpan={{ base: 1, md: 1 }}
-            bg="customGray"
-            textAlign="center"
-            p="2"
-            color="brandGray"
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            fontSize="20">
-            {weekday}
-          </GridItem>
-        ))}
       </Grid>
-      <Grid templateColumns="repeat(8, 1fr)" padding="16px" bg="lightGray">
+      <Grid  
+        templateColumns={{
+          base: "repeat(8, 1fr)",
+          lg: "repeat(8, 1fr)",
+        }}  
+        padding="16px" 
+        bg="lightGray"
+        overflowX= 'auto'
+        maxHeight="35rem"
+        position="relative"
+        >
         {Object.keys(days)
           .sort((a, b) => days[a].sortOrder - days[b].sortOrder)
           .map((dayId, index) => (
             <GridItem
               key={dayId}
               colSpan={{ base: 1, md: 1 }}
-              height="35rem"
               overflowY={dayId === "savedRecipes" ? "scroll" : "hidden"}
+              position="relative"
+              zIndex={dayId === "savedRecipes" ? "10" : "5"}
+              minWidth="180px" 
+              maxHeight={{
+                base: '25rem',  
+                sm: '30rem',   
+                md: '32rem',  
+                lg: '35rem',  
+              }}
+              style={dayId === "savedRecipes" ? { position: "sticky", top: "0px", left: "0px" } : {}}
               borderRight={index !== 0 && index !== 7 ? borderColor : "none"}>
               <Droppable droppableId={dayId} direction="vertical">
                 {provided => (
@@ -544,10 +607,11 @@ const Planner = () => {
                                       ? "none"
                                       : "opacity 0.2s ease"
                                   }
+                                  bg={"brandGray"}
                                   border={borderColor}
-                                  borderRadius="5px"
+                                  borderRadius="0"
                                   padding="0.5rem"
-                                  mt="0.2rem"
+                                  mt="0.03rem"
                                   width="100%"
                                   height="120px">
                                   <Center>
@@ -574,7 +638,17 @@ const Planner = () => {
                           );
                         }
                       )}
-
+                      <GridItem
+                        key={index}
+                        colSpan={{ base: 1, md: 1 }}
+                        bg="customGray"
+                        textAlign="center"
+                        p="2"
+                        color="brandGray"
+                        fontSize="20"
+                        >
+                        {days[dayId]?.name}
+                      </GridItem>
                     {dayId !== "savedRecipes" &&
                       days[dayId]?.meals?.map(mealSlot => (
                         <React.Fragment key={mealSlot}>
@@ -594,9 +668,10 @@ const Planner = () => {
                                 mt="0.5rem"
                                 mb="0.5rem"
                                 p="0.5rem"
-                                minHeight="120px"
+                                minHeight={{ base: "70px", sm: "100px", md: "100px", lg: "120px" }}
+                                maxHeight={{ base: "70px", sm: "100px",md: "100px", lg: "120px" }}
                                 position="relative"
-                                maxHeight="120px">
+                                >
                                 {days[dayId] &&
                                   days[dayId].recipes &&
                                   days[dayId].recipes
@@ -635,9 +710,27 @@ const Planner = () => {
                                                       : "opacity 0.2s ease"
                                                   }
                                                   width="100%"
-                                                  height="70px"
+                                                  h={{ 
+                                                    base: '20px',  
+                                                    sm: '50px',  
+                                                    md: "70px",  
+                                                  }}
                                                   position="absolute"
                                                   >
+                                                {isLoading[item.mealId] ? 
+                                                <Center 
+                                                  h={{ 
+                                                    base: '40px',  
+                                                    sm: '70px',  
+                                                    md: "100px",  
+                                                  }}
+                                                  display="flex"  
+                                                  justifyContent="center" 
+                                                  alignItems="center"
+                                                  >
+                                                  <Spinner size="md" color="green" key={item.mealId}/>
+                                                </Center>
+                                                : 
                                                   <Flex
                                                     mt="0.1rem"
                                                     justifyContent="center"
@@ -651,6 +744,11 @@ const Planner = () => {
                                                         w="100px"
                                                         h="50px"
                                                         objectFit="cover"
+                                                        display={{ 
+                                                          base: 'none',  
+                                                          sm: 'none',  
+                                                          md: 'block',  
+                                                        }}
                                                       />
                                                     </Center>
                                                     <Center>
@@ -687,6 +785,7 @@ const Planner = () => {
                                                       />
                                                     )}
                                                   </Flex>
+                                                  }
                                                 </Container>
                                               </div>
                                             )}
@@ -712,3 +811,4 @@ const Planner = () => {
 };
 
 export default Planner;
+
