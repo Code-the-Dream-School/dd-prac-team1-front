@@ -13,10 +13,40 @@ import {
   Text,
   Grid,
   GridItem,
-  Textarea
+  Textarea,
+  useToast
 } from "@chakra-ui/react";
-
+import { sendEmail } from "../../utils/fetchData";
+import { error } from "console";
 const Contact = () => {
+  const toast = useToast();
+  const handleSendEmail = (e: any) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const dataObject = Object.fromEntries(data.entries());
+    sendEmail(dataObject)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
+  };
   return (
     <Grid
       templateColumns="repeat(2, 1fr)"
@@ -32,7 +62,8 @@ const Contact = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          flexDirection="column">
+          flexDirection="column"
+          onSubmit={handleSendEmail}>
           <Stack
             divider={<StackDivider />}
             direction="column"
