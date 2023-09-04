@@ -27,7 +27,23 @@ const Contact = () => {
     sendEmail(dataObject)
       .then(response => {
         console.log(response);
+        toast({
+          title: "",
+          description: "",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          render: () => (
+            <>
+              <Box p="3" bg="green">
+                {response.data.message}
+              </Box>
+            </>
+          )
+        });
       })
+
       .catch(error => {
         console.log(error);
         toast({
