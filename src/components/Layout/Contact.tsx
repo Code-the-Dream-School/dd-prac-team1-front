@@ -32,13 +32,10 @@ const Contact = () => {
           alignItems="center"
           justifyContent="center"
           flexDirection="column">
-          {/* <Container maxW="xl"> */}
-
           <Stack
             divider={<StackDivider />}
             direction="column"
             w="70%"
-            // spacing="6px"
             marginY="7">
             <Box>
               <Heading>Contact</Heading>
@@ -51,21 +48,33 @@ const Contact = () => {
             <Box>
               <FormControl isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input variant={"unstyled"} />
+                <Input
+                  variant={"unstyled"}
+                  type="text"
+                  name="name"
+                  placeholder="Enter your name"
+                />
                 <FormErrorMessage>Name is required.</FormErrorMessage>
               </FormControl>
             </Box>
             <Box>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input variant={"unstyled"} />
+                <Input
+                  variant={"unstyled"}
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                />
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               </FormControl>
             </Box>
             <Box>
               <FormControl isRequired>
                 <FormLabel>Message</FormLabel>
-                <Textarea></Textarea>
+                <Textarea
+                  name="message"
+                  placeholder="Leave your message"></Textarea>
                 <FormErrorMessage>Message is required.</FormErrorMessage>
               </FormControl>
             </Box>
@@ -81,8 +90,6 @@ const Contact = () => {
               </Button>
             </Center>
           </Box>
-
-          {/* </Container> */}
         </Box>
       </GridItem>
       <GridItem
