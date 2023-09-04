@@ -102,7 +102,7 @@ const Contact = () => {
         h={{
           base: "50vh",
           sm: "50vh",
-          md: "calc(100vh - 55px - 70px)"
+          md: "calc(100vh - 55px - 110px)"
         }}
       />
     </Grid>
