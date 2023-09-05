@@ -1,4 +1,4 @@
-import { Box, Center, Container, Flex, Heading } from "@chakra-ui/layout";
+import { Box, Container, Flex, Heading } from "@chakra-ui/layout";
 import {
   FormControl,
   Grid,
