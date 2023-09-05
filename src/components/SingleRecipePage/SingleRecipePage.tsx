@@ -42,7 +42,7 @@ const SingleRecipePage = () => {
   const [_sendingIngredients, setSendingIngredients] = useState({});
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
-  const { isOpen: openModal, onClose } = useDisclosure();
+  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();

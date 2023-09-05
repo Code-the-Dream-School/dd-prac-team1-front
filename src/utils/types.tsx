@@ -1,3 +1,5 @@
+import SavedRecipes from "../components/SavedRecipes/SavedRecipes";
+
 export type AIIngredient = {
   name: string;
   quantity: string;
@@ -141,7 +143,7 @@ export type AnimationVariants = {
   };
 };
 
-export type PlannerRecipe = {
+export interface PlannerRecipe extends SavedRecipe {
   uniqueKey: string;
   mealSlot: any;
   id: string;
@@ -151,27 +153,27 @@ export type PlannerRecipe = {
   recipeImage: string;
   recipeName: string;
   sortOrder: number;
-  mealId: string,
-  recipeId: string,
-};
+  mealId: string;
+  recipeId: string;
+}
 
 export type Id = string;
 
 export type PlannerDays<PlannerRecipe> = {
-  [index: string]: { 
-    name?: string,
-    sortOrder: number; 
-    meals?: [string, string, string],
-    recipes: PlannerRecipe[],
+  [index: string]: {
+    name?: string;
+    sortOrder: number;
+    meals?: [string, string, string];
+    recipes: PlannerRecipe[];
   };
 };
 
 export type FetchedPlan = {
   _id: string;
   mealSlot: string;
-  dayOfWeek: string; 
-  recipeId: string; 
-  mealId?: string,
+  dayOfWeek: string;
+  recipeId: string;
+  mealId?: string;
 };
 
 export type ErrorResponse = {
@@ -179,8 +181,8 @@ export type ErrorResponse = {
     message?: string;
     msg?: string;
     error?: any;
-  }
-}
+  };
+};
 
 export type Error = {
   response?: ErrorResponse;
