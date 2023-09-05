@@ -34,7 +34,20 @@ const SearchAI = () => {
   const handleSearch = () => {
     searchAI(search, values)
       .then(response => {
-        setRecipe(response.data);
+        console.log(response);
+        if (
+          response.data.image === "" ||
+          response.data.image.startsWith("https://strapi.pxmo.com") ||
+          response.data.image.startsWith("http://www.momsbistro.net")
+        ) {
+          setRecipe({
+            ...response.data,
+            image:
+              "https://res.cloudinary.com/djidbbhk1/image/upload/v1693072469/default_image_lv6ume.png"
+          });
+        } else {
+          setRecipe(response.data);
+        }
         setIsLoading(false);
       })
       .catch(error => {
