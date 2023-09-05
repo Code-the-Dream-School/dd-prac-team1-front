@@ -3,15 +3,13 @@ import {
   Box,
   Button,
   Center,
-  Container,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
   Input,
-  Stack,
-  Text
+  Stack
 } from "@chakra-ui/react";
 import { searchAI } from "../../utils/fetchData";
 import { ChakraStylesConfig, MultiValue, Select } from "chakra-react-select";
