@@ -122,7 +122,6 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     saveRecipeIngredientsToShoppingList(recipeId, servings)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -165,8 +164,6 @@ const SingleRecipePage = () => {
           isClosable: true,
           position: "top"
         });
-
-        console.log(error);
       });
   };
 
