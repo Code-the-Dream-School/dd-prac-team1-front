@@ -189,7 +189,6 @@ const SingleRecipePage = () => {
       unit: "g"
     }
   ];
-
   return (
     <Container maxW="5xl">
       <Grid
