@@ -21,6 +21,7 @@ type ShoppingListIngredientProps = {
   handleEditIngredient: Function;
   defaultChecked: boolean;
   textDecoration: string;
+  highlightExistingIngredient: string;
 };
 
 const ShoppingListIngredient = ({
@@ -30,10 +31,10 @@ const ShoppingListIngredient = ({
   handleRemoveIngredient,
   handleEditIngredient,
   defaultChecked,
-  textDecoration
+  textDecoration,
+  highlightExistingIngredient
 }: ShoppingListIngredientProps) => {
   const [isEditIngredient, setIsEditIngredient] = useState<string>("");
-
   return (
     <>
       {isEditIngredient === ingredient._id ? (
@@ -106,10 +107,15 @@ const ShoppingListIngredient = ({
         <Box
           key="option2"
           borderColor="green"
+          bg={
+            highlightExistingIngredient === ingredient.ingredientName
+              ? "brandGray"
+              : "white"
+          }
+          transition="all 3s"
           w="100%"
           mb="-1px"
           borderWidth="thin"
-          // borderRadius="5"
           textDecoration={textDecoration}
           alignItems="center">
           <Grid
