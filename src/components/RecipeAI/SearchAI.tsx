@@ -35,7 +35,19 @@ const SearchAI = () => {
     searchAI(search, values)
       .then(response => {
         console.log(response);
-        setRecipe(response.data);
+        if (
+          response.data.image === "" ||
+          response.data.image.startsWith("https://strapi.pxmo.com") ||
+          response.data.image.startsWith("http://www.momsbistro.net")
+        ) {
+          setRecipe({
+            ...response.data,
+            image:
+              "https://res.cloudinary.com/djidbbhk1/image/upload/v1693072469/default_image_lv6ume.png"
+          });
+        } else {
+          setRecipe(response.data);
+        }
         setIsLoading(false);
       })
       .catch(error => {
@@ -115,15 +127,21 @@ const SearchAI = () => {
             <Flex
               flexDirection={"column"}
               justifyContent={"space-evenly"}
-              h="25vh">
-              <FormLabel textAlign="center" htmlFor="searchAI">
+              h={{ md: "25vh" }}>
+              <FormLabel
+                textAlign="center"
+                htmlFor="searchAI"
+                mt={{ base: 2, md: 0 }}>
                 Hi {name}, I'm Olivier! Do you want to try a new recipe?
               </FormLabel>
               <Input
                 type="text"
+                size="md"
                 placeholder="Type ingredients or recipe title"
                 id="searchAI"
                 value={search}
+                focusBorderColor="green"
+                mb={{ base: 2, md: 0 }}
                 variant="outline"
                 onChange={event => setSearch(event.target.value)}
               />
@@ -134,13 +152,18 @@ const SearchAI = () => {
                   chakraStyles={chakraStyles}
                   variant="outline"
                   focusBorderColor="green"
-                  placeholder="You can select options below"
+                  placeholder="Select options"
                   options={specialDietsOptions}
                   onChange={handleSelect}
                 />
               </Stack>
               <Center>
-                <Button variant="solid" type="submit" isDisabled={isLoading}>
+                <Button
+                  variant="solid"
+                  type="submit"
+                  mt={{ base: 2, md: 0 }}
+                  mb={{ base: 2, md: 0 }}
+                  isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
