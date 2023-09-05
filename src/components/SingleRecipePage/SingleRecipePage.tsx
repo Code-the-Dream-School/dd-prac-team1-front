@@ -6,7 +6,6 @@ import {
   Container,
   Icon,
   IconButton,
-  Image,
   Flex,
   Grid,
   GridItem,
@@ -291,7 +290,6 @@ const SingleRecipePage = () => {
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
                   onClick={onOpen}
-                  // onClick={sendIngredients}
                 />
                 <ModalForServings
                   isOpen={openModal}

@@ -235,7 +235,6 @@ const EditRecipe = () => {
           gap="2">
           <GridItem colSpan={{ base: 2, sm: 1, md: 2 }} w="100%">
             <Flex flexDirection="column">
-              {/* <Box> */}
               <FormControl
                 w={{ base: "100%", sm: "85%" }}
                 marginY="5"
@@ -295,7 +294,6 @@ const EditRecipe = () => {
                   <option value="Party Menu">Party Menu</option>
                 </Select>
               </FormControl>
-              {/* </Box> */}
               <Grid templateColumns="repeat(2, 1fr)" gap="2">
                 <GridItem colSpan={{ base: 2, md: 1 }} w="100%">
                   <FormControl>
