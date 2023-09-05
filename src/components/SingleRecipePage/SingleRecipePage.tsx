@@ -37,7 +37,7 @@ const SingleRecipePage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
-  const { isOpen: openModal, onClose } = useDisclosure();
+  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
