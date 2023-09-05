@@ -6,7 +6,6 @@ import {
   Container,
   Icon,
   IconButton,
-  Image,
   Flex,
   Grid,
   GridItem,
@@ -38,7 +37,7 @@ const SingleRecipePage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
-  const { isOpen: openModal, onOpen, onClose } = useDisclosure();
+  const { isOpen: openModal, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
   const navigate = useNavigate();
@@ -109,7 +108,7 @@ const SingleRecipePage = () => {
     recipe.recipeTags.map((tag: RecipeTag) =>
       renderingTags.push(tag.tagName.toLocaleLowerCase())
     );
-    recipe.recipeSpecialDiets.map((diet: string) => {
+    recipe.recipeSpecialDiets.forEach((diet: string) => {
       if (diet !== "None") {
         renderingTags.push(diet.toLocaleLowerCase());
       }
@@ -195,7 +194,6 @@ const SingleRecipePage = () => {
       unit: "g"
     }
   ];
-
   return (
     <Container maxW="5xl">
       <Grid
