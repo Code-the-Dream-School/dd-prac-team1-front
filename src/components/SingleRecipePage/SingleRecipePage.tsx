@@ -108,7 +108,7 @@ const SingleRecipePage = () => {
     recipe.recipeTags.map((tag: RecipeTag) =>
       renderingTags.push(tag.tagName.toLocaleLowerCase())
     );
-    recipe.recipeSpecialDiets.map((diet: string) => {
+    recipe.recipeSpecialDiets.forEach((diet: string) => {
       if (diet !== "None") {
         renderingTags.push(diet.toLocaleLowerCase());
       }
