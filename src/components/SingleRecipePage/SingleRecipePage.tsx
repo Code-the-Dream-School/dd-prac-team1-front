@@ -135,7 +135,7 @@ const SingleRecipePage = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 <Flex flexDirection="column">
                   Your recipe was added to the shopping list
                   <Button
