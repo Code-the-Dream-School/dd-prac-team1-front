@@ -110,7 +110,6 @@ const SavedRecipes = () => {
         }
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

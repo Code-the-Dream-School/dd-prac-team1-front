@@ -45,9 +45,7 @@ const Planner = () => {
           savedRecipes: { ...prevDays.savedRecipes, recipes: savedRecipesItems }
         }));
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   }, []);
 
   const onDragEnd = (result: DropResult) => {

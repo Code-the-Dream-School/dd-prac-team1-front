@@ -46,11 +46,9 @@ const ShoppingList = () => {
   const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
-        console.log(response);
         setIngredients(response.data.ingredients);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -106,20 +104,15 @@ const ShoppingList = () => {
 
   const handleEditIngredient = (e: any) => {
     const ingredientName = e.target.name;
-    console.log(ingredients);
     const editedIngredient = ingredients.filter(
       ingredient => ingredientName === ingredient.ingredientName
     );
     const newIngredient = editedIngredient.pop();
-    console.log(newIngredient);
     if (newIngredient === undefined) return;
     editAnIngredientFromShoppingList(newIngredient)
-      .then(response => {
-        console.log(response);
-      })
+      .then(response => {})
       .catch(error => {
         getIngredients();
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -139,7 +132,6 @@ const ShoppingList = () => {
   };
 
   const handleCheckedBox = (e: any) => {
-    console.log(e);
     if (e.target.checked) {
       setCheckedIngredientNames(prevName => [...prevName, e.target.name]);
     } else {
@@ -162,13 +154,9 @@ const ShoppingList = () => {
     checked.forEach((ingredient, index) => {
       setTimeout(() => {
         const ingredientName = ingredient.ingredientName;
-        console.log(ingredientName);
         deleteAnIngredientFromShoppingList(ingredientName)
-          .then(response => {
-            console.log(response);
-          })
+          .then(response => {})
           .catch(error => {
-            console.log(error);
             toast({
               title: "Error",
               description: `${
@@ -185,24 +173,20 @@ const ShoppingList = () => {
               position: "top"
             });
           });
-        console.log("Delayed for 1 second.");
       }, 250 * index);
     });
-    console.log(checked);
     setIngredients(unChecked);
   };
 
   const handleRemoveIngredient = (ingredientName: string) => {
     deleteAnIngredientFromShoppingList(ingredientName)
       .then(response => {
-        console.log(response);
         const newIngredients = ingredients.filter(ingredient => {
           return ingredientName !== ingredient.ingredientName;
         });
         setIngredients(newIngredients);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -224,11 +208,9 @@ const ShoppingList = () => {
   const handleRemoveIngredients = () => {
     deleteAllShoppingList()
       .then(response => {
-        console.log(response);
         setIngredients([]);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

@@ -57,7 +57,6 @@ const SingleRecipePage = () => {
         setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -88,7 +87,6 @@ const SingleRecipePage = () => {
         navigate("/saved-recipes");
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -128,7 +126,6 @@ const SingleRecipePage = () => {
   };
 
   const valueOfServings = (e: any) => {
-    console.log(e);
     // setRecipe({
     //   ...recipe,
     //   recipeServings: Number(e.target.value)

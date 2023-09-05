@@ -55,7 +55,6 @@ const Register = () => {
         }
       })
       .catch(error => {
-        console.log(error);
         if (error.response.data.msg.includes("already")) {
           setErrorEmail("Account already exists");
         }

@@ -77,14 +77,11 @@ const RecipeManual = () => {
   const toast = useToast();
 
   const saveRecipe = () => {
-    console.log(recipe);
     saveManualRecipe(recipe)
       .then(response => {
-        console.log(response);
         navigate("/saved-recipes");
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

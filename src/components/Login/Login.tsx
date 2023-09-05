@@ -50,7 +50,6 @@ const Login = () => {
         }
       })
       .catch(error => {
-        console.log(error);
         if (error) {
           setErrorOccur(true);
         }
