@@ -10,7 +10,8 @@ import {
   Heading,
   Text,
   useDisclosure,
-  useToast
+  useToast,
+  useMediaQuery
 } from "@chakra-ui/react";
 import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TbShare3 } from "react-icons/tb";
@@ -25,7 +26,7 @@ import { SavedIngredient } from "../../utils/types";
 import ModalForNewIngredient from "./ModalForNewIngredient";
 import ModalForSendEmail from "./ModalForSendEmail";
 import ShoppingListIngredient from "./ShoppingListIngredient";
-
+import PrintShoppingList from "./PrintShoppingList";
 const ShoppingList = () => {
   const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
@@ -248,9 +249,24 @@ const ShoppingList = () => {
   };
 
   const print = () => {
-    window.print();
+    setIsPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setIsPrinting(false);
+    }, 0);
   };
 
+  // const print = () => {
+  //   let content = document.getElementById("content");
+  //   let pri = document?.getElementById("printShoppingList")?.contentWindow;
+  //   pri.document.open();
+  //   pri.document.write(content?.innerHTML);
+  //   pri.document.close();
+  //   pri.focus();
+  //   pri.print();
+  // };
+  // const [isPrinting] = useMediaQuery("print");
+  const [isPrinting, setIsPrinting] = useState(false);
   return (
     <Container maxW="3xl">
       <Grid
@@ -342,49 +358,8 @@ const ShoppingList = () => {
           onCloseChangedIngredient();
         }}
       />
-      {uncheckedIngredients.map(ingredient => (
-        <Box key={ingredient._id}>
-          <ShoppingListIngredient
-            ingredient={ingredient}
-            onChange={handleCheckedBox}
-            handleEditAmount={handleEditAmount}
-            handleRemoveIngredient={handleRemoveIngredient}
-            handleEditIngredient={handleEditIngredient}
-            defaultChecked={false}
-            textDecoration={"none"}
-          />
-        </Box>
-      ))}
-      <Box borderColor="green" w="100%" mt="1" mb="1" borderWidth="thin">
-        <Grid
-          templateColumns="repeat(12, 1fr)"
-          gap="2"
-          alignItems="center"
-          w="100%">
-          <GridItem colSpan={1} w="100%"></GridItem>
-          <GridItem colSpan={10} w="100%">
-            <Text color="#505050" fontWeight="normal" textAlign="left">
-              CHECKED ITEMS
-            </Text>
-          </GridItem>
-          <GridItem colSpan={1} w="100%">
-            <IconButton
-              size="lg"
-              variant="ghost"
-              aria-label="Delete checked ingredients"
-              color="#505050"
-              bg="brandGray"
-              w="100%"
-              borderRadius="0"
-              icon={<IoTrashOutline />}
-              title="delete checked"
-              onClick={removeChecked}
-            />
-          </GridItem>
-        </Grid>
-      </Box>
-      <Box mb="10">
-        {checkedIngredients.map(ingredient => (
+      <Box>
+        {uncheckedIngredients.map(ingredient => (
           <Box key={ingredient._id}>
             <ShoppingListIngredient
               ingredient={ingredient}
@@ -392,12 +367,77 @@ const ShoppingList = () => {
               handleEditAmount={handleEditAmount}
               handleRemoveIngredient={handleRemoveIngredient}
               handleEditIngredient={handleEditIngredient}
-              defaultChecked={true}
-              textDecoration={"line-through"}
+              defaultChecked={false}
+              textDecoration={"none"}
             />
           </Box>
         ))}
+        <Box borderColor="green" w="100%" mt="1" mb="1" borderWidth="thin">
+          <Grid
+            templateColumns="repeat(12, 1fr)"
+            gap="2"
+            alignItems="center"
+            w="100%">
+            <GridItem colSpan={1} w="100%"></GridItem>
+            <GridItem colSpan={10} w="100%">
+              <Text color="#505050" fontWeight="normal" textAlign="left">
+                CHECKED ITEMS
+              </Text>
+            </GridItem>
+            <GridItem colSpan={1} w="100%">
+              <IconButton
+                size="lg"
+                variant="ghost"
+                aria-label="Delete checked ingredients"
+                color="#505050"
+                bg="brandGray"
+                w="100%"
+                borderRadius="0"
+                icon={<IoTrashOutline />}
+                title="delete checked"
+                onClick={removeChecked}
+              />
+            </GridItem>
+          </Grid>
+        </Box>
+        <Box mb="10">
+          {checkedIngredients.map(ingredient => (
+            <Box key={ingredient._id}>
+              <ShoppingListIngredient
+                ingredient={ingredient}
+                onChange={handleCheckedBox}
+                handleEditAmount={handleEditAmount}
+                handleRemoveIngredient={handleRemoveIngredient}
+                handleEditIngredient={handleEditIngredient}
+                defaultChecked={true}
+                textDecoration={"line-through"}
+              />
+            </Box>
+          ))}
+        </Box>
       </Box>
+      {/* <iframe
+        title="print"
+        id="printShoppingList"
+        style={{ height: "0px", width: "0px", position: "absolute" }}
+      /> */}
+      {/* <PrintShoppingList ingredients={ingredients} /> */}
+      {
+        isPrinting && <PrintShoppingList ingredients={ingredients} />
+        // ingredients.map(ingredient => (
+        //   <Box key={ingredient._id}>
+        //     <ShoppingListIngredient
+        //       ingredient={ingredient}
+        //       onChange={handleCheckedBox}
+        //       handleEditAmount={handleEditAmount}
+        //       handleRemoveIngredient={handleRemoveIngredient}
+        //       handleEditIngredient={handleEditIngredient}
+        //       defaultChecked={true}
+        //       textDecoration={"line-through"}
+        //     />
+        //   </Box>
+        // ))
+      }
     </Container>
   );
 };
