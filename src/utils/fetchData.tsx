@@ -4,7 +4,8 @@ import {
   SavedRecipe,
   EditedRecipe,
   ManualRecipe,
-  SavedIngredient
+  SavedIngredient,
+  FetchedPlan
 } from "./types";
 
 const jwtToken = sessionStorage.getItem("jwtToken");
@@ -205,6 +206,62 @@ export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
 export const deleteAllShoppingList = () => {
   return axios.delete("http://localhost:3000/api/v1/shopping-list/", {
     headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};
+
+export const createMealPlan = (data: FetchedPlan) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.post("http://localhost:3000/api/v1/meal-planner", 
+    {
+      ...data
+    },
+    {
+      headers: {
+        'Pragma': 'no-cache',
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
+
+export const getAllMealPlan = () => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.get("http://localhost:3000/api/v1/meal-planner", {
+    headers: {
+      'Pragma': 'no-cache',
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};
+
+export const  updateMealPlan = (data: FetchedPlan) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.put(`http://localhost:3000/api/v1/meal-planner/${data._id}`, 
+  {
+    ...data
+  }, {
+    headers: {
+      'Pragma': 'no-cache',
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwtToken}`
+    }
+  });
+};
+
+export const deleteMealPlan  = (mealId: string) => {
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
+  return axios.delete(`http://localhost:3000/api/v1/meal-planner/${mealId}`, {
+    headers: {
+      'Pragma': 'no-cache',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }
