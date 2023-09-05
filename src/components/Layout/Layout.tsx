@@ -113,6 +113,7 @@ export default function Layout() {
           <HStack
             width="95%"
             display="flex"
+            overflow="hidden"
             flexDirection={{ base: "column", sm: "row" }}
             ml={{ base: "20px", sm: "1rem" }}
             alignItems={{ base: "flex-start", sm: "center" }}>
