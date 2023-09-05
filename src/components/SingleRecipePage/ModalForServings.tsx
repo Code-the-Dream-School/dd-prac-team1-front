@@ -27,7 +27,6 @@ const ModalForServings = ({
 }: ModalForServingsProps) => {
   const handleServingSize = (e: any) => {
     e.preventDefault();
-    console.log(e);
     const data = new FormData(e.target);
     const dataObj = Object.fromEntries(data.entries());
     sendIngredients(dataObj.servings);

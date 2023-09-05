@@ -27,7 +27,6 @@ const ModalForSendEmail = ({
     e.preventDefault();
     const data = new FormData(e.target);
     const emailObj = Object.fromEntries(data.entries());
-    console.log(data);
     share(emailObj.email);
     onClose();
   };

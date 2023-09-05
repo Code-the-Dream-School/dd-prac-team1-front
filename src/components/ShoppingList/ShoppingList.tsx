@@ -78,7 +78,6 @@ const ShoppingList = () => {
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
     addIngredientToShoppingList(newIngredient)
       .then(response => {
-        console.log(response);
         if (
           response.data.message.includes(
             "Ingredient already exists in shopping list"
@@ -89,7 +88,6 @@ const ShoppingList = () => {
           );
           setTimeout(() => {
             if (ref.current) {
-              console.log("REF assigned");
               ref.current.scrollIntoView({ behavior: "smooth" });
             }
           }, 200);
@@ -115,7 +113,6 @@ const ShoppingList = () => {
         getIngredients();
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -283,10 +280,8 @@ const ShoppingList = () => {
   };
 
   const share = (email: string) => {
-    console.log(email);
     shareShoppingList(email)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -304,47 +299,6 @@ const ShoppingList = () => {
         });
       })
       .catch(error => {
-        toast({
-          title: "Error",
-          description: `${
-            error?.response?.data?.msg ||
-            error?.response?.data?.message ||
-            error?.response?.data?.error ||
-            error?.response?.data ||
-            error.message ||
-            "unknown error"
-          }`,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "top"
-        });
-      });
-  };
-
-  const share = (email: string) => {
-    console.log(email);
-    shareShoppingList(email)
-      .then(response => {
-        console.log(response);
-        toast({
-          title: "",
-          description: "",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-          render: () => (
-            <>
-              <Box p="3" bg="green">
-                {response.data.message}
-              </Box>
-            </>
-          )
-        });
-      })
-      .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
