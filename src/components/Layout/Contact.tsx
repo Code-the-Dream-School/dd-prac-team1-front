@@ -42,6 +42,7 @@ const Contact = () => {
             </>
           )
         });
+        e.target.reset();
       })
 
       .catch(error => {
