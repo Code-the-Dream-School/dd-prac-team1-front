@@ -33,7 +33,8 @@ import {
   HoveringButtonState,
   Id,
   PlannerDays,
-  PlannerRecipe
+  PlannerRecipe,
+  SavedRecipe
 } from "../../utils/types";
 import { CloseIcon } from "@chakra-ui/icons";
 import { GiShoppingCart } from "react-icons/gi";
@@ -97,6 +98,7 @@ const Planner = () => {
   const onMouseLeave = (mealId: string) => {
     setIsHovering({ ...isHovering, [mealId]: false });
   };
+  const [recipes, setRecipes] = useState<Array<SavedRecipe>>([]);
   const [search, setSearch] = useState("");
   const borderColor = "2px solid #d7da5e";
 
@@ -122,12 +124,37 @@ const Planner = () => {
     },
     [toast]
   );
+  // derivative state to filter recipe by search parameters
+  const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
+    const searchItems = search
+      .trim()
+      .toLowerCase()
+      .split(/,| /i)
+      .filter(el => el !== "");
+    const nameMatch = searchItems.some(param =>
+      recipe.recipeName.toLowerCase().includes(param)
+    );
+    const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
+      searchItems.some(param =>
+        ingredient.ingredientName.toLowerCase().includes(param)
+      )
+    );
+
+    return nameMatch || ingredientMatch;
+  });
+
   useEffect(() => {
     getRecipe()
       .then(response => {
-        console.log(response);
-        const fetchedRecipes = response.data.recipes;
-        const savedRecipesItems = fetchedRecipes.map(
+        setRecipes(response.data.recipes);
+        const fetchedRecipes = () => {
+          if (search === "") {
+            return response.data.recipes;
+          } else {
+            return searchedRecipes;
+          }
+        };
+        const savedRecipesItems = fetchedRecipes().map(
           (recipe: PlannerRecipe, index: number) => ({
             ...recipe,
             id: recipe._id,
@@ -140,13 +167,16 @@ const Planner = () => {
         );
         setDays(prevDays => ({
           ...prevDays,
-          savedRecipes: { ...prevDays.savedRecipes, recipes: savedRecipesItems }
+          savedRecipes: {
+            ...prevDays.savedRecipes,
+            recipes: savedRecipesItems
+          }
         }));
       })
       .catch(error => {
         showErrorToast(error);
       });
-  }, [showErrorToast]);
+  }, [showErrorToast, search]);
 
   useEffect(() => {
     // exit if no saved recipes are available
@@ -492,7 +522,6 @@ const Planner = () => {
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
     //we need only those that have also mealId so that we do not count recipes in savedRecipes
     const recipesWithMeal = allRecipes.filter(recipe => recipe.mealId);
-    console.log(recipesWithMeal);
     const recipeIdAndServings = recipesWithMeal.map(recipe => {
       return [recipe.id, recipe.recipeServings];
     });
@@ -510,28 +539,6 @@ const Planner = () => {
     if (allSuccessful) {
       navigate("/shopping-list");
     }
-  };
-
-  const searchRecipes = (recipe: PlannerRecipe) => {
-    if (search === "") {
-      return true;
-    }
-    const searchItems = search
-      .trim()
-      .toLowerCase()
-      .split(/,| /i)
-      .filter(el => el !== "");
-    const nameMatch = searchItems.some(param =>
-      recipe.recipeName.toLowerCase().includes(param)
-    );
-
-    const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
-      searchItems.some(param =>
-        ingredient.ingredientName.toLowerCase().includes(param)
-      )
-    );
-
-    return nameMatch || ingredientMatch;
   };
 
   return (
@@ -657,54 +664,56 @@ const Planner = () => {
                     ref={provided.innerRef}
                     {...provided.droppableProps}>
                     {dayId === "savedRecipes" &&
-                      days[dayId].recipes
-                        .filter(searchRecipes)
-                        .map((item: PlannerRecipe, index: number) => (
-                          <Draggable
-                            key={`${dayId}-${item.id}`}
-                            draggableId={`${dayId}-${item.id}`}
-                            index={index}>
-                            {(providedDraggable, snapshot) => (
-                              <Container
-                                ref={providedDraggable.innerRef}
-                                {...providedDraggable.draggableProps}
-                                {...providedDraggable.dragHandleProps}
-                                {...providedDraggable.draggableProps.style}
-                                opacity={snapshot.isDragging ? 0.7 : 1}
-                                transition={
-                                  snapshot.isDragging
-                                    ? "none"
-                                    : "opacity 0.2s ease"
-                                }
-                                bg={"brandGray"}
-                                border={borderColor}
-                                borderRadius="0"
-                                padding="0.5rem"
-                                mt="0.03rem"
-                                width="100%"
-                                height="120px">
-                                <Center>
-                                  <Image
-                                    mt="0.2rem"
-                                    src={item.image}
-                                    alt={item.name}
-                                    w="110px"
-                                    h="60px"
-                                    objectFit="cover"
-                                  />
-                                </Center>
-                                <Center>
-                                  <Text
-                                    fontWeight="normal"
-                                    textAlign="center"
-                                    fontSize="xs">
-                                    {item.name}
-                                  </Text>
-                                </Center>
-                              </Container>
-                            )}
-                          </Draggable>
-                        ))}
+                      days[dayId].recipes.map(
+                        (item: PlannerRecipe, index: number) => {
+                          return (
+                            <Draggable
+                              key={`${dayId}-${item.id}`}
+                              draggableId={`${dayId}-${item.id}`}
+                              index={index}>
+                              {(providedDraggable, snapshot) => (
+                                <Container
+                                  ref={providedDraggable.innerRef}
+                                  {...providedDraggable.draggableProps}
+                                  {...providedDraggable.dragHandleProps}
+                                  {...providedDraggable.draggableProps.style}
+                                  opacity={snapshot.isDragging ? 0.7 : 1}
+                                  transition={
+                                    snapshot.isDragging
+                                      ? "none"
+                                      : "opacity 0.2s ease"
+                                  }
+                                  bg={"brandGray"}
+                                  border={borderColor}
+                                  borderRadius="0"
+                                  padding="0.5rem"
+                                  mt="0.03rem"
+                                  width="100%"
+                                  height="120px">
+                                  <Center>
+                                    <Image
+                                      mt="0.2rem"
+                                      src={item.image}
+                                      alt={item.name}
+                                      w="110px"
+                                      h="60px"
+                                      objectFit="cover"
+                                    />
+                                  </Center>
+                                  <Center>
+                                    <Text
+                                      fontWeight="normal"
+                                      textAlign="center"
+                                      fontSize="xs">
+                                      {item.name}
+                                    </Text>
+                                  </Center>
+                                </Container>
+                              )}
+                            </Draggable>
+                          );
+                        }
+                      )}
                     <GridItem
                       key={index}
                       colSpan={{ base: 1, md: 1 }}
