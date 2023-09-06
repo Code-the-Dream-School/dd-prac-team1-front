@@ -147,14 +147,7 @@ const Planner = () => {
     getRecipe()
       .then(response => {
         setRecipes(response.data.recipes);
-        const fetchedRecipes = () => {
-          if (search === "") {
-            return response.data.recipes;
-          } else {
-            return searchedRecipes;
-          }
-        };
-        const savedRecipesItems = fetchedRecipes().map(
+        const savedRecipesItems = response.data.recipes.map(
           (recipe: PlannerRecipe, index: number) => ({
             ...recipe,
             id: recipe._id,
@@ -176,7 +169,37 @@ const Planner = () => {
       .catch(error => {
         showErrorToast(error);
       });
-  }, [showErrorToast, search]);
+  }, [showErrorToast]);
+
+  //updating list of recipes according to search
+  useEffect(() => {
+    const filteredRecipes = () => {
+      if (search === "") {
+        return recipes;
+      } else {
+        return searchedRecipes;
+      }
+    };
+    const savedRecipesItems: PlannerRecipe[] = filteredRecipes().map(
+      (recipe: SavedRecipe, index: number) => ({
+        ...recipe,
+        id: recipe._id,
+        name: recipe.recipeName,
+        image: recipe.recipeImage,
+        sortOrder: index,
+        mealId: null,
+        mealSlot: null
+      })
+    );
+    setDays(prevDays => ({
+      ...prevDays,
+      savedRecipes: {
+        ...prevDays.savedRecipes,
+        recipes: savedRecipesItems
+      }
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   useEffect(() => {
     // exit if no saved recipes are available
@@ -556,11 +579,41 @@ const Planner = () => {
         }}
         gap={{ base: 0 }}
         gridAutoRows="1fr">
-        <GridItem colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}></GridItem>
+        <GridItem colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}>
+          <GridItem colSpan={2} display="flex" alignItems="center"></GridItem>
+        </GridItem>
         <GridItem
           colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}
+          display="flex"
+          alignItems="center"
           bg="brandGray"
           p="3">
+          <Flex alignItems="center" flexGrow={1}>
+            {/* <FormControl ml="5">
+              <Input
+                size="xs"
+                width="auto"
+                overflow="hidden"
+                type="text"
+                placeholder="Enter name/ingredients"
+                id="search"
+                variant="outline"
+                value={search}
+                onChange={event => setSearch(event.target.value)}
+              />
+              <IconButton
+                aria-label="Cancel search"
+                icon={<CloseIcon />}
+                size="xs"
+                ml="2"
+                onClick={() => {
+                  setSearch("");
+                }}
+              />
+            </FormControl> */}
+            {/* </GridItem>
+          <GridItem colSpan={2} display="flex" alignItems="center"> */}
+          </Flex>
           <Flex justifyContent="flex-end" alignItems="center">
             <Heading mr="10">Menu Planner</Heading>
             <Tooltip
@@ -722,6 +775,9 @@ const Planner = () => {
                       p="2"
                       color="brandGray"
                       fontSize="20"
+                      style={
+                        dayId === "savedRecipes" ? { display: "none" } : {}
+                      }
                       mb="4">
                       {days[dayId]?.name}
                     </GridItem>

@@ -144,7 +144,7 @@ export type AnimationVariants = {
 };
 
 export interface PlannerRecipe extends SavedRecipe {
-  uniqueKey: string;
+  uniqueKey?: string;
   mealSlot: any;
   id: string;
   name: string;
@@ -153,8 +153,8 @@ export interface PlannerRecipe extends SavedRecipe {
   recipeImage: string;
   recipeName: string;
   sortOrder: number;
-  mealId: string;
-  recipeId: string;
+  mealId: string | null;
+  recipeId?: string;
 }
 
 export type Id = string;
