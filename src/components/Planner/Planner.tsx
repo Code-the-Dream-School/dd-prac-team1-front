@@ -125,6 +125,7 @@ const Planner = () => {
   useEffect(() => {
     getRecipe()
       .then(response => {
+        console.log(response);
         const fetchedRecipes = response.data.recipes;
         const savedRecipesItems = fetchedRecipes.map(
           (recipe: PlannerRecipe, index: number) => ({
@@ -490,14 +491,21 @@ const Planner = () => {
     //we add by recipeIds so we need to extract them and send one by one
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
     //we need only those that have also mealId so that we do not count recipes in savedRecipes
-    const recipesWithMealId = allRecipes.filter(recipe => recipe.mealId);
-    const recipeIds = recipesWithMealId.map(recipe => recipe.id);
-
+    const recipesWithMeal = allRecipes.filter(recipe => recipe.mealId);
+    // const recipesWithMealServings = allRecipes.filter(
+    //   recipe => recipe.recipeServings
+    // );
+    console.log(recipesWithMeal);
+    const recipeIdAndServings = recipesWithMeal.map(recipe => {
+      return [recipe.id, recipe.recipeServings];
+    });
     let allSuccessful = true;
-
-    for (const id of recipeIds) {
+    for (const idAndServins of recipeIdAndServings) {
+      let id = idAndServins[0].toString();
+      let servingSize = Number(idAndServins[1]);
+      console.log(id, servingSize);
       try {
-        await saveRecipeIngredientsToShoppingList(id);
+        await saveRecipeIngredientsToShoppingList(id, servingSize);
       } catch (error) {
         allSuccessful = false;
         showErrorToast(error as Error);
