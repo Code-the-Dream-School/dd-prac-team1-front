@@ -37,6 +37,24 @@ const Footer = () => {
 
         <Stack
           as="a"
+          href="/Documents/Olivier_Terms.pdf"
+          target="_blank"
+          mx={{ base: 0, md: 0 }}
+          mb={{ base: 2, md: 0 }}
+          textAlign={{ base: "center", md: "right" }}>
+          <Text
+            _hover={{
+              borderBottomColor: "green",
+              borderBottomWidth: "2px",
+              borderBottomStyle: "solid"
+            }}
+            fontSize="sm">
+            Terms of Service
+          </Text>
+        </Stack>
+
+        <Stack
+          as="a"
           href="/team"
           mx={{ base: 0, md: 0 }}
           mb={{ base: 2, md: 0 }}
