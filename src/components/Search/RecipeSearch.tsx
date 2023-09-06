@@ -22,7 +22,7 @@ const RecipeSearch = () => {
           size={{ base: "xs", sm: "sm" }}
           width="auto"
           type="text"
-          placeholder="Search a recipe..."
+          placeholder="Search for a recipe"
           id="search"
           variant="outline"
           value={search}
