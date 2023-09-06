@@ -113,11 +113,10 @@ export default function Layout() {
           <HStack
             width="95%"
             display="flex"
-            overflow="hidden"
             flexDirection={{ base: "column", sm: "row" }}
             ml={{ base: "20px", sm: "1rem" }}
             alignItems={{ base: "flex-start", sm: "center" }}>
-            <Box>
+            <Box overflow="hidden">
               <Image
                 src="/images/Logo_Olivier.svg"
                 maxW="100%"

@@ -188,7 +188,6 @@ const RecipeManual = () => {
                       name={`ingredientName-${id}`}
                       value={ingredient.ingredientName}
                       placeholder="Add ingredients"
-                      // maxW={{ base: "350px", sm: "auto" }}
                       _placeholder={{ position: "absolute", fontSize: "xs" }}
                       onChange={event => {
                         const newIngredients = [...ingredients];
