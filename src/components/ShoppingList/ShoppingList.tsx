@@ -98,17 +98,17 @@ const ShoppingList = () => {
           }, 200);
           setTimeout(() => {
             setHighlightExistingIngredient("");
-          }, 3000);
+          }, 4000);
           toast({
             title: "",
             description: "",
             status: "success",
-            duration: 3000,
+            duration: 4000,
             isClosable: true,
             position: "top",
             render: () => (
               <>
-                <Box p="3" bg="green">
+                <Box p="7" bg="green" borderRadius="5">
                   {response.data.message}
                 </Box>
               </>
@@ -314,7 +314,7 @@ const ShoppingList = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 {response.data.message}
               </Box>
             </>
