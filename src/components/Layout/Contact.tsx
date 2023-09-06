@@ -1,7 +1,5 @@
 import {
   Input,
-  Center,
-  Container,
   StackDivider,
   FormControl,
   FormLabel,
@@ -17,7 +15,7 @@ import {
   useToast
 } from "@chakra-ui/react";
 import { sendEmail } from "../../utils/fetchData";
-import { error } from "console";
+
 const Contact = () => {
   const toast = useToast();
   const handleSendEmail = (e: any) => {
@@ -26,7 +24,6 @@ const Contact = () => {
     const dataObject = Object.fromEntries(data.entries());
     sendEmail(dataObject)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -46,7 +43,6 @@ const Contact = () => {
       })
 
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
