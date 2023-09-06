@@ -6,12 +6,6 @@ import {
   CreatableSelect,
   MultiValue
 } from "chakra-react-select";
-import {
-  ActionMeta,
-  ChakraStylesConfig,
-  CreatableSelect,
-  MultiValue
-} from "chakra-react-select";
 
 const chakraStyles: ChakraStylesConfig = {
   placeholder: provided => ({
