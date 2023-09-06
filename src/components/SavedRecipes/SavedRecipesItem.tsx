@@ -32,17 +32,19 @@ const SavedRecipesItem = ({ recipe }: SavedRecipeProps) => {
               boxSize="full"
               borderRadius="lg"
               objectFit="cover"
-              height="150px"
+              height="220px"
               src={recipe.recipeImage}
               alt={recipe.recipeName}
             />
           </Center>
           <Stack
-            noOfLines={1}
+            overflow="hidden"
             textAlign="center"
             mt={{ base: "1", sm: "2", md: "3" }}
-            h={{ base: "8", sm: "8", md: "9" }}>
-            <Text fontSize="xs">{recipe.recipeName}</Text>
+            h={{ base: "10", sm: "14", md: "16", lg: "20" }}>
+            <Text fontSize={{ base: "sm", sm: "md", md: "lg" }}>
+              {recipe.recipeName}
+            </Text>
           </Stack>
         </CardBody>
       </Card>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  // Center,
   Collapse,
   Container,
   Icon,
@@ -32,15 +31,11 @@ import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
-// import { unmountComponentAtNode } from "react-dom";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_sendingIngredients, setSendingIngredients] = useState({});
-  // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
@@ -53,9 +48,9 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
+        console.log(response);
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
-        setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
         console.log(error);
@@ -127,45 +122,9 @@ const SingleRecipePage = () => {
     };
     return removeDuplicates(renderingTags);
   };
-
-  const valueOfServings = (e: any) => {
-    console.log(e);
-    // setRecipe({
-    //   ...recipe,
-    //   recipeServings: Number(e.target.value)
-    // });
-    setServingSize(Number(e.target.value));
-  };
-  console.log(servingSize);
-  const CalculateServings = () => {
-    if (recipe.recipeServings === servingSize) {
-      return recipe.recipeIngredients;
-    }
-    if (recipe.recipeServings === 0) {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount: ingredient.ingredientAmount * servingSize
-        };
-      });
-    } else {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount:
-            (ingredient.ingredientAmount / recipe.recipeServings) * servingSize
-        };
-      });
-    }
-  };
-
-  const sendIngredients = () => {
-    console.log(recipe);
+  const sendIngredients = (servings: number) => {
     if (recipeId === undefined) return;
-    console.log(recipeId);
-    saveRecipeIngredientsToShoppingList(recipeId)
+    saveRecipeIngredientsToShoppingList(recipeId, servings)
       .then(response => {
         console.log(response);
         toast({
@@ -177,9 +136,9 @@ const SingleRecipePage = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 <Flex flexDirection="column">
-                  Your recipe was added to the shopping list
+                  Your recipe has been added to the shopping list
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -213,14 +172,6 @@ const SingleRecipePage = () => {
 
         console.log(error);
       });
-  };
-  const saveIngredientsToShoppingList = () => {
-    CalculateServings();
-
-    localStorage.setItem(
-      "ingredient",
-      JSON.stringify(recipe.recipeIngredients)
-    );
   };
 
   const nutrition = [
@@ -339,19 +290,15 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  //onClick={onOpen}
-                  onClick={sendIngredients}
+                  onClick={onOpen}
                 />
                 <ModalForServings
                   isOpen={openModal}
                   onClose={() => {
                     onClose();
-                    setServingSize(recipe.recipeServings);
                   }}
                   value={servingSize}
-                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
-                  valueOfServings={valueOfServings}
-                  // recipe={recipe}
+                  sendIngredients={sendIngredients}
                 />
                 <IconButton
                   size="lg"
