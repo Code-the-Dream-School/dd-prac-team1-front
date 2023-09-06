@@ -169,7 +169,7 @@ export type PlannerDays<PlannerRecipe> = {
 };
 
 export type FetchedPlan = {
-  _id: string;
+  _id: string | null;
   mealSlot: string;
   dayOfWeek: string;
   recipeId: string;

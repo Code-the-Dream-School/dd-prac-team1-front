@@ -326,7 +326,6 @@ const Planner = () => {
         dayOfWeek: destDayId,
         mealSlot: destMealSlot
       };
-
       createMealPlan(data)
         .then(response => {
           const newMealId = response.data.newMealPlan._id;
@@ -549,9 +548,9 @@ const Planner = () => {
       return [recipe.id, recipe.recipeServings];
     });
     let allSuccessful = true;
-    for (const idAndServins of recipeIdAndServings) {
-      let id = idAndServins[0].toString();
-      let servingSize = Number(idAndServins[1]);
+    for (const idAndServings of recipeIdAndServings) {
+      let id = idAndServings[0].toString();
+      let servingSize = Number(idAndServings[1]);
       try {
         await saveRecipeIngredientsToShoppingList(id, servingSize);
       } catch (error) {
@@ -567,29 +566,29 @@ const Planner = () => {
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
-        h="120px"
+        mt="5"
         templateColumns={{
           base: "repeat(7, 1fr)",
           lg: "repeat(8, 1fr)"
-        }}
-        templateRows={{
-          base: "repeat(9, 1fr)",
-          md: "repeat(2, 1fr)",
-          sm: "repeat(3, 1fr)"
-        }}
-        gap={{ base: 0 }}
-        gridAutoRows="1fr">
-        <GridItem colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}>
-          <GridItem colSpan={2} display="flex" alignItems="center"></GridItem>
+        }}>
+        <GridItem
+          colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bg="brandGray"
+          p={{ sm: "3" }}>
+          <Heading>Menu Planner</Heading>
         </GridItem>
         <GridItem
           colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}
           display="flex"
           alignItems="center"
+          flexDirection={{ base: "column-reverse", sm: "row" }}
           bg="brandGray"
           p="3">
-          <Flex alignItems="center" flexGrow={1}>
-            {/* <FormControl ml="5">
+          <Flex alignItems="center" mb={{ sm: "3" }} flexGrow={1}>
+            <FormControl ml="5">
               <Input
                 size="xs"
                 width="auto"
@@ -610,22 +609,22 @@ const Planner = () => {
                   setSearch("");
                 }}
               />
-            </FormControl> */}
-            {/* </GridItem>
-          <GridItem colSpan={2} display="flex" alignItems="center"> */}
+            </FormControl>
           </Flex>
-          <Flex justifyContent="flex-end" alignItems="center">
-            <Heading mr="10">Menu Planner</Heading>
+          <Flex
+            justifyContent={{ base: "center", sm: "flex-end" }}
+            gap={{ md: "5" }}
+            pb="3"
+            alignItems="center">
             <Tooltip
               label="Add ingredients to the shopping list"
               aria-label="A tooltip"
               bg="green"
               color="black"
               fontSize="sm"
-              p={1}
               placement="top-start">
               <IconButton
-                mr="10"
+                mr={{ base: "0", sm: "10" }}
                 _hover={{ bg: "none", transform: "scale(1.2)" }}
                 transition="transform 0.2s ease-in-out"
                 size="xl"
@@ -636,43 +635,13 @@ const Planner = () => {
                 onClick={addMealsToShoppingList}
               />
             </Tooltip>
-            <Button mr="5" overflow="hidden" onClick={deleteAllMeals}>
+            <Button
+              mr={{ base: "0", sm: "5" }}
+              overflow="hidden"
+              onClick={deleteAllMeals}>
               Clear all
             </Button>
           </Flex>
-        </GridItem>
-      </Grid>
-      <Grid
-        templateColumns={"repeat(8, 1fr)"}
-        mt="3"
-        display="flex"
-        alignItems="center"
-        justifyContent="flex-start">
-        <GridItem colSpan={2} display="flex" alignItems="center">
-          <FormControl display="flex" alignItems="center" ml="8">
-            <Input
-              size="xs"
-              width="auto"
-              overflow="hidden"
-              type="text"
-              placeholder="Enter name/ingredients"
-              id="search"
-              variant="outline"
-              value={search}
-              onChange={event => setSearch(event.target.value)}
-            />
-          </FormControl>
-        </GridItem>
-        <GridItem colSpan={2} display="flex" alignItems="center">
-          <IconButton
-            aria-label="Cancel search"
-            icon={<CloseIcon />}
-            size="xs"
-            ml="2"
-            onClick={() => {
-              setSearch("");
-            }}
-          />
         </GridItem>
       </Grid>
       <Grid
