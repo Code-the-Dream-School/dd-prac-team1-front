@@ -196,7 +196,7 @@ const SingleRecipePage = () => {
     }
   ];
   return (
-    <Container maxW="5xl">
+    <Container maxW="5xl" mb="5">
       <Grid
         templateColumns={{
           base: "repeat(4, 1fr)",
