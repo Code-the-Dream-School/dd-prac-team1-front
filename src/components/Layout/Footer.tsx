@@ -11,7 +11,7 @@ import { FaGithub, FaInstagram, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   const iconSize = useBreakpointValue({ base: "1rem", md: "1.5rem" });
-
+  const thisYear = new Date().getFullYear();
   return (
     <Box
       as="footer"
@@ -32,7 +32,7 @@ const Footer = () => {
           mb={{ base: 2, md: 0 }}
           textAlign={{ base: "center", md: "left" }}
           fontSize="sm">
-          <Text>&copy; 2023 Olivier Meal Planner</Text>
+          <Text>&copy; {thisYear} Olivier Meal Planner</Text>
         </Stack>
 
         <Stack

@@ -4,7 +4,6 @@ import {
   Heading,
   Grid,
   GridItem,
-  Text,
   Button,
   Icon,
   UnorderedList,
@@ -51,11 +50,12 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
   };
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap="2" mt="5">
+    <Grid templateColumns="repeat(2, 1fr)" gap="2" mt="10" mb="10">
       <GridItem w="100%" colSpan={1}>
-        <Text>
-          Sure! Here's a simple and delicious recipe for {recipe.recipeName}:
-        </Text>
+        <Heading size="lg">
+          Sure! Here's a simple and delicious recipe for&nbsp;
+          {recipe.recipeName.toLocaleUpperCase()}
+        </Heading>
       </GridItem>
       <GridItem w="100%" colSpan={1}>
         <Center>
@@ -75,7 +75,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         </Center>
       </GridItem>
       <GridItem w="100%" colSpan={1} mt="10">
-        <Heading as="h6" mb="10">
+        <Heading as="h3" mb="10">
           Ingredients:
         </Heading>
         <UnorderedList>
@@ -94,7 +94,7 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         borderRadius="5"
       />
       <GridItem w="100%" colSpan={{ base: 2, md: 1 }}>
-        <Heading as="h6" mb="10">
+        <Heading as="h3" mb="10">
           Instructions:
         </Heading>
         {recipe.instructions.map((instruction, index) => (

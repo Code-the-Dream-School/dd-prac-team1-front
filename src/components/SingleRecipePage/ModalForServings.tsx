@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Box,
   Input,
   Center,
   Modal,
@@ -15,17 +16,24 @@ type ModalForServingsProps = {
   isOpen: boolean;
   onClose: () => void;
   value: number;
-  saveIngredientsToShoppingList: Function;
-  valueOfServings: Function;
+  sendIngredients: Function;
 };
 
 const ModalForServings = ({
   isOpen,
   onClose,
   value,
-  saveIngredientsToShoppingList,
-  valueOfServings
+  sendIngredients
 }: ModalForServingsProps) => {
+  const handleServingSize = (e: any) => {
+    e.preventDefault();
+    console.log(e);
+    const data = new FormData(e.target);
+    const dataObj = Object.fromEntries(data.entries());
+    sendIngredients(dataObj.servings);
+    onClose();
+  };
+
   return (
     <Modal
       blockScrollOnMount={false}
@@ -34,35 +42,33 @@ const ModalForServings = ({
       size="xs"
       variant="outline"
       isCentered>
-      <ModalOverlay
-        bg="transparent"
-        backdropFilter="blur(05px) brightness(0.5)"
-      />
-      <ModalContent>
-        <ModalHeader>Adjust serving size</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Center>
-            <Input
-              w="20"
-              type="number"
-              min="0"
-              value={value}
-              onChange={e => {
-                valueOfServings(e);
-              }}
-            />
-          </Center>
-        </ModalBody>
-        <ModalFooter>
-          <Button mr="3" bg="brandGray" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={() => saveIngredientsToShoppingList()}>
-            Add to Shopping List
-          </Button>
-        </ModalFooter>
-      </ModalContent>
+      <Box as="form" onSubmit={handleServingSize}>
+        <ModalOverlay
+          bg="transparent"
+          backdropFilter="blur(05px) brightness(0.5)"
+        />
+        <ModalContent>
+          <ModalHeader>Adjust serving size</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Center>
+              <Input
+                w="20"
+                type="number"
+                min="0"
+                name="servings"
+                defaultValue={value}
+              />
+            </Center>
+          </ModalBody>
+          <ModalFooter>
+            <Button mr="3" bg="brandGray" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit">Add to Shopping List</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Box>
     </Modal>
   );
 };

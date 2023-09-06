@@ -101,22 +101,6 @@ const SearchChoice = () => {
           </Text>
         </CardBody>
       </Card>
-      {/* if we will add this part we need to fix rendering (change sizes of cards), gaps between them and margins
-      <Card
-        cursor="pointer"
-        onClick={navigateToOwnRecipe}
-        w={{ base: "50%", md: "200px", lg: "300px" }}
-        h={{ base: "150px", md: "200px" }}>
-        <CardHeader>
-          <Center>
-            <Heading size="md">ADD BY URL </Heading>
-          </Center>
-        </CardHeader>
-        <CardBody>
-          <Text>Discovered a recipe you enjoy online? </Text>
-          <Text>Simply copy and paste the website URL right here.</Text>
-        </CardBody>
-      </Card> */}
     </Flex>
   );
 };

@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  // Center,
   Collapse,
   Container,
   Icon,
   IconButton,
-  Image,
   Flex,
   Grid,
   GridItem,
@@ -33,14 +31,11 @@ import SingleRecipeTag from "./SingleRecipeTag";
 import SingleRecipeIngredient from "./SingleRecipeIngredient";
 import ModalForServings from "./ModalForServings";
 import { saveRecipeIngredientsToShoppingList } from "../../utils/fetchData";
-// import { unmountComponentAtNode } from "react-dom";
 
 const SingleRecipePage = () => {
   const [recipe, setRecipe] = useState<SavedRecipe | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [servingSize, setServingSize] = useState(0);
-  const [sendingIngredients, setSendingIngredients] = useState({});
-  // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
@@ -52,9 +47,9 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
+        console.log(response);
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
-        setSendingIngredients(response.data.recipeIngredients);
       })
       .catch(error => {
         console.log(error);
@@ -114,7 +109,7 @@ const SingleRecipePage = () => {
     recipe.recipeTags.map((tag: RecipeTag) =>
       renderingTags.push(tag.tagName.toLocaleLowerCase())
     );
-    recipe.recipeSpecialDiets.map((diet: string) => {
+    recipe.recipeSpecialDiets.forEach((diet: string) => {
       if (diet !== "None") {
         renderingTags.push(diet.toLocaleLowerCase());
       }
@@ -126,45 +121,9 @@ const SingleRecipePage = () => {
     };
     return removeDuplicates(renderingTags);
   };
-
-  const valueOfServings = (e: any) => {
-    console.log(e);
-    // setRecipe({
-    //   ...recipe,
-    //   recipeServings: Number(e.target.value)
-    // });
-    setServingSize(Number(e.target.value));
-  };
-  console.log(servingSize);
-  const CalculateServings = () => {
-    if (recipe.recipeServings === servingSize) {
-      return recipe.recipeIngredients;
-    }
-    if (recipe.recipeServings === 0) {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount: ingredient.ingredientAmount * servingSize
-        };
-      });
-    } else {
-      return recipe.recipeIngredients.map(ingredient => {
-        console.log(ingredient);
-        return {
-          ...ingredient,
-          ingredientAmount:
-            (ingredient.ingredientAmount / recipe.recipeServings) * servingSize
-        };
-      });
-    }
-  };
-
-  const sendIngredients = () => {
-    console.log(recipe);
+  const sendIngredients = (servings: number) => {
     if (recipeId === undefined) return;
-    console.log(recipeId);
-    saveRecipeIngredientsToShoppingList(recipeId)
+    saveRecipeIngredientsToShoppingList(recipeId, servings)
       .then(response => {
         console.log(response);
         toast({
@@ -176,9 +135,9 @@ const SingleRecipePage = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 <Flex flexDirection="column">
-                  Your recipe was added to the shopping list
+                  Your recipe has been added to the shopping list
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -213,14 +172,6 @@ const SingleRecipePage = () => {
         console.log(error);
       });
   };
-  const saveIngredientsToShoppingList = () => {
-    CalculateServings();
-
-    localStorage.setItem(
-      "ingredient",
-      JSON.stringify(recipe.recipeIngredients)
-    );
-  };
 
   const nutrition = [
     {
@@ -244,9 +195,8 @@ const SingleRecipePage = () => {
       unit: "g"
     }
   ];
-
   return (
-    <Container maxW="5xl">
+    <Container maxW="5xl" mb="5">
       <Grid
         templateColumns={{
           base: "repeat(4, 1fr)",
@@ -339,19 +289,15 @@ const SingleRecipePage = () => {
                   aria-label="Add to shopping list"
                   icon={<GiShoppingCart />}
                   title="add to shopping cart"
-                  //onClick={onOpen}
-                  onClick={sendIngredients}
+                  onClick={onOpen}
                 />
                 <ModalForServings
                   isOpen={openModal}
                   onClose={() => {
                     onClose();
-                    setServingSize(recipe.recipeServings);
                   }}
                   value={servingSize}
-                  saveIngredientsToShoppingList={saveIngredientsToShoppingList}
-                  valueOfServings={valueOfServings}
-                  // recipe={recipe}
+                  sendIngredients={sendIngredients}
                 />
                 <IconButton
                   size="lg"
