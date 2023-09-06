@@ -46,7 +46,6 @@ export const logout = () => {
 };
 
 export const searchAI = (search: string, values: Array<string>) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/",
     {
@@ -64,7 +63,6 @@ export const searchAI = (search: string, values: Array<string>) => {
 
 export const saveRecipe = (recipe: AIRecipe) => {
   console.log(recipe);
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-ai",
     {
@@ -80,7 +78,6 @@ export const saveRecipe = (recipe: AIRecipe) => {
 };
 
 export const saveManualRecipe = (recipe: ManualRecipe) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-manual",
     {
@@ -96,7 +93,6 @@ export const saveManualRecipe = (recipe: ManualRecipe) => {
 };
 
 export const getRecipe = () => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get("http://localhost:3000/api/v1/recipes/", {
     headers: {
       "Content-Type": "application/json",
@@ -106,7 +102,6 @@ export const getRecipe = () => {
 };
 
 export const getSingleRecipe = (recipeId: string) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
     headers: {
       "Content-Type": "application/json",
@@ -119,7 +114,6 @@ export const editSingleRecipe = (
   recipeId: string,
   recipe: SavedRecipe | EditedRecipe
 ) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.patch(
     `http://localhost:3000/api/v1/recipes/${recipeId}`,
     {
@@ -135,7 +129,6 @@ export const editSingleRecipe = (
 };
 
 export const deleteSingleRecipe = (recipeId: string) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.delete(`http://localhost:3000/api/v1/recipes/${recipeId}`, {
     headers: {
       "Content-Type": "application/json",
@@ -144,11 +137,13 @@ export const deleteSingleRecipe = (recipeId: string) => {
   });
 };
 
-export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
+export const saveRecipeIngredientsToShoppingList = (
+  recipeId: string,
+  servingSize: number
+) => {
   return axios.post(
     `http://localhost:3000/api/v1/shopping-list/${recipeId}`,
-    {},
+    { servingSize },
     {
       headers: {
         "Content-Type": "application/json",
@@ -159,13 +154,25 @@ export const saveRecipeIngredientsToShoppingList = (recipeId: string) => {
 };
 
 export const getIngredientsFromShoppingList = () => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   return axios.get("http://localhost:3000/api/v1/shopping-list", {
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }
   });
+};
+
+export const addIngredientToShoppingList = (ingredient: SavedIngredient) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/shopping-list/add-ingredient",
+    { ...ingredient },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
 };
 
 export const editAnIngredientFromShoppingList = (
@@ -191,7 +198,6 @@ export const editAnIngredientFromShoppingList = (
 };
 
 export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
-  // const jwtToken = sessionStorage.getItem("jwtToken");
   const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
   console.log(uri);
   console.log(encodeURI(uri));
@@ -212,16 +218,28 @@ export const deleteAllShoppingList = () => {
   });
 };
 
-export const createMealPlan = (data: FetchedPlan) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+export const shareShoppingList = (email: string) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/shopping-list/share",
+    { recipientEmail: email },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
 
-  return axios.post("http://localhost:3000/api/v1/meal-planner", 
+export const createMealPlan = (data: FetchedPlan) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/meal-planner",
     {
       ...data
     },
     {
       headers: {
-        'Pragma': 'no-cache',
+        "Pragma": "no-cache",
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwtToken}`
       }
@@ -230,38 +248,35 @@ export const createMealPlan = (data: FetchedPlan) => {
 };
 
 export const getAllMealPlan = () => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
-
   return axios.get("http://localhost:3000/api/v1/meal-planner", {
     headers: {
-      'Pragma': 'no-cache',
+      "Pragma": "no-cache",
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }
   });
 };
 
-export const  updateMealPlan = (data: FetchedPlan) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
-
-  return axios.put(`http://localhost:3000/api/v1/meal-planner/${data._id}`, 
-  {
-    ...data
-  }, {
-    headers: {
-      'Pragma': 'no-cache',
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwtToken}`
+export const updateMealPlan = (data: FetchedPlan) => {
+  return axios.put(
+    `http://localhost:3000/api/v1/meal-planner/${data._id}`,
+    {
+      ...data
+    },
+    {
+      headers: {
+        "Pragma": "no-cache",
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
     }
-  });
+  );
 };
 
-export const deleteMealPlan  = (mealId: string) => {
-  const jwtToken = sessionStorage.getItem("jwtToken");
-
+export const deleteMealPlan = (mealId: string) => {
   return axios.delete(`http://localhost:3000/api/v1/meal-planner/${mealId}`, {
     headers: {
-      'Pragma': 'no-cache',
+      "Pragma": "no-cache",
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwtToken}`
     }

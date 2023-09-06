@@ -25,8 +25,11 @@ const ModalForNewIngredient = ({
 }: ModalForNewIngredientProps) => {
   const handleNewIngredient = (e: any) => {
     e.preventDefault();
+    console.log(e);
     const data = new FormData(e.target);
     const dataObj = Object.fromEntries(data.entries());
+    console.log(data);
+    console.log(dataObj);
     handleIngredientAdd(dataObj);
   };
   return (

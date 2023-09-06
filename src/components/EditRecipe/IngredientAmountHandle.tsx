@@ -23,7 +23,7 @@ const IngredientAmountHandle = ({
 
   return (
     <Flex justifyContent="center">
-      <FormControl mr="2">
+      <FormControl>
         <Select
           isRequired
           size="sm"
@@ -44,7 +44,7 @@ const IngredientAmountHandle = ({
         </Select>
       </FormControl>
       {mode === 0 && (
-        <FormControl w="40%">
+        <FormControl w="40%" ml="2">
           <Input
             size="sm"
             name="ingredientAmount"
