@@ -283,7 +283,7 @@ const RecipeManual = () => {
                   <FormControl isRequired>
                     <Textarea
                       size="lg"
-                      id="instuctions"
+                      id="instructions"
                       name="recipeInstructions"
                       value={recipe.recipeInstructions}
                       placeholder="Instructions how to cook the dish"
