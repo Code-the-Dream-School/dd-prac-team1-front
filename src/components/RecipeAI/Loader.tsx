@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Center, keyframes } from "@chakra-ui/react";
+import { Box, keyframes } from "@chakra-ui/react";
 
 const loader = keyframes`
   from {
@@ -16,7 +16,7 @@ const loader = keyframes`
 
 const Loader = ({ text = "Loading..." }) => {
   return (
-    <Center>
+    <Box display="flex" justifyContent="center" minH="100px">
       {text.split("").map((letter, index) => (
         <Box
           as="span"
@@ -28,12 +28,13 @@ const Loader = ({ text = "Loading..." }) => {
             md: "4xl",
             lg: "6xl"
           }}
+          overflow="hidden"
           letterSpacing="-1px"
           key={index}>
           {letter}
         </Box>
       ))}
-    </Center>
+    </Box>
   );
 };
 export default Loader;

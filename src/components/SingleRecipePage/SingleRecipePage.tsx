@@ -137,7 +137,7 @@ const SingleRecipePage = () => {
             <>
               <Box p="3" bg="green" borderRadius="5">
                 <Flex flexDirection="column">
-                  Your recipe was added to the shopping list
+                  Your recipe has been added to the shopping list
                   <Button
                     variant="outline"
                     onClick={() => {
