@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,28 +8,43 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   useToast
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { forgetPassword } from "../../utils/fetchData";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate, useParams } from "react-router-dom";
+import { resetPassword } from "../../utils/fetchData";
 
-const ForgetPassword = () => {
+const ResetPassword = () => {
   const [isSended, setIsSended] = useState(false);
+  const [type, setType] = useState("password");
+  const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
-  const navigateToLogin = () => {
-    navigate("/login");
+  const { slug } = useParams();
+  const token = slug;
+  const handleShowPassword = () => {
+    if (type === "password") {
+      setType("text");
+      setShowPassword(true);
+    } else {
+      setType("password");
+      setShowPassword(false);
+    }
   };
   const navigateToHome = () => {
     navigate("/");
   };
 
-  const handleResetEmail = (e: any) => {
+  const handleNewPassword = (e: any) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const emailObj = Object.fromEntries(data.entries());
-    forgetPassword(emailObj)
+    const passwordObj = Object.fromEntries(data.entries());
+    console.log(passwordObj);
+    if (!token) return;
+    resetPassword(token, passwordObj)
       .then(response => {
         console.log(response);
         toast({
@@ -49,6 +64,7 @@ const ForgetPassword = () => {
         });
         setIsSended(true);
         e.target.reset();
+        navigate("/login");
       })
       .catch(error => {
         console.log(error);
@@ -72,17 +88,24 @@ const ForgetPassword = () => {
 
   return (
     <Container maxW="xl" mt="50">
-      <Box as="form" onSubmit={handleResetEmail}>
+      <Box as="form" onSubmit={handleNewPassword}>
         <Box p="10px">
           <FormControl isRequired marginY="25">
             <FormLabel htmlFor="resetEmail">Email</FormLabel>
-            <Input
-              type="email"
-              id="resetEmail"
-              variant="flushed"
-              name="email"
-              placeholder="Enter email"
-            />
+            <InputGroup>
+              <Input
+                type={type}
+                id="newPassword"
+                variant="flushed"
+                name="newPassword"
+                placeholder="Enter new password"
+              />
+              <InputRightElement>
+                <Button size="xs" variant="ghost" onClick={handleShowPassword}>
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
         </Box>
         <Center mt="10">
@@ -96,9 +119,6 @@ const ForgetPassword = () => {
         </Center>
       </Box>
       <Flex alignItems="center" justifyContent="center" flexDirection="column">
-        <Button variant="link" size="xs" mt="5" onClick={navigateToLogin}>
-          <Text as="ins">Back to Login</Text>
-        </Button>
         <Button
           variant="link"
           size="xs"
@@ -112,4 +132,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default ResetPassword;
