@@ -4,6 +4,7 @@ import {
   Button,
   Center,
   Container,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -27,6 +28,9 @@ const Login = () => {
   const navigate = useNavigate();
   const navigateToRegister = () => {
     navigate("/register");
+  };
+  const navigateToForgetPassword = () => {
+    navigate("/forget-password");
   };
   const handleShowPassword = () => {
     if (type === "password") {
@@ -133,11 +137,18 @@ const Login = () => {
           </Button>
         </Center>
       </Box>
-      <Center>
-        <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
-          <Text as="ins">or create an account</Text>
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Button
+          variant="link"
+          size="xs"
+          mt="5"
+          onClick={navigateToForgetPassword}>
+          <Text as="ins">Forget password?</Text>
         </Button>
-      </Center>
+        <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
+          <Text as="ins">Create an account</Text>
+        </Button>
+      </Flex>
     </Container>
   );
 };
