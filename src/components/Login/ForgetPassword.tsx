@@ -31,7 +31,6 @@ const ForgetPassword = () => {
     const emailObj = Object.fromEntries(data.entries());
     forgetPassword(emailObj)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -51,7 +50,6 @@ const ForgetPassword = () => {
         e.target.reset();
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

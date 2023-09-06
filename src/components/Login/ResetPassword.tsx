@@ -46,7 +46,6 @@ const ResetPassword = () => {
     if (!token) return;
     resetPassword(token, passwordObj)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -67,7 +66,6 @@ const ResetPassword = () => {
         navigate("/login");
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
