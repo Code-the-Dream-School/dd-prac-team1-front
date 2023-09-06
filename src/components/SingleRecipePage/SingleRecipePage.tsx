@@ -42,6 +42,7 @@ const SingleRecipePage = () => {
   const [_sendingIngredients, setSendingIngredients] = useState({});
   // const [openModal, setOpenModal] = useState(false);
   const { isOpen: openNutrition, onToggle } = useDisclosure();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isOpen: openModal, onOpen, onClose } = useDisclosure();
   const { slug } = useParams();
   const recipeId = slug;
