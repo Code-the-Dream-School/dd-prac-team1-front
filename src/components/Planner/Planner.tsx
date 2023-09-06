@@ -492,9 +492,6 @@ const Planner = () => {
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
     //we need only those that have also mealId so that we do not count recipes in savedRecipes
     const recipesWithMeal = allRecipes.filter(recipe => recipe.mealId);
-    // const recipesWithMealServings = allRecipes.filter(
-    //   recipe => recipe.recipeServings
-    // );
     console.log(recipesWithMeal);
     const recipeIdAndServings = recipesWithMeal.map(recipe => {
       return [recipe.id, recipe.recipeServings];
