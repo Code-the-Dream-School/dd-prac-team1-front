@@ -12,9 +12,9 @@ import {
   useToast
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { forgetPassword } from "../../utils/fetchData";
+import { forgotPassword } from "../../utils/fetchData";
 
-const ForgetPassword = () => {
+const ForgotPassword = () => {
   const [isSended, setIsSended] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
@@ -29,19 +29,20 @@ const ForgetPassword = () => {
     e.preventDefault();
     const data = new FormData(e.target);
     const emailObj = Object.fromEntries(data.entries());
-    forgetPassword(emailObj)
+    forgotPassword(emailObj)
       .then(response => {
         toast({
           title: "",
           description: "",
+          duration: 1000000,
           status: "success",
-          duration: 4000,
           isClosable: true,
           position: "top",
           render: () => (
             <>
-              <Box p="7" bg="green" borderRadius="5">
-                {response.data.message}
+              <Box p="15" bg="green" h="50px" borderRadius="5">
+                We sent you an email with recovery link. Please check your
+                email.
               </Box>
             </>
           )
@@ -110,4 +111,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default ForgotPassword;

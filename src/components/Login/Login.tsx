@@ -29,8 +29,8 @@ const Login = () => {
   const navigateToRegister = () => {
     navigate("/register");
   };
-  const navigateToForgetPassword = () => {
-    navigate("/forget-password");
+  const navigateToForgotPassword = () => {
+    navigate("/forgot-password");
   };
   const handleShowPassword = () => {
     if (type === "password") {
@@ -141,8 +141,8 @@ const Login = () => {
           variant="link"
           size="xs"
           mt="5"
-          onClick={navigateToForgetPassword}>
-          <Text as="ins">Forget password?</Text>
+          onClick={navigateToForgotPassword}>
+          <Text as="ins">Forgot password?</Text>
         </Button>
         <Button variant="link" size="xs" mt="5" onClick={navigateToRegister}>
           <Text as="ins">Create an account</Text>

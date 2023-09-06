@@ -19,7 +19,7 @@ import ShoppingList from "./components/ShoppingList/ShoppingList";
 import NotFound from "./components/Layout/NotFound";
 import theme from "./CustomTheme";
 import RecipeManual from "./components/RecipeManual/RecipeManual";
-import ForgetPassword from "./components/Login/ForgetPassword";
+import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
@@ -32,7 +32,7 @@ root.render(
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/forget-password" element={<ForgetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="reset-password/:slug" element={<ResetPassword />} />
             <Route element={<Layout />}>
               <Route path="/search-choice" element={<SearchChoice />} />

@@ -61,7 +61,7 @@ export const searchAI = (search: string, values: Array<string>) => {
   );
 };
 
-export const forgetPassword = (email: object) => {
+export const forgotPassword = (email: object) => {
   return axios.post(
     "http://localhost:3000/api/v1/auth/forget-password",
     {

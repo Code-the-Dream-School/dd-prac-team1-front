@@ -89,7 +89,7 @@ const ResetPassword = () => {
       <Box as="form" onSubmit={handleNewPassword}>
         <Box p="10px">
           <FormControl isRequired marginY="25">
-            <FormLabel htmlFor="resetEmail">Email</FormLabel>
+            <FormLabel htmlFor="resetEmail">New password</FormLabel>
             <InputGroup>
               <Input
                 type={type}
