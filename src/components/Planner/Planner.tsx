@@ -500,7 +500,6 @@ const Planner = () => {
     for (const idAndServins of recipeIdAndServings) {
       let id = idAndServins[0].toString();
       let servingSize = Number(idAndServins[1]);
-      console.log(id, servingSize);
       try {
         await saveRecipeIngredientsToShoppingList(id, servingSize);
       } catch (error) {
