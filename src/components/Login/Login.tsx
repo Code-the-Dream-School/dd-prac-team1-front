@@ -30,7 +30,7 @@ const Login = () => {
     navigate("/register");
   };
   const navigateToForgotPassword = () => {
-    navigate("/forgot-password");
+    navigate("/forget-password");
   };
   const handleShowPassword = () => {
     if (type === "password") {
