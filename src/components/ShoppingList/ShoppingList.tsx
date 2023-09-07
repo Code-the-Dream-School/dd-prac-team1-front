@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -17,10 +17,12 @@ import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TbShare3 } from "react-icons/tb";
 import { TfiPrinter } from "react-icons/tfi";
 import {
+  addIngredientToShoppingList,
   getIngredientsFromShoppingList,
   editAnIngredientFromShoppingList,
   deleteAnIngredientFromShoppingList,
-  deleteAllShoppingList
+  deleteAllShoppingList,
+  shareShoppingList
 } from "../../utils/fetchData";
 import { SavedIngredient } from "../../utils/types";
 import ModalForNewIngredient from "./ModalForNewIngredient";
@@ -32,6 +34,8 @@ const ShoppingList = () => {
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
     Array<string>
   >([]);
+  const [highlightExistingIngredient, setHighlightExistingIngredient] =
+    useState<string>("");
   const {
     isOpen: isOpenChangedIngredient,
     onOpen: onOpenChangedIngredient,
@@ -44,11 +48,13 @@ const ShoppingList = () => {
   } = useDisclosure();
   const [isPrinting, setIsPrinting] = useState(false);
   const toast = useToast();
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
         console.log(response);
+
         setIngredients(response.data.ingredients);
       })
       .catch(error => {
@@ -74,18 +80,66 @@ const ShoppingList = () => {
     getIngredients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
-    const id = new Date().toString();
-    setIngredients([
-      {
-        ...newIngredient,
-        _id: id
-      },
-      ...ingredients
-    ]);
+    addIngredientToShoppingList(newIngredient)
+      .then(response => {
+        console.log(response);
+        if (
+          response.data.message.includes(
+            "Ingredient already exists in shopping list"
+          )
+        ) {
+          setHighlightExistingIngredient(
+            response.data.existingIngredient.ingredientName
+          );
+          setTimeout(() => {
+            if (ref.current) {
+              console.log("REF assigned");
+              ref.current.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 200);
+          setTimeout(() => {
+            setHighlightExistingIngredient("");
+          }, 4000);
+          toast({
+            title: "",
+            description: "",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+            position: "top",
+            render: () => (
+              <>
+                <Box p="7" bg="green" borderRadius="5">
+                  {response.data.message}
+                </Box>
+              </>
+            )
+          });
+        }
+        getIngredients();
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
     onCloseChangedIngredient();
   };
+
   const checkedIngredients = ingredients.filter(ingredient => {
     if (ingredient.ingredientName === undefined) return false;
     return checkedIngredientNames.includes(ingredient.ingredientName);
@@ -187,7 +241,6 @@ const ShoppingList = () => {
               position: "top"
             });
           });
-        console.log("Delayed for 1 second.");
       }, 250 * index);
     });
     console.log(checked);
@@ -249,6 +302,47 @@ const ShoppingList = () => {
       });
   };
 
+  const share = (email: string) => {
+    console.log(email);
+    shareShoppingList(email)
+      .then(response => {
+        console.log(response);
+        toast({
+          title: "",
+          description: "",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          render: () => (
+            <>
+              <Box p="3" bg="green" borderRadius="5">
+                {response.data.message}
+              </Box>
+            </>
+          )
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
+      });
+  };
+
   const print = () => {
     setIsPrinting(true);
     setTimeout(() => {
@@ -274,14 +368,14 @@ const ShoppingList = () => {
         templateColumns="repeat(12, 1fr)"
         gap="2"
         mt="5"
-        h="20"
-        alignItems="center">
-        <GridItem colSpan={9} w="100%">
+        alignItems="center"
+        justifyContent="center">
+        <GridItem colSpan={{ base: 12, sm: 9 }} w="100%">
           <Heading ml="2" fontSize="2xl">
             Shopping List
           </Heading>
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem colSpan={{ base: 4, sm: 1 }} w="100%">
           <IconButton
             size="lg"
             variant="ghost"
@@ -293,20 +387,26 @@ const ShoppingList = () => {
             onClick={handleRemoveIngredients}
           />
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem
+          colSpan={{ base: 4, sm: 1 }}
+          w="100%"
+          textAlign={{ base: "center", sm: "center" }}>
           <IconButton
             size="lg"
             variant="ghost"
             color="#505050"
             bg="brandGray"
-            aria-label="Send the shopping List"
+            aria-label="Share the shopping List"
             fontSize="20"
             icon={<TbShare3 />}
-            title="delete all"
+            title="share the shopping list"
             onClick={onOpenSendEmail}
           />
         </GridItem>
-        <GridItem colSpan={1} w="100%">
+        <GridItem
+          colSpan={{ base: 4, sm: 1 }}
+          w="100%"
+          textAlign={{ base: "end", sm: "center" }}>
           <IconButton
             size="lg"
             variant="ghost"
@@ -324,6 +424,7 @@ const ShoppingList = () => {
         w="100%"
         h="12"
         mb="1"
+        mt="5"
         borderRadius="0"
         bg="white"
         _hover={{
@@ -348,6 +449,7 @@ const ShoppingList = () => {
       </Button>
       <ModalForSendEmail
         isOpen={isOpenSendEmail}
+        share={share}
         onClose={() => {
           onCloseSendEmail();
         }}
@@ -359,86 +461,76 @@ const ShoppingList = () => {
           onCloseChangedIngredient();
         }}
       />
-      <Box>
-        {uncheckedIngredients.map(ingredient => (
-          <Box key={ingredient._id}>
+      {uncheckedIngredients.map(ingredient => (
+        <Box
+          key={ingredient._id}
+          ref={
+            highlightExistingIngredient === ingredient.ingredientName
+              ? ref
+              : null
+          }>
+          <ShoppingListIngredient
+            ingredient={ingredient}
+            onChange={handleCheckedBox}
+            handleEditAmount={handleEditAmount}
+            handleRemoveIngredient={handleRemoveIngredient}
+            handleEditIngredient={handleEditIngredient}
+            defaultChecked={false}
+            textDecoration={"none"}
+            highlightExistingIngredient={highlightExistingIngredient}
+          />
+        </Box>
+      ))}
+      <Box borderColor="green" w="100%" mt="1" mb="1" borderWidth="thin">
+        <Grid
+          templateColumns="repeat(12, 1fr)"
+          gap="2"
+          alignItems="center"
+          w="100%">
+          <GridItem colSpan={1} w="100%"></GridItem>
+          <GridItem colSpan={10} w="100%">
+            <Text color="#505050" fontWeight="normal" textAlign="left">
+              CHECKED ITEMS
+            </Text>
+          </GridItem>
+          <GridItem colSpan={1} w="100%">
+            <IconButton
+              size="lg"
+              variant="ghost"
+              aria-label="Delete checked ingredients"
+              color="#505050"
+              bg="brandGray"
+              w="100%"
+              borderRadius="0"
+              icon={<IoTrashOutline />}
+              title="delete checked"
+              onClick={removeChecked}
+            />
+          </GridItem>
+        </Grid>
+      </Box>
+      <Box mb="10">
+        {checkedIngredients.map(ingredient => (
+          <Box
+            key={ingredient._id}
+            ref={
+              highlightExistingIngredient === ingredient.ingredientName
+                ? ref
+                : null
+            }>
             <ShoppingListIngredient
               ingredient={ingredient}
               onChange={handleCheckedBox}
               handleEditAmount={handleEditAmount}
               handleRemoveIngredient={handleRemoveIngredient}
               handleEditIngredient={handleEditIngredient}
-              defaultChecked={false}
-              textDecoration={"none"}
+              defaultChecked={true}
+              textDecoration={"line-through"}
+              highlightExistingIngredient={highlightExistingIngredient}
             />
           </Box>
         ))}
-        <Box borderColor="green" w="100%" mt="1" mb="1" borderWidth="thin">
-          <Grid
-            templateColumns="repeat(12, 1fr)"
-            gap="2"
-            alignItems="center"
-            w="100%">
-            <GridItem colSpan={1} w="100%"></GridItem>
-            <GridItem colSpan={10} w="100%">
-              <Text color="#505050" fontWeight="normal" textAlign="left">
-                CHECKED ITEMS
-              </Text>
-            </GridItem>
-            <GridItem colSpan={1} w="100%">
-              <IconButton
-                size="lg"
-                variant="ghost"
-                aria-label="Delete checked ingredients"
-                color="#505050"
-                bg="brandGray"
-                w="100%"
-                borderRadius="0"
-                icon={<IoTrashOutline />}
-                title="delete checked"
-                onClick={removeChecked}
-              />
-            </GridItem>
-          </Grid>
-        </Box>
-        <Box mb="10">
-          {checkedIngredients.map(ingredient => (
-            <Box key={ingredient._id}>
-              <ShoppingListIngredient
-                ingredient={ingredient}
-                onChange={handleCheckedBox}
-                handleEditAmount={handleEditAmount}
-                handleRemoveIngredient={handleRemoveIngredient}
-                handleEditIngredient={handleEditIngredient}
-                defaultChecked={true}
-                textDecoration={"line-through"}
-              />
-            </Box>
-          ))}
-        </Box>
       </Box>
-      {/* <iframe
-        title="print"
-        id="printShoppingList"
-        style={{ height: "0px", width: "0px", position: "absolute" }}
-      /> */}
-      {/* <PrintShoppingList ingredients={ingredients} /> */}
-      {
-        isPrinting && <PrintShoppingList ingredients={ingredients} />
-        // ingredients.map(ingredient => (
-        //   <Box key={ingredient._id}>
-        //     <ShoppingListIngredient
-        //       ingredient={ingredient}
-        //       onChange={handleCheckedBox}
-        //       handleEditAmount={handleEditAmount}
-        //       handleRemoveIngredient={handleRemoveIngredient}
-        //       handleEditIngredient={handleEditIngredient}
-        //       defaultChecked={true}
-        //       textDecoration={"line-through"}
-        //     />
-        //   </Box>
-        // ))
-      }
     </Container>
   );
 };
