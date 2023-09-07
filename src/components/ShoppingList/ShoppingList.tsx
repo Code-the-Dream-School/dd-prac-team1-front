@@ -42,6 +42,7 @@ const ShoppingList = () => {
     onOpen: onOpenSendEmail,
     onClose: onCloseSendEmail
   } = useDisclosure();
+  const [isPrinting, setIsPrinting] = useState(false);
   const toast = useToast();
 
   const getIngredients = () => {
@@ -266,7 +267,7 @@ const ShoppingList = () => {
   //   pri.print();
   // };
   // const [isPrinting] = useMediaQuery("print");
-  const [isPrinting, setIsPrinting] = useState(false);
+
   return (
     <Container maxW="3xl">
       <Grid
