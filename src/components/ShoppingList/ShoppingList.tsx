@@ -10,8 +10,7 @@ import {
   Heading,
   Text,
   useDisclosure,
-  useToast,
-  useMediaQuery
+  useToast
 } from "@chakra-ui/react";
 import { IoAdd, IoTrashOutline } from "react-icons/io5";
 import { TbShare3 } from "react-icons/tb";
@@ -46,7 +45,6 @@ const ShoppingList = () => {
     onOpen: onOpenSendEmail,
     onClose: onCloseSendEmail
   } = useDisclosure();
-  const [isPrinting, setIsPrinting] = useState(false);
   const toast = useToast();
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -344,26 +342,34 @@ const ShoppingList = () => {
   };
 
   const print = () => {
-    setIsPrinting(true);
-    setTimeout(() => {
-      window.print();
-      setIsPrinting(false);
-    }, 0);
-  };
+    const printDiv = document.getElementById("printDiv");
+    if (!printDiv) return;
+    let printContents = printDiv.innerHTML;
 
-  // const print = () => {
-  //   let content = document.getElementById("content");
-  //   let pri = document?.getElementById("printShoppingList")?.contentWindow;
-  //   pri.document.open();
-  //   pri.document.write(content?.innerHTML);
-  //   pri.document.close();
-  //   pri.focus();
-  //   pri.print();
-  // };
-  // const [isPrinting] = useMediaQuery("print");
+    const pri = document.getElementById("ifmcontentstoprint");
+    if (!pri) return;
+    //@ts-ignore
+    var priW = pri.contentWindow;
+    priW.document.open();
+    priW.document.write(printContents);
+    priW.document.close();
+    priW.focus();
+    priW.print();
+  };
 
   return (
     <Container maxW="3xl">
+      {/* Iframe for printing content */}
+      <iframe
+        title="printer"
+        id="ifmcontentstoprint"
+        style={{ height: "0px", width: "0px", position: "absolute" }}></iframe>
+
+      {/* Div for printing content */}
+      <Box id="printDiv" display="none">
+        <PrintShoppingList ingredients={ingredients} />
+      </Box>
+
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap="2"
