@@ -286,9 +286,9 @@ const SingleRecipePage = () => {
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Add to shopping list"
+                  aria-label="Add to the shopping list"
                   icon={<GiShoppingCart />}
-                  title="add to shopping cart"
+                  title="add to the shopping cart"
                   onClick={onOpen}
                 />
                 <ModalForServings
