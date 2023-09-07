@@ -276,9 +276,9 @@ const SingleRecipePage = () => {
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Add to menu planner"
+                  aria-label="Go to the menu planner"
                   icon={<GiCalendar />}
-                  title="add to menu planner"
+                  title="go to the menu planner"
                   onClick={() => {
                     navigate("/planner");
                   }}
