@@ -36,6 +36,8 @@ const ResetPassword = () => {
   };
   const navigateToHome = () => {
     navigate("/");
+    setIsSended(false);
+    toast.closeAll();
   };
 
   const handleNewPassword = (e: any) => {
@@ -64,6 +66,7 @@ const ResetPassword = () => {
         setIsSended(true);
         e.target.reset();
         navigate("/login");
+        toast.closeAll();
       })
       .catch(error => {
         toast({
