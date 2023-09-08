@@ -61,6 +61,32 @@ export const searchAI = (search: string, values: Array<string>) => {
   );
 };
 
+export const forgotPassword = (email: object) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/auth/forget-password",
+    {
+      ...email
+    },
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+};
+export const resetPassword = (token: string, newPassword: object) => {
+  return axios.put(
+    `http://localhost:3000/api/v1/auth/reset-password/${token}`,
+    {
+      ...newPassword
+    },
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+};
 export const saveRecipe = (recipe: AIRecipe) => {
   console.log(recipe);
   return axios.post(
