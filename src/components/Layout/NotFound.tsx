@@ -37,8 +37,6 @@ const NotFound = () => {
                 <Heading
                   as="h3"
                   size="xl"
-                  // >
-                  //   <Text
                   textAlign="center"
                   fontSize={{ base: "25px", md: "30px" }}
                   ml="20"
@@ -46,7 +44,6 @@ const NotFound = () => {
                   color="blackAlpha.700">
                   Oops! Your desired recipe is off on a culinary adventure, and
                   our detectives are hot on the trail!
-                  {/* </Text> */}
                 </Heading>
               </Flex>
             </VStack>
