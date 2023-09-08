@@ -796,10 +796,10 @@ const Planner = () => {
                                             {(providedDraggable, snapshot) => (
                                               <div
                                                 onMouseEnter={() =>
-                                                  onMouseEnter(item.mealId)
+                                                  onMouseEnter(item.mealId!)
                                                 }
                                                 onMouseLeave={() =>
-                                                  onMouseLeave(item.mealId)
+                                                  onMouseLeave(item.mealId!)
                                                 }>
                                                 <Container
                                                   ref={
@@ -856,7 +856,7 @@ const Planner = () => {
                                                       </Text>
                                                     </Center>
                                                     {isHovering[
-                                                      item.mealId
+                                                      item.mealId!
                                                     ] && (
                                                       <IconButton
                                                         aria-label="Delete recipe"
@@ -875,7 +875,7 @@ const Planner = () => {
                                                         size="xs"
                                                         onClick={() =>
                                                           handleDelete(
-                                                            item.mealId
+                                                            item.mealId!
                                                           )
                                                         }
                                                       />
