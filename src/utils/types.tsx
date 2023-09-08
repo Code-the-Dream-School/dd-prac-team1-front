@@ -142,6 +142,8 @@ export type AnimationVariants = {
 };
 
 export type PlannerRecipe = {
+  uniqueKey: string;
+  mealSlot: any;
   id: string;
   name: string;
   image: string;
@@ -149,13 +151,42 @@ export type PlannerRecipe = {
   recipeImage: string;
   recipeName: string;
   sortOrder: number;
+  mealId: string,
+  recipeId: string,
 };
 
 export type Id = string;
 
 export type PlannerDays<PlannerRecipe> = {
-  [index: string]: {
-    sortOrder: number;
-    recipes: PlannerRecipe[];
+  [index: string]: { 
+    name?: string,
+    sortOrder: number; 
+    meals?: [string, string, string],
+    recipes: PlannerRecipe[],
   };
+};
+
+export type FetchedPlan = {
+  _id: string;
+  mealSlot: string;
+  dayOfWeek: string; 
+  recipeId: string; 
+  mealId?: string,
+};
+
+export type ErrorResponse = {
+  data: {
+    message?: string;
+    msg?: string;
+    error?: any;
+  }
+}
+
+export type Error = {
+  response?: ErrorResponse;
+  message?: string;
+};
+
+export type HoveringButtonState = {
+  [mealId: string]: boolean;
 };
