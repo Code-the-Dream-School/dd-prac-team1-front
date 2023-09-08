@@ -44,7 +44,6 @@ const ResetPassword = () => {
     e.preventDefault();
     const data = new FormData(e.target);
     const passwordObj = Object.fromEntries(data.entries());
-    console.log(passwordObj);
     if (!token) return;
     resetPassword(token, passwordObj)
       .then(response => {
