@@ -356,8 +356,13 @@ const ShoppingList = () => {
         alignItems="center"
         justifyContent="center">
         <GridItem colSpan={{ base: 12, sm: 9 }} w="100%">
-          <Heading ml="2" fontSize="2xl">
-            Shopping List
+          <Heading
+            fontSize={{
+              base: "xl",
+              md: "2xl",
+              lg: "3xl"
+            }}>
+            SHOPPING LIST
           </Heading>
         </GridItem>
         <GridItem colSpan={{ base: 4, sm: 1 }} w="100%">
