@@ -282,3 +282,17 @@ export const deleteMealPlan = (mealId: string) => {
     }
   });
 };
+
+
+export const sendEmail = (message: Object) => {
+  return axios.post(
+    "http://localhost:3000/api/v1/sendmail",
+    { ...message },
+        {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+  );
+};
