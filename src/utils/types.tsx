@@ -190,3 +190,11 @@ export type Error = {
 export type HoveringButtonState = {
   [mealId: string]: boolean;
 };
+
+export type TeamMember = {
+  name: string;
+  role: string;
+  imageUrl: string;
+  bio: string;
+  githubUrl: string;
+};

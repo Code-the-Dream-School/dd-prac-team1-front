@@ -26,8 +26,8 @@ const teamMembers = [
   {
     name: "Aigul Yedigeyeva",
     role: "Back-end team",
-    imageUrl: "/images/kitten.png",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    imageUrl: "/images/AygulYegideyeva.png",
+    bio: "Exploring full-stack coding with the zeal of a culinary enthusiast, I’m joyfully crafting digital innovations. Leveraging 15 years of experience in change-driving industry-leading companies, I’ve refined supply networks, enhanced marketing strategies, designed project blueprints, and introduced process innovations. The synergy of my full-stack knowledge and past experience opens boundless digital horizons.",
     githubUrl: "https://github.com/AigulY"
   },
   {
@@ -41,20 +41,20 @@ const teamMembers = [
     name: "Elena Gornovoy",
     role: "Front-end team",
     imageUrl: "/images/ElenaGornovoy.jpg",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bio: "An entry-level frontend developer with an interest in creating remarkable digital experiences that make a meaningful impact, I'm on a path deeply connected to the world of branding and user experience, where I understand the significance of every pixel and interaction.",
     githubUrl: "https://github.com/ElenaGor8"
   },
   {
     name: "Svetlana Beynik",
     role: "Front-end team",
-    imageUrl: "/images/SvetlanaBeynik.jpg",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    imageUrl: "/images/SvetlanaBeynik.png",
+    bio: "I am an enthusiastic and dedicated entry-level front-end developer with a passion for creating user-friendly and visually appealing websites. My goal is to contribute to innovative projects, continuously grow as a developer, and deliver solutions that engage and delight users.",
     githubUrl: "https://github.com/SvetlanaBeynik"
   },
   {
     name: "Rebekah Callari-Kaczmarczyk",
     role: "Mentor",
-    imageUrl: "/images/Rebekah Callari-Kaczmarczyk.jpeg",
+    imageUrl: "/images/Rebekah Callari-Kaczmarczyk.png",
     bio: "A software engineer who builds tools for data-driven decision making. Passionate about mentoring junior engineers, data visualization, and applied linguistics.",
     githubUrl: "https://github.com/rebekahcallkacz"
   },
@@ -62,15 +62,15 @@ const teamMembers = [
   {
     name: "Marcus Blanc",
     role: "Mentor",
-    imageUrl: "/images/kitten.png",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    imageUrl: "/images/MarcusBlanc.png",
+    bio: "A multifaceted software engineer whose work focuses on frontend development. My many passions center on creativity, such screenplay writing, running and obsessing over the latest TV shows & movies.",
     githubUrl: "https://github.com/mblanc2414"
   },
   {
     name: "Ekaterina Bondareva",
     role: "Mentor",
     imageUrl: "/images/EkaterinaBondareva.png",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bio: "A Full Stack Software Engineer and apprentice at Code The Dream (CTD), where she mentors students. With a Master's in Applied Computer Science and experience in finance management for international companies, she transitioned her career to pursue her coding dream. She's dedicated to CTD, volunteering, and continuous learning.",
     githubUrl: "https://github.com/Ekaterina-Bondareva"
   }
 ];
