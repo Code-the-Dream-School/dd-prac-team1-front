@@ -88,7 +88,10 @@ const ShoppingList = () => {
           );
           setTimeout(() => {
             if (ref.current) {
-              ref.current.scrollIntoView({ behavior: "smooth" });
+              ref.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              });
             }
           }, 200);
           setTimeout(() => {

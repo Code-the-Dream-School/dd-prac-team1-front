@@ -229,6 +229,8 @@ const SavedRecipes = () => {
         <GridItem
           colSpan={1}
           w="100%"
+          display="flex"
+          alignItems="flex-end"
           h={{
             base: "100",
             md: "120",
