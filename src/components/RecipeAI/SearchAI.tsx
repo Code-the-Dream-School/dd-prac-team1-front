@@ -3,11 +3,11 @@ import {
   Box,
   Button,
   Center,
-  Container,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
   Stack
 } from "@chakra-ui/react";
@@ -111,8 +111,8 @@ const SearchAI = () => {
   };
 
   return (
-    <Center>
-      <Container maxW="6xl">
+    <>
+      <Box w="100%" bg="brandGray" mt="5" p="5">
         <Box
           as="form"
           onSubmit={(event: { preventDefault: () => void }) => {
@@ -122,29 +122,25 @@ const SearchAI = () => {
             setIsLoading(true);
           }}>
           <FormControl isInvalid={error}>
-            <Flex
-              flexDirection={"column"}
-              justifyContent={"space-evenly"}
-              h={{ md: "25vh" }}>
-              <FormLabel
-                textAlign="center"
-                htmlFor="searchAI"
-                mt={{ base: 2, md: 0 }}>
-                Hi {name}, I'm Olivier! Do you want to try a new recipe?
+            <Flex flexDirection={"column"} gap="5" alignItems="center">
+              <FormLabel textAlign="center" htmlFor="searchAI">
+                <Heading size="md">
+                  Hi {name}, I'm Olivier! Do you want to try a new recipe?
+                </Heading>
               </FormLabel>
               <Input
+                w={{ base: "100%", md: "50%" }}
                 type="text"
                 size="md"
                 placeholder="Type ingredients or recipe title"
                 id="searchAI"
                 value={search}
                 focusBorderColor="green"
-                mb={{ base: 2, md: 0 }}
                 variant="outline"
                 onChange={event => setSearch(event.target.value)}
               />
               {error && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
-              <Stack>
+              <Stack w={{ base: "100%", md: "50%" }}>
                 <Select
                   isMulti
                   chakraStyles={chakraStyles}
@@ -156,25 +152,22 @@ const SearchAI = () => {
                 />
               </Stack>
               <Center>
-                <Button
-                  variant="solid"
-                  type="submit"
-                  mt={{ base: 2, md: 0 }}
-                  mb={{ base: 2, md: 0 }}
-                  isDisabled={isLoading}>
+                <Button variant="solid" type="submit" isDisabled={isLoading}>
                   GENERATE
                 </Button>
               </Center>
             </Flex>
           </FormControl>
         </Box>
+      </Box>
+      <Box p="5">
         {isLoading ? (
           <Loader text="Olivier is cooking your recipe" />
         ) : (
           recipe && <RecipeAI recipe={recipe} />
         )}
-      </Container>
-    </Center>
+      </Box>
+    </>
   );
 };
 

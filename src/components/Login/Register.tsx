@@ -11,7 +11,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -25,9 +26,8 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-
   const navigate = useNavigate();
-
+  const toast = useToast();
   const navigateToLogin = () => {
     navigate("/login");
   };
@@ -55,24 +55,44 @@ const Register = () => {
         }
       })
       .catch(error => {
-        if (error.response.data.msg.includes("already")) {
+        console.log(error);
+        if (error?.response?.data?.msg.includes("already")) {
           setErrorEmail("Account already exists");
+          return;
         }
-        if (error.response.data.msg.includes(8)) {
+        if (error?.response?.data?.msg.includes(8)) {
           setErrorPassword(error.response.data.msg);
+          return;
         }
         if (
-          error.response.data.msg.includes("format") &&
-          error.response.data.msg.includes(8)
+          error?.response?.data?.msg.includes("format") &&
+          error?.response?.data?.msg.includes(8)
         ) {
           setErrorEmail(
             "Please enter a valid email address in this format: name@example.com"
           );
           setErrorPassword("Password should be at least 8 characters long");
+          return;
         }
-        if (error.response.data.msg.includes("requests")) {
+        if (error?.response?.data?.msg.includes("requests")) {
           setErrorPassword(error.response.data.msg);
+          return;
         }
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error?.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
   return (

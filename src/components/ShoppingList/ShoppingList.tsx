@@ -27,7 +27,7 @@ import { SavedIngredient } from "../../utils/types";
 import ModalForNewIngredient from "./ModalForNewIngredient";
 import ModalForSendEmail from "./ModalForSendEmail";
 import ShoppingListIngredient from "./ShoppingListIngredient";
-
+import PrintShoppingList from "./PrintShoppingList";
 const ShoppingList = () => {
   const [ingredients, setIngredients] = useState<Array<SavedIngredient>>([]);
   const [checkedIngredientNames, setCheckedIngredientNames] = useState<
@@ -93,17 +93,17 @@ const ShoppingList = () => {
           }, 200);
           setTimeout(() => {
             setHighlightExistingIngredient("");
-          }, 3000);
+          }, 4000);
           toast({
             title: "",
             description: "",
             status: "success",
-            duration: 3000,
+            duration: 4000,
             isClosable: true,
             position: "top",
             render: () => (
               <>
-                <Box p="3" bg="green">
+                <Box p="7" bg="green" borderRadius="5">
                   {response.data.message}
                 </Box>
               </>
@@ -291,7 +291,7 @@ const ShoppingList = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 {response.data.message}
               </Box>
             </>
@@ -318,11 +318,34 @@ const ShoppingList = () => {
   };
 
   const print = () => {
-    window.print();
+    const printDiv = document.getElementById("printDiv");
+    if (!printDiv) return;
+    let printContents = printDiv.innerHTML;
+
+    const pri = document.getElementById("ifmcontentstoprint");
+    if (!pri) return;
+    //@ts-ignore
+    var priW = pri.contentWindow;
+    priW.document.open();
+    priW.document.write(printContents);
+    priW.document.close();
+    priW.focus();
+    priW.print();
   };
 
   return (
     <Container maxW="3xl">
+      {/* Iframe for printing content */}
+      <iframe
+        title="printer"
+        id="ifmcontentstoprint"
+        style={{ height: "0px", width: "0px", position: "absolute" }}></iframe>
+
+      {/* Div for printing content */}
+      <Box id="printDiv" display="none">
+        <PrintShoppingList ingredients={ingredients} />
+      </Box>
+
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap="2"

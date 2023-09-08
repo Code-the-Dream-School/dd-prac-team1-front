@@ -11,7 +11,7 @@ const chakraStyles: ChakraStylesConfig = {
   placeholder: provided => ({
     ...provided,
     position: "absolute",
-    marginTop: "-2",
+    marginTop: "0",
     fontSize: "xs"
   }),
   dropdownIndicator: () => ({
@@ -47,7 +47,7 @@ const MultipleCreatableSelectForm = ({ onChange }: OptionsProps) => (
         isMulti
         chakraStyles={chakraStyles}
         focusBorderColor="green"
-        placeholder='Type a tag, for ex. "fiest", and press ENTER'
+        placeholder={'Type a tag, for ex. "fiest", and press ENTER'}
         closeMenuOnSelect={false}
         onChange={onChange}
       />

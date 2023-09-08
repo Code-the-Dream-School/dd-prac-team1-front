@@ -112,14 +112,13 @@ export default function Layout() {
             width="95%"
             display="flex"
             flexDirection={{ base: "column", sm: "row" }}
-            justifyContent="space-between"
-            ml="1rem"
-            alignItems="center">
-            <Box ml={{ base: "-20", sm: "0" }}>
+            ml={{ base: "20px", sm: "1rem" }}
+            alignItems={{ base: "flex-start", sm: "center" }}>
+            <Box overflow="hidden">
               <Image
                 src="/images/Logo_Olivier.svg"
                 maxW="100%"
-                minWidth="150px"
+                minWidth={{ sm: "150px" }}
                 h="auto"
                 cursor="pointer"
                 onClick={() => {
@@ -127,49 +126,52 @@ export default function Layout() {
                 }}
               />
             </Box>
-            <HStack>
+            <Box ml={{ base: "-20", sm: "0" }}>
               <RecipeSearch />
-            </HStack>
-            <HStack
-              display={{ base: "none", lg: "flex" }}
-              justifyContent={"flex-end"}
-              spacing={20}>
-              <HStack
-                as={"nav"}
-                spacing={20}
-                display={{ base: "none", lg: "flex" }}
-                justifyContent={"flex-end"}>
-                <AnimatedUnderlineText
-                  href="/search-choice"
-                  isActive={location.pathname === "/search-choice"}>
-                  ADD RECIPE
-                </AnimatedUnderlineText>
-                <AnimatedUnderlineText
-                  href="/saved-recipes"
-                  isActive={location.pathname === "/saved-recipes"}>
-                  SAVED
-                </AnimatedUnderlineText>
-                <AnimatedUnderlineText
-                  href="/planner"
-                  isActive={location.pathname === "/planner"}>
-                  PLANNER
-                </AnimatedUnderlineText>
-                <AnimatedUnderlineText
-                  href="/shopping-list"
-                  isActive={location.pathname === "/shopping-list"}>
-                  SHOPPING
-                </AnimatedUnderlineText>
-                <AnimatedUnderlineText onClick={handleLogout}>
-                  LOGOUT
-                </AnimatedUnderlineText>
+            </Box>
+            <HStack display={{ base: "none", lg: "flex" }} flexGrow={1}>
+              <HStack as={"nav"} flexGrow={1}>
+                <Flex justifyContent="center" flexGrow={1}>
+                  <AnimatedUnderlineText
+                    href="/search-choice"
+                    isActive={location.pathname === "/search-choice"}>
+                    ADD RECIPE
+                  </AnimatedUnderlineText>
+                </Flex>
+                <Flex justifyContent="center" flexGrow={1}>
+                  <AnimatedUnderlineText
+                    href="/saved-recipes"
+                    isActive={location.pathname === "/saved-recipes"}>
+                    SAVED
+                  </AnimatedUnderlineText>
+                </Flex>
+                <Flex justifyContent="center" flexGrow={1}>
+                  <AnimatedUnderlineText
+                    href="/planner"
+                    isActive={location.pathname === "/planner"}>
+                    PLANNER
+                  </AnimatedUnderlineText>
+                </Flex>
+                <Flex justifyContent="center" flexGrow={1}>
+                  <AnimatedUnderlineText
+                    href="/shopping-list"
+                    isActive={location.pathname === "/shopping-list"}>
+                    SHOPPING
+                  </AnimatedUnderlineText>
+                </Flex>
+                <Flex justifyContent="center" flexGrow={1}>
+                  <AnimatedUnderlineText onClick={handleLogout}>
+                    LOGOUT
+                  </AnimatedUnderlineText>
+                </Flex>
               </HStack>
             </HStack>
           </HStack>
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ base: "flex", lg: "none" }}>
-            <Stack as={"nav"} spacing={4} onClick={onClose}>
+          <Box pb="4" display="flex">
+            <Stack as={"nav"} spacing="4" onClick={onClose}>
               <NavLink to="/search-choice">ADD RECIPE</NavLink>
               <NavLink to="/saved-recipes">SAVED</NavLink>
               <NavLink to="/planner">PLANNER</NavLink>

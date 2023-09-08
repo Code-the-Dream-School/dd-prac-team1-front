@@ -10,7 +10,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +23,8 @@ const Login = () => {
   const [type, setType] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
   const [errorOccur, setErrorOccur] = useState(false);
-
+  const toast = useToast();
   const navigate = useNavigate();
-
   const navigateToRegister = () => {
     navigate("/register");
   };
@@ -50,9 +50,30 @@ const Login = () => {
         }
       })
       .catch(error => {
-        if (error) {
+        console.log(error);
+        if (error?.response?.data?.msg.includes("Invalid password")) {
           setErrorOccur(true);
+          return;
         }
+        if (error?.response?.data?.msg.includes("Invalid email")) {
+          setErrorOccur(true);
+          return;
+        }
+        toast({
+          title: "Error",
+          description: `${
+            error?.response?.data?.msg ||
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.response?.data ||
+            error?.message ||
+            "unknown error"
+          }`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top"
+        });
       });
   };
 

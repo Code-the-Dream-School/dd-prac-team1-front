@@ -47,6 +47,7 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
+        console.log(response);
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
       })
@@ -131,9 +132,9 @@ const SingleRecipePage = () => {
           position: "top",
           render: () => (
             <>
-              <Box p="3" bg="green">
+              <Box p="3" bg="green" borderRadius="5">
                 <Flex flexDirection="column">
-                  Your recipe was added to the shopping list
+                  Your recipe has been added to the shopping list
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -190,7 +191,7 @@ const SingleRecipePage = () => {
     }
   ];
   return (
-    <Container maxW="5xl">
+    <Container maxW="5xl" mb="5">
       <Grid
         templateColumns={{
           base: "repeat(4, 1fr)",
@@ -270,9 +271,9 @@ const SingleRecipePage = () => {
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Add to menu planner"
+                  aria-label="Go to the menu planner"
                   icon={<GiCalendar />}
-                  title="add to menu planner"
+                  title="go to the menu planner"
                   onClick={() => {
                     navigate("/planner");
                   }}
@@ -280,9 +281,9 @@ const SingleRecipePage = () => {
                 <IconButton
                   size="lg"
                   variant="outline"
-                  aria-label="Add to shopping list"
+                  aria-label="Add to the shopping list"
                   icon={<GiShoppingCart />}
-                  title="add to shopping cart"
+                  title="add to the shopping cart"
                   onClick={onOpen}
                 />
                 <ModalForServings

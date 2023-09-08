@@ -47,7 +47,14 @@ const EditRecipe = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
-        setRecipe(response.data);
+        if (response.data.recipeServings === 0) {
+          setRecipe({
+            ...response.data,
+            recipeServings: 1
+          });
+        } else {
+          setRecipe(response.data);
+        }
         setEditSrcImage(response.data.recipeImage);
         setIngredients(
           response.data.recipeIngredients.map(
@@ -86,7 +93,15 @@ const EditRecipe = () => {
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
-    editSingleRecipe(recipeId, recipe)
+    console.log(recipe);
+    let newRecipe = { ...recipe };
+    if (newRecipe.recipeServings === 0) {
+      newRecipe = {
+        ...newRecipe,
+        recipeServings: 1
+      };
+    }
+    editSingleRecipe(recipeId, newRecipe)
       .then(response => {
         navigate(`/saved-recipes/${recipeId}`);
       })
@@ -383,8 +398,9 @@ const EditRecipe = () => {
                     <InputGroup w={{ base: "95%", md: "70%" }}>
                       <Input
                         size="sm"
+                        type="number"
                         value={recipe.recipeServings || ""}
-                        min="0"
+                        min="1"
                         onChange={e => {
                           setRecipe({
                             ...recipe,
