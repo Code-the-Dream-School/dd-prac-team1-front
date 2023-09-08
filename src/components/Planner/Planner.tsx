@@ -91,12 +91,16 @@ const Planner = () => {
 
   const [isHovering, setIsHovering] = useState<HoveringButtonState>({});
 
-  const onMouseEnter = (mealId: string) => {
-    setIsHovering({ ...isHovering, [mealId]: true });
+  const onMouseEnter = (mealId: string | null) => {
+    if (mealId) {
+      setIsHovering({ ...isHovering, [mealId]: true });
+    }
   };
 
-  const onMouseLeave = (mealId: string) => {
-    setIsHovering({ ...isHovering, [mealId]: false });
+  const onMouseLeave = (mealId: string | null) => {
+    if (mealId) {
+      setIsHovering({ ...isHovering, [mealId]: false });
+    }
   };
   const [recipes, setRecipes] = useState<Array<SavedRecipe>>([]);
   const [search, setSearch] = useState("");
@@ -796,10 +800,10 @@ const Planner = () => {
                                             {(providedDraggable, snapshot) => (
                                               <div
                                                 onMouseEnter={() =>
-                                                  onMouseEnter(item.mealId!)
+                                                  onMouseEnter(item.mealId)
                                                 }
                                                 onMouseLeave={() =>
-                                                  onMouseLeave(item.mealId!)
+                                                  onMouseLeave(item.mealId)
                                                 }>
                                                 <Container
                                                   ref={
@@ -855,31 +859,34 @@ const Planner = () => {
                                                         {item.name}
                                                       </Text>
                                                     </Center>
-                                                    {isHovering[
-                                                      item.mealId!
-                                                    ] && (
-                                                      <IconButton
-                                                        aria-label="Delete recipe"
-                                                        icon={<CloseIcon />}
-                                                        style={{
-                                                          position: "absolute",
-                                                          top: "-3.5px",
-                                                          right: "-3.5px",
-                                                          opacity: isHovering
-                                                            ? 1
-                                                            : 0,
-                                                          transition:
-                                                            "opacity 0.3s ease-in-out"
-                                                        }}
-                                                        mr="0rem"
-                                                        size="xs"
-                                                        onClick={() =>
-                                                          handleDelete(
-                                                            item.mealId!
-                                                          )
-                                                        }
-                                                      />
-                                                    )}
+                                                    {item.mealId &&
+                                                      isHovering[
+                                                        item.mealId
+                                                      ] && (
+                                                        <IconButton
+                                                          aria-label="Delete recipe"
+                                                          icon={<CloseIcon />}
+                                                          style={{
+                                                            position:
+                                                              "absolute",
+                                                            top: "-3.5px",
+                                                            right: "-3.5px",
+                                                            opacity: isHovering
+                                                              ? 1
+                                                              : 0,
+                                                            transition:
+                                                              "opacity 0.3s ease-in-out"
+                                                          }}
+                                                          mr="0rem"
+                                                          size="xs"
+                                                          onClick={() =>
+                                                            handleDelete(
+                                                              // Checked that this exists before rendering this component
+                                                              item.mealId!
+                                                            )
+                                                          }
+                                                        />
+                                                      )}
                                                   </Flex>
                                                 </Container>
                                               </div>
