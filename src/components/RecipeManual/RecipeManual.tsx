@@ -267,11 +267,10 @@ const RecipeManual = () => {
                 </Flex>
               </GridItem>
               <GridItem colSpan={{ base: 10, md: 7 }}>
-                {/* <Center> */}
                 <FormControl isRequired>
                   <Textarea
                     size="lg"
-                    id="instuctions"
+                    id="instructions"
                     name="recipeInstructions"
                     value={recipe.recipeInstructions}
                     placeholder="Instructions how to cook the dish"
@@ -284,7 +283,6 @@ const RecipeManual = () => {
                     }}
                   />
                 </FormControl>
-                {/* </Center> */}
               </GridItem>
 
               <GridItem colSpan={{ base: 10, md: 3 }}>
