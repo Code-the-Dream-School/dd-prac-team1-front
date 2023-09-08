@@ -12,7 +12,9 @@ import {
   Flex,
   Box,
   Button,
-  Heading
+  Heading,
+  FormControl,
+  Input
 } from "@chakra-ui/react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
@@ -31,12 +33,12 @@ import {
   HoveringButtonState,
   Id,
   PlannerDays,
-  PlannerRecipe
+  PlannerRecipe,
+  SavedRecipe
 } from "../../utils/types";
 import { CloseIcon } from "@chakra-ui/icons";
 import { GiShoppingCart } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
-
 const Planner = () => {
   const [days, setDays] = useState<PlannerDays<PlannerRecipe>>({
     savedRecipes: {
@@ -89,14 +91,19 @@ const Planner = () => {
 
   const [isHovering, setIsHovering] = useState<HoveringButtonState>({});
 
-  const onMouseEnter = (mealId: string) => {
-    setIsHovering({ ...isHovering, [mealId]: true });
+  const onMouseEnter = (mealId: string | null) => {
+    if (mealId) {
+      setIsHovering({ ...isHovering, [mealId]: true });
+    }
   };
 
-  const onMouseLeave = (mealId: string) => {
-    setIsHovering({ ...isHovering, [mealId]: false });
+  const onMouseLeave = (mealId: string | null) => {
+    if (mealId) {
+      setIsHovering({ ...isHovering, [mealId]: false });
+    }
   };
-
+  const [recipes, setRecipes] = useState<Array<SavedRecipe>>([]);
+  const [search, setSearch] = useState("");
   const borderColor = "2px solid #d7da5e";
 
   const navigate = useNavigate();
@@ -121,13 +128,32 @@ const Planner = () => {
     },
     [toast]
   );
+  // derivative state to filter recipe by search parameters
+  const searchedRecipes = recipes.filter((recipe: SavedRecipe) => {
+    const searchItems = search
+      .trim()
+      .toLowerCase()
+      .split(/,| /i)
+      .filter(el => el !== "");
+    const nameMatch = searchItems.some(param =>
+      recipe.recipeName.toLowerCase().includes(param)
+    );
+    const ingredientMatch = recipe.recipeIngredients.some(ingredient =>
+      searchItems.some(param =>
+        ingredient.ingredientName.toLowerCase().includes(param)
+      )
+    );
+
+    return nameMatch || ingredientMatch;
+  });
 
   useEffect(() => {
     getRecipe()
       .then(response => {
-        const fetchedRecipes = response.data.recipes;
-        const savedRecipesItems = fetchedRecipes.map(
+        setRecipes(response.data.recipes);
+        const savedRecipesItems = response.data.recipes.map(
           (recipe: PlannerRecipe, index: number) => ({
+            ...recipe,
             id: recipe._id,
             name: recipe.recipeName,
             image: recipe.recipeImage,
@@ -138,13 +164,46 @@ const Planner = () => {
         );
         setDays(prevDays => ({
           ...prevDays,
-          savedRecipes: { ...prevDays.savedRecipes, recipes: savedRecipesItems }
+          savedRecipes: {
+            ...prevDays.savedRecipes,
+            recipes: savedRecipesItems
+          }
         }));
       })
       .catch(error => {
         showErrorToast(error);
       });
   }, [showErrorToast]);
+
+  //updating list of recipes according to search
+  useEffect(() => {
+    const filteredRecipes = () => {
+      if (search === "") {
+        return recipes;
+      } else {
+        return searchedRecipes;
+      }
+    };
+    const savedRecipesItems: PlannerRecipe[] = filteredRecipes().map(
+      (recipe: SavedRecipe, index: number) => ({
+        ...recipe,
+        id: recipe._id,
+        name: recipe.recipeName,
+        image: recipe.recipeImage,
+        sortOrder: index,
+        mealId: null,
+        mealSlot: null
+      })
+    );
+    setDays(prevDays => ({
+      ...prevDays,
+      savedRecipes: {
+        ...prevDays.savedRecipes,
+        recipes: savedRecipesItems
+      }
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   useEffect(() => {
     // exit if no saved recipes are available
@@ -172,7 +231,7 @@ const Planner = () => {
                 mealId: fetchedPlan._id,
                 mealSlot: fetchedPlan.mealSlot
               };
-              // Initialize array 
+              // Initialize array
               if (!updatedDays[dayOfWeek].recipes) {
                 updatedDays[dayOfWeek].recipes = [];
               }
@@ -202,7 +261,6 @@ const Planner = () => {
   }, [days.savedRecipes, showErrorToast]);
 
   const onDragEnd = (result: DropResult) => {
-
     //destructuring result object to obtain source and destination
     const { source, destination } = result;
 
@@ -272,7 +330,6 @@ const Planner = () => {
         dayOfWeek: destDayId,
         mealSlot: destMealSlot
       };
-
       createMealPlan(data)
         .then(response => {
           const newMealId = response.data.newMealPlan._id;
@@ -296,9 +353,8 @@ const Planner = () => {
         .catch(error => {
           showErrorToast(error);
         });
-    //dragging between different meal slots 
+      //dragging between different meal slots
     } else if (sourceId !== "savedRecipes") {
-
       //splitting IDs to get the day and meal slot
       const [sourceDayId, sourceMealSlot] = sourceId.split("-");
       const [destDayId, destMealSlot] = destinationId.split("-");
@@ -345,8 +401,8 @@ const Planner = () => {
       if (!mealExistsInSlot) {
         movedItem.mealSlot = destMealSlot;
 
-      //if the source and destination days are the same 
-      //insert moved item into the same day but at the new slot
+        //if the source and destination days are the same
+        //insert moved item into the same day but at the new slot
         if (sourceDayId === destDayId) {
           sourceDay.splice(destination.index, 0, movedItem);
 
@@ -407,7 +463,10 @@ const Planner = () => {
 
               //adding the new item if not already present
               if (destinationDayIndex === -1) {
-                updatedDestinationDay = [...updatedDestinationDay, updatedMealPlan];
+                updatedDestinationDay = [
+                  ...updatedDestinationDay,
+                  updatedMealPlan
+                ];
               }
 
               return {
@@ -477,6 +536,7 @@ const Planner = () => {
       //deleting all meals in the meal plan one by one
       if (dayId !== "savedRecipes" && days[dayId]?.recipes) {
         days[dayId].recipes.forEach((recipe: PlannerRecipe) => {
+          if (recipe.mealId === null) return;
           handleDelete(recipe.mealId);
         });
       }
@@ -488,14 +548,16 @@ const Planner = () => {
     //we add by recipeIds so we need to extract them and send one by one
     const allRecipes = Object.values(days).flatMap(day => day.recipes);
     //we need only those that have also mealId so that we do not count recipes in savedRecipes
-    const recipesWithMealId = allRecipes.filter(recipe => recipe.mealId);
-    const recipeIds = recipesWithMealId.map(recipe => recipe.id);
-
+    const recipesWithMeal = allRecipes.filter(recipe => recipe.mealId);
+    const recipeIdAndServings = recipesWithMeal.map(recipe => {
+      return [recipe.id, recipe.recipeServings];
+    });
     let allSuccessful = true;
-
-    for (const id of recipeIds) {
+    for (const idAndServings of recipeIdAndServings) {
+      let id = idAndServings[0].toString();
+      let servingSize = Number(idAndServings[1]);
       try {
-        await saveRecipeIngredientsToShoppingList(id);
+        await saveRecipeIngredientsToShoppingList(id, servingSize);
       } catch (error) {
         allSuccessful = false;
         showErrorToast(error as Error);
@@ -509,35 +571,65 @@ const Planner = () => {
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result)}>
       <Grid
-        h="120px"
+        mt="5"
         templateColumns={{
           base: "repeat(7, 1fr)",
           lg: "repeat(8, 1fr)"
-        }}
-        templateRows={{
-          base: "repeat(9, 1fr)",
-          md: "repeat(2, 1fr)",
-          sm: "repeat(3, 1fr)"
-        }}
-        gap={{ base: 0 }}
-        gridAutoRows="1fr">
-        <GridItem colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}></GridItem>
+        }}>
         <GridItem
           colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bg="brandGray"
+          p={{ sm: "3" }}>
+          <Heading>Menu Planner</Heading>
+        </GridItem>
+        <GridItem
+          colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}
+          display="flex"
+          alignItems="center"
+          flexDirection={{ base: "column-reverse", sm: "row" }}
           bg="brandGray"
           p="3">
-          <Flex justifyContent="flex-end" alignItems="center">
-            <Heading mr="10">Menu Planner</Heading>
+          <Flex alignItems="center" mb={{ sm: "3" }} flexGrow={1}>
+            <FormControl ml="5">
+              <Input
+                size="xs"
+                width="auto"
+                overflow="hidden"
+                type="text"
+                placeholder="Enter name/ingredients"
+                id="search"
+                variant="outline"
+                value={search}
+                onChange={event => setSearch(event.target.value)}
+              />
+              <IconButton
+                aria-label="Cancel search"
+                icon={<CloseIcon />}
+                size="xs"
+                ml="2"
+                onClick={() => {
+                  setSearch("");
+                }}
+              />
+            </FormControl>
+          </Flex>
+          <Flex
+            justifyContent={{ base: "center", sm: "flex-end" }}
+            gap={{ md: "5" }}
+            pb="3"
+            alignItems="center">
             <Tooltip
               label="Add ingredients to the shopping list"
               aria-label="A tooltip"
               bg="green"
               color="black"
               fontSize="sm"
-              p={1}
               placement="top-start">
               <IconButton
-                mr="10"
+                mr={{ base: "0", sm: "10" }}
                 _hover={{ bg: "none", transform: "scale(1.2)" }}
                 transition="transform 0.2s ease-in-out"
                 size="xl"
@@ -548,7 +640,10 @@ const Planner = () => {
                 onClick={addMealsToShoppingList}
               />
             </Tooltip>
-            <Button mr="5" onClick={deleteAllMeals}>
+            <Button
+              mr={{ base: "0", sm: "5" }}
+              overflow="hidden"
+              onClick={deleteAllMeals}>
               Clear all
             </Button>
           </Flex>
@@ -597,7 +692,8 @@ const Planner = () => {
                     {...provided.droppableProps}>
                     {dayId === "savedRecipes" &&
                       days[dayId].recipes.map(
-                        (item: PlannerRecipe, index: number) => (
+                        (item: PlannerRecipe, index: number) => {
+                          return (
                             <Draggable
                               key={`${dayId}-${item.id}`}
                               draggableId={`${dayId}-${item.id}`}
@@ -642,7 +738,8 @@ const Planner = () => {
                                 </Container>
                               )}
                             </Draggable>
-                          )
+                          );
+                        }
                       )}
                     <GridItem
                       key={index}
@@ -652,6 +749,9 @@ const Planner = () => {
                       p="2"
                       color="brandGray"
                       fontSize="20"
+                      style={
+                        dayId === "savedRecipes" ? { display: "none" } : {}
+                      }
                       mb="4">
                       {days[dayId]?.name}
                     </GridItem>
@@ -760,31 +860,34 @@ const Planner = () => {
                                                         {item.name}
                                                       </Text>
                                                     </Center>
-                                                    {isHovering[
-                                                      item.mealId
-                                                    ] && (
-                                                      <IconButton
-                                                        aria-label="Delete recipe"
-                                                        icon={<CloseIcon />}
-                                                        style={{
-                                                          position: "absolute",
-                                                          top: "-3.5px",
-                                                          right: "-3.5px",
-                                                          opacity: isHovering
-                                                            ? 1
-                                                            : 0,
-                                                          transition:
-                                                            "opacity 0.3s ease-in-out"
-                                                        }}
-                                                        mr="0rem"
-                                                        size="xs"
-                                                        onClick={() =>
-                                                          handleDelete(
-                                                            item.mealId
-                                                          )
-                                                        }
-                                                      />
-                                                    )}
+                                                    {item.mealId &&
+                                                      isHovering[
+                                                        item.mealId
+                                                      ] && (
+                                                        <IconButton
+                                                          aria-label="Delete recipe"
+                                                          icon={<CloseIcon />}
+                                                          style={{
+                                                            position:
+                                                              "absolute",
+                                                            top: "-3.5px",
+                                                            right: "-3.5px",
+                                                            opacity: isHovering
+                                                              ? 1
+                                                              : 0,
+                                                            transition:
+                                                              "opacity 0.3s ease-in-out"
+                                                          }}
+                                                          mr="0rem"
+                                                          size="xs"
+                                                          onClick={() =>
+                                                            handleDelete(
+                                                              // Checked that this exists before rendering this component
+                                                              item.mealId!
+                                                            )
+                                                          }
+                                                        />
+                                                      )}
                                                   </Flex>
                                                 </Container>
                                               </div>

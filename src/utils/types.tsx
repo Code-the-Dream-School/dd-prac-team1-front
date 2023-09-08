@@ -141,8 +141,8 @@ export type AnimationVariants = {
   };
 };
 
-export type PlannerRecipe = {
-  uniqueKey: string;
+export interface PlannerRecipe extends SavedRecipe {
+  uniqueKey?: string;
   mealSlot: any;
   id: string;
   name: string;
@@ -151,27 +151,27 @@ export type PlannerRecipe = {
   recipeImage: string;
   recipeName: string;
   sortOrder: number;
-  mealId: string,
-  recipeId: string,
-};
+  mealId: string | null;
+  recipeId?: string;
+}
 
 export type Id = string;
 
 export type PlannerDays<PlannerRecipe> = {
-  [index: string]: { 
-    name?: string,
-    sortOrder: number; 
-    meals?: [string, string, string],
-    recipes: PlannerRecipe[],
+  [index: string]: {
+    name?: string;
+    sortOrder: number;
+    meals?: [string, string, string];
+    recipes: PlannerRecipe[];
   };
 };
 
 export type FetchedPlan = {
-  _id: string;
+  _id: string | null;
   mealSlot: string;
-  dayOfWeek: string; 
-  recipeId: string; 
-  mealId?: string,
+  dayOfWeek: string;
+  recipeId: string;
+  mealId?: string;
 };
 
 export type ErrorResponse = {
@@ -179,8 +179,8 @@ export type ErrorResponse = {
     message?: string;
     msg?: string;
     error?: any;
-  }
-}
+  };
+};
 
 export type Error = {
   response?: ErrorResponse;
