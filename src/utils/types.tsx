@@ -1,5 +1,3 @@
-import SavedRecipes from "../components/SavedRecipes/SavedRecipes";
-
 export type AIIngredient = {
   name: string;
   quantity: string;
