@@ -77,7 +77,6 @@ const RecipeManual = () => {
   const toast = useToast();
 
   const saveRecipe = () => {
-    console.log(recipe);
     let newRecipe = { ...recipe };
     if (newRecipe.recipeServings === 0) {
       newRecipe = {

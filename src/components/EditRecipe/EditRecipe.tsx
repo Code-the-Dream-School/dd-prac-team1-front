@@ -93,7 +93,6 @@ const EditRecipe = () => {
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
-    console.log(recipe);
     let newRecipe = { ...recipe };
     if (newRecipe.recipeServings === 0) {
       newRecipe = {
