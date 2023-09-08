@@ -532,6 +532,7 @@ const Planner = () => {
       //deleting all meals in the meal plan one by one
       if (dayId !== "savedRecipes" && days[dayId]?.recipes) {
         days[dayId].recipes.forEach((recipe: PlannerRecipe) => {
+          if (recipe.mealId === null) return;
           handleDelete(recipe.mealId);
         });
       }
