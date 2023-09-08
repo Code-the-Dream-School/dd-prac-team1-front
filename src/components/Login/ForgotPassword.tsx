@@ -20,9 +20,13 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate("/login");
+    setIsSended(false);
+    toast.closeAll();
   };
   const navigateToHome = () => {
     navigate("/");
+    setIsSended(false);
+    toast.closeAll();
   };
 
   const handleResetEmail = (e: any) => {

@@ -48,12 +48,10 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     getSingleRecipe(recipeId)
       .then(response => {
-        console.log(response);
         setRecipe(response.data);
         setServingSize(response.data.recipeServings);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -84,7 +82,6 @@ const SingleRecipePage = () => {
         navigate("/saved-recipes");
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -126,7 +123,6 @@ const SingleRecipePage = () => {
     if (recipeId === undefined) return;
     saveRecipeIngredientsToShoppingList(recipeId, servings)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -169,8 +165,6 @@ const SingleRecipePage = () => {
           isClosable: true,
           position: "top"
         });
-
-        console.log(error);
       });
   };
 

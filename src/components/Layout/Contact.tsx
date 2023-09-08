@@ -61,14 +61,7 @@ const Contact = () => {
       });
   };
   return (
-    <Grid
-      templateColumns="repeat(2, 1fr)"
-      gap={6}
-      p="5"
-      borderRadius="lg"
-      h={{
-        md: "calc(100vh - 55px - 70px)"
-      }}>
+    <Grid templateColumns="repeat(2, 1fr)" gap={6} p="5" borderRadius="lg">
       <GridItem colSpan={{ base: 2, md: 1 }}>
         <Box
           as="form"
@@ -81,7 +74,7 @@ const Contact = () => {
             divider={<StackDivider />}
             direction="column"
             w={{ md: "70%" }}
-            marginY="7">
+            marginY={{ base: "7", md: "10" }}>
             <Box>
               <Heading>Contact</Heading>
               <Text pt="2" fontSize="sm">
@@ -91,7 +84,7 @@ const Contact = () => {
               </Text>
             </Box>
             <Box>
-              <FormControl isRequired>
+              <FormControl marginY={{ md: "3" }} isRequired>
                 <FormLabel>Name</FormLabel>
                 <Input
                   variant={"unstyled"}
@@ -103,7 +96,7 @@ const Contact = () => {
               </FormControl>
             </Box>
             <Box>
-              <FormControl isRequired>
+              <FormControl marginY={{ md: "3" }} isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
                   variant={"unstyled"}
@@ -115,7 +108,7 @@ const Contact = () => {
               </FormControl>
             </Box>
             <Box>
-              <FormControl isRequired>
+              <FormControl marginY={{ md: "3" }} isRequired>
                 <FormLabel>Message</FormLabel>
                 <Textarea
                   name="message"
@@ -143,11 +136,7 @@ const Contact = () => {
         backgroundSize="cover"
         backgroundRepeat="no-repeat"
         borderRadius="lg"
-        h={{
-          base: "50vh",
-          sm: "50vh",
-          md: "calc(100vh - 55px - 110px)"
-        }}
+        minH="50vh"
       />
     </Grid>
   );

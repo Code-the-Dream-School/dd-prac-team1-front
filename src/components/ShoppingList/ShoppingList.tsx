@@ -51,12 +51,9 @@ const ShoppingList = () => {
   const getIngredients = () => {
     getIngredientsFromShoppingList()
       .then(response => {
-        console.log(response);
-
         setIngredients(response.data.ingredients);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -81,7 +78,6 @@ const ShoppingList = () => {
   const handleIngredientAdd = (newIngredient: SavedIngredient) => {
     addIngredientToShoppingList(newIngredient)
       .then(response => {
-        console.log(response);
         if (
           response.data.message.includes(
             "Ingredient already exists in shopping list"
@@ -92,8 +88,10 @@ const ShoppingList = () => {
           );
           setTimeout(() => {
             if (ref.current) {
-              console.log("REF assigned");
-              ref.current.scrollIntoView({ behavior: "smooth" });
+              ref.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              });
             }
           }, 200);
           setTimeout(() => {
@@ -118,7 +116,6 @@ const ShoppingList = () => {
         getIngredients();
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -160,20 +157,15 @@ const ShoppingList = () => {
 
   const handleEditIngredient = (e: any) => {
     const ingredientName = e.target.name;
-    console.log(ingredients);
     const editedIngredient = ingredients.filter(
       ingredient => ingredientName === ingredient.ingredientName
     );
     const newIngredient = editedIngredient.pop();
-    console.log(newIngredient);
     if (newIngredient === undefined) return;
     editAnIngredientFromShoppingList(newIngredient)
-      .then(response => {
-        console.log(response);
-      })
+      .then(response => {})
       .catch(error => {
         getIngredients();
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -193,7 +185,6 @@ const ShoppingList = () => {
   };
 
   const handleCheckedBox = (e: any) => {
-    console.log(e);
     if (e.target.checked) {
       setCheckedIngredientNames(prevName => [...prevName, e.target.name]);
     } else {
@@ -216,13 +207,9 @@ const ShoppingList = () => {
     checked.forEach((ingredient, index) => {
       setTimeout(() => {
         const ingredientName = ingredient.ingredientName;
-        console.log(ingredientName);
         deleteAnIngredientFromShoppingList(ingredientName)
-          .then(response => {
-            console.log(response);
-          })
+          .then(response => {})
           .catch(error => {
-            console.log(error);
             toast({
               title: "Error",
               description: `${
@@ -241,21 +228,18 @@ const ShoppingList = () => {
           });
       }, 250 * index);
     });
-    console.log(checked);
     setIngredients(unChecked);
   };
 
   const handleRemoveIngredient = (ingredientName: string) => {
     deleteAnIngredientFromShoppingList(ingredientName)
       .then(response => {
-        console.log(response);
         const newIngredients = ingredients.filter(ingredient => {
           return ingredientName !== ingredient.ingredientName;
         });
         setIngredients(newIngredients);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -277,11 +261,9 @@ const ShoppingList = () => {
   const handleRemoveIngredients = () => {
     deleteAllShoppingList()
       .then(response => {
-        console.log(response);
         setIngredients([]);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -301,10 +283,8 @@ const ShoppingList = () => {
   };
 
   const share = (email: string) => {
-    console.log(email);
     shareShoppingList(email)
       .then(response => {
-        console.log(response);
         toast({
           title: "",
           description: "",
@@ -322,7 +302,6 @@ const ShoppingList = () => {
         });
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -377,8 +356,13 @@ const ShoppingList = () => {
         alignItems="center"
         justifyContent="center">
         <GridItem colSpan={{ base: 12, sm: 9 }} w="100%">
-          <Heading ml="2" fontSize="2xl">
-            Shopping List
+          <Heading
+            fontSize={{
+              base: "xl",
+              md: "2xl",
+              lg: "3xl"
+            }}>
+            SHOPPING LIST
           </Heading>
         </GridItem>
         <GridItem colSpan={{ base: 4, sm: 1 }} w="100%">

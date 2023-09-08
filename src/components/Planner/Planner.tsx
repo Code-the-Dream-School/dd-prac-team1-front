@@ -583,7 +583,14 @@ const Planner = () => {
           justifyContent="center"
           bg="brandGray"
           p={{ sm: "3" }}>
-          <Heading>Menu Planner</Heading>
+          <Heading
+            fontSize={{
+              base: "xl",
+              md: "2xl",
+              lg: "3xl"
+            }}>
+            MENU PLANNER
+          </Heading>
         </GridItem>
         <GridItem
           colSpan={{ base: 7, sm: 7, md: 8, lg: 8, xl: 8 }}

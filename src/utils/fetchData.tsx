@@ -88,7 +88,6 @@ export const resetPassword = (token: string, newPassword: object) => {
   );
 };
 export const saveRecipe = (recipe: AIRecipe) => {
-  console.log(recipe);
   return axios.post(
     "http://localhost:3000/api/v1/recipes/add-ai",
     {
@@ -204,13 +203,9 @@ export const addIngredientToShoppingList = (ingredient: SavedIngredient) => {
 export const editAnIngredientFromShoppingList = (
   ingredient: SavedIngredient
 ) => {
-  console.log(ingredient);
   const ingredientName = ingredient.ingredientName;
   const ingredientAmount = ingredient.ingredientAmount;
-  console.log(ingredientName);
   const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
-  console.log(uri);
-  console.log(encodeURI(uri));
   return axios.put(
     encodeURI(uri),
     { ingredientAmount: ingredientAmount },
@@ -225,8 +220,6 @@ export const editAnIngredientFromShoppingList = (
 
 export const deleteAnIngredientFromShoppingList = (ingredientName: string) => {
   const uri = `http://localhost:3000/api/v1/shopping-list/${ingredientName}`;
-  console.log(uri);
-  console.log(encodeURI(uri));
   return axios.delete(encodeURI(uri), {
     headers: {
       "Content-Type": "application/json",

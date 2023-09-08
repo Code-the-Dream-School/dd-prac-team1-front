@@ -36,13 +36,14 @@ const ResetPassword = () => {
   };
   const navigateToHome = () => {
     navigate("/");
+    setIsSended(false);
+    toast.closeAll();
   };
 
   const handleNewPassword = (e: any) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const passwordObj = Object.fromEntries(data.entries());
-    console.log(passwordObj);
     if (!token) return;
     resetPassword(token, passwordObj)
       .then(response => {
@@ -64,6 +65,7 @@ const ResetPassword = () => {
         setIsSended(true);
         e.target.reset();
         navigate("/login");
+        toast.closeAll();
       })
       .catch(error => {
         toast({

@@ -77,7 +77,6 @@ const RecipeManual = () => {
   const toast = useToast();
 
   const saveRecipe = () => {
-    console.log(recipe);
     let newRecipe = { ...recipe };
     if (newRecipe.recipeServings === 0) {
       newRecipe = {
@@ -87,11 +86,9 @@ const RecipeManual = () => {
     }
     saveManualRecipe(newRecipe)
       .then(response => {
-        console.log(response);
         navigate("/saved-recipes");
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

@@ -30,7 +30,6 @@ const RecipeAI = ({ recipe }: RecipeProps) => {
         setIfSaved(true);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${

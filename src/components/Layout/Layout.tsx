@@ -74,13 +74,11 @@ export default function Layout() {
     logout()
       .then(result => {
         if (result.status === 200) {
-          console.log(result);
           sessionStorage.clear();
           navigate("/");
         }
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: "Logout failed",

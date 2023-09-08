@@ -71,7 +71,6 @@ const EditRecipe = () => {
         setDiets(response.data.recipeSpecialDiets);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -94,7 +93,6 @@ const EditRecipe = () => {
   const saveRecipe = () => {
     if (recipeId === undefined) return;
     if (recipe === null) return;
-    console.log(recipe);
     let newRecipe = { ...recipe };
     if (newRecipe.recipeServings === 0) {
       newRecipe = {
@@ -104,11 +102,9 @@ const EditRecipe = () => {
     }
     editSingleRecipe(recipeId, newRecipe)
       .then(response => {
-        console.log(response);
         navigate(`/saved-recipes/${recipeId}`);
       })
       .catch(error => {
-        console.log(error);
         toast({
           title: "Error",
           description: `${
@@ -174,7 +170,6 @@ const EditRecipe = () => {
       const values = [...diets];
       values.splice(index, 1);
       setDiets(values);
-      console.log(diets);
       if (values.length === 0) {
         setRecipe({ ...recipe, recipeSpecialDiets: "" });
       } else {
@@ -335,7 +330,6 @@ const EditRecipe = () => {
                                 recipe.recipeCookTime.recipeCookTimeMinutes
                             }
                           });
-                          console.log(recipe);
                         }}
                       />
                       <InputRightElement>
@@ -389,7 +383,6 @@ const EditRecipe = () => {
                                 recipe.recipePrepTime.recipePrepTimeMinutes
                             }
                           });
-                          console.log(recipe);
                         }}
                       />
                       <InputRightElement>
@@ -513,8 +506,6 @@ const EditRecipe = () => {
                             ...recipe,
                             recipeIngredients: newIngredients
                           });
-                          console.log(ingredients);
-                          console.log(recipe);
                         }}
                       />
                     </GridItem>
@@ -732,17 +723,14 @@ const EditRecipe = () => {
                   placeholder="Choose img"
                   accept="image/png, image/jpeg, image/avif"
                   onChange={e => {
-                    console.log(e);
                     if (e.target.files === null) return;
                     const file = e.target.files[0];
                     const newSrc = URL.createObjectURL(file);
                     setEditSrcImage(newSrc);
-                    console.log(newSrc);
                     setRecipe({
                       ...recipe,
                       recipeImage: e.target.files[0]
                     });
-                    console.log(recipe);
                   }}
                 />
               </FormControl>
@@ -822,7 +810,6 @@ const EditRecipe = () => {
                     placeholder="Choose diet"
                     value={diet}
                     onChange={e => {
-                      console.log(e);
                       const newDiets = [...diets];
                       newDiets[index] = e.target.value;
                       setDiets(newDiets);
