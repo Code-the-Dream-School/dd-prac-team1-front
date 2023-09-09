@@ -8,7 +8,7 @@ const IngredientList = ({ ingredient }: IngredientProps) => {
   return (
     <ListItem>
       {`${ingredient.name} 
-      ${ingredient.quantity} 
+      ${ingredient.quantity.split(" ")[0]} 
        ${
          ingredient.quantity === "to taste" ||
          ingredient.quantity === "for serving" ||
