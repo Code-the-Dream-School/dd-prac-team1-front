@@ -10,14 +10,17 @@ const IngredientList = ({ ingredient }: IngredientProps) => {
     ingredient.quantity === "for serving" ||
     ingredient.quantity === "for garnish" ||
     ingredient.quantity === "to serve" ||
-    ingredient.quantity === "to garnish" ||
-    ingredient.unit === "unit" ||
-    ingredient.unit === "other";
+    ingredient.quantity === "to garnish";
+
   return (
     <ListItem>
       {`${ingredient.name} 
       ${!hideUnits ? ingredient.quantity.split(" ")[0] : ingredient.quantity} 
-       ${hideUnits ? "" : ingredient.unit}
+       ${
+         hideUnits || ingredient.unit === "unit" || ingredient.unit === "other"
+           ? ""
+           : ingredient.unit
+       }
       `}
     </ListItem>
   );
