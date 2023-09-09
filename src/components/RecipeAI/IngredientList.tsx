@@ -13,6 +13,8 @@ const IngredientList = ({ ingredient }: IngredientProps) => {
          ingredient.quantity === "to taste" ||
          ingredient.quantity === "for serving" ||
          ingredient.quantity === "for garnish" ||
+         ingredient.quantity === "to serve" ||
+         ingredient.quantity === "to garnish" ||
          ingredient.unit === "unit" ||
          ingredient.unit === "other"
            ? ""
