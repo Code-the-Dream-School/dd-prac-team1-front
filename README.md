@@ -1,6 +1,6 @@
 # Olivier Meal Planning App
 
-Olivier is an AI-powered meal planning and shopping list application designed for women who are juggling professional lives, family responsibilities, and a commitment to a healthy lifestyle. Simplifying meal planning, recipe management, and grocery shopping with intuitive features and AI technology, Olivier empowers users to craft a balanced and enjoyable diet.
+Olivier is an AI-powered meal planning and grocery shopping application designed for women who are juggling professional lives, family responsibilities, and a commitment to a healthy lifestyle. Simplifying meal planning, recipe management, and grocery shopping with intuitive features and AI technology, Olivier empowers users to craft a balanced and enjoyable diet.
 
 ## Table of Contents
 
@@ -174,12 +174,10 @@ The primary branches in our repository are:
 4. **Merging to `main`**:
    - Only after successful testing on `devops/initial-setup`, create a pull request to merge changes from `devops/initial-setup` into `main`.
 
-By following this branching strategy, we ensure that our `main` branch always contains production-ready code, while active development and testing take place on the `dev` and `devops/initial-setup` branches. This approach helps maintain a stable production environment.
-
 ---
 ## Product Functionality
 
-Olivier offers a wide range of features to simplify meal planning and preparation:
+Olivier offers a wide range of features (September 2023):
 
 - **Register and Log In**: Create a user account to access all the app's features.
 
@@ -189,12 +187,13 @@ Olivier offers a wide range of features to simplify meal planning and preparatio
 ![](public\images\demo\1.png)
 
 - **Manual Recipe Creation**: Create and customize recipes directly within the app.
-![](public\images\demo\2.png)
+![](public\images\demo\manualaddpage.png)
 
 - **Efficient Recipe Management**: Organize and manage your recipes with ease, using categories and tags.
 ![](public\images\demo\5.png)
 
 - **Comprehensive Recipe Details**: Access detailed cooking instructions and ingredient lists.
+![](public\images\demo\6.png)
 
 - **Dynamic Weekly Meal Planner**: Craft and edit weekly menus with intuitive drag-and-drop functionality.
 ![](public\images\demo\4.png)
@@ -203,7 +202,7 @@ Olivier offers a wide range of features to simplify meal planning and preparatio
 ![](public\images\demo\3.png)
 
 - **Share Shopping Lists**: Share your shopping lists via email or print them out for convenient offline access.
-
+![](public\images\demo\printrecipepage.png)
 ---
 
 ## Additional Resources

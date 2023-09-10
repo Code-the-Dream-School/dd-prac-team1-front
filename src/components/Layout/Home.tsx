@@ -16,8 +16,12 @@ import { useEffect, useState } from "react";
 const images = [
   "/images/demo/1.png",
   "/images/demo/2.png",
+  "/images/demo/manualaddpage.png",
   "/images/demo/3.png",
   "/images/demo/4.png",
+  "/images/demo/5.png",
+  "/images/demo/6.png",
+  "/images/demo/7.png",
 ];
 
 const Home = () => {
