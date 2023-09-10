@@ -16,7 +16,8 @@ import { useEffect, useState } from "react";
 const images = [
   "/images/demo/1.png",
   "/images/demo/2.png",
-  "/images/demo/3.png"
+  "/images/demo/3.png",
+  "/images/demo/4.png",
 ];
 
 const Home = () => {

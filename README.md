@@ -7,17 +7,12 @@ Olivier is an AI-powered meal planning and shopping list application designed fo
 1. [Getting Started](#getting-started)
 2. [Folder Structure](#folder-structure)
 3. [Development](#development)
-4. [Styling](#styling)
-5. [API Integration](#api-integration)
-6. [Code Formatting](#code-formatting)
-7. [Drag and Drop](#drag-and-drop)
-8. [Testing](#testing)
-9. [Deployment](#deployment)
-10. [Additional Resources](#additional-resources)
-11. [Branching Strategy](#branching-strategy)
-12. [Authors](#authors)
-13. [Contributing & Improvements](#contributing-and-improvements)
-14. [License](#license)
+4. [Branching Strategy](#branching-strategy)
+5. [Additional Resources](#additional-resources)
+6. [Product Functionality](#product-functionality)
+7. [Authors](#authors)
+8. [Contributing & Improvements](#contributing-and-improvements)
+9. [License](#license)
 
 ---
 
@@ -182,6 +177,34 @@ The primary branches in our repository are:
 By following this branching strategy, we ensure that our `main` branch always contains production-ready code, while active development and testing take place on the `dev` and `devops/initial-setup` branches. This approach helps maintain a stable production environment.
 
 ---
+## Product Functionality
+
+Olivier offers a wide range of features to simplify meal planning and preparation:
+
+- **Register and Log In**: Create a user account to access all the app's features.
+
+- **Password Reset Feature**: Easily reset your password if needed, ensuring account security.
+
+- **AI-Powered Recipe Searches**: Quickly discover meal ideas powered by AI technology.
+![](public\images\demo\1.png)
+
+- **Manual Recipe Creation**: Create and customize recipes directly within the app.
+![](public\images\demo\2.png)
+
+- **Efficient Recipe Management**: Organize and manage your recipes with ease, using categories and tags.
+![](public\images\demo\5.png)
+
+- **Comprehensive Recipe Details**: Access detailed cooking instructions and ingredient lists.
+
+- **Dynamic Weekly Meal Planner**: Craft and edit weekly menus with intuitive drag-and-drop functionality.
+![](public\images\demo\4.png)
+
+- **Smart Shopping Lists**: Generate smart shopping lists based on selected recipes.
+![](public\images\demo\3.png)
+
+- **Share Shopping Lists**: Share your shopping lists via email or print them out for convenient offline access.
+
+---
 
 ## Additional Resources
 
@@ -192,7 +215,7 @@ By following this branching strategy, we ensure that our `main` branch always co
 - [Prettier documentation](https://prettier.io/docs/en/index.html)
 - [Beautiful DND documentation](https://github.com/atlassian/react-beautiful-dnd)
 - [React Testing Library documentation](https://testing-library.com/docs/)
-- [Our pptx. presentation for Code The Dream](https://docs.google.com/presentation/d/1o9Oo3HQEbyEM5JsXdGRZEjWkLaWQQgWp).
+- [Our pptx. presentation for Code The Dream](https://docs.google.com/presentation/d/1o9Oo3HQEbyEM5JsXdGRZEjWkLaWQQgWp)
 
 ---
 
