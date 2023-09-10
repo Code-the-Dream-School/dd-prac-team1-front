@@ -5,16 +5,19 @@ import { AIIngredient } from "../../utils/types";
 type IngredientProps = { ingredient: AIIngredient };
 
 const IngredientList = ({ ingredient }: IngredientProps) => {
+  const hideUnits =
+    ingredient.quantity === "to taste" ||
+    ingredient.quantity === "for serving" ||
+    ingredient.quantity === "for garnish" ||
+    ingredient.quantity === "to serve" ||
+    ingredient.quantity === "to garnish";
+
   return (
     <ListItem>
       {`${ingredient.name} 
-      ${ingredient.quantity} 
+      ${!hideUnits ? ingredient.quantity.split(" ")[0] : ingredient.quantity} 
        ${
-         ingredient.quantity === "to taste" ||
-         ingredient.quantity === "for serving" ||
-         ingredient.quantity === "for garnish" ||
-         ingredient.unit === "unit" ||
-         ingredient.unit === "other"
+         hideUnits || ingredient.unit === "unit" || ingredient.unit === "other"
            ? ""
            : ingredient.unit
        }
