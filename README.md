@@ -2,6 +2,8 @@
 
 Olivier is an AI-powered meal planning and grocery shopping application designed for women who are juggling professional lives, family responsibilities, and a commitment to a healthy lifestyle. Simplifying meal planning, recipe management, and grocery shopping with intuitive features and AI technology, Olivier empowers users to craft a balanced and enjoyable diet.
 
+We built this application during the Practicum course at Code The Dream school, you can watch our final project video presentation by following this [link](https://drive.google.com/file/d/12dl_sDWDZ_KIDzBptfClYFAyOvOA_SYG/view?usp=drive_link).
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
@@ -20,8 +22,7 @@ Olivier is an AI-powered meal planning and grocery shopping application designed
 
 ### Front-End Repo for Node/React Practicum
 
-This is the front-end for the team's practicum project. We recommend following these instructions after setting up the back-end server first.
-
+This is the front-end for the team's practicum project. We recommend following these instructions after setting up the back-end server first. You can find the back-end repository [here](https://github.com/Code-the-Dream-School/dd-prac-team1-back).
 1. Clone both the front-end and back-end repositories into a parent folder (e.g., "Practicum Project").
 2. The front-end app (React) runs on port 3005, and the back-end server runs on port 3000. Ensure both are running simultaneously for testing.
 
@@ -212,7 +213,9 @@ Olivier offers a wide range of features (September 2023):
 - [Axios documentation](https://axios-http.com/docs/intro)
 - [Prettier documentation](https://prettier.io/docs/en/index.html)
 - [Beautiful DND documentation](https://github.com/atlassian/react-beautiful-dnd)
-- [Our pptx. presentation for Code The Dream](https://docs.google.com/presentation/d/1o9Oo3HQEbyEM5JsXdGRZEjWkLaWQQgWp)
+- [Olivier video presentation](https://drive.google.com/file/d/12dl_sDWDZ_KIDzBptfClYFAyOvOA_SYG/view?usp=drive_link)
+- [Practicum project pptx presentation](https://docs.google.com/presentation/d/1o9Oo3HQEbyEM5JsXdGRZEjWkLaWQQgWp)
+- [Code The Dream organization](https://codethedream.org/)
 
 ---
 
