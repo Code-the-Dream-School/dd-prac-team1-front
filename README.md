@@ -20,8 +20,7 @@ Olivier is an AI-powered meal planning and grocery shopping application designed
 
 ### Front-End Repo for Node/React Practicum
 
-This is the front-end for the team's practicum project. We recommend following these instructions after setting up the back-end server first.
-
+This is the front-end for the team's practicum project. We recommend following these instructions after setting up the back-end server first. You can find the back-end repository following [this link](https://github.com/Code-the-Dream-School/dd-prac-team1-back).
 1. Clone both the front-end and back-end repositories into a parent folder (e.g., "Practicum Project").
 2. The front-end app (React) runs on port 3005, and the back-end server runs on port 3000. Ensure both are running simultaneously for testing.
 
