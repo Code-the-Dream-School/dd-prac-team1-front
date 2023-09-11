@@ -184,25 +184,24 @@ Olivier offers a wide range of features (September 2023):
 - **Password Reset Feature**: Easily reset your password if needed, ensuring account security.
 
 - **AI-Powered Recipe Searches**: Quickly discover meal ideas powered by AI technology.
-![](public\images\demo\1.png)
+![](public\images\demo\gif_1.gif)
 
 - **Manual Recipe Creation**: Create and customize recipes directly within the app.
-![](public\images\demo\manualaddpage.png)
+![](public\images\demo\gif_2.gif)
 
 - **Efficient Recipe Management**: Organize and manage your recipes with ease, using categories and tags.
-![](public\images\demo\5.png)
+![](public\images\demo\gif_3.gif)
 
 - **Comprehensive Recipe Details**: Access detailed cooking instructions and ingredient lists.
-![](public\images\demo\6.png)
 
 - **Dynamic Weekly Meal Planner**: Craft and edit weekly menus with intuitive drag-and-drop functionality.
-![](public\images\demo\4.png)
+![](public\images\demo\gif_5.gif)
 
 - **Smart Shopping Lists**: Generate smart shopping lists based on selected recipes.
-![](public\images\demo\3.png)
+![](public\images\demo\gif_4.gif)
 
 - **Share Shopping Lists**: Share your shopping lists via email or print them out for convenient offline access.
-![](public\images\demo\printrecipepage.png)
+
 ---
 
 ## Additional Resources
@@ -213,7 +212,6 @@ Olivier offers a wide range of features (September 2023):
 - [Axios documentation](https://axios-http.com/docs/intro)
 - [Prettier documentation](https://prettier.io/docs/en/index.html)
 - [Beautiful DND documentation](https://github.com/atlassian/react-beautiful-dnd)
-- [React Testing Library documentation](https://testing-library.com/docs/)
 - [Our pptx. presentation for Code The Dream](https://docs.google.com/presentation/d/1o9Oo3HQEbyEM5JsXdGRZEjWkLaWQQgWp)
 
 ---
