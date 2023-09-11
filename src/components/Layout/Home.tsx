@@ -14,9 +14,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const images = [
-  "/images/demo/gif_1.gif",
-  "/images/demo/gif_2.gif",
-  "/images/demo/gif_5.gif"
+  "/images/demo/gif_1_1.gif",
+  "/images/demo/gif_2_1.gif",
+  "/images/demo/gif_5_1.gif"
 ];
 
 const Home = () => {
