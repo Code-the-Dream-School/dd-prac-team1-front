@@ -14,9 +14,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const images = [
-  "/images/demo/1.png",
-  "/images/demo/2.png",
-  "/images/demo/3.png"
+  "/images/demo/gif_1.gif",
+  "/images/demo/gif_2.gif",
+  "/images/demo/gif_5.gif"
 ];
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % images.length);
   };
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
+    const interval = setInterval(nextSlide, 15000);
     return () => clearInterval(interval);
   }, []);
 
