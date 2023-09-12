@@ -117,6 +117,7 @@ export default function Layout() {
             <Box overflow="hidden">
               <Image
                 src="/images/Logo_Olivier.svg"
+                alt="logo"
                 maxW="100%"
                 minWidth={{ sm: "150px" }}
                 h="auto"
